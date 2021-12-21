@@ -1,5 +1,5 @@
 {
-  "name": "@htcloud/base-css",
+  "name": "@htfed/base-css",
   "version": "1.0.0",
   "description": "Basic css includes base.css and css includes base.css and atom.css.",
   "main": "index.css",
@@ -13,5 +13,12 @@
     "directory": "packages/base-css"
   },
   "author": "fed",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rainnaZR/vite-ui/issues"
+  },
+  "homepage": "https://github.com/rainnaZR/vite-ui#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
