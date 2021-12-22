@@ -1,6 +1,6 @@
 {
   "name": "@htfed/vui-iconfont",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "iconfont library",
   "main": "index.css",
   "style": "index.css",
