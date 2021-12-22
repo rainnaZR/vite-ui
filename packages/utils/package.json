@@ -1,0 +1,25 @@
+{
+  "name": "@htfed/utils",
+  "version": "0.0.1",
+  "description": "All util functions used in project.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rainnaZR/vite-ui.git",
+    "directory": "packages/utils"
+  },
+  "author": "fed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rainnaZR/vite-ui/issues"
+  },
+  "homepage": "https://github.com/rainnaZR/vite-ui#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "axios": "^0.24.0",
+    "dayjs": "^1.10.7"
+  }
+}
