@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/rainnaZR/vite-ui/issues"
   },
-  "homepage": "https://github.com/rainnaZR/vite-ui#readme"
+  "homepage": "https://github.com/rainnaZR/vite-ui#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.1",
+    "rollup": "^2.61.1"
+  }
 }

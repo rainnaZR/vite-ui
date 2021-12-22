@@ -1,20 +1,4 @@
-import axios from 'axios'
-
 export default {
-    /**
-     * 上传Blob二进制数据
-     */
-    uploadBlob({requestUrl = 'uploadBlob', fileName, blob}) {
-        if (!fileName || !blob) return
-
-        const formData = new FormData()
-        formData.append('fileName', fileName)
-        formData.append('file', blob)
-        return axios
-            .post(requestUrl, formData)
-            .then(res => res.data)
-    },
-
     /**
      * base64转换成blob数据
      */

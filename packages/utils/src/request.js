@@ -1,7 +1,6 @@
-import axios from 'axios'
-
 let request = {
-  init({ baseURL = '', timeout = 10000, headers = {}, reqInterceptor, resInterceptor } = {}){
+  init({ axios, baseURL = '', timeout = 10000, headers = {}, reqInterceptor, resInterceptor } = {}){
+    if(!axios) return
     this.ajax = axios.create({
       baseURL,
       timeout,
@@ -38,14 +37,16 @@ let request = {
     })
   },
 
-  all(promises = [], cbFunc) {
-    if (promises.length == 0) {
-        return
-    }
-    return axios.all(promises).then(axios.spread(function(acct, perms) {
-        // 所有请求现在都执行完成
-        cbFunc(acct, perms)
-    }))
+  /**
+   * 上传Blob二进制数据
+   */
+  uploadBlob({requestUrl = 'uploadBlob', fileName, blob}) {
+    if (!fileName || !blob) return
+
+    const formData = new FormData()
+    formData.append('fileName', fileName)
+    formData.append('file', blob)
+    return this.post(requestUrl, formData)
   }
 }
 
