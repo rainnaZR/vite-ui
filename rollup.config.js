@@ -1,14 +1,14 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import pkg from './package.json';
+import utilPkg from './packages/utils/package.json';
 
 export default [
 	// browser-friendly UMD build
 	{
-		input: 'index.js',
+		input: 'packages/utils/index.js',
 		output: {
 			name: 'howLongUntilLunch',
-			file: pkg.browser,
+			file: `packages/utils/${utilPkg.browser}`,
 			format: 'umd'
 		},
 		plugins: [
@@ -18,11 +18,11 @@ export default [
 	},
 	// CommonJS (for Node) and ES module (for bundlers) build. 
 	{
-		input: 'index.js',
+		input: 'packages/utils/index.js',
 		external: ['ms'],
 		output: [
-			{ file: pkg.main, format: 'cjs' },
-			{ file: pkg.module, format: 'es' }
+			{ file: `packages/utils/${utilPkg.main}`, format: 'cjs' },
+			{ file: `packages/utils/${utilPkg.module}`, format: 'es' }
 		]
 	}
 ];
