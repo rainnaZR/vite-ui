@@ -1,6 +1,6 @@
 {
   "name": "@htfed/utils",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "All util functions used in project.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -20,6 +20,7 @@
     "build": "rollup -c"
   },
   "dependencies": {
-    "dayjs": "^1.10.7"
+    "dayjs": "^1.10.7",
+    "axios": "^0.24.0"
   }
 }
