@@ -1,6 +1,6 @@
 {
   "name": "@htfed/utils",
-  "version": "0.0.5",
+  "version": "0.0.8",
   "description": "All util functions used in project.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -18,9 +18,5 @@
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "scripts": {
     "build": "rollup -c"
-  },
-  "dependencies": {
-    "dayjs": "^1.10.7",
-    "axios": "^0.24.0"
   }
 }

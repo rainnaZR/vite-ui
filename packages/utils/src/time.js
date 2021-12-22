@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 // 根据时间戳换算成时分秒的格式
 function formatLeftTime (time) {
     let day = Math.floor(time / 1000 / 60 / 60 / 24)
@@ -46,11 +44,6 @@ function getCountDown (timestamp, cbFunc) {
     change()
 }
 
-function formatTime (time) {
-    return time ? dayjs(time).format('YYYY-MM-DD HH:mm') : ''
-}
-
 export default {
-    getCountDown,
-    formatTime
+    getCountDown
 };
