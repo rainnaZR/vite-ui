@@ -4,14 +4,14 @@ function formatLeftTime(time) {
 	let leftTime = time % (1000 * 60 * 60 * 24)
 	let hour = Math.floor(leftTime / 1000 / 60 / 60)
 	leftTime = leftTime % (1000 * 60 * 60)
-	let min = Math.floor(leftTime / 1000 / 60)
+	let minute = Math.floor(leftTime / 1000 / 60)
 	leftTime = leftTime % (1000 * 60)
 	let second = Math.floor(leftTime / 1000)
 
 	return {
 		day,
 		hour: numFixed(hour),
-		min: numFixed(min),
+		minute: numFixed(minute),
 		second: numFixed(second),
 	}
 }
