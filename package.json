@@ -7,8 +7,8 @@
     "dev": "vite -m development",
     "build": "yarn build:package && yarn build:package:dts",
     "build:docs": "vue-tsc --noEmit && vite build",
-    "build:package": "rollup -c build/rollup.config.js",
-    "build:package:dts": "rollup -c build/rollup.config.dts.js",
+    "build:package": "rollup -c build/rollup.config.ts -w",
+    "build:package:dts": "rollup -c build/rollup.config.dts.ts",
     "test:unit": "jest -c=jest.config.js --detectOpenHandles",
     "preview": "vite preview"
   },
