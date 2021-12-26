@@ -1,10 +1,9 @@
 import type { App } from "vue";
 
-/* 基础组件 start */
-import MeImg from "./MeImg"; // 图片
+/* 基础组件 */
+import HtImg from "./HtImg"; // 图片
 
-// 所有组件
-const components: any[] = [MeImg];
+const components: any[] = [HtImg];
 
 /**
  * 组件注册
@@ -16,7 +15,7 @@ const install = (app: App) => {
   components.forEach((component) => app.component(component.name, component));
 };
 
-export { MeImg };
+export { HtImg };
 // 全部导出
 export default {
   install,

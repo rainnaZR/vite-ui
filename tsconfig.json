@@ -11,6 +11,6 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"]
   },
-  "include": ["types/*.d.ts", "types/*.ts", "docs/**/*.ts", "docs/**/*.d.ts", "docs/**/*.tsx", "docs/**/*.vue", "build/*.ts", "build/*.dts.ts"],
+  "include": ["types/*.d.ts", "types/*.ts", "docs/**/*.ts", "docs/**/*.d.ts", "docs/**/*.tsx", "docs/**/*.vue", "build/*.ts", "build/*.dts.ts", "packages/**/*.ts", "packages/**/*.d.ts"],
   "exclude": ["node_modules"]
 }

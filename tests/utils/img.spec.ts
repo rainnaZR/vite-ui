@@ -1,14 +1,15 @@
 import { mount } from "@vue/test-utils";
-import MeImg from "~/MeImg/index.vue";
+import HtImg from "~/HtImg/index.vue";
 
-describe("MeImg", () => {
-  const src = "http://dummyimage.com/100x100/0079cb/fff"; // 图片地址
+describe("HtImg", () => {
+  const src =
+    "https://pics1.baidu.com/feed/d50735fae6cd7b8906d8447d5041e0aed8330e02.jpeg?token=b798fd3f957e4c33967d87d9ec2b16b5"; // 图片地址
   test("props src", () => {
     // 向组件里传参
-    const wrapper = mount(MeImg, {
+    const wrapper = mount(HtImg, {
       props: { src },
     });
-    const viewer = wrapper.find(".me-img"); // 获取 DOM
+    const viewer = wrapper.find(".ht-img");
     expect(viewer.exists()).toBeTruthy();
     const imgEl = viewer.find("img");
     expect(viewer.exists()).toBeTruthy();

@@ -1,6 +1,6 @@
 <template>
   <!-- 图片 -->
-  <div class="me-img" @click="onClick">
+  <div class="ht-img" @click="onClick">
     <img
       :src="src"
       width="40px"
@@ -22,7 +22,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "MeImg",
+  name: "HtImg",
   props: {
     // 图片地址
     src: {
@@ -76,7 +76,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="less">
-@import "./index.less";
-</style>

@@ -7,7 +7,7 @@ import { resolve } from "path";
 const input = resolve(__dirname, "../packages"); // 入口文件
 const output = resolve(__dirname, "../lib"); // 输出文件
 const config = readdirSync(input)
-  .filter((name) => !["theme-default", "index.ts", "types.ts"].includes(name))
+  .filter((name) => !["theme", "index.ts", "types.ts"].includes(name))
   .map((name) => ({
     input: `${input}/${name}/index.ts`,
     external: ["vue"],
