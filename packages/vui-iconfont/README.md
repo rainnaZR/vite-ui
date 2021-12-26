@@ -1,3 +1,0 @@
-# vui-iconfont
-
-iconfont library.
