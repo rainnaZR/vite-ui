@@ -1,14 +1,13 @@
 {
   "name": "@htfed/ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "lib/index.esm.js",
   "scripts": {
     "dev": "vite -m development",
-    "build": "yarn build:package && yarn build:package:dts",
+    "build": "yarn build:package",
     "build:docs": "vue-tsc --noEmit && vite build",
     "build:package": "rollup -c build/rollup.config.ts -w",
-    "build:package:dts": "rollup -c build/rollup.config.dts.ts",
     "test:unit": "jest -c=jest.config.js --detectOpenHandles",
     "preview": "vite preview"
   },
@@ -27,6 +26,7 @@
   },
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "dependencies": {
+    "@htfed/ui": "^0.0.2",
     "vue": "^3.2.25",
     "vue-router": "4.0.6"
   },
