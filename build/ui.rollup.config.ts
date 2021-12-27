@@ -9,7 +9,15 @@ const output = "packages/HtUi/dist"; // 输出文件
 const config = readdirSync(input)
   .filter(
     (name) =>
-      !["theme", "dist", "index.ts", "types.ts", "package.json"].includes(name)
+      ![
+        "theme",
+        "dist",
+        "index.ts",
+        "types.ts",
+        "package.json",
+        "node_modules",
+        "yarn.lock",
+      ].includes(name)
   )
   .map((name) => ({
     input: `${input}/${name}/index.ts`,
