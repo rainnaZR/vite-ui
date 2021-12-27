@@ -1,0 +1,21 @@
+{
+  "name": "@htfed/base-css",
+  "version": "1.0.1",
+  "description": "Basic css includes base.css and atom.css.",
+  "main": "index.css",
+  "style": "index.css",
+  "files": [
+    "index.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rainnaZR/vite-ui.git",
+    "directory": "packages/HtBaseCss"
+  },
+  "author": "fed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rainnaZR/vite-ui/issues"
+  },
+  "homepage": "https://github.com/rainnaZR/vite-ui#readme"
+}
