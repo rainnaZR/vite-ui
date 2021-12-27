@@ -1,6 +1,6 @@
 <template>
   <!-- 倒计时 -->
-  <div class="ht-count-down" v-if="data && data.timestamp">
+  <div class="ht-count-down">
     <slot :data="data">
       {{ data.day }}天 {{ data.hour }}时 {{ data.minute }}分 {{ data.second }}秒
     </slot>
