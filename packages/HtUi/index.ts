@@ -1,8 +1,8 @@
 import type { App } from "vue";
 
 /* 基础组件 */
-import HtCountDown from "./HtCountDown"; // 倒计时
-import HtImg from "./HtImg"; // 图片
+import HtCountDown from "./src/HtCountdown"; // 倒计时
+import HtImg from "./src/HtImg"; // 图片
 
 const components: any[] = [HtCountDown, HtImg];
 

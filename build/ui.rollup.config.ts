@@ -4,21 +4,11 @@ import vue from "rollup-plugin-vue"; // 处理vue文件
 import { terser } from "rollup-plugin-terser";
 import { readdirSync } from "fs"; // 写文件
 
-const input = "packages/HtUi"; // 入口文件
-const output = "packages/HtUi/dist"; // 输出文件
+const pkgDir = "packages/HtUi"; // 包名目录
+const input = `${pkgDir}/src`; // 入口文件
+const output = `${pkgDir}/dist`; // 输出文件
 const config = readdirSync(input)
-  .filter(
-    (name) =>
-      ![
-        "theme",
-        "dist",
-        "index.ts",
-        "types.ts",
-        "package.json",
-        "node_modules",
-        "yarn.lock",
-      ].includes(name)
-  )
+  .filter((name) => !["theme", "index.ts", "types.ts"].includes(name))
   .map((name) => ({
     input: `${input}/${name}/index.ts`,
     external: ["vue"],
@@ -43,7 +33,7 @@ const config = readdirSync(input)
     },
   }));
 config.push({
-  input: `${input}/index.ts`,
+  input: `${pkgDir}/index.ts`,
   output: {
     name: "index",
     format: "es",
