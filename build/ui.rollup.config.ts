@@ -2,6 +2,8 @@ import nodeResolve from "@rollup/plugin-node-resolve"; // 告诉 Rollup 如何�
 import typescript from "rollup-plugin-typescript2";
 import vue from "rollup-plugin-vue"; // 处理vue文件
 import { terser } from "rollup-plugin-terser";
+import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
 import { readdirSync } from "fs"; // 写文件
 
 const pkgDir = "packages/HtUi"; // 包名目录
@@ -25,6 +27,8 @@ const config = readdirSync(input)
         abortOnError: false,
         clean: true,
       }),
+      commonjs(),
+      json(),
     ],
     output: {
       name,
@@ -54,6 +58,8 @@ config.push({
       },
       abortOnError: false,
     }),
+    commonjs(),
+    json(),
   ],
   external: ["vue"],
 });
