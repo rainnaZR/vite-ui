@@ -1,17 +1,23 @@
 <template>
-  <div>Ht-Ui</div>
+  <div class="f-fs24 f-fw1 f-mb20">Ht-Ui</div>
 
   <div class="f-mb20">
-    <h2 class="s-fc1">倒计时组件</h2>
+    <h2 class="s-fc1 f-fs18 f-fw1 f-mb10">iconfont</h2>
+    <i class="u-icon u-icon-arrowleft"></i>
+    <i class="u-icon u-icon-add"></i>
+  </div>
+
+  <div class="f-mb20">
+    <h2 class="s-fc1 f-fs18 f-fw1 f-mb10">倒计时组件</h2>
     <ht-count-down v-model:time="time" @on-stop="onStop" />
   </div>
 
   <div class="f-mb20">
-    <h2 class="s-fc1">图片组件</h2>
+    <h2 class="s-fc1 f-fs18 f-fw1 f-mb10">图片组件</h2>
     <ht-img
       src="https://img11.360buyimg.com/pop/s1180x940_jfs/t1/115893/29/24341/38397/61c566fdE263704d1/282ee8a9b41ee6eb.jpg.webp"
-      width="500px"
-      height="500px"
+      width="300px"
+      height="300px"
       radius="50%"
     />
   </div>

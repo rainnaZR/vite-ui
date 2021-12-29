@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "dependencies": {
+    "@htfed/base-css": "^1.0.1",
+    "@htfed/icon": "^0.0.2",
     "@htfed/ui": "^0.0.8",
     "vue": "^3.2.25",
     "vue-router": "4.0.6"
