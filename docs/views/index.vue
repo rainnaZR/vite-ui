@@ -14,6 +14,7 @@
   <div class="f-mb20">
     <h2 class="s-fc1 f-fs18 f-fw1 f-mb10">倒计时组件</h2>
     <ht-count-down v-model:time="time" @on-stop="onStop" />
+    <ht-count-down v-model:time="time2" @on-stop="onStop" />
   </div>
 
   <div class="f-mb20">
@@ -33,12 +34,14 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
   setup() {
     const time = ref(10000);
+    const time2 = ref(95000000);
     const onStop = () => {
       console.log("倒计时停止");
     };
 
     return {
       time,
+      time2,
       onStop,
     };
   },
