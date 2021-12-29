@@ -5,6 +5,10 @@
     <h2 class="s-fc1 f-fs18 f-fw1 f-mb10">iconfont</h2>
     <i class="u-icon u-icon-arrowleft"></i>
     <i class="u-icon u-icon-add"></i>
+    <i class="u-icon u-icon-spread"></i>
+    <i class="u-icon u-icon-eye"></i>
+    <i class="u-icon u-icon-import"></i>
+    <i class="u-icon u-icon-user"></i>
   </div>
 
   <div class="f-mb20">
