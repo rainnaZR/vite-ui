@@ -16,10 +16,11 @@ export default [
       commonjs(), // so Rollup can convert `ms` to an ES module
       json(),
     ],
+    external: ["axios"],
   },
   {
     input: "packages/HtUtils/index.js",
-    external: ["ms"],
+    external: ["ms", "axios"],
     output: [
       { file: `packages/HtUtils/${utilPkg.main}`, format: "cjs" },
       { file: `packages/HtUtils/${utilPkg.module}`, format: "es" },
