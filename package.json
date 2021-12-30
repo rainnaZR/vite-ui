@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.esm.js",
   "scripts": {
-    "dev": "vite -m development",
+    "dev": "vite -m development --port 1768",
     "build": "",
     "build:utils": "rollup -c build/utils.rollup.config.ts -w",
     "build:ui": "rollup -c build/ui.rollup.config.ts -w",
