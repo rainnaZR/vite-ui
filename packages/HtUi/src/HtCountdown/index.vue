@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { time as timeUtil } from "@htfed/utils";
-import { Result } from "./interface";
+import { Result } from "./types";
 
 export default defineComponent({
   name: "ht-count-down",
