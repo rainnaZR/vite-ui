@@ -4,6 +4,7 @@ import {
   RouteRecordRaw,
   Router,
 } from "vue-router";
+import docs from "./docs";
 
 const BaseRouter = "/";
 // 路由配置
@@ -16,6 +17,14 @@ const routes: RouteRecordRaw[] = [
     path: "/",
     name: "Index",
     component: () => import(`@/views/index.vue`),
+  },
+  {
+    path: "/doc",
+    redirect: {
+      name: "introduce",
+    },
+    component: () => import(`@/views/docs.vue`),
+    children: docs as any[],
   },
 ];
 // 路由实例
