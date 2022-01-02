@@ -11,7 +11,9 @@ const BaseRouter = "/";
 const routes: RouteRecordRaw[] = [
   {
     path: "/:pathMatch(.*)*",
-    redirect: { name: "Index" },
+    redirect: {
+      name: "Index",
+    },
   },
   {
     path: "/",
@@ -23,10 +25,11 @@ const routes: RouteRecordRaw[] = [
     redirect: {
       name: "introduce",
     },
-    component: () => import(`@/views/docs.vue`),
+    component: () => import(`@/views/doc.vue`),
     children: docs as any[],
   },
 ];
+
 // 路由实例
 const router: Router = createRouter({
   history: createWebHistory(BaseRouter),
