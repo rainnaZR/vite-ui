@@ -4,12 +4,14 @@ import { RouteComponent } from "vue-router";
 export interface SidebarMeta {
   title: string;
 }
+
 // 导航子栏目
 export interface SidebarItems {
   name: string;
   path: string;
   meta: SidebarMeta;
 }
+
 // 导航子类型
 export interface SidebarChildItem {
   name?: string;
@@ -24,7 +26,7 @@ export interface Docs extends SidebarChildItem {
   component?: Lazy<RouteComponent>;
 }
 
-// 导出文件的数据
+// 文件导出
 export interface Doc {
   name: string;
   fileName: string;

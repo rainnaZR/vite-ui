@@ -1,8 +1,8 @@
 import { createApp } from "vue";
-import HtUi from "@htfed/ui";
 import "@htfed/base-css";
 import "@htfed/markdown-css";
 import "@htfed/icon";
+import HtUi from "@htfed/ui";
 import router from "./router";
 import App from "./App.vue";
 
