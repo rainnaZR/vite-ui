@@ -34,7 +34,7 @@ load({
       meta: {
         title: options.name,
       },
-      component: options.fileContent,
+      component: options.fileContent.default,
     });
   },
 });
