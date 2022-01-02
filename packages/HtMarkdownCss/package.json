@@ -1,0 +1,27 @@
+{
+  "name": "@htfed/markdown-css",
+  "version": "0.0.1",
+  "description": "Markdown.css.",
+  "main": "dist/index.css",
+  "style": "dist/index.css",
+  "scripts": {
+    "build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rainnaZR/vite-ui.git",
+    "directory": "packages/HtMarkdownCss"
+  },
+  "author": "fed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rainnaZR/vite-ui/issues"
+  },
+  "homepage": "https://github.com/rainnaZR/vite-ui#readme",
+  "devDependencies": {
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-less": "^5.0.0"
+  }
+}

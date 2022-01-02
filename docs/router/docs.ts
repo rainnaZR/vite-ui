@@ -30,7 +30,7 @@ load({
   callback: (options: Doc) => {
     docs.push({
       name: options.name,
-      path: `/${options.name}`,
+      path: options.name,
       meta: {
         title: options.name,
       },

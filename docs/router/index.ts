@@ -12,12 +12,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/:pathMatch(.*)*",
     redirect: {
-      name: "Index",
+      name: "index",
     },
   },
   {
     path: "/",
-    name: "Index",
+    name: "index",
     component: () => import(`@/views/index.vue`),
   },
   {
