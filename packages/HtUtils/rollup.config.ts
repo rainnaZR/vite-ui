@@ -2,14 +2,17 @@ import nodeResolve from "@rollup/plugin-node-resolve"; // 告诉 Rollup 如何�
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import { terser } from "rollup-plugin-terser";
-import utilPkg from "../packages/HtUtils/package.json";
+import path from "path";
+
+const input = path.join(__dirname, "index.js"); // 入口文件
+const output = path.join(__dirname, "dist"); // 输出文件
 
 export default [
   {
-    input: "packages/HtUtils/index.js",
+    input,
     output: {
       name: "howLongUntilLunch",
-      file: `packages/HtUtils/${utilPkg.browser}`,
+      file: `${output}/index.umd.js`,
       format: "umd",
       globals: {
         axios: "axios",
@@ -24,17 +27,17 @@ export default [
     external: ["axios"],
   },
   {
-    input: "packages/HtUtils/index.js",
+    input,
     output: [
       {
-        file: `packages/HtUtils/${utilPkg.main}`,
+        file: `${output}/index.cjs.js`,
         format: "cjs",
         globals: {
           axios: "axios",
         },
       },
       {
-        file: `packages/HtUtils/${utilPkg.module}`,
+        file: `${output}/index.esm.js`,
         format: "es",
         globals: {
           axios: "axios",

@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite -m development --port 1768",
     "build": "",
-    "build:utils": "rollup -c config/utils.rollup.config.ts -w",
-    "build:ui": "rollup -c config/ui.rollup.config.ts -w",
     "build:mdcss": "gulp -f packages/HtMarkdownCss/gulpfile.js",
+    "build:ui": "rollup -c packages/HtUi/rollup.config.ts -w",
+    "build:utils": "rollup -c packages/HtUtils/rollup.config.ts -w",
     "build:packages": "",
     "build:docs": "vue-tsc --noEmit && vite build",
     "test:unit": "jest -c=jest.config.js --detectOpenHandles",
@@ -39,7 +39,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.1.1",
+    "@rollup/plugin-node-resolve": "^13.1.2",
     "@types/jest": "^27.0.3",
     "@types/node": "^17.0.4",
     "@typescript-eslint/eslint-plugin": "^5.8.0",

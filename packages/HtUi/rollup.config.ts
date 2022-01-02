@@ -3,10 +3,10 @@ import typescript from "rollup-plugin-typescript2";
 import vue from "rollup-plugin-vue"; // 处理vue文件
 import { terser } from "rollup-plugin-terser";
 import { readdirSync } from "fs"; // 写文件
+import path from "path";
 
-const pkgDir = "packages/HtUi"; // 包名目录
-const input = `${pkgDir}/src`; // 入口文件
-const output = `${pkgDir}/dist`; // 输出文件
+const input = path.join(__dirname, "src"); // 入口文件
+const output = path.join(__dirname, "dist"); // 输出文件
 const config = readdirSync(input)
   .filter((name) => !["theme", "index.ts", "types.ts"].includes(name))
   .map((name) => ({
@@ -33,7 +33,7 @@ const config = readdirSync(input)
     },
   }));
 config.push({
-  input: `${pkgDir}/index.ts`,
+  input: path.join(__dirname, "index.ts"),
   output: {
     name: "index",
     format: "es",
@@ -49,7 +49,7 @@ config.push({
     typescript({
       useTsconfigDeclarationDir: false,
       tsconfigOverride: {
-        include: ["packages/**/*"],
+        include: ["*"],
         exclude: ["node_modules", "docs", "tests"],
       },
       abortOnError: false,
