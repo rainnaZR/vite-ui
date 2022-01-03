@@ -1,11 +1,12 @@
 import type { App } from "vue";
 
 /* 基础组件 */
-import HtCountDown from "./src/HtCountdown"; // 倒计时
 import HtImage from "./src/HtImage"; // 图片
+import HtTab from "./src/HtTab"; // 图片
+import HtCountDown from "./src/HtCountdown"; // 倒计时
 import HtHeader from "./src/HtHeader"; // 头部
 
-const components: any[] = [HtCountDown, HtImage, HtHeader];
+const components: any[] = [HtImage, HtTab, HtCountDown, HtHeader];
 
 /**
  * 组件注册

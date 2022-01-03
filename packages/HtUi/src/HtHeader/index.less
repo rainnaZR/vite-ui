@@ -1,1 +1,26 @@
-.ht-header {}
+.ht-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
+    height: 60px;
+    padding: 0 15px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgb(197 217 232 / 50%);
+    box-sizing: border-box;
+    .header-left{
+        .logo{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+            .text{
+                margin-left: 10px;
+                font-size: 16px;
+            }
+        }
+    }
+    .header-center{
+        flex: 1;
+    }
+}
