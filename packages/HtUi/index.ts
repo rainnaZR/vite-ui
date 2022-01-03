@@ -2,9 +2,9 @@ import type { App } from "vue";
 
 /* 基础组件 */
 import HtCountDown from "./src/HtCountdown"; // 倒计时
-import HtImg from "./src/HtImg"; // 图片
+import HtImage from "./src/HtImage"; // 图片
 
-const components: any[] = [HtCountDown, HtImg];
+const components: any[] = [HtCountDown, HtImage];
 
 /**
  * 组件注册
@@ -16,7 +16,7 @@ const install = (app: App) => {
   components.forEach((component) => app.component(component.name, component));
 };
 
-export { HtCountDown, HtImg };
+export { HtCountDown, HtImage };
 // 全部导出
 export default {
   install,

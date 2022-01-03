@@ -1,20 +1,20 @@
 <template>
   <!-- 图片 -->
-  <div class="ht-img" @click="onClick">
+  <div class="ht-image" @click="onClick">
+    <div
+      v-if="fill"
+      :style="`width:${width};height:${height};background:url(${src}) no-repeat center;background-size:${fill};`"
+    ></div>
     <img
+      v-else
       :src="src"
-      width="40px"
-      height="40px"
+      :width="width"
+      :height="height"
       :alt="alt"
-      v-if="!fill"
-      :style="`width:${width};height:${height};border-radius:${radius};`"
+      :style="cssStyle"
       @load="onLoad"
       @error="onError"
     />
-    <span
-      :style="`width:${width};height:${height};border-radius:${radius};background:url(${src}) no-repeat center;background-size:${fill};`"
-      v-else
-    ></span>
   </div>
 </template>
 
@@ -22,8 +22,14 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "HtImg",
+  name: "HtImage",
   props: {
+    // 填充方式
+    fill: {
+      type: String,
+      default: "",
+      validator: (value: string) => ["cover", "contain"].includes(value),
+    },
     // 图片地址
     src: {
       type: String,
@@ -39,18 +45,13 @@ export default defineComponent({
       type: String,
       default: "",
     },
-    // 填充方式
-    fill: {
+    // 错误显示alt
+    alt: {
       type: String,
       default: "",
     },
-    // 倒角
-    radius: {
-      type: String,
-      default: "0",
-    },
-    // 错误显示alt
-    alt: {
+    // 图片样式
+    cssStyle: {
       type: String,
       default: "",
     },
