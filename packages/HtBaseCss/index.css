@@ -136,10 +136,13 @@ img[src=""],img:not([src]){
 .f-dib{ display: inline-block; }
 .f-df{ display: flex; }
 .f-jcc{ justify-content: center; }
+.f-jcsb{ justify-content: space-between; }
+.f-jcsa{ justify-content: space-around; }
 .f-aic{ align-items: center; }
 .f-f1{ flex: 1; }
 .f-fdc{ flex-direction: column; }
 .f-fdr{ flex-direction: row; }
+.f-fww {flex-wrap: wrap; }
 .f-fl{ float: left; }
 .f-fr{ float: right; }
 .f-oh{ overflow: hidden; }
@@ -149,6 +152,7 @@ img[src=""],img:not([src]){
 .f-vv{ visibility: visible; }
 
 /* margins paddings */
+.f-mg0{margin: 0 auto; }
 .f-mb5{ margin-bottom: 5px; }
 .f-mr5{ margin-right: 5px;  }
 .f-ml5{ margin-left: 5px; }
