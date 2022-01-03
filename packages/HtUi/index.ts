@@ -3,8 +3,9 @@ import type { App } from "vue";
 /* 基础组件 */
 import HtCountDown from "./src/HtCountdown"; // 倒计时
 import HtImage from "./src/HtImage"; // 图片
+import HtHeader from "./src/HtHeader"; // 头部
 
-const components: any[] = [HtCountDown, HtImage];
+const components: any[] = [HtCountDown, HtImage, HtHeader];
 
 /**
  * 组件注册

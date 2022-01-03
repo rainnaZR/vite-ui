@@ -9,3 +9,9 @@ export default defineComponent({
   setup() {},
 });
 </script>
+
+<style lang="less">
+body, html{
+  letter-spacing: 2px;
+}
+</style>
