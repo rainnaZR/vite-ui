@@ -32,6 +32,7 @@ body{
     -webkit-overflow-scrolling: touch;
     -webkit-font-smoothing: antialiased;
     font-family: PingFangSC-Light,sans-serif;
+    line-height: 1.8;
 }
 input, button, textarea, select{
   border: 0 none;
@@ -207,3 +208,4 @@ img[src=""],img:not([src]){
     -ms-user-select: none;
     user-select: none;
 }
+.f-lt2{letter-spacing: 2px; }

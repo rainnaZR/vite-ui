@@ -2,16 +2,16 @@
   <!-- 图片 -->
   <div class="ht-image" @click="onClick">
     <div
-      v-if="fill"
-      :style="`width:${width};height:${height};background:url(${src}) no-repeat center;background-size:${fill};`"
+      v-if="data.fill"
+      :style="`width:${data.width};height:${data.height};background:url(${data.src}) no-repeat center;background-size:${data.fill};`"
     ></div>
     <img
       v-else
-      :src="src"
-      :width="width"
-      :height="height"
-      :alt="alt"
-      :style="cssStyle"
+      :src="data.src"
+      :width="data.width"
+      :height="data.height"
+      :alt="data.alt"
+      :style="data.cssStyle"
       @load="onLoad"
       @error="onError"
     />
@@ -19,43 +19,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { ImageData } from "./types";
 
 export default defineComponent({
   name: "HtImage",
+
   props: {
-    // 填充方式
-    fill: {
-      type: String,
-      default: "",
-      validator: (value: string) => ["cover", "contain"].includes(value),
-    },
-    // 图片地址
-    src: {
-      type: String,
-      required: true,
-    },
-    // 宽度
-    width: {
-      type: String,
-      default: "",
-    },
-    // 高度
-    height: {
-      type: String,
-      default: "",
-    },
-    // 错误显示alt
-    alt: {
-      type: String,
-      default: "",
-    },
-    // 图片样式
-    cssStyle: {
-      type: String,
-      default: "",
+    data: {
+      type: Object as PropType<ImageData>,
+      default: () => ({
+        src: "",
+      }),
     },
   },
+
   setup(props, { emit }) {
     // 点击按钮
     const onClick = (e: MouseEvent) => {
@@ -77,3 +55,7 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="less" scoped>
+@import "./index.less";
+</style>
