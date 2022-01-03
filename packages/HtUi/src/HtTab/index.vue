@@ -11,9 +11,7 @@
             'item-curr': data.currentValue == tab.value,
           },
         ]"
-        :style="`color: ${
-          data.currentValue == tab.value ? data.activeColor : data.color
-        }`"
+        :style="onGetStyle(tab)"
         @click="onTabClick(tab, index)"
       >
         {{ tab.label }}
@@ -37,6 +35,14 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const onGetStyle = (tab: TabItem) => {
+      const isCurrent = props.data.currentValue === tab.value;
+      const color = isCurrent ? props.data.activeColor : props.data.color;
+      return {
+        color,
+        borderColor: isCurrent ? color : "transparent",
+      };
+    };
     const onTabClick = (tab: TabItem, index: number) => {
       if (props.data.currentValue === tab.value) return;
 
@@ -44,7 +50,7 @@ export default defineComponent({
       emit("on-change", tab, index);
     };
 
-    return { onTabClick };
+    return { onGetStyle, onTabClick };
   },
 });
 </script>
