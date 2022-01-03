@@ -21,6 +21,7 @@
     <div class="header-center">
       <slot name="center" :scope="data">
         <ht-tab
+          class="tabs"
           v-model:currentValue="data.tabCurrentValue"
           :data="{
             list: data.tabList,
@@ -35,15 +36,16 @@
 
     <!-- 头部右边区域 -->
     <div class="header-right">
-      <slot name="right" :scope="data"> 菜单右边 </slot>
+      <slot name="right" :scope="data"> Github </slot>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import HtImage from "../HtImage";
 import HtTab from "../HtTab";
+import { HeaderData } from "./types";
 
 export default defineComponent({
   name: "HtHeader",
@@ -55,10 +57,11 @@ export default defineComponent({
 
   props: {
     data: {
-      type: Object,
+      type: Object as PropType<HeaderData>,
       default: () => {},
     },
   },
+
   setup(props, { emit }) {
     const onClickLogo = () => {
       emit("on-click:logo", props.data);

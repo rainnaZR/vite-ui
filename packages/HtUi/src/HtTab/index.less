@@ -2,20 +2,18 @@
 @import "../theme/variables.less";
 
 .ht-tab {
-    .tabs{
-        display: flex;
-        flex-direction: row;
-        font-size: @tab-font-size;
-        .item{
-            padding: 0 10px;
-            margin: 0 10px;
-            border-bottom: 2px solid transparent;
-            color: @tab-color;
-            cursor: pointer;
-            &-curr{
-                border-color: @tab-active-color;
-                color: @tab-active-color;
-            }
+    display: flex;
+    flex-direction: row;
+    font-size: @tab-font-size;
+    .item{
+        padding: 0 10px;
+        margin: 0 10px;
+        border-bottom: 2px solid transparent;
+        color: @tab-color;
+        cursor: pointer;
+        &-curr{
+            border-color: @tab-active-color;
+            color: @tab-active-color;
         }
     }
 }

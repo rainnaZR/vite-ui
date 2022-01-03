@@ -2,23 +2,21 @@
   <!-- 标签页 -->
   <div class="ht-tab">
     <slot>
-      <div class="tabs">
-        <div
-          v-for="(tab, index) in data.list"
-          :key="index"
-          :class="[
-            'item',
-            {
-              'item-curr': data.currentValue == tab.value,
-            },
-          ]"
-          :style="`color: ${
-            data.currentValue == tab.value ? data.activeColor : data.color
-          }`"
-          @click="onTabClick(tab, index)"
-        >
-          {{ tab.label }}
-        </div>
+      <div
+        v-for="(tab, index) in data.list"
+        :key="index"
+        :class="[
+          'item',
+          {
+            'item-curr': data.currentValue == tab.value,
+          },
+        ]"
+        :style="`color: ${
+          data.currentValue == tab.value ? data.activeColor : data.color
+        }`"
+        @click="onTabClick(tab, index)"
+      >
+        {{ tab.label }}
       </div>
     </slot>
   </div>

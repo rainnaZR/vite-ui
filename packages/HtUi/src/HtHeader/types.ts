@@ -1,15 +1,20 @@
 import { PublicProps } from "../types";
 
-export interface MenuItem {
+export interface TabItem {
   label: string;
-  value: string | number;
-  path?: string;
+  value?: string | number;
 }
 
 export interface HeaderData {
-  logoUrl?: string;
+  logoUrl: string;
+  logoWidth?: string | number;
+  logoHeight?: string | number;
+  logoAlt?: string;
   logoText?: string;
-  menuList?: MenuItem[];
+  tabList: TabItem[];
+  tabCurrentValue?: number | string;
+  tabColor?: string;
+  tabActiveColor?: string;
 }
 
 export type Props = PublicProps<{

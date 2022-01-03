@@ -1,12 +1,14 @@
+@import "../theme/variables.less";
+
 .ht-header {
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 100vw;
-    height: 60px;
+    height: @header-height;
     padding: 0 15px;
-    background: #fff;
-    box-shadow: 0 2px 5px rgb(197 217 232 / 50%);
+    background: @header-background-color;
+    box-shadow: @header-box-shadow;
     box-sizing: border-box;
     .header-left{
         .logo{
@@ -16,11 +18,14 @@
             cursor: pointer;
             .text{
                 margin-left: 10px;
-                font-size: 16px;
+                font-size: @header-logo-text-size;
             }
         }
     }
     .header-center{
         flex: 1;
+        .tabs{
+            justify-content: flex-end;
+        }
     }
 }
