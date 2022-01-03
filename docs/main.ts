@@ -3,6 +3,7 @@ import "@htfed/base-css";
 import "@htfed/markdown-css";
 import "@htfed/icon";
 import HtUi from "@htfed/ui";
+import "@htfed/ui/dist/index.css";
 import router from "./router";
 import App from "./App.vue";
 

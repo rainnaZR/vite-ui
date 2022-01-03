@@ -1,6 +1,7 @@
 import nodeResolve from "@rollup/plugin-node-resolve"; // 告诉 Rollup 如何查找外部模块
 import typescript from "rollup-plugin-typescript2";
 import vue from "rollup-plugin-vue"; // 处理vue文件
+import less from "rollup-plugin-less";
 import { terser } from "rollup-plugin-terser";
 import { readdirSync } from "fs"; // 写文件
 import path from "path";
@@ -15,6 +16,9 @@ const config = readdirSync(input)
     plugins: [
       nodeResolve(),
       vue(),
+      less({
+        output: `${output}/index.css`,
+      }),
       typescript({
         tsconfigOverride: {
           compilerOptions: {
@@ -45,6 +49,9 @@ config.push({
     vue({
       target: "browser",
       exposeFilename: false,
+    }),
+    less({
+      output: `${output}/index.css`,
     }),
     typescript({
       useTsconfigDeclarationDir: false,

@@ -29,17 +29,17 @@
   },
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "dependencies": {
-    "@htfed/base-css": "^1.0.5",
+    "@htfed/base-css": "^1.0.6",
     "@htfed/icon": "^0.0.2",
     "@htfed/markdown-css": "^0.0.1",
-    "@htfed/ui": "^0.1.5",
+    "@htfed/ui": "^0.1.7",
     "vue": "^3.2.25",
     "vue-router": "4.0.6"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.1.2",
+    "@rollup/plugin-node-resolve": "13.1.1",
     "@types/jest": "^27.0.3",
     "@types/node": "^17.0.4",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
