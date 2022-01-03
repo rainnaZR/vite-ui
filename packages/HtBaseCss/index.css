@@ -121,6 +121,7 @@ img[src=""],img:not([src]){
 .f-fs24{ font-size: 24px; }
 .f-fs26{ font-size: 26px; }
 .f-fs28{ font-size: 28px; }
+.f-fs30{ font-size: 30px; }
 
 /* 对齐 */
 .f-tal{ text-align: left; }
@@ -137,6 +138,8 @@ img[src=""],img:not([src]){
 .f-jcc{ justify-content: center; }
 .f-aic{ align-items: center; }
 .f-f1{ flex: 1; }
+.f-fdc{ flex-direction: column; }
+.f-fdr{ flex-direction: row; }
 .f-fl{ float: left; }
 .f-fr{ float: right; }
 .f-oh{ overflow: hidden; }
@@ -166,6 +169,10 @@ img[src=""],img:not([src]){
 .f-mr25{ margin-right: 25px;  }
 .f-ml25{ margin-left: 25px; }
 .f-mt25{ margin-top: 25px; }
+.f-mb50{ margin-bottom: 50px; }
+.f-mr50 { margin-right: 50px; }
+.f-ml50 { margin-left: 50px; }
+.f-mt50 { margin-top: 50px; }
 
 .f-nopointer{ pointer-events: none; }
 .f-pointer{ pointer-events: auto; }

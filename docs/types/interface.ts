@@ -34,3 +34,11 @@ export interface Doc {
   filePath: string;
   fileContent?: any;
 }
+
+// 首页listItem
+export interface IndexToolsItem {
+  img: string;
+  title: string;
+  introduce: string;
+  path: string;
+}
