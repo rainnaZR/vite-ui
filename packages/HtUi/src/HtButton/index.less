@@ -11,56 +11,52 @@
     text-align: center;
     line-height: 1.7;
     cursor: pointer;
+    .button-type(@backgroundColor, @borderColor, @Color: @button-font-color-white) {
+        background: @backgroundColor;
+        border-color: @borderColor;
+        color: @Color;
+    }
+    .button-size(@padding, @fontSize) {
+        padding: @padding;
+        font-size: @fontSize;
+    }
+
     &-default {}
     &-primary {
-        background: @button-background-color-primary;
-        border-color: @button-background-color-primary;
-        color: @button-font-color-white;
+        .button-type(@button-background-color-primary, @button-background-color-primary);
     }
     &-success {
-        background: @button-background-color-success;
-        border-color: @button-background-color-success;
-        color: @button-font-color-white;
+        .button-type(@button-background-color-success, @button-background-color-success);
     }
     &-info {
-        background: @button-background-color-info;
-        border-color: @button-background-color-info;
-        color: @button-font-color-white;
+        .button-type(@button-background-color-info, @button-background-color-info);
     }
     &-warning {
-        background: @button-background-color-warning;
-        border-color: @button-background-color-warning;
-        color: @button-font-color-white;
+        .button-type(@button-background-color-warning, @button-background-color-warning);
     }
     &-danger {
-        background: @button-background-color-danger;
-        border-color: @button-background-color-danger;
-        color: @button-font-color-white;
+        .button-type(@button-background-color-danger, @button-background-color-danger);
     }
     &-text {
-        background: @button-background-color-text;
-        border-color: @button-background-color-text;
-        color: @button-font-color-blue;
+        .button-type(@button-background-color-text, @button-background-color-text, @button-font-color-blue);
     }
-    &-small{
-        padding: @button-padding-small;
-        font-size: @button-font-size-small;
-    }
+
     &-normal{}
+    &-small{
+        .button-size(@button-padding-small, @button-font-size-small);
+    }
     &-big{
-        font-size: @button-font-size-big;
+        .button-size(@button-padding, @button-font-size-big);
     }
     &-huge{
-        padding: @button-padding-huge;
-        font-size: @button-font-size-huge;
+        .button-size(@button-padding-huge, @button-font-size-huge);
     }
+
     &-full{
         width: 100%;
     }
     &-disabled{
-        background: @button-background-color-disabled;
-        border-color: @button-background-color-disabled;
-        color: @button-font-color-grey;
+        .button-type(@button-background-color-disabled, @button-background-color-disabled, @button-font-color-grey);
         cursor: not-allowed;
     }
 }
