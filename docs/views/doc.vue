@@ -7,7 +7,13 @@
         :data="headerData"
         @on-click:logo="onClickLogo"
         @on-click:tab="onClickTab"
-      />
+      >
+        <template #right>
+          <div class="f-fs12 s-fc1">
+            今天倒计时：<ht-count-down :data="countDownData" />
+          </div>
+        </template>
+      </ht-header>
     </div>
 
     <!-- 主体 -->
@@ -31,10 +37,14 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { time } from "@htfed/utils";
+import docs from "../router/docs";
 
 export default defineComponent({
   setup() {
+    const $route = useRoute();
+    const $router = useRouter();
     const headerData = reactive({
       logoUrl: "../logo.png",
       logoWidth: 40,
@@ -53,34 +63,25 @@ export default defineComponent({
           path: "/doc/button",
         },
       ],
-      tabCurrentValue: "",
-      tabColor: "#999",
-      tabActiveColor: "#f60",
+      tabCurrentValue: $route.name,
+      tabColor: "",
+      tabActiveColor: "",
+    });
+    const countDownData = reactive({
+      time: time.getTodayLeftTime(),
+      unit: "s",
     });
     const tabData = reactive({
       direction: "column",
-      list: [
-        {
-          value: "button",
-          label: "按钮",
-          path: "/doc/button",
-        },
-        {
-          value: "icon",
-          label: "icon",
-          path: "/doc/icon",
-        },
-        {
-          value: "introduce",
-          label: "introduce",
-          path: "/doc/introduce",
-        },
-      ],
-      currentValue: "button",
-      color: "#aaa",
-      activeColor: "#f60",
+      list: docs.map((i) => ({
+        label: i.meta?.title || i.name,
+        value: i.name,
+        path: `/doc/${i.path}`,
+      })),
+      currentValue: $route.name,
+      color: "",
+      activeColor: "",
     });
-    const $router = useRouter();
     const onClickLogo = () => {
       $router.push("/");
     };
@@ -90,6 +91,7 @@ export default defineComponent({
 
     return {
       headerData,
+      countDownData,
       tabData,
       onClickLogo,
       onClickTab,

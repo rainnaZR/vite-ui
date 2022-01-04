@@ -9,8 +9,9 @@
         @on-click:tab="onClickTab"
       >
         <template #right>
-          距离今天结束还剩：
-          <ht-count-down :data="countDownData" />
+          <div class="f-fs12 s-fc1">
+            今天倒计时：<ht-count-down :data="countDownData" />
+          </div>
         </template>
       </ht-header>
     </div>
@@ -68,6 +69,7 @@ export default defineComponent({
     });
     const countDownData = reactive({
       time: time.getTodayLeftTime(),
+      unit: "s",
     });
     const list: IndexToolsItem[] = reactive([
       {
