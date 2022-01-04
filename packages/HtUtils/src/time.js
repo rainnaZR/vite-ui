@@ -43,7 +43,21 @@ function getCountDown(timestamp, cbFunc) {
   change();
 }
 
+// 计算当天剩余时间，单位s
+function getTodayLeftTime() {
+  const now = new Date();
+  now.setHours(0);
+  now.setMinutes(0);
+  now.setSeconds(0);
+  now.setMilliseconds(0);
+
+  const tomorrow = now.getTime() / 1000 + 24 * 3600;
+  const today = Date.now() / 1000;
+  return tomorrow - today;
+}
+
 export default {
   formatLeftTime,
   getCountDown,
+  getTodayLeftTime,
 };

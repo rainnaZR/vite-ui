@@ -36,7 +36,7 @@
 
     <!-- 头部右边区域 -->
     <div class="header-right">
-      <slot name="right" :scope="data"> Github </slot>
+      <slot name="right" :scope="data"></slot>
     </div>
   </div>
 </template>

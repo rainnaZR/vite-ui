@@ -7,7 +7,12 @@
         :data="headerData"
         @on-click:logo="onClickLogo"
         @on-click:tab="onClickTab"
-      />
+      >
+        <template #right>
+          距离今天结束还剩：
+          <ht-count-down :data="countDownData" />
+        </template>
+      </ht-header>
     </div>
 
     <!-- 内容 -->
@@ -34,6 +39,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import { useRouter } from "vue-router";
+import { time } from '@htfed/utils';
 import { IndexToolsItem } from "../types";
 
 export default defineComponent({
@@ -60,6 +66,9 @@ export default defineComponent({
       tabColor: "#999",
       tabActiveColor: "#f60",
     });
+    const countDownData = reactive({
+      time: time.getTodayLeftTime(),
+    });
     const list: IndexToolsItem[] = reactive([
       {
         img: "logo.png",
@@ -78,6 +87,7 @@ export default defineComponent({
 
     return {
       headerData,
+      countDownData,
       list,
       onClickLogo,
       onClickTab,
