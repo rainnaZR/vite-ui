@@ -29,6 +29,7 @@ const config = readdirSync(input)
         abortOnError: false,
         clean: true,
       }),
+      terser(),
     ],
     output: {
       name,
@@ -44,7 +45,6 @@ config.push({
     file: `${output}/index.esm.js`,
   },
   plugins: [
-    terser(),
     nodeResolve(),
     vue({
       target: "browser",
@@ -61,6 +61,7 @@ config.push({
       },
       abortOnError: false,
     }),
+    terser(),
   ],
   external: ["vue", "@htfed/utils"],
 });
