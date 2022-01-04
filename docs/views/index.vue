@@ -1,6 +1,6 @@
 <template>
   <!-- 首页 -->
-  <div class="g-page f-df f-fdc f-aic">
+  <div class="g-page f-lt2">
     <!-- 头部 -->
     <div class="m-header">
       <ht-header
@@ -96,17 +96,18 @@ export default defineComponent({
   }
 }
 .g-page {
-  height: 100vh;
   .m-header {
     position: fixed;
     left: 0;
     top: 0;
     right: 0;
     z-index: 2;
+    box-shadow: 0 2px 5px rgb(197 217 232 / 50%);
   }
   .m-main {
-    flex: 1;
+    min-height: 100vh;
     padding: 100px 0;
+    box-sizing: border-box;
     background: linear-gradient(
       180deg,
       rgba(#ecf6fb, 1),
