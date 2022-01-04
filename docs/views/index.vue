@@ -34,7 +34,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { IndexToolsItem } from "../types/interface";
+import { IndexToolsItem } from "../types";
 
 export default defineComponent({
   setup() {

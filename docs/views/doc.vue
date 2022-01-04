@@ -13,12 +13,16 @@
     <!-- 主体 -->
     <div class="m-main">
       <!-- 边栏 -->
-      <div class="m-side">
-        <ht-tab :data="tabData" @on-change="onClickTab" />
+      <div class="m-side f-pd20">
+        <ht-tab
+          v-model:currentValue="tabData.currentValue"
+          :data="tabData"
+          @on-change="onClickTab"
+        />
       </div>
 
       <!-- 正文 -->
-      <div class="m-content">
+      <div class="m-content f-pd20">
         <router-view />
       </div>
     </div>

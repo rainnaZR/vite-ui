@@ -1,4 +1,4 @@
-import { Docs, Doc } from "../types/interface";
+import { Docs, Doc } from "../types";
 
 function load({ fileExtension, callback }: any) {
   const comps = import.meta.globEager("../components/*.md");
