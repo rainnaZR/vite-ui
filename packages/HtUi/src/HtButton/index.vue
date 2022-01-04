@@ -3,8 +3,8 @@
   <button
     :class="[
       'ht-button',
-      `ht-button-${data.type || 'default'}`,
-      `ht-button-${data.size || 'normal'}`,
+      `ht-button-${data.type}`,
+      `ht-button-${data.size}`,
       {
         'ht-button-full': data.full,
       },
@@ -31,7 +31,10 @@ export default defineComponent({
   props: {
     data: {
       type: Object as PropType<ButtonData>,
-      default: () => {},
+      default: () => ({
+        type: "default",
+        size: "normal",
+      }),
     },
   },
 

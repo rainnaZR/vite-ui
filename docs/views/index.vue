@@ -22,9 +22,9 @@
           <ht-image class="f-mb20" :data="{ src: item.img }" />
           <div class="f-mb15 f-fs18">{{ item.title }}</div>
           <div class="f-mb10 f-fs14 s-fc6">{{ item.introduce }}</div>
-          <ht-button :data="{ type: 'primary' }">
-            <router-link :to="item.path">开始使用</router-link>
-          </ht-button>
+          <router-link :to="item.path">
+            <ht-button>开始使用</ht-button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -102,6 +102,7 @@ export default defineComponent({
   }
 }
 .g-page {
+  height: 100vh;
   background: linear-gradient(
     180deg,
     rgba(#ecf6fb, 1),
