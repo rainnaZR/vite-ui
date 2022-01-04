@@ -5,8 +5,8 @@
     <div class="m-header">
       <ht-header
         :data="headerData"
-        @on-click:logo="onLogoClick"
-        @on-click:tab="onTabClick"
+        @on-click:logo="onClickLogo"
+        @on-click:tab="onClickTab"
       />
     </div>
 
@@ -14,7 +14,7 @@
     <div class="m-main">
       <!-- 边栏 -->
       <div class="m-side">
-        <ht-sidebar />
+        <ht-tab :data="tabData" @on-change="onClickTab" />
       </div>
 
       <!-- 正文 -->
@@ -53,18 +53,42 @@ export default defineComponent({
       tabColor: "#999",
       tabActiveColor: "#f60",
     });
+    const tabData = reactive({
+      direction: "column",
+      list: [
+        {
+          value: "button",
+          label: "按钮",
+          path: "/doc/button",
+        },
+        {
+          value: "icon",
+          label: "icon",
+          path: "/doc/icon",
+        },
+        {
+          value: "introduce",
+          label: "introduce",
+          path: "/doc/introduce",
+        },
+      ],
+      currentValue: "button",
+      color: "#aaa",
+      activeColor: "#f60",
+    });
     const $router = useRouter();
-    const onLogoClick = () => {
+    const onClickLogo = () => {
       $router.push("/");
     };
-    const onTabClick = (tab: any) => {
+    const onClickTab = (tab: any) => {
       $router.push(tab.path);
     };
 
     return {
       headerData,
-      onLogoClick,
-      onTabClick,
+      tabData,
+      onClickLogo,
+      onClickTab,
     };
   },
 });
@@ -91,7 +115,7 @@ export default defineComponent({
     width: 200px;
     box-shadow: 2px 0 5px rgb(197 217 232 / 50%);
   }
-  .m-content{
+  .m-content {
     flex: 1;
   }
 }

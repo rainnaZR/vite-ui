@@ -1,6 +1,6 @@
 <template>
   <!-- 标签页 -->
-  <div class="ht-tab">
+  <div :class="['ht-tab', `ht-tab-${data.direction}`]">
     <slot>
       <div
         v-for="(tab, index) in data.list"
@@ -30,7 +30,10 @@ export default defineComponent({
   props: {
     data: {
       type: Object as PropType<TabData>,
-      default: () => {},
+      default: () => ({
+        direction: "row",
+        list: [],
+      }),
     },
   },
 

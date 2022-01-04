@@ -5,8 +5,8 @@
     <div class="m-header">
       <ht-header
         :data="headerData"
-        @on-click:logo="onLogoClick"
-        @on-click:tab="onTabClick"
+        @on-click:logo="onClickLogo"
+        @on-click:tab="onClickTab"
       />
     </div>
 
@@ -69,18 +69,18 @@ export default defineComponent({
       },
     ]);
     const $router = useRouter();
-    const onLogoClick = () => {
+    const onClickLogo = () => {
       $router.push("/");
     };
-    const onTabClick = (tab: any) => {
+    const onClickTab = (tab: any) => {
       $router.push(tab.path);
     };
 
     return {
       headerData,
       list,
-      onLogoClick,
-      onTabClick,
+      onClickLogo,
+      onClickTab,
     };
   },
 });

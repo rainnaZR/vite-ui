@@ -6,6 +6,7 @@ export interface TabItem {
 }
 
 export interface TabData {
+  direction: string;
   list: TabItem[];
   currentValue?: string | number;
   color?: string;
