@@ -20,18 +20,17 @@
     <div class="m-main f-flexc">
       <h1 class="f-mb50 f-fs30">前端基础建设平台</h1>
       <div class="m-list">
-        <div
+        <router-link
           class="item f-flexc f-mb20"
           v-for="(item, index) in list"
           :key="index"
+          :to="item.path"
         >
           <ht-image class="f-mb20" :data="{ src: item.img }" />
-          <div class="f-mb15 f-fs18">{{ item.title }}</div>
+          <div class="f-mb15 f-fs18 s-fc4">{{ item.title }}</div>
           <div class="f-mb10 f-fs14 s-fc6">{{ item.introduce }}</div>
-          <router-link :to="item.path">
-            <ht-button>开始使用</ht-button>
-          </router-link>
-        </div>
+          <ht-button>开始使用</ht-button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -136,7 +135,7 @@ export default defineComponent({
       width: 30%;
       min-width: 250px;
       max-width: 400px;
-      padding: 15px;
+      padding: 20px;
       box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.1);
       border-radius: 4px;
       box-sizing: border-box;
