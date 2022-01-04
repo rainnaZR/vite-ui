@@ -35,15 +35,9 @@
 import { defineComponent, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { IndexToolsItem } from "../types/interface";
-import HtButton from "~/HtUi/src/HtButton";
 
 export default defineComponent({
-  components: {
-    HtButton,
-  },
-
   setup() {
-    const $router = useRouter();
     const headerData = reactive({
       logoUrl: "logo.png",
       logoWidth: 40,
@@ -74,10 +68,10 @@ export default defineComponent({
         path: "/doc",
       },
     ]);
+    const $router = useRouter();
     const onLogoClick = () => {
       $router.push("/");
     };
-
     const onTabClick = (tab: any) => {
       $router.push(tab.path);
     };
@@ -103,12 +97,6 @@ export default defineComponent({
 }
 .g-page {
   height: 100vh;
-  background: linear-gradient(
-    180deg,
-    rgba(#ecf6fb, 1),
-    rgba(#ecf6fb, 0.8),
-    rgba(#ecf6fb, 0.6)
-  );
   .m-header {
     position: fixed;
     left: 0;
@@ -119,6 +107,12 @@ export default defineComponent({
   .m-main {
     flex: 1;
     padding: 100px 0;
+    background: linear-gradient(
+      180deg,
+      rgba(#ecf6fb, 1),
+      rgba(#ecf6fb, 0.8),
+      rgba(#ecf6fb, 0.6)
+    );
   }
   .m-list {
     display: flex;
