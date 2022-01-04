@@ -33,6 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { useRouter } from "vue-router";
 import { IndexToolsItem } from "../types/interface";
 import HtButton from "~/HtUi/src/HtButton";
 
@@ -42,6 +43,7 @@ export default defineComponent({
   },
 
   setup() {
+    const $router = useRouter();
     const headerData = reactive({
       logoUrl: "logo.png",
       logoWidth: 40,
@@ -52,15 +54,15 @@ export default defineComponent({
         {
           label: "指南",
           value: 1,
-          path: "/doc",
+          path: "/doc/introduce",
         },
         {
           label: "组件",
           value: 2,
-          path: "/button",
+          path: "/doc/button",
         },
       ],
-      tabCurrentValue: 1,
+      tabCurrentValue: "",
       tabColor: "#999",
       tabActiveColor: "#f60",
     });
@@ -73,12 +75,11 @@ export default defineComponent({
       },
     ]);
     const onLogoClick = () => {
-      console.log("onLogoClick");
+      $router.push("/");
     };
-    const onTabClick = (tab: any, index: number) => {
-      console.log(
-        `onTabClick, label=${tab.label}, value=${tab.value}, index=${index}`
-      );
+
+    const onTabClick = (tab: any) => {
+      $router.push(tab.path);
     };
 
     return {

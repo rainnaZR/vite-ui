@@ -4,9 +4,10 @@ import type { App } from "vue";
 import HtImage from "./src/HtImage"; // 图片
 import HtTab from "./src/HtTab"; // 图片
 import HtHeader from "./src/HtHeader"; // 头部
+import HtButton from "./src/HtButton"; // 按钮
 import HtCountDown from "./src/HtCountdown"; // 倒计时
 
-const components: any[] = [HtImage, HtTab, HtHeader, HtCountDown];
+const components: any[] = [HtImage, HtTab, HtHeader, HtButton, HtCountDown];
 
 /**
  * 组件注册

@@ -3,15 +3,18 @@
   <button
     :class="[
       'ht-button',
-      `ht-button-${type}`,
-      `ht-button-${size}`,
+      `ht-button-${data.type || 'default'}`,
+      `ht-button-${data.size || 'normal'}`,
       {
-        'ht-button-disabled': disabled,
+        'ht-button-full': data.full,
+      },
+      {
+        'ht-button-disabled': data.disabled,
       },
     ]"
-    :type="nativeType"
-    :style="buttonStyle"
-    :disabled="disabled"
+    :type="data.nativeType || 'button'"
+    :style="data.buttonStyle"
+    :disabled="data.disabled"
     @click="onClick"
   >
     <slot></slot>
@@ -19,48 +22,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { ButtonData } from "./types";
 
 export default defineComponent({
   name: "HtButton",
+
   props: {
-    // 按钮类型
-    type: {
-      type: String,
-      validator: (value: string) =>
-        [
-          "default",
-          "primary",
-          "success",
-          "info",
-          "warning",
-          "danger",
-          "text",
-        ].includes(value),
-      default: "default",
-    },
-    // 按钮尺寸
-    size: {
-      type: String,
-      validator: (value: string) =>
-        ["mini", "small", "normal", "big", "huge"].includes(value),
-      default: "normal",
-    },
-    nativeType: {
-      type: String,
-      validator: (value: string) =>
-        ["button", "reset", "submit"].includes(value),
-      default: "button",
-    },
-    // 禁用状态
-    disabled: {
-      type: Boolean,
-    },
-    // 按钮样式
-    buttonStyle: {
-      type: String,
+    data: {
+      type: Object as PropType<ButtonData>,
+      default: () => {},
     },
   },
+
   setup(props, { emit }) {
     const onClick = (e: MouseEvent) => {
       emit("on-click", e);
@@ -72,3 +46,7 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="less" scoped>
+@import "./index.less";
+</style>
