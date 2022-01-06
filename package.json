@@ -31,7 +31,7 @@
   "dependencies": {
     "@htfed/base-css": "^1.0.7",
     "@htfed/icon": "^0.0.2",
-    "@htfed/markdown-css": "^0.0.1",
+    "@htfed/markdown-css": "^0.0.3",
     "@htfed/ui": "^0.2.1",
     "@htfed/utils": "^0.1.8",
     "vue": "^3.2.25",

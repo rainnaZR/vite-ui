@@ -1,6 +1,6 @@
 {
   "name": "@htfed/markdown-css",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Markdown.css.",
   "main": "dist/index.css",
   "style": "dist/index.css",
