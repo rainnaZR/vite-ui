@@ -7,17 +7,17 @@ import MarkdownItContainer from "markdown-it-container";
 const vitePluginVuedocConfig: Partial<VueDocPluginOptions> = {
   wrapperClass: "m-markdown-default",
   highlight: {
-    theme: "one-dark", // one-dark|one-light
+    theme: "one-light", // one-dark|one-light
   },
   markdownIt: {
     plugins: [
       [
         MarkdownItContainer,
-        "TimeLine",
+        "CopyCode",
         {
-          validate: (params) => params.trim().match(/^TimeLine\s*(.*)$/),
+          validate: (params) => params.trim().match(/^CopyCode\s+(.*)$/),
           render: (tokens, idx) =>
-            tokens[idx].nesting === 1 ? `<time-line>` : `</time-line>\n`,
+            tokens[idx].nesting === 1 ? `<copy-code>` : `</copy-code>\n`,
         },
       ],
     ],

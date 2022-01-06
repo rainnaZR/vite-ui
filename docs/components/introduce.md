@@ -9,7 +9,8 @@
 
 ## 使用
 
-```Javascript
+::: CopyCode
+```JavaScript
 import { createApp } from "vue";
 import App from "./App.vue";
 import HtUi from "@htfed/ui";
@@ -17,6 +18,7 @@ import "@htfed/ui/dist/index.css";
 
 createApp(App).use(HtUi).mount("#app");
 ```
+:::
 
 ## GitHub
 
