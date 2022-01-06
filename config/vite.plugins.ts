@@ -15,13 +15,12 @@ const vitePluginVuedocConfig: Partial<VueDocPluginOptions> = {
         MarkdownItContainer,
         "CopyCode",
         {
-          validate: (params) => params.trim().match(/^CopyCode\s+(.*)$/),
-          render: (tokens, idx) =>
-            tokens[idx].nesting === 1 ? `<copy-code>` : `</copy-code>\n`,
-        },
-      ],
-    ],
-  },
+          validate: (params) => params.trim().match(/^CopyCode\s*(.*)$/),
+          render: (tokens, idx) => (tokens[idx].nesting === 1 ? `<ht-copy>` : `</ht-copy>\n`)
+        }
+      ]
+    ]
+  }
 };
 
 // vue插件配置
