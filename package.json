@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.esm.js",
   "scripts": {
-    "dev": "vite -m development --port 1768",
+    "dev": "vite -m development --port 1768 --host",
     "build": "",
     "build:mdcss": "gulp -f packages/HtMarkdownCss/gulpfile.js",
     "build:ui": "rollup -c packages/HtUi/rollup.config.ts -w",

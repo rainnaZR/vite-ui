@@ -7,6 +7,18 @@
 - 基于vue3 + vite 开发。
 - 基于rollup打包，总包体积较小。
 
+## 使用
+
+```
+import { createApp } from "vue";
+import App from "./App.vue";
+import HtUi from "@htfed/ui";
+import "@htfed/ui/dist/index.css";
+
+createApp(App).use(HtUi).mount("#app");
+
+```
+
 ## GitHub
 
 [👉 GitHub地址](git+https://github.com/rainnaZR/vite-ui.git) 
