@@ -174,27 +174,27 @@ function createElement(id) {
 /**
  * 复制
  */
-function onCopy(value, {node, tagClassName="j-copy-textarea-only"}){
+function onCopy(value, node, tagClassName = "j-copy-textarea-only") {
   return new Promise((resolve, reject) => {
-    if(!value || !value.trim()){
-      return reject ('复制内容不能为空')
+    if (!value || !value.trim()) {
+      return reject("复制内容不能为空");
     }
 
-    let elem = node || document.body
-    let textarea = elem.querySelector(`.${tagClassName}`)
+    const elem = node || document.body;
+    let textarea = elem.querySelector(`.${tagClassName}`);
     // 如果复制标签不存在，则新建textarea标签
-    if(!textarea){
-      textarea = document.createElement('textarea')
-      textarea.className = tagClassName
-      textarea.style.cssText = 'position:absolute;left:-9999999px;'
-      textarea.setAttribute('readonly', 'readonly')
-      elem.appendChild(textarea)
+    if (!textarea) {
+      textarea = document.createElement("textarea");
+      textarea.className = tagClassName;
+      textarea.style.cssText = "position:absolute;left:-9999999px;";
+      textarea.setAttribute("readonly", "readonly");
+      elem.appendChild(textarea);
     }
-    textarea.value = value
-    textarea.select()  // 选中文本
-    document.execCommand('copy') // 执行复制命令
-    resolve('复制成功')
-  })
+    textarea.value = value;
+    textarea.select(); // 选中文本
+    document.execCommand("copy"); // 执行复制命令
+    resolve("复制成功");
+  });
 }
 
 export default {
