@@ -6,8 +6,16 @@ import HtTab from "./src/HtTab"; // 图片
 import HtHeader from "./src/HtHeader"; // 头部
 import HtButton from "./src/HtButton"; // 按钮
 import HtCountDown from "./src/HtCountdown"; // 倒计时
+import HtCopy from "./src/HtCopy"; // 复制
 
-const components: any[] = [HtImage, HtTab, HtHeader, HtButton, HtCountDown];
+const components: any[] = [
+  HtImage,
+  HtTab,
+  HtHeader,
+  HtButton,
+  HtCountDown,
+  HtCopy,
+];
 
 /**
  * 组件注册

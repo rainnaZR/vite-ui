@@ -16,11 +16,12 @@ const vitePluginVuedocConfig: Partial<VueDocPluginOptions> = {
         "CopyCode",
         {
           validate: (params) => params.trim().match(/^CopyCode\s*(.*)$/),
-          render: (tokens, idx) => (tokens[idx].nesting === 1 ? `<ht-copy>` : `</ht-copy>\n`)
-        }
-      ]
-    ]
-  }
+          render: (tokens, idx) =>
+            tokens[idx].nesting === 1 ? `<ht-copy>` : `</ht-copy>\n`,
+        },
+      ],
+    ],
+  },
 };
 
 // vue插件配置
