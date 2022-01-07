@@ -20,6 +20,15 @@ const vitePluginVuedocConfig: Partial<VueDocPluginOptions> = {
             tokens[idx].nesting === 1 ? `<ht-copy>` : `</ht-copy>\n`,
         },
       ],
+      [
+        MarkdownItContainer,
+        "Demo",
+        {
+          validate: (params) => params.trim().match(/^Demo\s*(.*)$/),
+          render: (tokens, idx) =>
+            tokens[idx].nesting === 1 ? `<ht-md-demo>` : `</ht-md-demo>\n`,
+        },
+      ],
     ],
   },
 };

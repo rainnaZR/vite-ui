@@ -28,7 +28,7 @@
         >
           <ht-image class="f-mb20" :data="{ src: item.img }" />
           <div class="f-mb15 f-fs18 s-fc4">{{ item.title }}</div>
-          <div class="f-mb10 f-fs14 s-fc6">{{ item.introduce }}</div>
+          <div class="f-mb15 f-fs14 s-fc6">{{ item.introduce }}</div>
           <ht-button>开始使用</ht-button>
         </router-link>
       </div>

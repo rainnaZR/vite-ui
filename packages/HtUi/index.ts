@@ -7,6 +7,7 @@ import HtHeader from "./src/HtHeader"; // 头部
 import HtButton from "./src/HtButton"; // 按钮
 import HtCountDown from "./src/HtCountdown"; // 倒计时
 import HtCopy from "./src/HtCopy"; // 复制
+import HtMdDemo from "./src/HtMdDemo"; // 代码预览
 
 const components: any[] = [
   HtImage,
@@ -15,6 +16,7 @@ const components: any[] = [
   HtButton,
   HtCountDown,
   HtCopy,
+  HtMdDemo,
 ];
 
 /**
