@@ -33,7 +33,7 @@
     "@htfed/icon": "^0.0.2",
     "@htfed/markdown-css": "^0.0.3",
     "@htfed/ui": "^0.2.1",
-    "@htfed/utils": "^0.1.8",
+    "@htfed/utils": "0.1.10",
     "vue": "^3.2.25",
     "vue-router": "4.0.6"
   },

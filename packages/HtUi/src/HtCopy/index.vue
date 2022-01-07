@@ -2,7 +2,7 @@
   <!-- 复制 -->
   <div class="ht-copy">
     <!-- 复制入口 -->
-    <div @click="onCopy">
+    <div @click="onCopyText">
       <slot name="entry">
         <ht-button class="entry" :data="{ size: 'small' }">复制</ht-button>
       </slot>
@@ -17,32 +17,35 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import HtButton from '../HtButton';
-import { dom } from '@htfed/utils';
+import { dom } from "@htfed/utils";
+import HtButton from "../HtButton";
 
 export default defineComponent({
   name: "HtCopy",
 
   components: {
-    HtButton
+    HtButton,
   },
 
   setup(props, { emit }) {
-    const contentRef = ref<HTMLDivElement>()
-    const onCopy = () => {
-      let value = contentRef.value!?.textContent!?.slice(0, -1)
-      dom.onCopy(value).then((res?: string) => {
-        alert(res);
-        emit('on-success', res)
-      }, (err?: string) => {
-        alert(err);
-        emit('on-fail', err)
-      })
-    }
+    const contentRef = ref<HTMLDivElement>();
+    const onCopyText = () => {
+      const value = contentRef.value!?.textContent!?.slice(0, -1);
+      dom.onCopy(value).then(
+        (res?: string) => {
+          alert(res);
+          emit("on-success", res);
+        },
+        (err?: string) => {
+          alert(err);
+          emit("on-failure", err);
+        }
+      );
+    };
 
     return {
       contentRef,
-      onCopy,
+      onCopyText,
     };
   },
 });
