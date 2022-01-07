@@ -32,10 +32,12 @@ load({
       name: options.name,
       path: options.name,
       meta: {
-        title: options.name,
+        title:
+          options.fileContent?.default?.$vd?.toc[0]?.content || options.name,
       },
       component: options.fileContent.default,
     });
   },
 });
+
 export default docs;
