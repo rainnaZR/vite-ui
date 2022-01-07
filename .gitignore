@@ -9,3 +9,4 @@ dist-ssr
 yarn-error.log
 yarn.lock
 .vscode
+.history
