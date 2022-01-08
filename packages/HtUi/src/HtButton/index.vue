@@ -3,8 +3,8 @@
   <button
     :class="[
       'ht-button',
-      `ht-button-${data.type}`,
-      `ht-button-${data.size}`,
+      `ht-button-${data.type || 'default'}`,
+      `ht-button-${data.size || 'normal'}`,
       {
         'ht-button-full': data.full,
       },

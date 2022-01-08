@@ -2,7 +2,7 @@
   <!-- 复制 -->
   <div class="ht-copy">
     <!-- 复制入口 -->
-    <div @click="onCopyText">
+    <div @click="onCopy">
       <slot name="entry">
         <ht-button class="entry" :data="{ size: 'small' }">复制</ht-button>
       </slot>
@@ -29,7 +29,7 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const contentRef = ref<HTMLDivElement>();
-    const onCopyText = () => {
+    const onCopy = () => {
       const value = contentRef.value!?.textContent!?.slice(0, -1);
       dom.onCopy(value).then(
         (res?: string) => {
@@ -45,7 +45,7 @@ export default defineComponent({
 
     return {
       contentRef,
-      onCopyText,
+      onCopy,
     };
   },
 });
