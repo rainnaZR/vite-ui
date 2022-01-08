@@ -40,7 +40,7 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const onClick = (e: MouseEvent) => {
-      emit("on-click", e);
+      if (!props.data.disabled) emit("on-click", e);
     };
 
     return {

@@ -31,14 +31,14 @@ export default defineComponent({
   setup() {
     // 查看源码
     const onViewSource = (e: any) => {
-      const node = e.target.parentNode?.parentNode?.parentNode;
+      const node = e.target.parentNode?.parentNode;
       const elem = node?.querySelector(".vuedoc-demo__footer");
       elem && elem.click();
     };
 
     // 复制源码
     const onCopy = (e: any) => {
-      const node = e.target.parentNode?.parentNode?.parentNode;
+      const node = e.target.parentNode?.parentNode;
       const elem = node.querySelector(".vuedoc__code");
       const value = elem?.textContent!?.slice(0, -1);
       dom.onCopy(value).then(
