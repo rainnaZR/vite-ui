@@ -1,7 +1,7 @@
 {
-  "name": "@htfed/markdown-css",
+  "name": "@htfed/vue-doc-css",
   "version": "0.0.3",
-  "description": "Markdown.css.",
+  "description": "VueDoc.css.",
   "main": "dist/index.css",
   "style": "dist/index.css",
   "scripts": {
@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rainnaZR/vite-ui.git",
-    "directory": "packages/HtMarkdownCss"
+    "directory": "packages/HtVueDocCss"
   },
   "author": "fed",
   "license": "ISC",

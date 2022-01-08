@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import "@htfed/base-css";
 import "@htfed/icon";
-import "@htfed/markdown-css";
+import "@htfed/vue-doc-css";
 import "@htfed/ui/dist/index.css";
 import HtUi from "@htfed/ui";
 import router from "./router";

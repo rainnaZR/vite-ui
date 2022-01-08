@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite -m development --port 1768 --host",
     "build": "",
-    "build:mdcss": "gulp -f packages/HtMarkdownCss/gulpfile.js",
+    "build:doccss": "gulp -f packages/HtVueDocCss/gulpfile.js",
     "build:ui": "rollup -c packages/HtUi/rollup.config.ts -w",
     "build:utils": "rollup -c packages/HtUtils/rollup.config.ts -w",
     "build:packages": "",
@@ -31,9 +31,9 @@
   "dependencies": {
     "@htfed/base-css": "^1.0.7",
     "@htfed/icon": "^0.0.2",
-    "@htfed/markdown-css": "^0.0.3",
     "@htfed/ui": "^0.2.3",
     "@htfed/utils": "0.1.10",
+    "@htfed/vue-doc-css": "^0.0.3",
     "vue": "^3.2.25",
     "vue-router": "4.0.6"
   },
