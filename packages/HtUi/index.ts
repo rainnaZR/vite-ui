@@ -29,8 +29,7 @@ const install = (app: App) => {
   components.forEach((component) => app.component(component.name, component));
 };
 
-export { HtCountDown, HtImage };
-// 全部导出
+export { HtImage, HtTab, HtHeader, HtButton, HtCountDown, HtCopy, HtMdDemo };
 export default {
   install,
   ...components,

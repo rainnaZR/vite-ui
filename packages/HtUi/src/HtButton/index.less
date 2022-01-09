@@ -16,8 +16,9 @@
         border-color: @borderColor;
         color: @Color;
     }
-    .button-size(@padding, @fontSize) {
+    .button-size(@padding, @borderRadius: @button-border-radius, @fontSize) {
         padding: @padding;
+        border-radius: @borderRadius;
         font-size: @fontSize;
     }
 
@@ -43,15 +44,14 @@
 
     &-normal{}
     &-small{
-        .button-size(@button-padding-small, @button-font-size-small);
+        .button-size(@button-padding-small, @button-border-radius, @button-font-size-small);
     }
     &-big{
-        .button-size(@button-padding, @button-font-size-big);
+        .button-size(@button-padding, @button-border-radius-big, @button-font-size-big);
     }
     &-huge{
-        .button-size(@button-padding-huge, @button-font-size-huge);
+        .button-size(@button-padding-huge, @button-border-radius-huge, @button-font-size-huge);
     }
-
     &-full{
         width: 100%;
     }
