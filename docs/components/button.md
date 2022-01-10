@@ -6,13 +6,13 @@
 
 ::: CopyCode
 ```JavaScript
-import { HtButton } from '@htfed/ui'
+import { createApp } from "vue";
+import App from "./App.vue";
+import { HtButton } from '@htfed/ui';
 
-export default {
-  components: {
-    HtButton
-  }
-}
+const app = createApp(App);
+app.use(HtButton);
+app.mount("#app");
 ```
 :::
 
@@ -39,10 +39,9 @@ export default {
 :::
 
 
-
 ### 按钮尺寸
 
-- 尺寸支持 `small`、`normal`、`big`、`huge`、`full`五种尺寸，默认尺寸为 normal。
+- 尺寸支持 `small`、`normal`、`big`、`huge`四种尺寸，默认尺寸为 normal。
 
 
 ::: Demo
@@ -55,19 +54,6 @@ export default {
 </template>
 ```
 :::
-
-
-- 尺寸为`full`的长按钮。
-
-
-::: Demo
-```vue demo
-<template>
-  <ht-button :data="{ type: 'primary', size: 'full'}">primary按钮</ht-button>
-</template>
-```
-:::
-
 
 ### 按钮状态
 
@@ -87,6 +73,22 @@ export default {
 </template>
 ```
 :::
+
+
+### 长按钮
+
+- 宽度为`100%`的长按钮。
+
+
+::: Demo
+```vue demo
+<template>
+  <ht-button :data="{ type: 'primary', full: true }">primary按钮</ht-button>
+</template>
+```
+:::
+
+
 
 
 ## Props属性
@@ -121,16 +123,3 @@ export default {
 
 
 ## 案例页面
-
-
-
-
-
-
-
-
-:::demo Use `type`, `plain`, `round` and `circle` to define Button's style.
-
-button/basic
-
-:::
