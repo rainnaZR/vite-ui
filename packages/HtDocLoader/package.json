@@ -1,0 +1,22 @@
+{
+  "name": "@htfed/doc-loader",
+  "version": "0.0.1",
+  "description": "Auto generate doc files from ui library.",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rainnaZR/vite-ui.git",
+    "directory": "packages/HtDocLoader"
+  },
+  "scripts": {
+    "build": "rollup -c rollup.config.js"
+  },
+  "author": "fed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rainnaZR/vite-ui/issues"
+  },
+  "homepage": "https://github.com/rainnaZR/vite-ui#readme"
+}

@@ -196,11 +196,12 @@ img[src=""],img:not([src]){
 }
 /* 多行隐藏 */
 .f-txtell2{
-    display:-webkit-box; display:-webkit-flex; display:-ms-flexbox;
+    display:-webkit-box;
     -webkit-box-orient:vertical; box-orient: vertical;
     -webkit-line-clamp:2; line-clamp: 2;
     overflow:hidden;
     text-overflow:ellipsis;
+    word-break: break-all;
 }
 /* 文字禁用选择 */
 .f-unselect{
