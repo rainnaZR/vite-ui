@@ -1,5 +1,9 @@
-const fs = require('fs-extra');
-const { compileTemplate, compileScript } = require("./src/compile");
+const fs = require("fs-extra");
+const {
+  compileTemplate,
+  compileScript,
+  compileTypeScript,
+} = require("./src/compile");
 
 class DocLoader {
   constructor(options) {
@@ -30,7 +34,7 @@ class DocLoader {
   // 解析单个入口文件
   onParseItem(entry) {
     this.onGetInitContent(entry);
-    const { templateStr, scriptStr } = this.result[entry];
+    const { templateStr, scriptStr, typeScriptStr } = this.result[entry];
     // 编译template
     compileTemplate(
       templateStr,
@@ -41,12 +45,18 @@ class DocLoader {
     compileScript(scriptStr, this.options?.scriptCompileOptions, (result) =>
       this.cbCompile(entry, result)
     );
+    // 编译typescript
+    compileTypeScript(
+      typeScriptStr,
+      this.options?.typeScriptCompileOptions,
+      (result) => this.cbCompile(entry, result)
+    );
   }
 
   // 获取文件初始内容
   onGetInitContent(entry) {
     // 获取vue文件内容vueStr
-    const vueStr = fs.readFileSync(entry, "utf8");
+    const vueStr = fs.existsSync(entry) && fs.readFileSync(entry, "utf8");
     // vueStr中提取template内容
     const templateStr = vueStr.match(/<template>([\S|\s]*)<\/template>/)[1];
     // vueStr中提取script内容
@@ -56,7 +66,8 @@ class DocLoader {
     // 获取ts文件路径，ts文件名字types.ts, 与*.vue在同一目录下
     const tsEntry = entry.replace(/\\(\w+).vue$/, "\\types.ts");
     // 读取ts文件内容
-    const typeScriptStr = fs.readFileSync(tsEntry, "utf8");
+    const typeScriptStr =
+      fs.existsSync(tsEntry) && fs.readFileSync(tsEntry, "utf8");
     this.result[entry] = {
       vueStr,
       templateStr,

@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/rainnaZR/vite-ui/issues"
   },
-  "homepage": "https://github.com/rainnaZR/vite-ui#readme"
+  "homepage": "https://github.com/rainnaZR/vite-ui#readme",
+  "devDependencies": {
+    "@babel/parser": "^7.16.8",
+    "@babel/traverse": "^7.16.8",
+    "@vue/compiler-core": "^3.2.27",
+    "fs-extra": "^10.0.0"
+  }
 }
