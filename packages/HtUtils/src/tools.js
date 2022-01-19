@@ -63,9 +63,34 @@ const convertHEX2RGBA = (hexStr, alpha = 1) => {
   return `rgba(${value},${alpha})`;
 };
 
+// 字符串下划线转驼峰
+const keyFormat = (str, type) => {
+  if (type === "underlineToHump") {
+    return str.replace(/_([A-Za-z])/g, (all, letter) => letter.toUpperCase());
+  }
+  return str;
+};
+
+// 下划线转驼峰
+const dataFormat = (data, options = { type: "underlineToHump" }) => {
+  if (!data) return;
+  if (Array.isArray(data)) {
+    return data.map((item) => dataFormat(item, options));
+  }
+  if (Object.prototype.toString.call(data) === "[object Object]") {
+    Object.keys(data).forEach((key) => {
+      const newKey = keyFormat(key, options.type);
+      data[newKey] = dataFormat(data[key], options);
+      newKey !== key && delete data[key];
+    });
+  }
+  return data;
+};
+
 export default {
   throttle,
   debounce,
   cssSupport,
   convertHEX2RGBA,
+  dataFormat,
 };
