@@ -16,7 +16,7 @@ class DocLoader {
     this.result = {};
 
     // 清空打包目录
-    this.onClearDistPath();
+    output && this.onClearDistPath();
     // 解析文档
     this.onParseAll();
   }
@@ -106,7 +106,7 @@ class DocLoader {
 
   // 生成编译后的文件
   onGenerateCompileFile(entry) {
-    const fileExtension = this.options.outputFileExtension || ".json";
+    const fileExtension = this.options.outputFileExtension || ".md";
     switch (fileExtension) {
       case ".md":
         this.onGenerateMdFile(entry);
@@ -147,8 +147,16 @@ class DocLoader {
       fileName = componentInfo.name || entry.replace(/[\\|.|:]/g, "");
       fileContent = mdContent;
     }
-    // 写入文件到打包目录里
-    fs.writeFile(path.join(this.options.output, `${fileName}.md`), fileContent);
+    this.result[entry].fileContent = fileContent;
+
+    // 如果设置了打包目录，则输出打包文件
+    if (this.options.output) {
+      // 写入文件到打包目录里
+      fs.writeFile(
+        path.join(this.options.output, `${fileName}.md`),
+        fileContent
+      );
+    }
   }
 
   // 编译内容生成json文件

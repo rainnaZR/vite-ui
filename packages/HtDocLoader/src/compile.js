@@ -214,6 +214,37 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
       // 获取vue组件所有的方法method定义
       if (type === "ArrowFunctionExpression") {
         const { name } = nodePath.node.id;
+        const leadingComments = nodePath?.parent?.leadingComments;
+        let desc, res, params = [];
+        if (leadingComments) {
+          const comment = leadingComments[leadingComments.length - 1];
+          if (comment.type === "CommentLine") {
+            desc = comment.value.trim();
+          } else {
+            // 提取方法说明
+            const descRes = comment.value.match(/\*\s*[^@]\s*(.*)/);
+            if (descRes) {
+              desc = descRes[1];
+            }
+            // 提取 参数说明
+            const paramsRes = comment.value.matchAll(
+              /(@param)[\s]*{([a-zA-Z]*)}[\s]*(\w*)(.*)/g
+            );
+            // eslint-disable-next-line no-restricted-syntax
+            for (const param of paramsRes) {
+              params.push({
+                name: param[3],
+                type: param[2],
+                desc: param[4].trim(),
+              });
+            }
+            // 提取方法返回值
+            const returnRes = comment.value.match(/(@returns)[\s]*(.*)/);
+            if (returnRes) {
+              res = returnRes[2];
+            }
+          }
+        }
         // 执行回调，将值保存到componentInfo.methods中
         callback({
           type: "methods",
@@ -222,10 +253,8 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
             name,
             async,
             params,
-            res: "",
-            desc: nodePath?.parent?.leadingComments
-              ?.map((i) => i.value?.trim())
-              .join(","),
+            res,
+            desc,
           },
         });
       }

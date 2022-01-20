@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite -m development --port 1768 --host",
     "build": "",
-    "build:doccss": "gulp -f packages/HtVueDocCss/gulpfile.js",
+    "build:doc-css": "gulp -f packages/HtVueDocCss/gulpfile.js",
     "build:ui": "rollup -c packages/HtUi/rollup.config.ts -w",
     "build:utils": "rollup -c packages/HtUtils/rollup.config.ts -w",
     "build:packages": "",
@@ -30,6 +30,7 @@
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "dependencies": {
     "@htfed/base-css": "^1.0.7",
+    "@htfed/doc-loader": "^0.0.2",
     "@htfed/icon": "^0.0.2",
     "@htfed/ui": "^0.2.4",
     "@htfed/utils": "0.1.10",
