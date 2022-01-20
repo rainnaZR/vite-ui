@@ -76,66 +76,6 @@ const defaultTypeScriptCompileOptions = {
   sourceType: "module",
 };
 
-// 遍历模板AST
-const traverserTemplateAst = (ast, visitor = {}) => {
-  function traverseNode(node, parent) {
-    visitor.enter && visitor.enter(node, parent);
-    visitor[node.tag] && visitor[node.tag](node, parent);
-    node.children && traverseArray(node.children, node);
-    visitor.exit && visitor.exit(node, parent);
-  }
-
-  function traverseArray(array, parent) {
-    array.forEach((child) => {
-      traverseNode(child, parent);
-    });
-  }
-  traverseNode(ast, null);
-};
-
-// template模板内容编译
-const compileTemplate = (templateStr, options = {}, callback = () => {}) => {
-  if (!templateStr) return;
-  const { ast } = baseCompile(templateStr, {
-    ...defaultTemplateCompileOptions,
-    ...options,
-  });
-  // 遍历模板ast
-  traverserTemplateAst(ast, {
-    // 插槽标签
-    slot(node, parent) {
-      // 提取所有的插槽slot
-      const index = parent.children.findIndex((item) => item === node);
-      let desc = defaultText;
-      let name = defaultText;
-      if (index > 0) {
-        // 查询是否有插槽的注释标签
-        // @vue/compiler-core 里的parseComment方法，type: 3 /* COMMENT */
-        const tag = parent.children[index - 1];
-        if (tag.type === 3) {
-          desc = tag.content.trim();
-        }
-      }
-      // 获取插槽name名称 <slot name="header"></slot> 获取值"header"
-      if (node.props && node.props.length) {
-        const targetProp = node.props.filter(
-          (prop) => prop.type === 6 && prop.name === "name"
-        )[0];
-        targetProp && (name = targetProp.value.content);
-      }
-      // 执行回调，将值保存到componentInfo.slots中
-      callback({
-        type: "slots",
-        key: name,
-        content: {
-          name,
-          desc,
-        },
-      });
-    },
-  });
-};
-
 // script内容编译
 const compileScript = (scriptStr, options = {}, callback = () => {}) => {
   if (!scriptStr) return;
@@ -303,9 +243,70 @@ const compileTypeScript = (
   });
 };
 
+
+// 遍历模板AST
+const traverserTemplateAst = (ast, visitor = {}) => {
+  function traverseNode(node, parent) {
+    visitor.enter && visitor.enter(node, parent);
+    visitor[node.tag] && visitor[node.tag](node, parent);
+    node.children && traverseArray(node.children, node);
+    visitor.exit && visitor.exit(node, parent);
+  }
+
+  function traverseArray(array, parent) {
+    array.forEach((child) => {
+      traverseNode(child, parent);
+    });
+  }
+  traverseNode(ast, null);
+};
+
+// template模板内容编译
+const compileTemplate = (templateStr, options = {}, callback = () => {}) => {
+  if (!templateStr) return;
+  const { ast } = baseCompile(templateStr, {
+    ...defaultTemplateCompileOptions,
+    ...options,
+  });
+  // 遍历模板ast
+  traverserTemplateAst(ast, {
+    // 插槽标签
+    slot(node, parent) {
+      // 提取所有的插槽slot
+      const index = parent.children.findIndex((item) => item === node);
+      let desc = defaultText;
+      let name = defaultText;
+      if (index > 0) {
+        // 查询是否有插槽的注释标签
+        // @vue/compiler-core 里的parseComment方法，type: 3 /* COMMENT */
+        const tag = parent.children[index - 1];
+        if (tag.type === 3) {
+          desc = tag.content.trim();
+        }
+      }
+      // 获取插槽name名称 <slot name="header"></slot> 获取值"header"
+      if (node.props && node.props.length) {
+        const targetProp = node.props.filter(
+          (prop) => prop.type === 6 && prop.name === "name"
+        )[0];
+        targetProp && (name = targetProp.value.content);
+      }
+      // 执行回调，将值保存到componentInfo.slots中
+      callback({
+        type: "slots",
+        key: name,
+        content: {
+          name,
+          desc,
+        },
+      });
+    },
+  });
+};
+
 module.exports = {
   traverserTemplateAst,
-  compileTemplate,
   compileScript,
   compileTypeScript,
+  compileTemplate,
 };

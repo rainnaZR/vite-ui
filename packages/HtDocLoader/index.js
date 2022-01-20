@@ -1,9 +1,9 @@
 const fs = require("fs-extra");
 const path = require("path");
 const {
-  compileTemplate,
   compileScript,
   compileTypeScript,
+  compileTemplate,
 } = require("./src/compile");
 const { RenderMd } = require("./src/render");
 
@@ -48,13 +48,7 @@ class DocLoader {
   // 解析单个入口文件
   onParseItem(entry) {
     this.onGetInitContent(entry);
-    const { templateStr, scriptStr, typeScriptStr } = this.result[entry];
-    // 编译template
-    compileTemplate(
-      templateStr,
-      this.options?.templateCompileOptions,
-      (result) => this.cbCompile(entry, result)
-    );
+    const { scriptStr, typeScriptStr, templateStr } = this.result[entry];
     // 编译script
     compileScript(scriptStr, this.options?.scriptCompileOptions, (result) =>
       this.cbCompile(entry, result)
@@ -65,6 +59,12 @@ class DocLoader {
       this.options?.typeScriptCompileOptions,
       (result) => this.cbCompile(entry, result)
     );
+    // 编译template
+    compileTemplate(
+      templateStr,
+      this.options?.templateCompileOptions,
+      (result) => this.cbCompile(entry, result)
+    );
     // 生成编译后的文件
     this.onGenerateCompileFile(entry);
   }
@@ -73,8 +73,6 @@ class DocLoader {
   onGetInitContent(entry) {
     // 获取vue文件内容vueStr
     const vueStr = fs.existsSync(entry) && fs.readFileSync(entry, "utf8");
-    // vueStr中提取template内容
-    const templateStr = vueStr.match(/<template>([\S|\s]*)<\/template>/)[1];
     // vueStr中提取script内容
     const scriptStr = vueStr.match(
       /<script(\s*lang="ts")*>([\S|\s]*)<\/script>/
@@ -84,11 +82,14 @@ class DocLoader {
     // 读取ts文件内容
     const typeScriptStr =
       fs.existsSync(tsEntry) && fs.readFileSync(tsEntry, "utf8");
+    // vueStr中提取template内容
+    const templateStr = vueStr.match(/<template>([\S|\s]*)<\/template>/)[1];
+
     this.result[entry] = {
       vueStr,
-      templateStr,
       scriptStr,
       typeScriptStr,
+      templateStr,
     };
   }
 
