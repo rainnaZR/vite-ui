@@ -1,7 +1,8 @@
 import { Docs, Doc } from "../types";
 
 function load({ fileExtension, callback }: any) {
-  const comps = import.meta.globEager("../components/*.md");
+  const comps = import.meta.globEager("../../dist/*.md");
+
   if (!comps) return;
 
   Object.keys(comps).reduce((total: Doc[], i: any) => {

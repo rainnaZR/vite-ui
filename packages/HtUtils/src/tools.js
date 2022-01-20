@@ -63,10 +63,13 @@ const convertHEX2RGBA = (hexStr, alpha = 1) => {
   return `rgba(${value},${alpha})`;
 };
 
-// 字符串下划线转驼峰
+// 字符串下划线转驼峰/驼峰转下划线
 const keyFormat = (str, type) => {
   if (type === "underlineToHump") {
     return str.replace(/_([A-Za-z])/g, (all, letter) => letter.toUpperCase());
+  }
+  if (type === "humpToUnderline") {
+    return str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
   }
   return str;
 };

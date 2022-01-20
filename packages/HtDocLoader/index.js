@@ -1,9 +1,11 @@
 const fs = require("fs-extra");
+const path = require("path");
 const {
   compileTemplate,
   compileScript,
   compileTypeScript,
 } = require("./src/compile");
+const { RenderMd } = require("./src/render");
 
 class DocLoader {
   constructor(options) {
@@ -13,6 +15,8 @@ class DocLoader {
     this.output = output;
     this.result = {};
 
+    // 清空打包目录
+    this.onClearDistPath();
     // 解析文档
     this.onParseAll();
   }
@@ -24,6 +28,16 @@ class DocLoader {
       : Array.isArray(entry)
       ? entry
       : [];
+  }
+
+  // 清空打包目录
+  onClearDistPath() {
+    const { output } = this.options;
+    try {
+      fs.accessSync(output, fs.constants.R_OK);
+    } catch (e) {
+      fs.mkdirSync(output);
+    }
   }
 
   // 解析所有入口文件
@@ -51,6 +65,8 @@ class DocLoader {
       this.options?.typeScriptCompileOptions,
       (result) => this.cbCompile(entry, result)
     );
+    // 生成编译后的文件
+    this.onGenerateCompileFile(entry);
   }
 
   // 获取文件初始内容
@@ -87,6 +103,56 @@ class DocLoader {
       ? (this.result[entry].componentInfo[type][key] = content)
       : (this.result[entry].componentInfo[type] = content);
   }
+
+  // 生成编译后的文件
+  onGenerateCompileFile(entry) {
+    const fileExtension = this.options.outputFileExtension || ".json";
+    switch (fileExtension) {
+      case ".md":
+        this.onGenerateMdFile(entry);
+        break;
+      case ".json":
+        this.onGenerateJsonFile(entry);
+        break;
+      default:
+        break;
+    }
+  }
+
+  // 编译内容生成md文件
+  onGenerateMdFile(entry) {
+    const componentInfo = this.result[entry]?.componentInfo;
+    const mdContent = new RenderMd(
+      componentInfo,
+      this.options.outputMdFileOptions
+    ).render();
+    let fileName;
+    let fileContent;
+    if (
+      this.options.beforeOutputFileHook &&
+      typeof this.options.beforeOutputFileHook === "function"
+    ) {
+      // 如果定义beforeOutputFileHook，则执行
+      const result = this.options.beforeOutputFileHook({
+        entry, // 入口文件
+        componentInfo, // 入口文件生成的组件信息
+        mdContent, // 组件信息生成的md格式内容
+      });
+      // 生成文件名
+      fileName = result.fileName;
+      // 生成文件内容
+      fileContent = result.fileContent;
+    } else {
+      // 否则不经过转化，直接生成md文件
+      fileName = componentInfo.name || entry.replace(/[\\|.|:]/g, "");
+      fileContent = mdContent;
+    }
+    // 写入文件到打包目录里
+    fs.writeFile(path.join(this.options.output, `${fileName}.md`), fileContent);
+  }
+
+  // 编译内容生成json文件
+  onGenerateJsonFile() {}
 }
 
 module.exports = DocLoader;
