@@ -4,11 +4,6 @@ const traverse = require("@babel/traverse");
 
 // 默认占位符
 const defaultText = "--";
-// 默认template编译参数
-const defaultTemplateCompileOptions = {
-  mode: "module",
-  isTS: true,
-};
 // 默认script编译参数
 const defaultScriptCompileOptions = {
   plugins: [
@@ -74,6 +69,11 @@ const defaultTypeScriptCompileOptions = {
   ],
   allowImportExportEverywhere: true,
   sourceType: "module",
+};
+// 默认template编译参数
+const defaultTemplateCompileOptions = {
+  mode: "module",
+  isTS: true,
 };
 
 // script内容编译
@@ -150,12 +150,14 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
       });
     },
     VariableDeclarator(nodePath) {
-      const { type, async, params } = nodePath.node.init;
+      const { type, async, params: defaultParams } = nodePath.node.init;
       // 获取vue组件所有的方法method定义
       if (type === "ArrowFunctionExpression") {
         const { name } = nodePath.node.id;
         const leadingComments = nodePath?.parent?.leadingComments;
-        let desc, res, params = [];
+        let desc;
+        let res;
+        const params = [];
         if (leadingComments) {
           const comment = leadingComments[leadingComments.length - 1];
           if (comment.type === "CommentLine") {
@@ -192,7 +194,7 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
           content: {
             name,
             async,
-            params,
+            params: params || defaultParams,
             res,
             desc,
           },
@@ -233,6 +235,7 @@ const compileTypeScript = (
           ?.map((i) => i.value?.trim())
           .join(","),
       };
+      props.type = props.type?.replace(/TS(\w+)Keyword/g, (str, $1) => $1);
       // 执行回调，将值保存到componentInfo.props中，vue组件的props通过ts文件来定义
       callback({
         type: "props",
@@ -242,7 +245,6 @@ const compileTypeScript = (
     },
   });
 };
-
 
 // 遍历模板AST
 const traverserTemplateAst = (ast, visitor = {}) => {

@@ -5,12 +5,12 @@
   "main": "lib/index.esm.js",
   "scripts": {
     "dev": "vite -m development --port 1768 --host",
-    "build": "",
     "build:doc-css": "gulp -f packages/HtVueDocCss/gulpfile.js",
-    "build:ui": "rollup -c packages/HtUi/rollup.config.ts -w",
+    "build:ui": "node config/doc.config.ts & rollup -c packages/HtUi/rollup.config.ts -w",
+    "build:ui-docs": "node config/doc.config.ts",
     "build:utils": "rollup -c packages/HtUtils/rollup.config.ts -w",
     "build:packages": "",
-    "build:docs": "vue-tsc --noEmit && vite build",
+    "build:docs": "",
     "test:unit": "jest -c=jest.config.js --detectOpenHandles",
     "preview": "vite preview"
   },
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "dependencies": {
     "@htfed/base-css": "^1.0.7",
-    "@htfed/doc-loader": "^0.0.2",
+    "@htfed/doc-loader": "^0.0.4",
     "@htfed/icon": "^0.0.2",
     "@htfed/ui": "^0.2.4",
     "@htfed/utils": "0.1.10",
