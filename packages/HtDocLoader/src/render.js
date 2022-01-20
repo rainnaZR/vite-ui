@@ -37,7 +37,13 @@ class RenderMd {
       if (content) {
         switch (key) {
           case "name":
-            mdArr.push(...this.renderTitle(content, false, 2));
+            mdArr.push(
+              ...this.onRenderTitle({
+                content,
+                isNewLine: false,
+                weight: 2,
+              })
+            );
             break;
           case "desc":
             mdArr.push(content);
@@ -46,9 +52,14 @@ class RenderMd {
           case "slots":
           case "events":
           case "methods":
-            if (this.options[key]) {
-              mdArr.push(...this[`${key}Render`](content, this.options[key]));
-            }
+            this.options[key] &&
+              mdArr.push(
+                ...this.onRenderContent({
+                  key,
+                  content,
+                  option: this.options[key],
+                })
+              );
             break;
           default:
             break;
@@ -58,146 +69,54 @@ class RenderMd {
     return mdArr.join("\n");
   }
 
-  renderTitle(title, br = true, num = 3) {
-    const h = ["#", "##", "###", "####", "#####", "######"];
-    return br ? ["", "", `${h[num - 1]} ${title}`] : [`${h[num - 1]} ${title}`];
+  onRenderTitle({ content, isNewLine = true, weight = 3 }) {
+    const weights = ["#", "##", "###", "####", "#####", "######"];
+    return isNewLine
+      ? ["", "", `${weights[weight - 1]} ${content}`]
+      : [`${weights[weight - 1]} ${content}`];
   }
 
-  propsRender(content, config) {
-    const kt = this._getKeysAndTitles(config, [
-      "name",
-      "desc",
-      "type",
-      "default",
-    ]);
+  onRenderContent({ key, content, option }) {
     const mdArr = [
-      ...this.renderTitle("Props"),
-      ...this.renderTabelHeader(kt.titles),
+      ...this.onRenderTitle({
+        content: `${key?.slice(0, 1).toUpperCase()}${key?.slice(1)}`,
+      }),
+      ...this.onRenderTableHeader(Object.values(option)),
     ];
-    for (const key in content) {
-      if (Object.hasOwnProperty.call(content, key)) {
-        const element = content[key];
-        const row = [];
-        kt.keys.map((key) => {
-          if (Object.keys(element).includes(key)) {
-            if (key === "name") {
-              row.push(
-                `${element[key]}${this._tag(element, "sync")}${this._tag(
-                  element,
-                  "model"
-                )}`
-              );
-            } else {
-              row.push(element[key]);
-            }
-          } else {
-            row.push("--");
-          }
-        });
-        mdArr.push(this.renderTabelRow(row));
-      }
-    }
+
+    Object.keys(content).forEach((contentKey) => {
+      const element = content[contentKey];
+      const row = [];
+      Object.keys(option).forEach((optionKey) => {
+        if (key === "methods" && optionKey === "name") {
+          row.push(`${element[optionKey]}${this.onGetTag(element, "async")}`);
+        } else if (key === "methods" && optionKey === "params") {
+          row.push(this.onGetParam(element[optionKey]) || "--");
+        } else {
+          row.push(element[optionKey] || "--");
+        }
+      });
+      mdArr.push(this.onRenderTableRow(row));
+    });
     return mdArr;
   }
 
-  slotsRender(slotsRes, config) {
-    const kt = this._getKeysAndTitles(config, ["name", "desc"]);
-    const mdArr = [
-      ...this.renderTitle("Slots"),
-      ...this.renderTabelHeader(kt.titles),
-    ];
-    for (const key in slotsRes) {
-      if (Object.hasOwnProperty.call(slotsRes, key)) {
-        const element = slotsRes[key];
-        const row = [];
-        kt.keys.map((key) => {
-          if (Object.keys(element).includes(key)) {
-            row.push(element[key]);
-          } else {
-            row.push("--");
-          }
-        });
-        mdArr.push(this.renderTabelRow(row));
-      }
-    }
-    return mdArr;
-  }
-
-  eventsRender(eventRes, config) {
-    const kt = this._getKeysAndTitles(config, ["name", "desc"]);
-    const mdArr = [
-      ...this.renderTitle("Events"),
-      ...this.renderTabelHeader(kt.titles),
-    ];
-    for (const key in eventRes) {
-      if (Object.hasOwnProperty.call(eventRes, key)) {
-        const element = eventRes[key];
-        const row = [];
-        kt.keys.map((key) => {
-          if (Object.keys(element).includes(key)) {
-            row.push(element[key]);
-          } else {
-            row.push("--");
-          }
-        });
-        mdArr.push(this.renderTabelRow(row));
-      }
-    }
-    return mdArr;
-  }
-
-  methodsRender(methodRes, config) {
-    const kt = this._getKeysAndTitles(config, [
-      "name",
-      "desc",
-      "params",
-      "res",
-    ]);
-    const mdArr = [
-      ...this.renderTitle("Methods"),
-      ...this.renderTabelHeader(kt.titles),
-    ];
-    for (const key in methodRes) {
-      if (Object.hasOwnProperty.call(methodRes, key)) {
-        const element = methodRes[key];
-        const row = [];
-        kt.keys.map((key) => {
-          if (Object.keys(element).includes(key)) {
-            if (key === "name") {
-              row.push(`${element[key]}${this._tag(element, "async")}`);
-            } else if (key === "params") {
-              row.push(this._funParam(element[key]));
-            } else {
-              row.push(element[key]);
-            }
-          } else {
-            row.push("--");
-          }
-        });
-        mdArr.push(this.renderTabelRow(row));
-      }
-    }
-    return mdArr;
-  }
-
-  renderTabelHeader(header) {
+  onRenderTableHeader(header) {
     return [
-      this.renderTabelRow(header),
+      this.onRenderTableRow(header),
       `|${header.map(() => "------").join("|")}|`,
     ];
   }
 
-  renderTabelRow(row) {
+  onRenderTableRow(row) {
     return `|${row.join("|")}|`;
   }
 
-  _getKeysAndTitles(config, inKeys) {
-    const keys = Object.keys(config).filter((key) => inKeys.includes(key));
-    const titles = keys.map((key) => config[key]);
-    return { keys, titles };
+  onGetTag(item, tag) {
+    return item[tag] ? ` \`${tag}\` ` : "";
   }
 
-  _funParam(params) {
+  onGetParam(params) {
     if (!params) return "—";
     return params
       .map(
@@ -205,10 +124,6 @@ class RenderMd {
           `${item.name}:${item.type}${item.desc ? `(${item.desc})` : ""}`
       )
       .join(",");
-  }
-  
-  _tag(item, tag) {
-    return item[tag] ? ` \`${tag}\` ` : "";
   }
 }
 
