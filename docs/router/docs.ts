@@ -1,11 +1,8 @@
 import { Docs, Doc } from "../types";
 
-function load({ fileExtension, callback }: any) {
-  const comps = import.meta.globEager("../../dist/*.md");
-
-  if (!comps) return;
-
-  Object.keys(comps).reduce((total: Doc[], i: any) => {
+function load({ fileEntry, fileExtension, callback }: any) {
+  if (!fileEntry) return;
+  Object.keys(fileEntry).reduce((total: Doc[], i: any) => {
     if (!fileExtension || i.endsWith(fileExtension)) {
       const fileArr = i.split("/");
       const fileName = fileArr[fileArr.length - 1];
@@ -16,7 +13,7 @@ function load({ fileExtension, callback }: any) {
         fileName,
         fileExtension,
         filePath: i,
-        fileContent: comps[i],
+        fileContent: fileEntry[i],
       };
       total.push(options);
       callback && callback(options);
@@ -26,7 +23,16 @@ function load({ fileExtension, callback }: any) {
 }
 
 const docs: Docs[] = [];
+// 除了组件之外的根目录文档，比如introduce.md
+const componentDocs = import.meta.globEager("../components/*.md");
+// 打包生成的组件文档
+const disDocs = import.meta.globEager("../../dist/*.md");
+
 load({
+  fileEntry: {
+    ...componentDocs,
+    ...disDocs,
+  },
   fileExtension: ".md",
   callback: (options: Doc) => {
     docs.push({

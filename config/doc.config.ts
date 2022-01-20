@@ -32,7 +32,7 @@ const docLoader = new DocLoader({
     const fileName = fileEntry.match(/(\w+)\\index\.vue$/)[1];
     const fullFileName = path.resolve(
       __dirname,
-      `./docs/components/ui/${fileName}.md`
+      `../docs/components/ui/${fileName}.md`
     );
     const newMdContent =
       fs.existsSync(fullFileName) && fs.readFileSync(fullFileName, "utf8");
