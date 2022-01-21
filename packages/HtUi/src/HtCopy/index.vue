@@ -1,15 +1,14 @@
 <template>
-  <!-- 复制 -->
   <div class="ht-copy">
-    <!-- 复制入口 -->
     <div @click="onCopy">
+      <!-- 复制按钮插槽 -->
       <slot name="entry">
         <ht-button class="entry" :data="{ size: 'small' }">复制</ht-button>
       </slot>
     </div>
 
-    <!-- 复制内容 -->
     <div ref="contentRef">
+      <!-- 复制内容插槽 -->
       <slot></slot>
     </div>
   </div>
@@ -20,6 +19,9 @@ import { defineComponent, ref } from "vue";
 import { dom } from "@htfed/utils";
 import HtButton from "../HtButton";
 
+/**
+ * 复制组件，包括复制的按钮和需要复制的内容两部分
+ * */
 export default defineComponent({
   name: "HtCopy",
 
@@ -34,10 +36,12 @@ export default defineComponent({
       dom.onCopy(value).then(
         (res?: string) => {
           alert(res);
+          // 复制成功触发事件
           emit("on-success", res);
         },
         (err?: string) => {
           alert(err);
+          // 复制失败触发事件
           emit("on-failure", err);
         }
       );

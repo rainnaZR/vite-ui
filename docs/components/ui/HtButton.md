@@ -72,9 +72,7 @@
 ::: Demo
 ```vue demo
 <template>
-  <div class="button-demo">
-    <ht-button :data="{ type: 'primary', full: true }">长按钮</ht-button>
-  </div>
+  <ht-button :data="{ type: 'primary', full: true }">长按钮</ht-button>
 </template>
 ```
 :::

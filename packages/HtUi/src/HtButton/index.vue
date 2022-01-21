@@ -1,5 +1,4 @@
 <template>
-  <!-- 按钮 -->
   <button
     :class="[
       'ht-button',
@@ -17,6 +16,7 @@
     :disabled="data.disabled"
     @click="onClick"
   >
+    <!-- 自定义按钮内容 -->
     <slot></slot>
   </button>
 </template>
@@ -25,6 +25,9 @@
 import { defineComponent, PropType } from "vue";
 import { ButtonData } from "./types";
 
+/**
+ * 项目中使用的按钮集合。
+ * */
 export default defineComponent({
   name: "HtButton",
 
@@ -39,8 +42,16 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    /**
+     * 按钮点击事件
+     * @param {Object} event MouseEvent对象
+     * @returns void
+     */
     const onClick = (e: MouseEvent) => {
-      if (!props.data.disabled) emit("on-click", e);
+      if (!props.data.disabled) {
+        // 按钮事件触发
+        emit("on-click", e);
+      }
     };
 
     return {

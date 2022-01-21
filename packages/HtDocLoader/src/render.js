@@ -6,6 +6,7 @@ class RenderMd {
         name: "属性",
         desc: "说明",
         type: "类型",
+        optional: "可选值",
         default: "默认值",
       },
       slots: {

@@ -28,7 +28,7 @@
       </div>
 
       <!-- 正文 -->
-      <div class="m-content f-pd20">
+      <div class="m-content f-pd20 f-ml20">
         <router-view />
       </div>
     </div>
