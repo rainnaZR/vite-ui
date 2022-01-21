@@ -126,3 +126,12 @@ export default defineComponent({
   }
 }
 </style>
+<style lang="less">
+.ht-md-demo {
+  .button-demo {
+    .ht-button {
+      margin: 0 10px 20px;
+    }
+  }
+}
+</style>

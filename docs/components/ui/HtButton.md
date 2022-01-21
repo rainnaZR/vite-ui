@@ -1,17 +1,4 @@
-## 组件引用
-
-::: CopyCode
-```JavaScript
-import { createApp } from "vue";
-import App from "./App.vue";
-import { HtButton } from '@htfed/ui';
-
-const app = createApp(App);
-app.use(HtButton);
-app.mount("#app");
-```
-:::
-
+# HtButton 按钮
 
 ## 代码演示
 
@@ -23,13 +10,15 @@ app.mount("#app");
 ::: Demo
 ```vue demo
 <template>
-  <ht-button :data="{ type: 'default', size: 'normal'}">default按钮</ht-button>
-  <ht-button :data="{ type: 'primary', size: 'normal'}">primary按钮</ht-button>
-  <ht-button :data="{ type: 'success', size: 'normal'}">success按钮</ht-button>
-  <ht-button :data="{ type: 'info', size: 'normal'}">info按钮</ht-button>
-  <ht-button :data="{ type: 'warning', size: 'normal'}">warning按钮</ht-button>
-  <ht-button :data="{ type: 'danger', size: 'normal'}">danger按钮</ht-button>
-  <ht-button :data="{ type: 'text', size: 'normal'}">text按钮</ht-button>
+  <div class="button-demo">
+    <ht-button :data="{ type: 'default', size: 'normal'}">default按钮</ht-button>
+    <ht-button :data="{ type: 'primary', size: 'normal'}">primary按钮</ht-button>
+    <ht-button :data="{ type: 'success', size: 'normal'}">success按钮</ht-button>
+    <ht-button :data="{ type: 'info', size: 'normal'}">info按钮</ht-button>
+    <ht-button :data="{ type: 'warning', size: 'normal'}">warning按钮</ht-button>
+    <ht-button :data="{ type: 'danger', size: 'normal'}">danger按钮</ht-button>
+    <ht-button :data="{ type: 'text', size: 'normal'}">text按钮</ht-button>
+  </div>
 </template>
 ```
 :::
@@ -43,10 +32,12 @@ app.mount("#app");
 ::: Demo
 ```vue demo
 <template>
-  <ht-button :data="{ type: 'default', size: 'small'}">default按钮</ht-button>
-  <ht-button :data="{ type: 'primary', size: 'normal'}">primary按钮</ht-button>
-  <ht-button :data="{ type: 'success', size: 'big'}">success按钮</ht-button>
-  <ht-button :data="{ type: 'info', size: 'huge'}">info按钮</ht-button>
+  <div class="button-demo">
+    <ht-button :data="{ type: 'default', size: 'small'}">small按钮</ht-button>
+    <ht-button :data="{ type: 'primary', size: 'normal'}">normal按钮</ht-button>
+    <ht-button :data="{ type: 'success', size: 'big'}">big按钮</ht-button>
+    <ht-button :data="{ type: 'info', size: 'huge'}">huge按钮</ht-button>
+  </div>
 </template>
 ```
 :::
@@ -59,13 +50,15 @@ app.mount("#app");
 ::: Demo
 ```vue demo
 <template>
-  <ht-button :data="{ type: 'default', size: 'normal', disabled: true}">default按钮</ht-button>
-  <ht-button :data="{ type: 'primary', size: 'normal', disabled: true}">primary按钮</ht-button>
-  <ht-button :data="{ type: 'success', size: 'normal', disabled: true}">success按钮</ht-button>
-  <ht-button :data="{ type: 'info', size: 'normal', disabled: true}">info按钮</ht-button>
-  <ht-button :data="{ type: 'warning', size: 'normal', disabled: true}">warning按钮</ht-button>
-  <ht-button :data="{ type: 'danger', size: 'normal', disabled: true}">danger按钮</ht-button>
-  <ht-button :data="{ type: 'text', size: 'normal', disabled: true}">text按钮</ht-button>
+  <div class="button-demo">
+    <ht-button :data="{ type: 'default', size: 'normal', disabled: true}">disabled按钮</ht-button>
+    <ht-button :data="{ type: 'primary', size: 'normal', disabled: true}">disabled按钮</ht-button>
+    <ht-button :data="{ type: 'success', size: 'normal', disabled: true}">disabled按钮</ht-button>
+    <ht-button :data="{ type: 'info', size: 'normal', disabled: true}">disabled按钮</ht-button>
+    <ht-button :data="{ type: 'warning', size: 'normal', disabled: true}">disabled按钮</ht-button>
+    <ht-button :data="{ type: 'danger', size: 'normal', disabled: true}">disabled按钮</ht-button>
+    <ht-button :data="{ type: 'text', size: 'normal', disabled: true}">disabled按钮</ht-button>
+  </div>
 </template>
 ```
 :::
@@ -79,7 +72,9 @@ app.mount("#app");
 ::: Demo
 ```vue demo
 <template>
-  <ht-button :data="{ type: 'primary', full: true }">primary按钮</ht-button>
+  <div class="button-demo">
+    <ht-button :data="{ type: 'primary', full: true }">长按钮</ht-button>
+  </div>
 </template>
 ```
 :::
