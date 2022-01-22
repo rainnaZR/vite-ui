@@ -6,8 +6,11 @@ class RenderMd {
         name: "属性",
         desc: "说明",
         type: "类型",
+        required: "是否必填项",
         optional: "可选值",
         default: "默认值",
+        tsPropType: "tsPropType",
+        scope: "scope",
       },
       slots: {
         name: "插槽",
@@ -50,6 +53,28 @@ class RenderMd {
             mdArr.push(content);
             break;
           case "props":
+            if (this.options[key]) {
+              // props数据
+              mdArr.push(
+                ...this.onRenderContent({
+                  key,
+                  content,
+                  option: this.options[key],
+                })
+              );
+              // tsProps数据
+              mdArr.push(
+                ...this.onRenderContent({
+                  key: "tsProps",
+                  content: this.onFilterTsProps(
+                    content,
+                    this.parserResult.tsProps
+                  ),
+                  option: this.options.props, // 公用props的配置数据
+                })
+              );
+            }
+            break;
           case "slots":
           case "events":
           case "methods":
@@ -68,6 +93,17 @@ class RenderMd {
       }
     });
     return mdArr.join("\n");
+  }
+
+  // 过滤tsProps，只展示在组件props中data相关的属性信息，ts文件中定义的其他数据字段不展示
+  onFilterTsProps(props, tsProps) {
+    const tsPropTypes = Object.values(props)
+      ?.map((i) => i.tsPropType)
+      ?.filter((i) => !!i);
+    Object.values(tsProps)?.forEach((i) => {
+      if (!tsPropTypes.includes(i.scope)) delete tsProps[i.name];
+    });
+    return tsProps;
   }
 
   onRenderTitle({ content, isNewLine = true, weight = 3 }) {
@@ -93,6 +129,8 @@ class RenderMd {
           row.push(`${element[optionKey]}${this.onGetTag(element, "async")}`);
         } else if (key === "methods" && optionKey === "params") {
           row.push(this.onGetParam(element[optionKey]) || "--");
+        } else if (key === "props" && optionKey === "required") {
+          row.push(element[optionKey] ? "是" : "否");
         } else {
           row.push(element[optionKey] || "--");
         }

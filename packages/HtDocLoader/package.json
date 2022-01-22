@@ -1,6 +1,6 @@
 {
   "name": "@htfed/doc-loader",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Auto generate doc files from ui library.",
   "main": "index.js",
   "repository": {
@@ -15,6 +15,7 @@
   },
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "devDependencies": {
+    "@babel/generator": "^7.16.8",
     "@babel/parser": "^7.16.8",
     "@babel/traverse": "^7.16.8",
     "@vue/compiler-core": "^3.2.27",

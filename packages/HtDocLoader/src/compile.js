@@ -1,6 +1,7 @@
 const { baseCompile } = require("@vue/compiler-core");
 const parser = require("@babel/parser");
 const traverse = require("@babel/traverse");
+const generate = require("@babel/generator");
 
 // 默认占位符
 const defaultText = "--";
@@ -147,6 +148,76 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
             content: prop.value?.value,
           });
         }
+        // 获取组件props定义
+        if (key === "props") {
+          prop.value.properties?.forEach((propNode) => {
+            const {
+              key: propNodeKey,
+              value: propNodeValue,
+              leadingComments,
+            } = propNode;
+            const result = {
+              type: key,
+              key: propNodeKey.name,
+              content: {
+                name: propNodeKey.name,
+                desc: leadingComments && leadingComments[0]?.value?.trim(),
+                type: "",
+                tsPropType: "", // 对应ts文件里props.data里的属性描述名字，比如ButtonData, TabData等
+                required: false,
+                optional: "",
+                default: "",
+              },
+            };
+            // 根据prop的不同类型展示不同的值
+            // 基础的类型检查 propA: Number
+            if (propNodeValue.type === "Identifier") {
+              result.content.type = propNodeValue.name;
+            }
+            // 对象或数组的类型检查
+            // propB: {
+            //   type: Object as PropType<ButtonData>,
+            //   required: true,
+            //   default: () => ({
+            //     type: "default",
+            //     size: "normal",
+            //   }),
+            // },
+            if (propNodeValue.type === "ObjectExpression") {
+              propNodeValue.properties.forEach((i) => {
+                const keyName = i.key.name;
+                if (keyName === "type") {
+                  result.content[keyName] =
+                    i.value.name || i.value.expression?.name || "Object";
+                  result.content.tsPropType =
+                    i.value.typeAnnotation?.typeParameters?.params[0]?.typeName?.name;
+                }
+                if (keyName === "required") {
+                  result.content[keyName] = i.value?.value;
+                }
+                if (keyName === "default") {
+                  try {
+                    const targetProp = propNodeValue.properties.filter(
+                      (item) => item.key.name === "default"
+                    );
+                    if (targetProp) {
+                      const targetBody = targetProp[0].value.body;
+                      const { code } = generate.default(targetBody);
+                      result.content[keyName] = JSON.stringify(code);
+                    }
+                  } catch (error) {}
+                }
+              });
+            }
+            // propC: [String, Number],
+            if (propNodeValue.type === "ArrayExpression") {
+              result.content.type = propNodeValue.elements
+                ?.map((item) => item.name)
+                .join(", ");
+            }
+            callback(result);
+          });
+        }
       });
     },
     VariableDeclarator(nodePath) {
@@ -220,7 +291,7 @@ const compileTypeScript = (
   traverse.default(tsAst, {
     TSPropertySignature(nodePath) {
       // 获取 interface 接口定义值
-      const props = {
+      const tsProp = {
         scopeType: nodePath.parentPath?.container?.type,
         scope: nodePath.parentPath?.container?.id?.name,
         name: nodePath.node?.key?.name,
@@ -235,12 +306,12 @@ const compileTypeScript = (
           ?.map((i) => i.value?.trim())
           .join(","),
       };
-      props.type = props.type?.replace(/TS(\w+)Keyword/g, (str, $1) => $1);
-      // 执行回调，将值保存到componentInfo.props中，vue组件的props通过ts文件来定义
+      tsProp.type = tsProp.type?.replace(/TS(\w+)Keyword/g, (str, $1) => $1);
+      // 执行回调，将值保存到componentInfo.tsProps中，vue组件的props里的data属性通过ts文件来定义
       callback({
-        type: "props",
-        key: props.name,
-        content: props,
+        type: "tsProps",
+        key: tsProp.name,
+        content: tsProp,
       });
     },
   });
