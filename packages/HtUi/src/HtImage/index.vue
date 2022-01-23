@@ -1,17 +1,11 @@
 <template>
-  <!-- 图片 -->
   <div class="ht-image" @click="onClick">
-    <div
-      v-if="data.fill"
-      :style="`width:${data.width};height:${data.height};background:url(${data.src}) no-repeat center;background-size:${data.fill};`"
-    ></div>
     <img
-      v-else
       :src="data.src"
       :width="data.width"
       :height="data.height"
       :alt="data.alt"
-      :style="data.cssStyle"
+      :style="[`object-fit: ${data.fill || 'cover'};`, data.cssStyle]"
       @load="onLoad"
       @error="onError"
     />
@@ -22,12 +16,14 @@
 import { defineComponent, PropType } from "vue";
 import { ImageData } from "./types";
 
+// 图片显示与预览。
 export default defineComponent({
   name: "HtImage",
 
   props: {
     data: {
       type: Object as PropType<ImageData>,
+      required: true,
       default: () => ({
         src: "",
       }),
@@ -35,18 +31,51 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    // 点击按钮
+    /**
+     * 图片点击方法
+     * @param {Object} event MouseEvent对象
+     * @returns void
+     * */
     const onClick = (e: MouseEvent) => {
-      emit("on-click", e);
+      /**
+       * 图片点击事件触发
+       * @param {Object} data 图片组件data对象
+       * @param {Object} event MouseEvent对象
+       * @returns void
+       * */
+      emit("on-click", props.data, e);
     };
-    // 加载完成
+
+    /**
+     * 图片加载成功方法
+     * @param {Object} event MouseEvent
+     * @returns void
+     */
     const onLoad = (e: Event) => {
-      emit("on-load", e);
+      /**
+       * 图片加载完成事件触发
+       * @param {Object} data 图片组件data对象
+       * @param {Object} event MouseEvent
+       * @returns void
+       */
+      emit("on-load", props.data, e);
     };
-    // 加载失败
+
+    /**
+     * 图片加载失败方法
+     * @param {Object} event MouseEvent
+     * @returns void
+     */
     const onError = (e: Event) => {
-      emit("on-error", e);
+      /**
+       * 图片加载失败事件触发
+       * @param {Object} data 图片组件data对象
+       * @param {Object} event MouseEvent
+       * @returns void
+       */
+      emit("on-error", props.data, e);
     };
+
     return {
       onClick,
       onLoad,

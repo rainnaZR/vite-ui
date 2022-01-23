@@ -146,5 +146,10 @@ export default defineComponent({
       }
     }
   }
+  .image-demo {
+    .ht-image {
+      margin: 0 0 20px;
+    }
+  }
 }
 </style>
