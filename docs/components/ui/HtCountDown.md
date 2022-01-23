@@ -4,6 +4,8 @@
 
 ### 基本用法
 
+- 倒计时单位支持 `ms` 和 `s` 两种方式。
+
 ::: Demo
 ```vue demo
 <template>

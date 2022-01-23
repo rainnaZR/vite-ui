@@ -26,7 +26,7 @@
 
 ### 按钮尺寸
 
-- 尺寸支持 `small`、`normal`、`big`、`huge`四种尺寸，默认尺寸为 normal。
+- 尺寸支持 `small`、`normal`、`big`、`huge`四种尺寸，默认尺寸为 `normal`。
 
 
 ::: Demo
