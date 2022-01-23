@@ -48,14 +48,14 @@ export default defineComponent({
 
     /**
      * 图片加载成功方法
-     * @param {Object} event MouseEvent
+     * @param {Object} event MouseEvent对象
      * @returns void
      */
     const onLoad = (e: Event) => {
       /**
        * 图片加载完成事件触发
        * @param {Object} data 图片组件data对象
-       * @param {Object} event MouseEvent
+       * @param {Object} event MouseEvent对象
        * @returns void
        */
       emit("on-load", props.data, e);
@@ -63,14 +63,14 @@ export default defineComponent({
 
     /**
      * 图片加载失败方法
-     * @param {Object} event MouseEvent
+     * @param {Object} event MouseEvent对象
      * @returns void
      */
     const onError = (e: Event) => {
       /**
        * 图片加载失败事件触发
        * @param {Object} data 图片组件data对象
-       * @param {Object} event MouseEvent
+       * @param {Object} event MouseEvent对象
        * @returns void
        */
       emit("on-error", props.data, e);
