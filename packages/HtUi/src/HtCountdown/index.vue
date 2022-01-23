@@ -1,6 +1,6 @@
 <template>
   <div class="ht-count-down">
-    <!-- 倒计时内容显示插槽 -->
+    <!-- 倒计时时间显示插槽 -->
     <slot :scope="detail">
       <span v-if="detail.day > 0">{{ detail.day }}天</span>
       {{ detail.hour || 0 }}时{{ detail.minute || 0 }}分{{

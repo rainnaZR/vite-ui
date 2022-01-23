@@ -16,7 +16,7 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-count-down :data="{time: 5, unit: 's',}" @on-stop="onStop">
+    <ht-count-down :data="{time: 90, unit: 's',}" @on-stop="onStop">
         <template v-slot="detail">
             距离活动结束还剩：
             {{detail.scope.day}}天

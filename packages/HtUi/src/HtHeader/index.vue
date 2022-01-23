@@ -1,7 +1,7 @@
 <template>
   <div class="ht-header">
-    <!-- 头部左边区域 -->
     <div class="header-left">
+      <!-- 顶部左边区域 -->
       <slot name="left" :scope="data">
         <div class="logo" @click="onClickLogo">
           <ht-image
@@ -17,8 +17,8 @@
       </slot>
     </div>
 
-    <!-- 头部中间区域 -->
     <div class="header-center">
+      <!-- 顶部中间区域 -->
       <slot name="center" :scope="data">
         <ht-tab
           class="tabs"
@@ -34,8 +34,8 @@
       </slot>
     </div>
 
-    <!-- 头部右边区域 -->
     <div class="header-right">
+      <!-- 顶部右边区域 -->
       <slot name="right" :scope="data"></slot>
     </div>
   </div>
@@ -47,6 +47,7 @@ import HtImage from "../HtImage";
 import HtTab from "../HtTab";
 import { HeaderData } from "./types";
 
+// 通用顶部内容：包含左边logo区域，中间tab导航区域，右侧自定义区域。
 export default defineComponent({
   name: "HtHeader",
 
@@ -58,15 +59,36 @@ export default defineComponent({
   props: {
     data: {
       type: Object as PropType<HeaderData>,
+      required: true,
       default: () => {},
     },
   },
 
   setup(props, { emit }) {
+    /**
+     * logo点击事件
+     * @returns void
+     */
     const onClickLogo = () => {
+      /**
+       * logo事件触发
+       * @param {Object} data 通用顶部数据
+       */
       emit("on-click:logo", props.data);
     };
+
+    /**
+     * tab导航点击事件
+     * @param {Object} tabItem 单个tab数据
+     * @param {Number} index tab导航点击的索引值
+     * @returns void
+     */
     const onClickTab = (item: any, index: number) => {
+      /**
+       * tab导航事件触发
+       * @param {Object} tabItem 单个tab数据
+       * @param {Number} index tab导航点击的索引值
+       */
       emit("on-click:tab", item, index);
     };
 

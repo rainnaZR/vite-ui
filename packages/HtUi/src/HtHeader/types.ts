@@ -6,15 +6,15 @@ export interface TabItem {
 }
 
 export interface HeaderData {
-  logoUrl: string;
-  logoWidth?: string | number;
-  logoHeight?: string | number;
-  logoAlt?: string;
-  logoText?: string;
-  tabList: TabItem[];
-  tabCurrentValue?: number | string;
-  tabColor?: string;
-  tabActiveColor?: string;
+  logoUrl: string; // logo图片链接
+  logoWidth?: string | number; // logo图片宽度
+  logoHeight?: string | number; // logo图片高度
+  logoAlt?: string; // logo图片提示alt值
+  logoText?: string; // logo标语
+  tabList: TabItem[]; // 导航列表
+  tabCurrentValue?: number | string; // 当前定位的导航value值
+  tabColor?: string; // 导航颜色值
+  tabActiveColor?: string; // 导航选中的颜色值
 }
 
 export type Props = PublicProps<{
