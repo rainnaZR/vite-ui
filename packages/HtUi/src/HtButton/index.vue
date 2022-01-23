@@ -50,7 +50,10 @@ export default defineComponent({
      */
     const onClick = (e: MouseEvent) => {
       if (!props.data.disabled) {
-        // 按钮事件触发
+        /**
+         * 按钮事件触发
+         * @param {Object} event MouseEvent对象
+         */
         emit("on-click", e);
       }
     };

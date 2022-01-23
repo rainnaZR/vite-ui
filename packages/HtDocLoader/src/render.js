@@ -19,6 +19,7 @@ class RenderMd {
       events: {
         name: "事件名",
         desc: "说明",
+        params: "回调参数",
       },
       methods: {
         name: "方法名",
@@ -127,7 +128,10 @@ class RenderMd {
       Object.keys(option).forEach((optionKey) => {
         if (key === "methods" && optionKey === "name") {
           row.push(`${element[optionKey]}${this.onGetTag(element, "async")}`);
-        } else if (key === "methods" && optionKey === "params") {
+        } else if (
+          ["methods", "events"].includes(key) &&
+          optionKey === "params"
+        ) {
           row.push(this.onGetParam(element[optionKey]) || "--");
         } else if (
           ["props", "tsProps"].includes(key) &&

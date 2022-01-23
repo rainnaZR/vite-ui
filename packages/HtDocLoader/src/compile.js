@@ -76,6 +76,46 @@ const defaultTemplateCompileOptions = {
   mode: "module",
   isTS: true,
 };
+// 通过注释读取method相关信息
+const onExtractMethodInfo = (comment) => {
+  const data = {
+    desc: "",
+    params: [],
+    res: "",
+  };
+  if (!comment) return data;
+  if (comment.type === "CommentLine") {
+    // 单行注释
+    data.desc = comment.value.trim();
+  } else if (comment.type === "CommentBlock") {
+    // 多行注释
+    // 提取方法说明
+    const descRes = comment.value.match(/\*\s*[^@]\s*(.*)/);
+    if (descRes) {
+      data.desc = descRes[1];
+    }
+    // 提取 参数说明
+    const paramsRes = comment.value.matchAll(
+      /(@param)[\s]*{([a-zA-Z]*)}[\s]*(\w*)(.*)/g
+    );
+    // eslint-disable-next-line no-restricted-syntax
+    if (paramsRes) {
+      for (const param of paramsRes) {
+        data.params.push({
+          name: param[3],
+          type: param[2],
+          desc: param[4].trim(),
+        });
+      }
+    }
+    // 提取方法返回值
+    const returnRes = comment.value?.match(/(@returns)[\s]*(.*)/);
+    if (returnRes) {
+      data.res = returnRes[2];
+    }
+  }
+  return data;
+};
 
 // script内容编译
 const compileScript = (scriptStr, options = {}, callback = () => {}) => {
@@ -99,18 +139,17 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
           .slice(1)
           .map((i, index) => `param${index + 1}`)
           .join("|");
+        const leadingComments = nodePath.parent?.leadingComments || [];
+        const comment = leadingComments[leadingComments.length - 1];
+        const commentRes = onExtractMethodInfo(comment);
         // 执行回调，将值保存到componentInfo.events中
         callback({
           type: "events",
           key: emitName,
           content: {
             name: emitName,
-            desc:
-              nodePath.parent?.leadingComments
-                ?.map((i) => i.value.trim())
-                ?.join(",")
-                ?.toString() || "——",
-            params: emitParams,
+            desc: commentRes.desc,
+            params: commentRes.params || emitParams,
           },
         });
       }
@@ -225,39 +264,9 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
       // 获取vue组件所有的方法method定义
       if (type === "ArrowFunctionExpression") {
         const { name } = nodePath.node.id;
-        const leadingComments = nodePath?.parent?.leadingComments;
-        let desc;
-        let res;
-        const params = [];
-        if (leadingComments) {
-          const comment = leadingComments[leadingComments.length - 1];
-          if (comment.type === "CommentLine") {
-            desc = comment.value.trim();
-          } else {
-            // 提取方法说明
-            const descRes = comment.value.match(/\*\s*[^@]\s*(.*)/);
-            if (descRes) {
-              desc = descRes[1];
-            }
-            // 提取 参数说明
-            const paramsRes = comment.value.matchAll(
-              /(@param)[\s]*{([a-zA-Z]*)}[\s]*(\w*)(.*)/g
-            );
-            // eslint-disable-next-line no-restricted-syntax
-            for (const param of paramsRes) {
-              params.push({
-                name: param[3],
-                type: param[2],
-                desc: param[4].trim(),
-              });
-            }
-            // 提取方法返回值
-            const returnRes = comment.value.match(/(@returns)[\s]*(.*)/);
-            if (returnRes) {
-              res = returnRes[2];
-            }
-          }
-        }
+        const leadingComments = nodePath?.parent?.leadingComments || [];
+        const comment = leadingComments[leadingComments.length - 1];
+        const { desc, params = [], res } = onExtractMethodInfo(comment);
         // 执行回调，将值保存到componentInfo.methods中
         callback({
           type: "methods",
@@ -265,9 +274,9 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
           content: {
             name,
             async,
+            desc,
             params: params || defaultParams,
             res,
-            desc,
           },
         });
       }
@@ -378,8 +387,8 @@ const compileTemplate = (templateStr, options = {}, callback = () => {}) => {
 };
 
 module.exports = {
-  traverserTemplateAst,
   compileScript,
   compileTypeScript,
+  traverserTemplateAst,
   compileTemplate,
 };
