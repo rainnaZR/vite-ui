@@ -129,7 +129,10 @@ class RenderMd {
           row.push(`${element[optionKey]}${this.onGetTag(element, "async")}`);
         } else if (key === "methods" && optionKey === "params") {
           row.push(this.onGetParam(element[optionKey]) || "--");
-        } else if (key === "props" && optionKey === "required") {
+        } else if (
+          ["props", "tsProps"].includes(key) &&
+          optionKey === "required"
+        ) {
           row.push(element[optionKey] ? "是" : "否");
         } else {
           row.push(element[optionKey] || "--");

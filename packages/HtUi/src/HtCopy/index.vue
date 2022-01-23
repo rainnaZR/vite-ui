@@ -1,14 +1,14 @@
 <template>
   <div class="ht-copy">
-    <div @click="onCopy">
-      <!-- 复制按钮插槽 -->
+    <div class="entry" @click="onCopy">
+      <!-- 复制的按钮插槽 -->
       <slot name="entry">
-        <ht-button class="entry" :data="{ size: 'small' }">复制</ht-button>
+        <ht-button :data="{ size: 'small' }">复制</ht-button>
       </slot>
     </div>
 
-    <div ref="contentRef">
-      <!-- 复制内容插槽 -->
+    <div class="content" ref="contentRef">
+      <!-- 复制的内容插槽 -->
       <slot></slot>
     </div>
   </div>
@@ -32,7 +32,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const contentRef = ref<HTMLDivElement>();
     const onCopy = () => {
-      const value = contentRef.value!?.textContent!?.slice(0, -1);
+      const value = contentRef.value!?.textContent;
       dom.onCopy(value).then(
         (res?: string) => {
           alert(res);

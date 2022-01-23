@@ -295,7 +295,7 @@ const compileTypeScript = (
         scopeType: nodePath.parentPath?.container?.type,
         scope: nodePath.parentPath?.container?.id?.name,
         name: nodePath.node?.key?.name,
-        required: !!nodePath.node?.optional,
+        required: !nodePath.node?.optional,
         type:
           nodePath.node?.typeAnnotation?.typeAnnotation?.type === "TSUnionType"
             ? nodePath.node?.typeAnnotation?.typeAnnotation?.types

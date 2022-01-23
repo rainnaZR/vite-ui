@@ -1,6 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
 const DocLoader = require("@htfed/doc-loader");
+// const DocLoader = require("../packages/HtDocLoader");
 
 // 第一步：定义入口文件，出口目录
 const entryDir = path.resolve(__dirname, "../packages/HtUi/src");
