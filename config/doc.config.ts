@@ -40,7 +40,9 @@ const docLoader = new DocLoader({
 
     return {
       fileName,
-      fileContent: `${newMdContent}\n####\n${mdContent}`,
+      fileContent: newMdContent
+        ? `${newMdContent}\n####\n${mdContent}`
+        : mdContent,
     };
   },
   outputMdFileOptions: {},

@@ -1,6 +1,6 @@
 <template>
-  <!-- 倒计时 -->
   <div class="ht-count-down">
+    <!-- 倒计时内容显示插槽 -->
     <slot :scope="detail">
       <span v-if="detail.day > 0">{{ detail.day }}天</span>
       {{ detail.hour || 0 }}时{{ detail.minute || 0 }}分{{
@@ -15,12 +15,14 @@ import { defineComponent, PropType, ref } from "vue";
 import { time as timeUtil } from "@htfed/utils";
 import { CountDownData, Detail } from "./types";
 
+// 倒计时组件显示。
 export default defineComponent({
   name: "ht-count-down",
 
   props: {
     data: {
       type: Object as PropType<CountDownData>,
+      required: true,
       default: () => ({
         time: 0,
         unit: "s",
@@ -35,7 +37,10 @@ export default defineComponent({
 
     timeUtil.getCountDown(time, (res: Detail) => {
       detail.value = res;
-      res.timestamp === 0 && emit("on-stop");
+      if (res.timestamp === 0) {
+        // 倒计时结束触发的事件
+        emit("on-stop");
+      }
     });
 
     return {

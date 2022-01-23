@@ -34,6 +34,15 @@ body{
     font-family: PingFangSC-Light,sans-serif;
     line-height: 1.8;
 }
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #359f4e;
+}
 input, button, textarea, select{
   border: 0 none;
   outline: none;

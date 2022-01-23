@@ -113,16 +113,20 @@ export default defineComponent({
   .m-main {
     display: flex;
     flex-direction: row;
-    min-height: 100vh;
+    height: calc(100vh - 60px);
     padding: 60px 0 0;
     box-sizing: border-box;
   }
   .m-side {
     width: 200px;
+    height: 100%;
+    overflow-y: scroll;
     box-shadow: 2px 0 5px rgb(197 217 232 / 50%);
   }
   .m-content {
     flex: 1;
+    height: 100%;
+    overflow-y: scroll;
   }
 }
 </style>
@@ -136,7 +140,7 @@ export default defineComponent({
   .copy-demo {
     .ht-copy {
       width: 600px;
-      margin: 0 0 30px;
+      margin: 0 0 35px;
       &:last-child {
         margin: 0;
       }
