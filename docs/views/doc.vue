@@ -133,5 +133,14 @@ export default defineComponent({
       margin: 0 10px 20px;
     }
   }
+  .copy-demo {
+    .ht-copy {
+      width: 600px;
+      margin: 0 0 30px;
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
 }
 </style>

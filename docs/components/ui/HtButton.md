@@ -4,7 +4,7 @@
 
 ### 按钮类型
 
-- 类型支持 `default`、`primary`、`success`、`info`、`warning`、`danger`、`text` 七种类型，默认类型为 default。
+- 类型支持 `default`、`primary`、`success`、`info`、`warning`、`danger`、`text` 七种类型，默认类型为 `default`。
 
 
 ::: Demo

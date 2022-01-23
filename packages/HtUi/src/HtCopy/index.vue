@@ -1,8 +1,8 @@
 <template>
-  <div class="ht-copy">
-    <div class="entry" @click="onCopy">
+  <div :class="['ht-copy', `ht-copy-${data.buttonPosition}`]">
+    <div class="button f-curp" @click="onCopy">
       <!-- 复制的按钮插槽 -->
-      <slot name="entry">
+      <slot name="button">
         <ht-button :data="{ size: 'small' }">复制</ht-button>
       </slot>
     </div>
@@ -15,15 +15,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, PropType } from "vue";
 import { dom } from "@htfed/utils";
 import HtButton from "../HtButton";
+import { CopyData } from "./types";
 
 /**
- * 复制组件，包括复制的按钮和需要复制的内容两部分
+ * 复制组件：包括复制的按钮和需要复制的内容两部分。
  * */
 export default defineComponent({
   name: "HtCopy",
+
+  props: {
+    data: {
+      type: Object as PropType<CopyData>,
+      required: false,
+      default: () => ({
+        buttonPosition: "top",
+      }),
+    },
+  },
 
   components: {
     HtButton,
@@ -31,18 +42,31 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const contentRef = ref<HTMLDivElement>();
+
+    /**
+     * 复制方法
+     * @returns void
+     */
     const onCopy = () => {
       const value = contentRef.value!?.textContent;
       dom.onCopy(value).then(
         (res?: string) => {
           alert(res);
-          // 复制成功触发事件
-          emit("on-success", res);
+          /**
+           * 复制成功触发事件
+           * @param {String} value 要复制的内容
+           * @returns void
+           */
+          emit("on-success", value);
         },
         (err?: string) => {
           alert(err);
-          // 复制失败触发事件
-          emit("on-failure", err);
+          /**
+           * 复制失败触发事件
+           * @param {String} value 要复制的内容
+           * @returns void
+           */
+          emit("on-failure", value);
         }
       );
     };

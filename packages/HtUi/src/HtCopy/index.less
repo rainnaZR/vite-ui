@@ -1,8 +1,28 @@
 .ht-copy {
-    position: relative;
-    .entry{
-        position: absolute;
-        right: 5px;
-        top: 5px;
+    display: flex;
+    flex-direction: column;
+    .button{
+        margin: 0 0 12px;
+    }
+    .content{
+        flex: 1;
+    }
+    &-bottom{
+        flex-direction: column-reverse;
+        .button{
+            margin: 12px 0 0;
+        }
+    }
+    &-left{
+        flex-direction: row;
+        .button{
+            margin: 0 15px 0 0;
+        }
+    }
+    &-right{
+        flex-direction: row-reverse;
+        .button{
+            margin: 0 0 0 15px;
+        }
     }
 }

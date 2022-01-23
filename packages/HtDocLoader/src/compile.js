@@ -242,7 +242,11 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
                     if (targetProp) {
                       const targetBody = targetProp[0].value.body;
                       const { code } = generate.default(targetBody);
-                      result.content[keyName] = JSON.stringify(code);
+                      // 去除空白字符，换行符，首尾引号等  code: "{\n  buttonPosition: \"top\"\n}"
+                      result.content[keyName] = JSON.stringify(code)
+                        ?.replace(/\\n(\s*)/g, "")
+                        ?.replace(/^"/, "")
+                        ?.replace(/"$/, "");
                     }
                   } catch (error) {}
                 }
