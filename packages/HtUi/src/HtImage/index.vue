@@ -5,7 +5,7 @@
       :width="data.width"
       :height="data.height"
       :alt="data.alt"
-      :style="[`object-fit: ${data.fill || 'cover'};`, data.cssStyle]"
+      :style="[`object-fit: ${data.fit || 'cover'};`, data.cssStyle]"
       @load="onLoad"
       @error="onError"
     />
