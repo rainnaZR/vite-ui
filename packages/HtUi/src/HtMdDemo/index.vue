@@ -7,7 +7,7 @@
         <ht-button class="f-mr5" @click="onViewSource" :data="{ size: 'small' }"
           >查看源码</ht-button
         >
-        <ht-button @click="onCopy" :data="{ size: 'small' }"
+        <ht-button @click="onCopySource" :data="{ size: 'small' }"
           >复制源码</ht-button
         >
       </div>
@@ -47,7 +47,7 @@ export default defineComponent({
      * @param {Object} event MouseEvent对象
      * @returns void
      * */
-    const onCopy = (e: any) => {
+    const onCopySource = (e: any) => {
       const node = e.target.parentNode?.parentNode;
       const elem = node.querySelector(".vuedoc__code");
       const value = elem?.textContent!?.slice(0, -1);
@@ -59,7 +59,7 @@ export default defineComponent({
 
     return {
       onViewSource,
-      onCopy,
+      onCopySource,
     };
   },
 });

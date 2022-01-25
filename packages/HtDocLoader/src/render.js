@@ -6,7 +6,7 @@ class RenderMd {
         name: "属性",
         desc: "说明",
         type: "类型",
-        required: "是否必填项",
+        required: "必填",
         optional: "可选值",
         default: "默认值",
         tsPropType: "tsPropType",
