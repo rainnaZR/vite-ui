@@ -1,23 +1,50 @@
 <template>
-  <div :class="['ht-tab', `ht-tab-${data.direction}`]">
-    <!-- 正文插槽 -->
-    <slot :scope="data">
+  <ul :class="['ht-tab', `ht-tab-${data.direction}`]">
+    <li v-for="(tab, index) in data.list" :key="index">
       <div
-        v-for="(tab, index) in data.list"
-        :key="index"
         :class="[
-          'item',
+          'content',
           {
-            'item-curr': data.currentValue == tab.value,
+            'content-curr': data.currentValue[0] === tab.value,
           },
         ]"
-        :style="onGetStyle(tab)"
+        :style="onGetStyle(data.currentValue[0] === tab.value)"
         @click="onTabClick(tab, index)"
       >
-        {{ tab.label }}
+        <!-- 左侧图标插槽 -->
+        <slot name="icon" :scope="data">
+          <span v-if="tab.icon" :class="`u-icon ${tab.icon} f-mr10`"></span>
+        </slot>
+        <!-- 内容默认插槽 -->
+        <slot :scope="data">
+          <span class="label">{{ tab.label }}</span>
+        </slot>
+        <!-- 下拉子菜单 -->
+        <span
+          v-if="tab.children && tab.children.length"
+          class="u-icon u-icon-arrowbottom f-ml10"
+        ></span>
       </div>
-    </slot>
-  </div>
+
+      <!-- 子菜单列表 -->
+      <ul v-if="tab.children && tab.children.length" class="children">
+        <div
+          v-for="(child, childIndex) in tab.children"
+          v-bind:key="`${index}-${childIndex}`"
+          :class="[
+            'child',
+            {
+              'child-curr': data.currentValue[1] === child.value,
+            },
+          ]"
+          :style="onGetStyle(data.currentValue[1] === child.value)"
+          @click="onSubTabClick(child, childIndex)"
+        >
+          <span class="label">{{ child.label }}</span>
+        </div>
+      </ul>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
@@ -42,15 +69,13 @@ export default defineComponent({
   setup(props, { emit }) {
     /**
      * 获取tab样式
-     * @param {Object} tab TabItem对象
+     * @param {Boolean} isCurrent 是否是选中状态
      * @returns {Object} tab样式
      */
-    const onGetStyle = (tab: TabItem) => {
-      const isCurrent = props.data.currentValue === tab.value;
+    const onGetStyle = (isCurrent: Boolean) => {
       const color = isCurrent ? props.data.activeColor : props.data.color;
       return {
         color,
-        borderColor: isCurrent ? color : "transparent",
       };
     };
 

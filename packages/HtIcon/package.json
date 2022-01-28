@@ -1,6 +1,6 @@
 {
   "name": "@htfed/icon",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "iconfont library",
   "main": "index.css",
   "style": "index.css",

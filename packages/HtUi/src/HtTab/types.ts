@@ -3,6 +3,8 @@ import { PublicProps } from "../types";
 export interface TabItem {
   label: string; // tab名称
   value?: string | number; // tab值
+  icon?: string; // icon图标
+  children?: Array<TabItem>; // 子tab列表
 }
 
 export interface TabData {

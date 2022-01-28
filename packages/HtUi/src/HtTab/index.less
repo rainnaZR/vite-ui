@@ -1,25 +1,32 @@
-
 @import "../theme/variables.less";
 
 .ht-tab {
     display: flex;
     flex-direction: row;
     font-size: @tab-font-size;
-    .item{
-        padding: 0 10px;
-        margin: 0 10px;
-        border-bottom: 2px solid transparent;
-        color: @tab-color;
+    line-height: @tab-line-height;
+    color: @tab-color;
+    .content{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px 20px;
         cursor: pointer;
+        .label{
+            flex: 1;
+            white-space: nowrap;
+        }
         &-curr{
-            border-color: @tab-active-color;
             color: @tab-active-color;
+        }
+    }
+    .child{
+        padding: 10px 20px 10px 60px;
+        &-curr{
+            background-color: @tab-active-color;
         }
     }
     &-column{
         flex-direction: column;
-        .item{
-            margin: 0 0 15px;
-        }
     }
 }
