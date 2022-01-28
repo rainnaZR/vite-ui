@@ -76,7 +76,7 @@ const keyFormat = (str, type) => {
 
 // 下划线转驼峰
 const dataFormat = (data, options = { type: "underlineToHump" }) => {
-  if (!data) return;
+  if (data === undefined) return;
   if (Array.isArray(data)) {
     return data.map((item) => dataFormat(item, options));
   }
