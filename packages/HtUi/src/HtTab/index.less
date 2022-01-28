@@ -11,19 +11,25 @@
         flex-direction: row;
         align-items: center;
         padding: 10px 20px;
-        cursor: pointer;
         .label{
             flex: 1;
             white-space: nowrap;
         }
+        .u-icon{
+            transform: rotate(0deg);
+        }
         &-curr{
             color: @tab-active-color;
+            .u-icon{
+                transform: rotate(180deg);
+            }
         }
     }
     .child{
         padding: 10px 20px 10px 60px;
         &-curr{
-            background-color: @tab-active-color;
+            color: @tab-active-color;
+            background-color: @tab-active-bg-color;
         }
     }
     &-column{

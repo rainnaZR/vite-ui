@@ -1,15 +1,16 @@
 <template>
-  <ul :class="['ht-tab', `ht-tab-${data.direction}`]">
-    <li v-for="(tab, index) in data.list" :key="index">
+  <div :class="['ht-tab', `ht-tab-${data.direction}`]">
+    <div v-for="(tab, index) in data.list" :key="index">
       <div
         :class="[
           'content',
           {
             'content-curr': data.currentValue[0] === tab.value,
           },
+          'f-curp',
         ]"
-        :style="onGetStyle(data.currentValue[0] === tab.value)"
-        @click="onTabClick(tab, index)"
+        :style="onGetStyle(tab, 0)"
+        @click="onTabClick(tab, index, 0)"
       >
         <!-- 左侧图标插槽 -->
         <slot name="icon" :scope="data">
@@ -27,7 +28,16 @@
       </div>
 
       <!-- 子菜单列表 -->
-      <ul v-if="tab.children && tab.children.length" class="children">
+      <div
+        v-if="tab.children && tab.children.length"
+        class="children f-trans f-oh"
+        :style="{
+          height:
+            data.currentValue[0] === tab.value
+              ? `${tab.children.length * itemHeight}px`
+              : '0px',
+        }"
+      >
         <div
           v-for="(child, childIndex) in tab.children"
           v-bind:key="`${index}-${childIndex}`"
@@ -36,15 +46,16 @@
             {
               'child-curr': data.currentValue[1] === child.value,
             },
+            'f-curp',
           ]"
-          :style="onGetStyle(data.currentValue[1] === child.value)"
-          @click="onSubTabClick(child, childIndex)"
+          :style="onGetStyle(child, 1)"
+          @click="onTabClick(child, childIndex, 1)"
         >
           <span class="label">{{ child.label }}</span>
         </div>
-      </ul>
-    </li>
-  </ul>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -67,15 +78,25 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const itemHeight = 48;
+
     /**
      * 获取tab样式
-     * @param {Boolean} isCurrent 是否是选中状态
+     * @parma {Object} tab 当前tab对象
+     * @param {Number} depth 当前点击的tab深度
      * @returns {Object} tab样式
      */
-    const onGetStyle = (isCurrent: Boolean) => {
+    const onGetStyle = (tab: TabItem, depth: number) => {
+      const currentValue: any = props.data?.currentValue;
+      const isCurrent = tab.value === currentValue[depth];
       const color = isCurrent ? props.data.activeColor : props.data.color;
+      const backgroundColor =
+        isCurrent && (depth > 0 || (!depth && !tab.children))
+          ? props.data.activeBgColor
+          : "transparent";
       return {
         color,
+        backgroundColor,
       };
     };
 
@@ -83,26 +104,33 @@ export default defineComponent({
      * tab点击方法
      * @param {Object} tab 当前点击的tabItem对象
      * @param {Number} index 当前点击的tab索引值
+     * @param {Number} depth 当前点击的tab深度
      * @returns void
      */
-    const onTabClick = (tab: TabItem, index: number) => {
-      if (props.data.currentValue === tab.value) return;
-
+    const onTabClick = (tab: TabItem, index: number, depth: number) => {
+      const currentValue: any = props.data?.currentValue;
+      const params =
+        !depth && !tab.children
+          ? [tab.value]
+          : !depth && tab.children
+          ? [tab.value, tab.children[0].value]
+          : [currentValue[0], tab.value];
       /**
        * 当前tab点击的value值更新
-       * @param {String, Number} value 当前点击tab的value值
+       * @param {Array} params 当前点击tab的value值数组
        */
-      emit("update:currentValue", tab.value);
+      emit("update:currentValue", params);
 
       /**
        * tab事件点击触发
        * @param {Object} tab 当前点击的tabItem对象
        * @param {Number} index 当前点击的tab索引值
+       * @param {Number} depth 当前点击的tab深度
        */
-      emit("on-change", tab, index);
+      emit("on-change", tab, index, depth);
     };
 
-    return { onGetStyle, onTabClick };
+    return { itemHeight, onGetStyle, onTabClick };
   },
 });
 </script>
