@@ -48,7 +48,35 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-tab style="width: 100px" :data="{direction: 'column', list: [{label: 'tab1', value: 1},{label: 'tab2', value: 2}, {label: 'tab3', value: 3}, {label: 'tab4', value: 4}], currentValue: 1, color: '#666', activeColor: '#f00'}" />
+    <ht-tab style="width: 100px" v-model:currentValue="data.currentValue" :data="data" @on-change="onClickTab" />
 </template>
+
+<script>
+import { reactive } from 'vue'
+export default {
+    setup(){
+        const data = reactive({
+            direction: 'column',
+            list: [{
+                label: 'tab1', 
+                value: 1
+            },{
+                label: 'tab2', 
+                value: 2
+            },{
+                label: 'tab3', 
+                value: 3
+            }], 
+            currentValue: 2, 
+            color: '#666', 
+            activeColor: '#f00'
+        })
+        return {
+            data,
+            onClickTab: (tab, index) => alert(`第${index+1}个导航点击，导航label值 '${tab.label}'`)
+        }
+    }
+}
+</script>
 ```
 :::
