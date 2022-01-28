@@ -82,7 +82,7 @@ export default defineComponent({
 
     /**
      * 获取tab样式
-     * @parma {Object} tab 当前tab对象
+     * @param {Object} tab 当前tab对象
      * @param {Number} depth 当前点击的tab深度
      * @returns {Object} tab样式
      */

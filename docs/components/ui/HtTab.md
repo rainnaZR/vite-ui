@@ -204,6 +204,10 @@ export default {
                 label: 'tab3', 
                 value: 3,
                 icon: 'u-icon-edit',
+            },{
+                label: 'tab4', 
+                value: 4,
+                icon: 'u-icon-edit',
             }], 
             currentValue: ['2', '2-1'],
         })
