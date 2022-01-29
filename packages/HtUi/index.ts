@@ -1,6 +1,7 @@
 import type { App } from "vue";
 
 /* 基础组件 */
+import HtBreadCrumb from "./src/HtBreadCrumb"; // 面包屑
 import HtImage from "./src/HtImage"; // 图片
 import HtTab from "./src/HtTab"; // 图片
 import HtHeader from "./src/HtHeader"; // 头部
@@ -10,6 +11,7 @@ import HtCopy from "./src/HtCopy"; // 复制
 import HtMdDemo from "./src/HtMdDemo"; // 文档demo
 
 const components: any[] = [
+  HtBreadCrumb,
   HtImage,
   HtTab,
   HtHeader,
@@ -29,7 +31,16 @@ const install = (app: App) => {
   components.forEach((component) => app.component(component.name, component));
 };
 
-export { HtImage, HtTab, HtHeader, HtButton, HtCountDown, HtCopy, HtMdDemo };
+export {
+  HtBreadCrumb,
+  HtImage,
+  HtTab,
+  HtHeader,
+  HtButton,
+  HtCountDown,
+  HtCopy,
+  HtMdDemo,
+};
 export default {
   install,
   ...components,
