@@ -23,7 +23,7 @@
         <!-- 下拉子菜单 -->
         <span
           v-if="tab.children && tab.children.length"
-          class="u-icon u-icon-arrowbottom f-ml10"
+          class="u-icon u-icon-arrowbottom f-ml10 f-trans"
         ></span>
       </div>
 
@@ -102,7 +102,7 @@ export default defineComponent({
 
     /**
      * tab点击方法
-     * @param {Object} tab 当前点击的tabItem对象
+     * @param {Object} tab 当前点击的tab对象
      * @param {Number} index 当前点击的tab索引值
      * @param {Number} depth 当前点击的tab深度
      * @returns void
@@ -113,7 +113,9 @@ export default defineComponent({
         !depth && !tab.children
           ? [tab.value]
           : !depth && tab.children
-          ? [tab.value, tab.children[0].value]
+          ? tab.value === currentValue[0]
+            ? [currentValue[0], currentValue[1]]
+            : [tab.value, tab.children[0].value]
           : [currentValue[0], tab.value];
       /**
        * 当前tab点击的value值更新
@@ -123,7 +125,7 @@ export default defineComponent({
 
       /**
        * tab事件点击触发
-       * @param {Object} tab 当前点击的tabItem对象
+       * @param {Object} tab 当前点击的tab对象
        * @param {Number} index 当前点击的tab索引值
        * @param {Number} depth 当前点击的tab深度
        */

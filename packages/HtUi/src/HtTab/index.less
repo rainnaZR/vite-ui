@@ -15,18 +15,19 @@
             flex: 1;
             white-space: nowrap;
         }
-        .u-icon{
+        .u-icon-arrowbottom{
             transform: rotate(0deg);
         }
         &-curr{
             color: @tab-active-color;
-            .u-icon{
+            .u-icon-arrowbottom{
                 transform: rotate(180deg);
             }
         }
     }
     .child{
-        padding: 10px 20px 10px 60px;
+        padding: 10px;
+        text-align: center;
         &-curr{
             color: @tab-active-color;
             background-color: @tab-active-bg-color;
@@ -34,5 +35,9 @@
     }
     &-column{
         flex-direction: column;
+        .child{
+            padding: 10px 20px 10px 60px;
+            text-align: left;
+        }
     }
 }
