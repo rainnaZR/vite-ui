@@ -21,7 +21,6 @@ export default {
             name: "客户列表",
         },{
             name: "客户详情",
-            isActive: true,
         }]
     });
     return { breadCrumbData };
@@ -52,7 +51,6 @@ export default {
             name: "客户列表",
         },{
             name: "客户详情",
-            isActive: true,
         }],
         separator: "|",
     });
@@ -84,7 +82,6 @@ export default {
             name: "客户列表",
         },{
             name: "客户详情",
-            isActive: true,
         }],
         color: "#f1c2a2",
         activeColor: "#f60",

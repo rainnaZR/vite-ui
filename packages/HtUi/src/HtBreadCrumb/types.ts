@@ -2,7 +2,6 @@ import { PublicProps } from "../types";
 
 export interface BreadCrumbItem {
   name: string; // 面包屑名称
-  isActive?: boolean; // 当前面包屑是否选中
 }
 
 export interface BreadCrumbData {

@@ -6,12 +6,16 @@
       class="item"
       @click="onItemClick(item, index)"
     >
-      <span class="separator" v-if="index !== 0">{{
+      <span v-if="index !== 0" class="separator">{{
         data.separator || defaultSeparator
       }}</span>
       <span
-        :class="['name', { 'name-curr': item.isActive }]"
-        :style="`color: ${item.isActive ? data.activeColor : data.color}`"
+        class="name"
+        :style="`color: ${
+          index === data.list.length - 1
+            ? data.activeColor || data.color
+            : data.color
+        }`"
       >
         <!-- 默认内容插槽 -->
         <slot :scope="data">

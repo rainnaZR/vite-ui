@@ -4,17 +4,21 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    .item{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        &:last-child .name{
+            color: @bread-crumb-active-color;
+        }
+    }
     .name{
         color: @bread-crumb-color;
         font-size: @bread-crumb-font-size;
         line-height: @bread-crumb-line-height;
-        &-curr{
-            color: @bread-crumb-active-color;
-        }
     }
     .separator{
         margin: 0 8px;
-        vertical-align: middle;
         color: @bread-crumb-separator-color;
         font-size: @bread-crumb-separator-font-size;
     }
