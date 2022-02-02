@@ -1,5 +1,7 @@
 const fs = require("fs-extra");
 const path = require("path");
+// 生成字体图标配置项
+require("./icon.config.ts");
 const DocLoader = require("@htfed/doc-loader");
 // const DocLoader = require("../packages/HtDocLoader");
 
