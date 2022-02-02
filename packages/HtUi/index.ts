@@ -4,6 +4,7 @@ import type { App } from "vue";
 import HtBreadCrumb from "./src/HtBreadCrumb"; // 面包屑
 import HtImage from "./src/HtImage"; // 图片
 import HtTab from "./src/HtTab"; // 图片
+import HtIcon from "./src/HtIcon"; // Iconfont图标
 import HtHeader from "./src/HtHeader"; // 头部
 import HtButton from "./src/HtButton"; // 按钮
 import HtCountDown from "./src/HtCountdown"; // 倒计时
@@ -14,6 +15,7 @@ const components: any[] = [
   HtBreadCrumb,
   HtImage,
   HtTab,
+  HtIcon,
   HtHeader,
   HtButton,
   HtCountDown,
@@ -35,6 +37,7 @@ export {
   HtBreadCrumb,
   HtImage,
   HtTab,
+  HtIcon,
   HtHeader,
   HtButton,
   HtCountDown,
