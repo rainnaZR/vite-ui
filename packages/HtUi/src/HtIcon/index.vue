@@ -1,12 +1,11 @@
 <template>
-  <i
-    :class="`ht-icon u-icon ${data.name}`"
-    :style="data.style"
-    @click="onClick"
-  >
-    <!-- 默认内容插槽 -->
-    <slot></slot>
-  </i>
+  <div class="ht-icon">
+    <i :class="`u-icon ${data.name}`" :style="data.style" @click="onClick"></i>
+    <span class="label f-ml5">
+      <!-- 默认内容插槽 -->
+      <slot></slot>
+    </span>
+  </div>
 </template>
 
 <script lang="ts">

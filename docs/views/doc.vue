@@ -151,5 +151,11 @@ export default defineComponent({
       margin: 0 0 20px;
     }
   }
+  .icon-demo {
+    .ht-icon {
+      display: inline-block;
+      margin: 0 20px 0 0;
+    }
+  }
 }
 </style>
