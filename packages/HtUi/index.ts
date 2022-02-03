@@ -10,6 +10,7 @@ import HtButton from "./src/HtButton"; // 按钮
 import HtCountDown from "./src/HtCountdown"; // 倒计时
 import HtCopy from "./src/HtCopy"; // 复制
 import HtMdDemo from "./src/HtMdDemo"; // 文档demo
+import HtInput from "./src/HtInput"; // 输入框
 
 const components: any[] = [
   HtBreadCrumb,
@@ -21,6 +22,7 @@ const components: any[] = [
   HtCountDown,
   HtCopy,
   HtMdDemo,
+  HtInput,
 ];
 
 /**
@@ -43,6 +45,7 @@ export {
   HtCountDown,
   HtCopy,
   HtMdDemo,
+  HtInput,
 };
 export default {
   install,
