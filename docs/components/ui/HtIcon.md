@@ -10,7 +10,7 @@
 ::: Demo
 ```vue demo
 <template>
-  <div class="icon-demo">
+  <div class="icon-demo icon-demo-1">
     <ht-icon :data="{ name: 'u-icon-bottom' }" />
     <ht-icon :data="{ name: 'u-icon-bottom', style: 'color: red' }" />
     <ht-icon :data="{ name: 'u-icon-bottom', style: 'font-size: 24px;' }" />
@@ -28,12 +28,12 @@
 ::: Demo
 ```vue demo
 <template>
-  <ht-icon v-for="(name, index) in iconList" :key="index" :data="{ name }">{{name}}</ht-icon>
+  <div class="icon-demo">
+    <ht-icon v-for="(name, index) in iconList" :key="index" :data="{ name }">{{name}}</ht-icon>
+  </div>
 </template>
 
-
 <script>
-import { reactive } from 'vue'
 import iconList from './icon.js'
 
 export default {

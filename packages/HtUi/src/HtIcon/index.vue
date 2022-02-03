@@ -1,6 +1,6 @@
 <template>
-  <div class="ht-icon">
-    <i :class="`u-icon ${data.name}`" :style="data.style" @click="onClick"></i>
+  <div class="ht-icon" @click="onClick">
+    <i :class="`u-icon ${data.name}`" :style="data.style"></i>
     <span class="label f-ml5">
       <!-- 默认内容插槽 -->
       <slot></slot>

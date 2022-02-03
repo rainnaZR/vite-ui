@@ -153,6 +153,9 @@ export default defineComponent({
   }
   .icon-demo {
     .ht-icon {
+      margin: 0 0 10px;
+    }
+    &-1 .ht-icon {
       display: inline-block;
       margin: 0 20px 0 0;
     }
