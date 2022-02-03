@@ -14,6 +14,7 @@
     <ht-icon :data="{ name: 'u-icon-bottom' }" />
     <ht-icon :data="{ name: 'u-icon-bottom', style: 'color: red' }" />
     <ht-icon :data="{ name: 'u-icon-bottom', style: 'font-size: 24px;' }" />
+    <ht-icon :data="{ name: 'u-icon-bottom' }">置底</ht-icon>
   </div>
 </template>
 ```

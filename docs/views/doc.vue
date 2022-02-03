@@ -157,7 +157,7 @@ export default defineComponent({
     }
     &-1 .ht-icon {
       display: inline-block;
-      margin: 0 20px 0 0;
+      margin: 0 30px 0 0;
     }
   }
 }
