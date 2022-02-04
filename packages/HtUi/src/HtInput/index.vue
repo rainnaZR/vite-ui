@@ -1,15 +1,19 @@
 <template>
-  <div class="ht-input" :style="`${data.style}`">
-    <!-- 输入框左侧图标插槽 -->
-    <slot name="prepend"></slot>
+  <div class="ht-input" :style="data.wrapStyle">
+    <!-- 输入框头部插槽 -->
+    <slot name="prepend" :scope="data"></slot>
     <textarea
       v-if="data.type === 'textarea'"
       class="textarea"
       :style="onGetStyle()"
+      :rows="data.rows || 5"
+      :name="data.name"
       v-model="inputVal"
       :placeholder="data.placeholder || '请输入...'"
       :readonly="data.readonly"
       :disabled="data.disabled"
+      :autofocus="data.autofocus"
+      :autocomplete="data.autocomplete"
       :maxlength="data.maxLength || -1"
       @focus="onFocus"
       @blur="onBlur"
@@ -28,10 +32,13 @@
       ]"
       :style="onGetStyle()"
       :type="inputType"
+      :name="data.name"
       v-model="inputVal"
       :placeholder="data.placeholder || '请输入...'"
       :readonly="data.readonly"
       :disabled="data.disabled"
+      :autofocus="data.autofocus"
+      :autocomplete="data.autocomplete"
       :maxlength="data.maxLength || -1"
       @focus="onFocus"
       @blur="onBlur"
@@ -39,8 +46,10 @@
       @input="onInput"
     />
     <div class="action">
+      <!-- 输入框前缀插槽 -->
+      <slot name="prefix" :scope="data"></slot>
       <!-- 自定义前缀icon名称 -->
-      <span v-if="data.prefixIcon" class="f-curp">
+      <span v-if="data.prefixIcon" class="f-curp f-ml5">
         <ht-icon
           :data="{ name: data.prefixIcon }"
           @click="onActionClick('prefixIcon')"
@@ -84,9 +93,11 @@
           @click="onActionClick('suffixIcon')"
         />
       </span>
+      <!-- 输入框后缀插槽 -->
+      <slot name="suffix" :scope="data"></slot>
     </div>
-    <!-- 输入框右侧图标插槽 -->
-    <slot name="append"></slot>
+    <!-- 输入框尾部插槽 -->
+    <slot name="append" :scope="data"></slot>
   </div>
 </template>
 
@@ -129,7 +140,7 @@ export default defineComponent({
       let paddingLeft = 10;
       let leftActionCount = 0;
       props.data.prefixIcon && leftActionCount++; // 自定义icon
-      paddingLeft += (actionWidth - 5) * leftActionCount;
+      paddingLeft += actionWidth * leftActionCount;
 
       let paddingRight = 10;
       props.data.maxLength && props.data.maxLength > 0 && (paddingRight = 45);
@@ -152,6 +163,7 @@ export default defineComponent({
           ? props.data.focusBorderColor || props.data.borderColor
           : props.data.borderColor,
         color: props.data.color,
+        ...(props.data.inputStyle || {}),
       };
     };
 
@@ -165,9 +177,10 @@ export default defineComponent({
       isFocus.value = true;
       /**
        * 输入框focus事件触发
+       * @param {String} value 输入框value值
        * @param {Object} event MouseEvent对象
        */
-      emit("on-focus", e);
+      emit("on-focus", inputVal.value, e);
     };
 
     /**
@@ -180,9 +193,10 @@ export default defineComponent({
       isFocus.value = false;
       /**
        * 输入框blur事件触发
+       * @param {String} value 输入框value值
        * @param {Object} event MouseEvent对象
        */
-      emit("on-blur", e);
+      emit("on-blur", inputVal.value, e);
     };
 
     /**
@@ -194,9 +208,10 @@ export default defineComponent({
       if (props.data.disabled) return;
       /**
        * 输入框change事件触发
+       * @param {String} value 输入框value值
        * @param {Object} event MouseEvent对象
        */
-      emit("on-change", e);
+      emit("on-change", inputVal.value, e);
     };
 
     /**
@@ -208,9 +223,10 @@ export default defineComponent({
       if (props.data.disabled) return;
       /**
        * 输入框input事件触发
+       * @param {String} value 输入框value值
        * @param {Object} event MouseEvent对象
        */
-      emit("on-input", e);
+      emit("on-input", inputVal.value, e);
     };
 
     /**
