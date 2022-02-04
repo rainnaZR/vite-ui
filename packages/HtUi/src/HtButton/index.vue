@@ -34,7 +34,7 @@ export default defineComponent({
   props: {
     data: {
       type: Object as PropType<ButtonData>,
-      required: true,
+      required: false,
       default: () => ({
         type: "default",
         size: "normal",

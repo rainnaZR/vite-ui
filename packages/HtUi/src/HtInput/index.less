@@ -1,3 +1,42 @@
 @import "../theme/variables.less";
 
-.ht-input{}
+.ht-input{
+    position: relative;
+    .input, .textarea{
+        width: 100%;
+        padding: @input-padding-top @input-padding-left;
+        border: 1px solid @input-border-color;
+        border-radius: @input-border-radius;
+        box-sizing: border-box;
+        font-size: @input-font-size;
+        line-height: @input-line-height;
+        color: @input-color;
+        &-number{
+            padding-right: 0;
+        }
+        &-tips-length{
+            padding-right: 40px;
+        }
+        &-tips-clearable{
+            padding-right: 30px;
+        }
+        &-disabled{
+            color: @input-disabled-color;
+        }
+        &:focus{
+            border-color: @input-focus-border-color;
+            box-shadow: 0 0 0 2px fade(@input-focus-border-color, 20%);
+        }
+    }
+    .textarea{
+        min-height: 150px;
+    }
+    .tips{
+        position: absolute;
+        right: 5px;
+        top: 0;
+        color: @input-tips-color;
+        line-height: 34px;
+        font-size: 12px;
+    }
+}
