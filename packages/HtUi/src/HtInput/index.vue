@@ -4,11 +4,11 @@
     <slot name="prepend" :scope="data"></slot>
     <textarea
       v-if="data.type === 'textarea'"
+      v-model="inputVal"
       class="textarea"
       :style="onGetStyle()"
       :rows="data.rows || 5"
       :name="data.name"
-      v-model="inputVal"
       :placeholder="data.placeholder || '请输入...'"
       :readonly="data.readonly"
       :disabled="data.disabled"
@@ -23,6 +23,7 @@
     </textarea>
     <input
       v-else
+      v-model="inputVal"
       :class="[
         'input',
         `input-${data.type || 'type'}`,
@@ -33,7 +34,6 @@
       :style="onGetStyle()"
       :type="inputType"
       :name="data.name"
-      v-model="inputVal"
       :placeholder="data.placeholder || '请输入...'"
       :readonly="data.readonly"
       :disabled="data.disabled"
@@ -49,10 +49,10 @@
       <!-- 输入框前缀插槽 -->
       <slot name="prefix" :scope="data"></slot>
       <!-- 自定义前缀icon名称 -->
-      <span v-if="data.prefixIcon" class="f-curp f-ml5">
+      <span v-if="data.prefixIcon" class="f-curp">
         <ht-icon
           :data="{ name: data.prefixIcon }"
-          @click="onActionClick('prefixIcon')"
+          @click="onAction('prefixIcon')"
         />
       </span>
     </div>
@@ -65,7 +65,7 @@
       <span v-if="data.clearable" class="f-curp">
         <ht-icon
           :data="{ name: 'u-icon-clear' }"
-          @click="onActionClick('clearable')"
+          @click="onAction('clearable')"
         />
       </span>
       <!-- 密码显示/隐藏icon -->
@@ -76,21 +76,21 @@
               inputType === 'password' ? 'u-icon-hidePreview' : 'u-icon-preview'
             }`,
           }"
-          @click="onActionClick('password')"
+          @click="onAction('password')"
         />
       </span>
       <!-- 搜索icon -->
       <span v-if="data.search" class="f-curp">
         <ht-icon
           :data="{ name: 'u-icon-search' }"
-          @click="onActionClick('search')"
+          @click="onAction('search')"
         />
       </span>
       <!-- 自定义后缀icon名称 -->
       <span v-if="data.suffixIcon" class="f-curp">
         <ht-icon
           :data="{ name: data.suffixIcon }"
-          @click="onActionClick('suffixIcon')"
+          @click="onAction('suffixIcon')"
         />
       </span>
       <!-- 输入框后缀插槽 -->
@@ -136,14 +136,15 @@ export default defineComponent({
      * @returns {Object} style 输入框样式
      */
     const onGetStyle = (): any => {
-      const actionWidth = 22;
+      const actionWidth = 25;
+
       let paddingLeft = 10;
       let leftActionCount = 0;
       props.data.prefixIcon && leftActionCount++; // 自定义icon
       paddingLeft += actionWidth * leftActionCount;
 
       let paddingRight = 10;
-      props.data.maxLength && props.data.maxLength > 0 && (paddingRight = 45);
+      props.data.maxLength && props.data.maxLength > 0 && (paddingRight += 35);
       let rightActionCount = 0;
       props.data.clearable && rightActionCount++; // 清除icon
       props.data.password && rightActionCount++; // 密码切换icon
@@ -231,10 +232,10 @@ export default defineComponent({
 
     /**
      * 操作行为点击事件
-     * @param {String} type 操作行为类型：clearable
-     * @return void
+     * @param {String} type 操作行为类型
+     * @returns void
      */
-    const onActionClick = (type: string) => {
+    const onAction = (type: string) => {
       switch (type) {
         case "clearable":
           inputVal.value = "";
@@ -248,7 +249,7 @@ export default defineComponent({
       }
       /**
        * 操作行为点击事件触发
-       * @param {String} type 操作行为类型：clearable
+       * @param {String} type 操作行为类型
        * @param {String} value 输入框value值
        */
       emit("on-action", type, inputVal.value);
@@ -283,7 +284,7 @@ export default defineComponent({
       onBlur,
       onChange,
       onInput,
-      onActionClick,
+      onAction,
     };
   },
 });

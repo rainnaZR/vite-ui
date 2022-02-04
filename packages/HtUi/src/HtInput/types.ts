@@ -1,6 +1,8 @@
 import { PublicProps } from "../types";
 
 export interface InputData {
+  wrapStyle?: any; // 输入框容器自定义样式
+  inputStyle?: any; // 输入框自定义样式
   modelValue: string | number; // input输入框中的值
   type: string; // 输入框类型
   name?: string; // 输入框名称，原生属性
@@ -19,8 +21,6 @@ export interface InputData {
   prefixIcon?: string; // 自定义前缀icon样式名称，比如u-icon-top
   suffixIcon?: string; // 自定义后缀icon样式名称，比如u-icon-top
   rows?: number; // 多行文本框时的显示行数
-  wrapStyle?: any; // 输入框容器自定义样式
-  inputStyle?: any; // 输入框自定义样式
 }
 
 export type Props = PublicProps<{
