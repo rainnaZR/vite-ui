@@ -25,15 +25,9 @@
         {
           'input-disabled': data.disabled || data.readonly,
         },
-        {
-          'input-tips-length': data.maxLength > 0,
-        },
-        {
-          'input-tips-clearable': data.clearable,
-        },
       ]"
       :style="onGetStyle()"
-      :type="data.type || 'text'"
+      :type="inputType"
       v-model="inputVal"
       :placeholder="data.placeholder || '请输入...'"
       :readonly="data.readonly"
@@ -44,14 +38,53 @@
       @change="onChange"
       @input="onInput"
     />
-    <!-- 字数展示 -->
-    <span v-if="data.maxLength > 0" class="tips">
-      {{ inputVal.length }}/{{ data.maxLength }}
-    </span>
-    <!-- 清除icon展示 -->
-    <span v-if="data.clearable" class="tips f-curp">
-      <ht-icon :data="{ name: 'u-icon-clear' }" @click="inputVal = ''" />
-    </span>
+    <div class="action">
+      <!-- 自定义前缀icon名称 -->
+      <span v-if="data.prefixIcon" class="f-curp">
+        <ht-icon
+          :data="{ name: data.prefixIcon }"
+          @click="onActionClick('prefixIcon')"
+        />
+      </span>
+    </div>
+    <div class="action action-1">
+      <!-- 字数 -->
+      <span v-if="data.maxLength > 0">
+        {{ inputVal.length }}/{{ data.maxLength }}
+      </span>
+      <!-- 清除icon -->
+      <span v-if="data.clearable" class="f-curp">
+        <ht-icon
+          :data="{ name: 'u-icon-clear' }"
+          @click="onActionClick('clearable')"
+        />
+      </span>
+      <!-- 密码显示/隐藏icon -->
+      <span v-if="data.password" class="f-curp">
+        <ht-icon
+          :data="{
+            name: `${
+              inputType === 'password' ? 'u-icon-hidePreview' : 'u-icon-preview'
+            }`,
+          }"
+          @click="onActionClick('password')"
+        />
+      </span>
+      <!-- 搜索icon -->
+      <span v-if="data.search" class="f-curp">
+        <ht-icon
+          :data="{ name: 'u-icon-search' }"
+          @click="onActionClick('search')"
+        />
+      </span>
+      <!-- 自定义后缀icon名称 -->
+      <span v-if="data.suffixIcon" class="f-curp">
+        <ht-icon
+          :data="{ name: data.suffixIcon }"
+          @click="onActionClick('suffixIcon')"
+        />
+      </span>
+    </div>
     <!-- 输入框右侧图标插槽 -->
     <slot name="append"></slot>
   </div>
@@ -59,8 +92,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from "vue";
-import { InputData } from "./types";
 import HtIcon from "../HtIcon";
+import { InputData } from "./types";
 
 // 表单中的输入框组件。
 export default defineComponent({
@@ -82,15 +115,34 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const inputType = ref<string>("text"); // 输入框类型
     const inputVal = ref<string | number>(""); // 输入框值
     const isFocus = ref(false); // 是否聚焦
+    inputType.value = props.data.password ? "password" : props.data.type;
 
     /**
      * 获取输入框样式
      * @returns {Object} style 输入框样式
      */
     const onGetStyle = (): any => {
+      const actionWidth = 22;
+      let paddingLeft = 10;
+      let leftActionCount = 0;
+      props.data.prefixIcon && leftActionCount++; // 自定义icon
+      paddingLeft += (actionWidth - 5) * leftActionCount;
+
+      let paddingRight = 10;
+      props.data.maxLength && props.data.maxLength > 0 && (paddingRight = 45);
+      let rightActionCount = 0;
+      props.data.clearable && rightActionCount++; // 清除icon
+      props.data.password && rightActionCount++; // 密码切换icon
+      props.data.search && rightActionCount++; // 搜索icon
+      props.data.suffixIcon && rightActionCount++; // 自定义icon
+      paddingRight += actionWidth * rightActionCount;
+
       return {
+        paddingLeft: `${paddingLeft}px`,
+        paddingRight: `${paddingRight}px`,
         "box-shadow": isFocus.value
           ? `0 0 4px -1px ${
               props.data.focusBorderColor || props.data.borderColor
@@ -161,6 +213,31 @@ export default defineComponent({
       emit("on-input", e);
     };
 
+    /**
+     * 操作行为点击事件
+     * @param {String} type 操作行为类型：clearable
+     * @return void
+     */
+    const onActionClick = (type: string) => {
+      switch (type) {
+        case "clearable":
+          inputVal.value = "";
+          break;
+        case "password":
+          inputType.value =
+            inputType.value === "password" ? "text" : "password";
+          break;
+        default:
+          break;
+      }
+      /**
+       * 操作行为点击事件触发
+       * @param {String} type 操作行为类型：clearable
+       * @param {String} value 输入框value值
+       */
+      emit("on-action", type, inputVal.value);
+    };
+
     // 监听参数 value 的变化
     watch(
       () => props.data.modelValue,
@@ -182,6 +259,7 @@ export default defineComponent({
     });
 
     return {
+      inputType,
       inputVal,
       isFocus,
       onGetStyle,
@@ -189,6 +267,7 @@ export default defineComponent({
       onBlur,
       onChange,
       onInput,
+      onActionClick,
     };
   },
 });

@@ -14,12 +14,6 @@
         &-number{
             padding-right: 0;
         }
-        &-tips-length{
-            padding-right: 40px;
-        }
-        &-tips-clearable{
-            padding-right: 30px;
-        }
         &-disabled{
             color: @input-disabled-color;
         }
@@ -31,12 +25,19 @@
     .textarea{
         min-height: 150px;
     }
-    .tips{
+    .action{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         position: absolute;
-        right: 5px;
+        left: 5px;
         top: 0;
-        color: @input-tips-color;
+        color: @input-action-color;
         line-height: 34px;
         font-size: 12px;
+        &-1{
+            left: auto;
+            right: 5px;
+        }
     }
 }
