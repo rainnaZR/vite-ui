@@ -160,5 +160,8 @@ export default defineComponent({
       margin: 0 30px 0 0;
     }
   }
+  .ht-input{
+    max-width: 300px;
+  }
 }
 </style>
