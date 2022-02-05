@@ -314,7 +314,8 @@ export default {
         :data="{ 
             wrapStyle: { 
                 padding: '15px', 
-                border: '1px solid rgb(158 219 127)', backgroundColor: 'rgb(233 251 225)' 
+                border: '1px solid rgb(158 219 127)', 
+                backgroundColor: 'rgb(233 251 225)',
             }
         }" 
     />
@@ -335,7 +336,8 @@ export default {
     <ht-input 
         :data="{ 
             inputStyle: { 
-                border: '1px solid rgb(158 219 127)', backgroundColor: 'rgb(233 251 225)' 
+                border: '1px solid rgb(158 219 127)', 
+                backgroundColor: 'rgb(233 251 225)', 
             }
         }" 
     />

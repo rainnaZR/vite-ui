@@ -13,9 +13,6 @@
         font-size: @input-font-size;
         line-height: @input-line-height;
         color: @input-color;
-        &-number{
-            padding-right: 0;
-        }
         &-disabled{
             color: @input-disabled-color;
         }
@@ -29,11 +26,12 @@
         flex-direction: row;
         align-items: center;
         position: absolute;
-        left: 10px;
-        top: 0;
+        left: @input-padding-left;
+        top: @input-padding-top;
+        bottom: @input-padding-top;
+        line-height: @input-line-height;
         color: @input-action-color;
-        line-height: 34px;
-        font-size: 12px;
+        font-size: @input-action-font-size;
         &-1{
             left: auto;
             right: 5px;

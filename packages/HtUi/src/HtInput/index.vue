@@ -26,7 +26,6 @@
       v-model="inputVal"
       :class="[
         'input',
-        `input-${data.type || 'type'}`,
         {
           'input-disabled': data.disabled || data.readonly,
         },
@@ -62,37 +61,37 @@
         {{ inputVal.length }}/{{ data.maxLength }}
       </span>
       <!-- 清除icon -->
-      <span v-if="data.clearable" class="f-curp">
-        <ht-icon
-          :data="{ name: 'u-icon-clear' }"
-          @click="onAction('clearable')"
-        />
-      </span>
+      <ht-icon
+        v-if="data.clearable"
+        class="f-curp"
+        :data="{ name: 'u-icon-clear' }"
+        @click="onAction('clearable')"
+      />
       <!-- 密码显示/隐藏icon -->
-      <span v-if="data.password" class="f-curp">
-        <ht-icon
-          :data="{
-            name: `${
-              inputType === 'password' ? 'u-icon-hidePreview' : 'u-icon-preview'
-            }`,
-          }"
-          @click="onAction('password')"
-        />
-      </span>
+      <ht-icon
+        v-if="data.password"
+        class="f-curp"
+        :data="{
+          name: `${
+            inputType === 'password' ? 'u-icon-hidePreview' : 'u-icon-preview'
+          }`,
+        }"
+        @click="onAction('password')"
+      />
       <!-- 搜索icon -->
-      <span v-if="data.search" class="f-curp">
-        <ht-icon
-          :data="{ name: 'u-icon-search' }"
-          @click="onAction('search')"
-        />
-      </span>
+      <ht-icon
+        v-if="data.search"
+        class="f-curp"
+        :data="{ name: 'u-icon-search' }"
+        @click="onAction('search')"
+      />
       <!-- 自定义后缀icon名称 -->
-      <span v-if="data.suffixIcon" class="f-curp">
-        <ht-icon
-          :data="{ name: data.suffixIcon }"
-          @click="onAction('suffixIcon')"
-        />
-      </span>
+      <ht-icon
+        v-if="data.suffixIcon"
+        class="f-curp"
+        :data="{ name: data.suffixIcon }"
+        @click="onAction('suffixIcon')"
+      />
       <!-- 输入框后缀插槽 -->
       <slot name="suffix" :scope="data"></slot>
     </div>
@@ -144,7 +143,7 @@ export default defineComponent({
       paddingLeft += actionWidth * leftActionCount;
 
       let paddingRight = 10;
-      props.data.maxLength && props.data.maxLength > 0 && (paddingRight += 35);
+      props.data.maxLength && props.data.maxLength > 0 && (paddingRight += 45);
       let rightActionCount = 0;
       props.data.clearable && rightActionCount++; // 清除icon
       props.data.password && rightActionCount++; // 密码切换icon
