@@ -8,7 +8,7 @@ export interface RadioItem {
 }
 
 export interface RadioData {
-  modelValue: string | number; // 单选框组选中值
+  modelValue: string | number | any[]; // 单选框组选中值
   options: RadioItem[]; // 单选框组选项列表值
   column?: number; // 每一行显示的单选框个数
   icon?: string; // 单选框icon名称

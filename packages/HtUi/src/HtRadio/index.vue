@@ -63,7 +63,7 @@ export default defineComponent({
       if (!column) return {};
 
       return {
-        width: `${100 / ~~column}%`,
+        width: `${(100 / ~~column).toFixed(2)}%`,
       };
     };
 

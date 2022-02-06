@@ -11,7 +11,8 @@ import HtCountDown from "./src/HtCountdown"; // 倒计时
 import HtCopy from "./src/HtCopy"; // 复制
 import HtMdDemo from "./src/HtMdDemo"; // 文档demo
 import HtInput from "./src/HtInput"; // 输入框
-import HtRadio from "./src/HtRadio"; // 输入框
+import HtRadio from "./src/HtRadio"; // 单选框
+import HtCheckbox from "./src/HtCheckbox"; // 多选框
 
 const components: any[] = [
   HtBreadCrumb,
@@ -25,6 +26,7 @@ const components: any[] = [
   HtMdDemo,
   HtInput,
   HtRadio,
+  HtCheckbox,
 ];
 
 /**
@@ -49,6 +51,7 @@ export {
   HtMdDemo,
   HtInput,
   HtRadio,
+  HtCheckbox,
 };
 export default {
   install,
