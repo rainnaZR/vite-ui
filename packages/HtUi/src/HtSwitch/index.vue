@@ -56,17 +56,18 @@ export default defineComponent({
     const onChange = () => {
       if (props.data.disabled) return;
 
+      const value = !props.data.modelValue;
       /**
        * 开关切换值更新
        * @param {Boolean} value 开关切换值
        */
-      emit("update:modelValue", !props.data.modelValue);
+      emit("update:modelValue", value);
 
       /**
        * 开关切换事件触发
        * @param {Boolean} value 开关切换值
        */
-      emit("on-change", !props.data.modelValue);
+      emit("on-change", value);
     };
 
     return {

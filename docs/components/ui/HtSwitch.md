@@ -11,7 +11,7 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-switch v-model:modelValue="switchData.modelValue" :data="switchData" />
+    <ht-switch v-model:modelValue="switchData.modelValue" :data="switchData" @on-change="onChange" />
 </template>
 
 <script lang="ts">
@@ -21,7 +21,8 @@ export default {
     const switchData = reactive({
       modelValue: true,
     });
-    return { switchData };
+    const onChange = value => console.log(`开关值${value}`);
+    return { switchData, onChange };
   },
 };
 </script>
