@@ -5,11 +5,15 @@
       { 'ht-switch-active': !!data.modelValue },
       { 'ht-switch-disabled': data.disabled },
       'f-curp',
+      'f-trans',
     ]"
     :style="onGetStyle()"
     @click="onChange"
   >
-    <span class="circle"></span>
+    <div
+      class="circle f-trans"
+      :style="data.circleColor ? `background: ${data.circleColor}` : ''"
+    ></div>
   </div>
 </template>
 
