@@ -1,0 +1,26 @@
+@import "../theme/variables.less";
+
+.ht-switch{
+    position: relative;
+    width: @switch-width;
+    height: @switch-height;
+    border-radius: @switch-height;
+    box-sizing: border-box;
+    background-color: @switch-background-color;
+    .circle{
+        position: absolute;
+        left: @switch-circle-position;
+        top: @switch-circle-position;
+        width: @switch-circle-width;
+        height: @switch-circle-width;
+        border-radius: @switch-circle-width;
+        background-color: @switch-circle-background-color;
+    }
+    &-active{
+        background-color: @switch-active-background-color;
+        .circle{
+            left: auto;
+            right: @switch-circle-position;
+        }
+    }
+}

@@ -13,6 +13,7 @@ import HtMdDemo from "./src/HtMdDemo"; // 文档demo
 import HtInput from "./src/HtInput"; // 输入框
 import HtRadio from "./src/HtRadio"; // 单选框
 import HtCheckbox from "./src/HtCheckbox"; // 多选框
+import HtSwitch from "./src/HtSwitch"; // 开关切换
 
 const components: any[] = [
   HtBreadCrumb,
@@ -27,6 +28,7 @@ const components: any[] = [
   HtInput,
   HtRadio,
   HtCheckbox,
+  HtSwitch,
 ];
 
 /**
@@ -52,6 +54,7 @@ export {
   HtInput,
   HtRadio,
   HtCheckbox,
+  HtSwitch,
 };
 export default {
   install,
