@@ -178,7 +178,7 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
       const { properties } = argument;
       properties.forEach((prop) => {
         // 此时所有prop.type == 'ObjectProperty'
-        const key = prop.key.name;
+        const key = prop.key?.name;
         // 获取组件注册的name名称
         if (key === "name") {
           // 执行回调，将值保存到componentInfo.name中

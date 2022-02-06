@@ -17,7 +17,7 @@ import { CountDownData, Detail } from "./types";
 
 // 倒计时组件显示。
 export default defineComponent({
-  name: "ht-count-down",
+  name: "htCountDown",
 
   props: {
     data: {

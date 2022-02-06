@@ -83,7 +83,7 @@ class DocLoader {
     const typeScriptStr =
       fs.existsSync(tsEntry) && fs.readFileSync(tsEntry, "utf8");
     // vueStr中提取template内容
-    const templateStr = vueStr.match(/<template>([\S|\s]*)<\/template>/)[1];
+    const templateStr = vueStr.match(/<template>([\S|\s]*)<\/template>/)?.[1];
 
     this.result[entry] = {
       vueStr,

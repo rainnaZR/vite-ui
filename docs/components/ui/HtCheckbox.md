@@ -1,25 +1,34 @@
-# HtRadio 单选框
+# HtCheckbox 多选框
+
+`HtCheckbox 多选框`与`HtRadio 单选框`继承自同一个组件，区别主要有以下两点：
+
+- `multiple` 多选传值true，单选传值false。
+- `modelValue` 多选时传数组，单选时传字符串或数字。
+
+
 
 ## 代码演示
 
 ### 基本用法
 
-- 组件可定义 `v-model:modelValue` 来实现单选框组值的双向绑定。
+- 组件多选属性 `multiple` 设置为true，表示多选。
+- 组件可定义 `v-model:modelValue` 来实现多选框组值的双向绑定，多选时值为数组。
 - 组件可定义 `data` 属性定义组件的配置项。
 
 
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" @on-change="onChange" />
+    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" @on-change="onChange" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const radioData = reactive({
-      modelValue: 1,
+    const checkboxData = reactive({
+      multiple: true,
+      modelValue: [1, 3],
       options: [
         {
           label: "选项1",
@@ -37,7 +46,7 @@ export default {
     });
     const onChange = (value, item, index) => console.log(`选中值${value}，当前点击框值${item.value}，点击框索引${index}`)
 
-    return { radioData, onChange };
+    return { checkboxData, onChange };
   },
 };
 </script>
@@ -45,24 +54,26 @@ export default {
 :::
 
 
+
 ### 竖排
 
-- 单选框组件修改排列方式属性`column`，值为数字，表示每一行显示的选择框数量。
+- 多选框组件修改排列方式属性`column`，值为数字，表示每一行显示的选择框数量。
 - `column`值为1效果如下：
 
 
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const radioData = reactive({
-      modelValue: 1,
+    const checkboxData = reactive({
+      multiple: true,
+      modelValue: [1],
       options: [
         {
           label: "选项1",
@@ -75,84 +86,7 @@ export default {
       ],
       column: 1,
     });
-    return { radioData };
-  },
-};
-</script>
-```
-:::
-
-### 横排一排二
-
-- `column`值为2效果如下：
-
-
-::: Demo
-```vue demo
-<template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
-</template>
-
-<script lang="ts">
-import { reactive } from 'vue'
-export default {
-  setup() {
-    const radioData = reactive({
-      modelValue: 1,
-      options: [
-        {
-          label: "选项1",
-          value: 1,
-        },
-        {
-          label: "选项2",
-          value: 2,
-        },
-      ],
-      column: 2,
-    });
-    return { radioData };
-  },
-};
-</script>
-```
-:::
-
-
-### 横排一排三
-
-- `column`值为3效果如下：
-
-
-::: Demo
-```vue demo
-<template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
-</template>
-
-<script lang="ts">
-import { reactive } from 'vue'
-export default {
-  setup() {
-    const radioData = reactive({
-      modelValue: 1,
-      options: [
-        {
-          label: "选项1",
-          value: 1,
-        },
-        {
-          label: "选项2",
-          value: 2,
-        },
-        {
-          label: "选项3",
-          value: 3,
-        },
-      ],
-      column: 3,
-    });
-    return { radioData };
+    return { checkboxData };
   },
 };
 </script>
@@ -171,15 +105,16 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const radioData = reactive({
-      modelValue: 1,
+    const checkboxData = reactive({
+      multiple: true,
+      modelValue: [1, 3],
       options: [
         {
           label: "选项1",
@@ -194,10 +129,10 @@ export default {
           value: 3,
         },
       ],
-      icon: "u-icon-hidePreview",
-      checkedIcon: "u-icon-preview",
+      icon: "u-icon-checkbox",
+      checkedIcon: "u-icon-checkboxCheck2",
     });
-    return { radioData };
+    return { checkboxData };
   },
 };
 </script>
@@ -217,15 +152,16 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const radioData = reactive({
-      modelValue: 1,
+    const checkboxData = reactive({
+      multiple: true,
+      modelValue: [1, 3],
       options: [
         {
           label: "选项1",
@@ -241,13 +177,13 @@ export default {
         },
       ],
       iconStyle: {
-        color: "#2196f3",
+        color: "#999",
       },
       checkedIconStyle: {
-        color: "#f60",
+        color: "#2196f3",
       },
     });
-    return { radioData };
+    return { checkboxData };
   },
 };
 </script>
@@ -265,15 +201,16 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const radioData = reactive({
-      modelValue: 2,
+    const checkboxData = reactive({
+      multiple: true,
+      modelValue: [2],
       options: [
         {
           label: "选项1",
@@ -290,7 +227,7 @@ export default {
         },
       ],
     });
-    return { radioData };
+    return { checkboxData };
   },
 };
 </script>
@@ -306,15 +243,16 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const radioData = reactive({
-      modelValue: 2,
+    const checkboxData = reactive({
+      multiple: true,
+      modelValue: [2],
       options: [
         {
           label: "选项1",
@@ -331,52 +269,13 @@ export default {
       ],
       disabled: true,
     });
-    return { radioData };
+    return { checkboxData };
   },
 };
 </script>
 ```
 :::
 
+## 配置说明
 
-### 插槽
-
-- 组件支持默认文本插槽，插槽作用域参数为`scope`, `index`。
-
-::: Demo
-```vue demo
-<template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData">
-        <template v-slot="detail">
-            {{ detail.index + 1 }}-{{ detail.scope.label }}
-        </template>
-    </ht-radio>
-</template>
-
-<script lang="ts">
-import { reactive } from 'vue'
-export default {
-  setup() {
-    const radioData = reactive({
-      modelValue: 1,
-      options: [
-        {
-          label: "选项1",
-          value: 1,
-        },
-        {
-          label: "选项2",
-          value: 2,
-        },
-        {
-          label: "选项3",
-          value: 3,
-        },
-      ],
-    });
-    return { radioData };
-  },
-};
-</script>
-```
-:::
+组件用法和配置项参考 [HtRadio 单选框](http://localhost:1768/doc/HtRadio)说明。

@@ -1,6 +1,6 @@
 <template>
   <!-- 文档页 -->
-  <div class="g-page f-lt2">
+  <div class="g-page">
     <!-- 头部 -->
     <div class="m-header">
       <ht-header

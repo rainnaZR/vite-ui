@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-radio">
+  <div class="ht-radio f-unselect">
     <div
       v-for="(item, index) in data.options"
       :key="index"
@@ -117,12 +117,12 @@ export default defineComponent({
       const value = props.data.multiple ? checkedValue : checkedValue[0];
       /**
        * 选择框选中值更新
-       * @param {String/Array} value 选择框组选中值，单选框为选中值/多选框为选中值的数组
+       * @param {Any} value 选择框组选中值，单选框为选中值/多选框为选中值的数组
        */
       emit("update:modelValue", value);
       /**
        * 选择框选中值更新事件触发
-       * @param {String/Array} value 选择框组选中值，单选框为选中值/多选框为选中值的数组
+       * @param {Any} value 选择框组选中值，单选框为选中值/多选框为选中值的数组
        * @param {Object} item 当前点击的选择框数据
        * @param {Number} index 当前点击的选择框索引
        */
