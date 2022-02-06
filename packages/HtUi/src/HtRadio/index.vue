@@ -71,7 +71,7 @@ export default defineComponent({
      * 获取当前radio的icon配置项
      * @param {Object} item 当前点击的radio数据
      * @param {String} type radio的配置类型
-     * @returns {String|Object} name||style 当前radio的icon图标名||当前radio的icon样式
+     * @returns {String/Object} name/style 当前radio的icon图标名/当前radio的icon样式
      */
     const onGetIcon = (item: RadioItem, type: string) => {
       if (type === "name") {
