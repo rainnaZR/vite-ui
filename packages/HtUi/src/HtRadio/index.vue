@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from "vue";
+import { defineComponent, PropType, reactive, watch } from "vue";
 import HtIcon from "../HtIcon";
 import { RadioItem, RadioData } from "./types";
 
@@ -52,11 +52,16 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const checkedValue = ref(props.data.modelValue || ""); // 当前选中radio值
+    let checkedValue = Array.isArray(props.data.modelValue)
+      ? reactive(props.data.modelValue)
+      : reactive([props.data.modelValue]); // 当前选中值
+    const defaultIcons = props.data.multiple
+      ? ["u-icon-checkbox", "u-icon-checkboxCheck"]
+      : ["u-icon-radio", "u-icon-radioCheck"]; // icon图标默认配置项
 
     /**
-     * 获取单选框样式
-     * @returns {Object} style 单选框样式
+     * 获取选择框样式
+     * @returns {Object} style 选择框样式
      */
     const onGetStyle = () => {
       const { column } = props.data;
@@ -68,53 +73,66 @@ export default defineComponent({
     };
 
     /**
-     * 获取当前radio的icon配置项
-     * @param {Object} item 当前点击的radio数据
-     * @param {String} type radio的配置类型
-     * @returns {String/Object} name/style 当前radio的icon图标名/当前radio的icon样式
+     * 获取选择框的icon配置项
+     * @param {Object} item 当前点击的选择框数据
+     * @param {String} type icon配置类型
+     * @returns {String/Object} name/style 选择框icon图标名/选择框icon样式
      */
     const onGetIcon = (item: RadioItem, type: string) => {
       if (type === "name") {
-        return item.value === checkedValue.value
-          ? props.data.checkedIcon || "u-icon-radioCheck"
-          : props.data.icon || "u-icon-radio";
+        return checkedValue.includes(item.value)
+          ? props.data.checkedIcon || defaultIcons[1]
+          : props.data.icon || defaultIcons[0];
       }
-      return item.value === checkedValue.value
+      return checkedValue.includes(item.value)
         ? props.data.checkedIconStyle
         : props.data.iconStyle;
     };
 
     /**
-     * 单选框点击事件
-     * @param {Object} item 当前点击的radio数据
-     * @param {Number} index 当前点击的radio索引
+     * 选择框点击事件
+     * @param {Object} item 当前点击的选择框数据
+     * @param {Number} index 当前点击的选择框索引
      * @returns void
      */
     const onClick = (item: RadioItem, index: number) => {
-      if (
-        props.data.disabled ||
-        item.disabled ||
-        checkedValue.value === item.value
-      )
-        return;
-      checkedValue.value = item.value;
+      if (props.data.disabled || item.disabled) return;
+
+      if (props.data.multiple) {
+        // 如果是多选
+        // 当前项已包含在选中项，则反选
+        if (checkedValue.includes(item.value)) {
+          checkedValue.splice(checkedValue.indexOf(item.value), 1);
+        } else {
+          checkedValue.push(item.value);
+        }
+      } else {
+        // 如果是单选
+        // 当前项已包含在选中项
+        if (checkedValue.includes(item.value)) return;
+        checkedValue = [];
+        checkedValue.push(item.value);
+      }
+
+      const value = props.data.multiple ? checkedValue : checkedValue[0];
       /**
-       * 单选框组选中值更新
-       * @param {String} value 单选框组选中值
+       * 选择框选中值更新
+       * @param {String/Array} value 选择框组选中值，单选框为选中值/多选框为选中值的数组
        */
-      emit("update:modelValue", item.value);
+      emit("update:modelValue", value);
       /**
-       * 单选框组值更新事件触发
-       * @param {Object} item 当前点击的radio数据
-       * @param {Number} index 当前点击的radio索引
+       * 选择框选中值更新事件触发
+       * @param {String/Array} value 选择框组选中值，单选框为选中值/多选框为选中值的数组
+       * @param {Object} item 当前点击的选择框数据
+       * @param {Number} index 当前点击的选择框索引
        */
-      emit("on-change", item, index);
+      emit("on-change", value, item, index);
     };
 
     watch(
       () => props.data.modelValue,
       (value) => {
-        checkedValue.value = value;
+        checkedValue = Array.isArray(value) ? value : [value];
       }
     );
 

@@ -8,6 +8,7 @@ export interface RadioItem {
 }
 
 export interface RadioData {
+  multiple?: boolean; // 是否是多选，单选框值为false，多选框值为true
   modelValue: string | number | any[]; // 单选框组选中值
   options: RadioItem[]; // 单选框组选项列表值
   column?: number; // 每一行显示的单选框个数
