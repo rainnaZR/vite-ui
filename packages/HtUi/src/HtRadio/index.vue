@@ -3,7 +3,13 @@
     <div
       v-for="(item, index) in data.options"
       :key="index"
-      class="item f-curp"
+      :class="[
+        'item',
+        {
+          'item-disabled': data.disabled || item.disabled,
+        },
+        'f-curp',
+      ]"
       :style="onGetStyle()"
       @click="onClick(item, index)"
     >
@@ -15,7 +21,7 @@
       />
       <div class="label">
         <!-- 默认内容插槽 -->
-        <slot :scope="data">{{ item.label }}</slot>
+        <slot :scope="item" :index="index">{{ item.label }}</slot>
       </div>
     </div>
   </div>
@@ -28,6 +34,8 @@ import { RadioItem, RadioData } from "./types";
 
 // 表单中的单选框组件。
 export default defineComponent({
+  name: "HtRadio",
+
   components: {
     HtIcon,
   },
@@ -63,7 +71,7 @@ export default defineComponent({
      * 获取当前radio的icon配置项
      * @param {Object} item 当前点击的radio数据
      * @param {String} type radio的配置类型
-     * @returns {String|Object} name 当前radio的icon图标名
+     * @returns {String|Object} name||style 当前radio的icon图标名||当前radio的icon样式
      */
     const onGetIcon = (item: RadioItem, type: string) => {
       if (type === "name") {
@@ -71,6 +79,9 @@ export default defineComponent({
           ? props.data.checkedIcon || "u-icon-radioCheck"
           : props.data.icon || "u-icon-radio";
       }
+      return item.value === checkedValue.value
+        ? props.data.checkedIconStyle
+        : props.data.iconStyle;
     };
 
     /**
@@ -80,7 +91,12 @@ export default defineComponent({
      * @returns void
      */
     const onClick = (item: RadioItem, index: number) => {
-      if (checkedValue.value === item.value) return;
+      if (
+        props.data.disabled ||
+        item.disabled ||
+        checkedValue.value === item.value
+      )
+        return;
       checkedValue.value = item.value;
       /**
        * 单选框组选中值更新

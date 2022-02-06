@@ -1,0 +1,380 @@
+# HtRadio 单选框
+
+## 代码演示
+
+### 基本用法
+
+- 组件可定义 `v-model:modelValue` 来实现单选框组值的双向绑定。
+- 组件可定义 `data` 属性定义组件的配置项。
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 1,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+        },
+        {
+          label: "单选框3",
+          value: 3,
+        },
+      ],
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
+
+
+### 竖排
+
+- 单选框组件修改排列方式属性`column`，值为数字，表示每一行显示的单选框数量。
+- `column`值为1效果如下：
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 1,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+        },
+      ],
+      column: 1,
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
+
+### 横排一排二
+
+- `column`值为2效果如下：
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 1,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+        },
+      ],
+      column: 2,
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
+
+
+### 横排一排三
+
+- `column`值为3效果如下：
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 1,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+        },
+        {
+          label: "单选框3",
+          value: 3,
+        },
+      ],
+      column: 3,
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
+
+
+### 自定义图标
+
+
+- 自定义图标包括`正常图标`和`选中图标`两种。
+- 组件显示自定义正常图标的属性`icon`，值为`样式名`。
+- 组件显示自定义选中图标的属性`checkedIcon`，值为`样式名`。
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 1,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+        },
+        {
+          label: "单选框3",
+          value: 3,
+        },
+      ],
+      icon: "u-icon-hidePreview",
+      checkedIcon: "u-icon-preview",
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
+
+
+### 自定义图标样式
+
+
+- 自定义图标样式包括`正常图标样式`和`选中图标样式`两种。
+- 组件显示自定义正常图标样式的属性`iconStyle`，值为`样式对象`。
+- 组件显示自定义选中图标样式的属性`checkedIconStyle`，值为`样式对象`。
+
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 1,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+        },
+        {
+          label: "单选框3",
+          value: 3,
+        },
+      ],
+      iconStyle: {
+        color: "#2196f3",
+      },
+      checkedIconStyle: {
+        color: "#f60",
+      },
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
+
+
+### 单个禁用
+
+- 单选框禁用分为`单个禁用`和`全部禁用`。
+- 单选框禁用属性为`disabled`，值为布尔值，默认`false`。
+- 单选框`单个禁用`效果如下：
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 2,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+          disabled: true,
+        },
+        {
+          label: "单选框3",
+          value: 3,
+        },
+      ],
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
+
+### 全部禁用
+
+- 单选框`全部禁用`效果如下：
+
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 2,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+        },
+        {
+          label: "单选框3",
+          value: 3,
+        },
+      ],
+      disabled: true,
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
+
+
+### 插槽
+
+- 组件支持默认文本插槽，插槽作用域参数为`scope`, `index`。
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData">
+        <template v-slot="detail">
+            {{ detail.index + 1 }}-{{ detail.scope.label }}
+        </template>
+    </ht-radio>
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const radioData = reactive({
+      modelValue: 1,
+      options: [
+        {
+          label: "单选框1",
+          value: 1,
+        },
+        {
+          label: "单选框2",
+          value: 2,
+        },
+        {
+          label: "单选框3",
+          value: 3,
+        },
+      ],
+    });
+    return { radioData };
+  },
+};
+</script>
+```
+:::
