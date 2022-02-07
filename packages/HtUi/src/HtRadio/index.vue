@@ -137,6 +137,7 @@ export default defineComponent({
     );
 
     return {
+      checkedValue,
       onGetStyle,
       onGetIcon,
       onClick,
