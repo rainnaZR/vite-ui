@@ -40,9 +40,11 @@
         }"
         @click="onChange(item, index)"
       >
+        <!-- 下拉选项label插槽 -->
         <slot name="label" :scope="item" :index="index">
           <div class="f-f1">{{ item.label }}</div>
         </slot>
+        <!-- 下拉选项status插槽 -->
         <slot
           name="status"
           :scoped="item"
@@ -136,8 +138,8 @@ export default defineComponent({
         state.inputData.suffixIcon = "u-icon-arrowDown";
         state.showOptions = false;
         /**
-         * 下拉框显示/隐藏时触发事件
-         * @param {Boolean} isShow 下拉框是否显示，true为显示，false为隐藏
+         * 下拉框显示/隐藏时事件触发
+         * @param {Boolean} value 下拉框是否显示，true为显示，false为隐藏
          */
         emit("on-popup", state.showOptions);
       }
@@ -151,15 +153,15 @@ export default defineComponent({
       state.inputData.suffixIcon = "u-icon-arrowUp";
       state.showOptions = true;
       /**
-       * 下拉框显示/隐藏时触发事件
-       * @param {Boolean} isShow 下拉框是否显示，true为显示，false为隐藏
+       * 下拉框显示/隐藏时事件触发
+       * @param {Boolean} value 下拉框是否显示，true为显示，false为隐藏
        */
       emit("on-popup", state.showOptions);
     };
 
     /**
-     * 输入框input筛选事件
-     * @param {String} value 筛选关键字
+     * 输入框input事件
+     * @param {String} value 关键字
      * @returns {Array} result 筛选结果列表
      */
     const onInput = (value: string) => {
