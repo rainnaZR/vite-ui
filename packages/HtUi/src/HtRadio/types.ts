@@ -10,7 +10,7 @@ export interface RadioItem {
 export interface RadioData {
   multiple?: boolean; // 是否是多选，单选框值为false，多选框值为true
   modelValue: string | number | any[]; // 选择框组选中值
-  options: RadioItem[]; // 选择框组选项值
+  options: RadioItem[]; // 选择框组选项值，item数组，item格式为：{label:'', value:'', style:{}, disabled: ''}
   column?: number; // 每一行显示的选择框个数
   icon?: string; // 选择框icon名称
   checkedIcon?: string; // 选择框选中icon名称

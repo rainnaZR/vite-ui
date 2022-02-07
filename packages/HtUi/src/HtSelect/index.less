@@ -1,3 +1,21 @@
 @import "../theme/variables.less";
 
-.ht-select{}
+.ht-select{
+    position: relative;
+    .list{
+        position: absolute;
+        left: 0;
+        top: 100%;
+        z-index: 99;
+        width: 100%;
+        border: @select-options-border;
+        border-radius: @select-options-border-radius;
+        background: @select-options-background-color;
+        box-shadow: @select-options-box-shadow;
+    }
+    .item{
+        color: @select-option-color;
+        font-size: @select-option-font-size;
+        line-height: @select-option-line-height;
+    }
+}

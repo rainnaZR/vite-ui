@@ -128,7 +128,9 @@ export default defineComponent({
     const inputType = ref<string>("text"); // 输入框类型
     const inputVal = ref<string | number>(""); // 输入框值
     const isFocus = ref(false); // 是否聚焦
-    inputType.value = props.data.password ? "password" : props.data.type;
+    inputType.value = props.data.password
+      ? "password"
+      : props.data.type || "text";
 
     /**
      * 获取输入框样式

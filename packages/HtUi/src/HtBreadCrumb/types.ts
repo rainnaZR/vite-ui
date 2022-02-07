@@ -5,7 +5,7 @@ export interface BreadCrumbItem {
 }
 
 export interface BreadCrumbData {
-  list: BreadCrumbItem[]; // 面包屑列表
+  list: BreadCrumbItem[]; // 面包屑列表，item数组，item项格式：{name: '11'}
   separator?: string; // 面包屑分隔符
   color?: string; // 面包屑默认字体颜色
   activeColor?: string; // 当前选中面包屑文字颜色
