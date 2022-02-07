@@ -8,7 +8,7 @@ export interface SelectItem {
 
 export interface SelectData {
   modelValue: string | number; // 下拉框选中值
-  options: SelectItem[]; // 下拉框选项值
+  options: SelectItem[]; // 下拉框选项值，item数组，item格式为：{label:'', value:'', disabled: ''}
   multiple?: boolean; // 下拉框是否是多选
   disabled?: boolean; // 下拉框是否全部禁用
   maxCount?: number; // 下拉框选择最大数量

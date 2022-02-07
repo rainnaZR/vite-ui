@@ -4,8 +4,8 @@
     <ht-input
       v-model:modelValue="state.inputData.modelValue"
       :data="state.inputData"
-      @on-focus="onFocus"
       @on-blur="onBlur('input')"
+      @on-focus="onFocus"
       @on-input="onInput"
       @on-action="onAction"
     />
@@ -124,20 +124,6 @@ export default defineComponent({
     state.inputData.modelValue = onGetInputValue();
 
     /**
-     * 输入框focus事件
-     * @returns void
-     */
-    const onFocus = () => {
-      state.inputData.suffixIcon = "u-icon-arrowUp";
-      state.showOptions = true;
-      /**
-       * 下拉框显示/隐藏时触发事件
-       * @param {Boolean} isShow 下拉框是否显示，true为显示，false为隐藏
-       */
-      emit("on-popup", state.showOptions);
-    };
-
-    /**
      * 元素blur事件
      * @param {String} type blur事件触发的元素类型
      * @returns void
@@ -155,6 +141,20 @@ export default defineComponent({
          */
         emit("on-popup", state.showOptions);
       }
+    };
+
+    /**
+     * 输入框focus事件
+     * @returns void
+     */
+    const onFocus = () => {
+      state.inputData.suffixIcon = "u-icon-arrowUp";
+      state.showOptions = true;
+      /**
+       * 下拉框显示/隐藏时触发事件
+       * @param {Boolean} isShow 下拉框是否显示，true为显示，false为隐藏
+       */
+      emit("on-popup", state.showOptions);
     };
 
     /**
@@ -250,8 +250,8 @@ export default defineComponent({
 
     return {
       state,
-      onFocus,
       onBlur,
+      onFocus,
       onInput,
       onAction,
       onChange,
