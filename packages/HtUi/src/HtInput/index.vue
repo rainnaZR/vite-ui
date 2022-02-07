@@ -27,7 +27,10 @@
       :class="[
         'input',
         {
-          'input-disabled': data.disabled || data.readonly,
+          'input-readonly': data.readonly,
+        },
+        {
+          'input-disabled': data.disabled,
         },
       ]"
       :style="onGetStyle()"

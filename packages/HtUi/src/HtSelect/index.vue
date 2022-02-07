@@ -1,12 +1,13 @@
 <template>
-  <div class="ht-select">
+  <div class="ht-select" :tabindex="data.tabIndex || 0" @blur="onBlur">
     <!-- 输入框 -->
     <ht-input
       v-model:modelValue="state.inputData.modelValue"
       :data="state.inputData"
       @on-focus="onFocus"
-      @on-blur="onBlur"
+      @on-blur="onBlur('input')"
       @on-input="onInput"
+      @on-action="onAction"
     />
     <!-- 筛选项 -->
     <div
@@ -19,7 +20,7 @@
       ]"
     >
       <div
-        v-for="(item, index) in data.options"
+        v-for="(item, index) in state.options"
         :key="index"
         :class="[
           'item',
@@ -37,6 +38,12 @@
         @click="onChange(item, index)"
       >
         <slot name="option" scope="item" index="index">{{ item.label }}</slot>
+      </div>
+      <div
+        v-if="!state.options || !state.options.length"
+        class="item item-empty"
+      >
+        {{ data.emptyText || "暂无数据" }}
       </div>
     </div>
   </div>
@@ -81,6 +88,7 @@ export default defineComponent({
         disabled: props.data.disabled,
       },
       showOptions: false, // 是否显示下拉选项
+      options: props.data.options, // 下拉选项
     });
 
     /**
@@ -100,18 +108,66 @@ export default defineComponent({
 
     /**
      * 输入框focus事件
+     * @returns void
      */
     const onFocus = () => {
-      state.showOptions = true;
       state.inputData.suffixIcon = "u-icon-arrowUp";
+      state.showOptions = true;
+      /**
+       * 下拉框显示/隐藏时触发事件
+       * @param {Boolean} isShow 下拉框是否显示，true为显示，false为隐藏
+       */
+      emit("on-popup", state.showOptions);
     };
 
     /**
-     * 输入框blur事件
+     * 元素blur事件
+     * @param {String} type blur事件触发的元素类型
+     * @returns void
      */
-    const onBlur = () => {
-      state.showOptions = false;
-      state.inputData.suffixIcon = "u-icon-arrowDown";
+    const onBlur = (type?: string) => {
+      if (
+        (type !== "input" && props.data.multiple) ||
+        (type === "input" && !props.data.multiple)
+      ) {
+        state.inputData.suffixIcon = "u-icon-arrowDown";
+        state.showOptions = false;
+        /**
+         * 下拉框显示/隐藏时触发事件
+         * @param {Boolean} isShow 下拉框是否显示，true为显示，false为隐藏
+         */
+        emit("on-popup", state.showOptions);
+      }
+    };
+
+    /**
+     * 输入框input筛选事件
+     * @param {String} value 筛选关键字
+     * @returns {Array} result 筛选结果列表
+     */
+    const onInput = (value: string) => {
+      value = value?.trim();
+      state.options = props.data.options?.filter(
+        (i) => i.label?.toString()?.indexOf(value) > -1
+      );
+    };
+
+    /**
+     * 输入框操作按钮点击事件
+     * @param {String} type 操作行为类型
+     * @returns void
+     */
+    const onAction = (type: string) => {
+      // 清空icon点击
+      if (type === "clearable") {
+        state.selectValue = [];
+        state.options = props.data.options;
+        /**
+         * 下拉框选中值更新
+         * @param {Any} value 下拉框选中值，单选为选中值/多选为选中值的数组
+         */
+        emit("update:modelValue", props.data.multiple ? [] : "");
+      }
     };
 
     /**
@@ -133,18 +189,21 @@ export default defineComponent({
         if (isSelect) {
           state.selectValue.splice(state.selectValue.indexOf(item.value), 1);
         } else {
+          if (
+            props.data.maxCount &&
+            state.selectValue.length >= ~~props.data.maxCount
+          )
+            return;
           state.selectValue.push(item.value);
         }
       } else {
         // 如果是单选
         // 当前项已包含在选中项
-        if (isSelect) {
-          state.showOptions = true;
-          return;
-        }
+        if (isSelect) return;
         state.selectValue = [];
         state.selectValue.push(item.value);
       }
+      state.inputData.modelValue = onGetInputValue();
 
       const value = props.data.multiple
         ? state.selectValue
@@ -163,36 +222,27 @@ export default defineComponent({
       emit("on-change", value, item, index);
     };
 
-    /**
-     * 输入框input事件
-     * @param {String} value 筛选关键字
-     * @returns {Array} result 筛选结果列表
-     */
-    const onInput = (value: string) => {
-      value = value?.trim();
-      if (!value) return;
-    };
-
     watch(
       () => props.data.modelValue,
       (value) => {
         state.selectValue = Array.isArray(value) ? value : [value];
         state.inputData.modelValue = onGetInputValue();
+        state.options = props.data.options;
       }
     );
 
     return {
       state,
-      onGetInputValue,
       onFocus,
       onBlur,
       onInput,
+      onAction,
       onChange,
     };
   },
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "./index.less";
 </style>
