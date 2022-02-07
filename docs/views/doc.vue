@@ -160,7 +160,8 @@ export default defineComponent({
       margin: 0 30px 0 0;
     }
   }
-  .ht-input{
+  .ht-input,
+  .ht-select {
     max-width: 300px;
   }
 }

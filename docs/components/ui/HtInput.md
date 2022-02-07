@@ -107,7 +107,7 @@ export default {
 
 ### 自定义placeholder
 
-- 输入框可自定义 `placeholder`，值为字符串，默认`请输入...`
+- 输入框可自定义 `placeholder`，值为字符串，默认`请输入...`。
 
 ::: Demo
 ```vue demo

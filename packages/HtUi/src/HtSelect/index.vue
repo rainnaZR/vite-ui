@@ -30,14 +30,29 @@
           'f-curp',
           'f-trans',
         ]"
-        :style="
-          data.focusBorderColor && state.selectValue.includes(item.value)
-            ? `color: ${data.focusBorderColor}`
-            : ''
-        "
+        :style="{
+          color:
+            data.disabled || item.disabled
+              ? '#ccc'
+              : state.selectValue.includes(item.value)
+              ? data.focusBorderColor || data.borderColor || '#606266'
+              : '#606266',
+        }"
         @click="onChange(item, index)"
       >
-        <slot name="option" scope="item" index="index">{{ item.label }}</slot>
+        <slot name="label" :scope="item" :index="index">
+          <div class="f-f1">{{ item.label }}</div>
+        </slot>
+        <slot
+          name="status"
+          :scoped="item"
+          :status="state.selectValue.includes(item.value)"
+        >
+          <ht-icon
+            v-if="state.selectValue.includes(item.value)"
+            :data="{ name: 'u-icon-select' }"
+          />
+        </slot>
       </div>
       <div
         v-if="!state.options || !state.options.length"
@@ -52,6 +67,7 @@
 <script lang="ts">
 import { defineComponent, PropType, reactive, watch } from "vue";
 import HtInput from "../HtInput";
+import HtIcon from "../HtIcon";
 import { SelectData, SelectItem } from "./types";
 
 export default defineComponent({
@@ -59,6 +75,7 @@ export default defineComponent({
 
   components: {
     HtInput,
+    HtIcon,
   },
 
   props: {
