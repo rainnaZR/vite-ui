@@ -2,27 +2,35 @@
   <div class="ht-select">
     <!-- 输入框 -->
     <ht-input
-      v-model:modelValue="inputData.modelValue"
-      :data="inputData"
+      v-model:modelValue="state.inputData.modelValue"
+      :data="state.inputData"
       @on-focus="onFocus"
       @on-blur="onBlur"
       @on-input="onInput"
     />
     <!-- 筛选项 -->
-    <div :class="`list ${showOptions ? 'list-show' : ''} f-trans`">
+    <div
+      :class="[
+        'list',
+        {
+          'list-show': state.showOptions,
+        },
+        'f-trans',
+      ]"
+    >
       <div
         v-for="(item, index) in data.options"
         :key="index"
         :class="[
           'item',
-          { 'item-select': selectValue.includes(item.value) },
+          { 'item-select': state.selectValue.includes(item.value) },
           { 'item-disabled': data.disabled || item.disabled },
           'f-txtell',
           'f-curp',
           'f-trans',
         ]"
         :style="
-          data.focusBorderColor && selectValue.includes(item.value)
+          data.focusBorderColor && state.selectValue.includes(item.value)
             ? `color: ${data.focusBorderColor}`
             : ''
         "
@@ -35,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref, watch } from "vue";
+import { defineComponent, PropType, reactive, watch } from "vue";
 import HtInput from "../HtInput";
 import { SelectData, SelectItem } from "./types";
 
@@ -57,42 +65,53 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    let selectValue = Array.isArray(props.data.modelValue)
-      ? reactive(props.data.modelValue)
-      : reactive([props.data.modelValue]); // 下拉框选中值
-    const inputData = reactive({
-      modelValue: selectValue
+    const state = reactive({
+      selectValue: Array.isArray(props.data.modelValue)
+        ? props.data.modelValue
+        : [props.data.modelValue], // 下拉框选中值
+      inputData: {
+        modelValue: "",
+        placeholder: props.data.placeholder || "请选择...",
+        borderColor: props.data.borderColor,
+        focusBorderColor: props.data.focusBorderColor,
+        inputStyle: props.data.inputStyle,
+        clearable: props.data.clearable,
+        suffixIcon: "u-icon-arrowDown",
+        readonly: !props.data.filterable,
+        disabled: props.data.disabled,
+      },
+      showOptions: false, // 是否显示下拉选项
+    });
+
+    /**
+     * 获取输入框value值
+     * @returns {String} value 输入框显示的value值
+     */
+    const onGetInputValue = () => {
+      return state.selectValue
         ?.map(
           (value) =>
             props.data.options?.filter((option) => option.value === value)?.[0]
               ?.label
         )
-        ?.join(","),
-      placeholder: props.data.placeholder || "请选择...",
-      borderColor: props.data.borderColor,
-      focusBorderColor: props.data.focusBorderColor,
-      inputStyle: props.data.inputStyle,
-      clearable: props.data.clearable,
-      suffixIcon: "u-icon-arrowDown",
-      readonly: !props.data.filterable,
-      disabled: props.data.disabled,
-    });
-    const showOptions = ref(false); // 是否显示下拉选项
+        ?.join(",");
+    };
+    state.inputData.modelValue = onGetInputValue();
 
     /**
      * 输入框focus事件
      */
     const onFocus = () => {
-      showOptions.value = true;
-      inputData.suffixIcon = "u-icon-arrowUp";
+      state.showOptions = true;
+      state.inputData.suffixIcon = "u-icon-arrowUp";
     };
 
     /**
      * 输入框blur事件
      */
     const onBlur = () => {
-      showOptions.value = false;
-      inputData.suffixIcon = "u-icon-arrowDown";
+      state.showOptions = false;
+      state.inputData.suffixIcon = "u-icon-arrowDown";
     };
 
     /**
@@ -103,30 +122,33 @@ export default defineComponent({
      */
     const onChange = (item: SelectItem, index: number) => {
       if (props.data.disabled || item.disabled) {
-        showOptions.value = true;
+        state.showOptions = true;
         return;
       }
 
+      const isSelect = state.selectValue.includes(item.value);
       if (props.data.multiple) {
         // 如果是多选
         // 当前项已包含在选中项，则反选
-        if (selectValue.includes(item.value)) {
-          selectValue.splice(selectValue.indexOf(item.value), 1);
+        if (isSelect) {
+          state.selectValue.splice(state.selectValue.indexOf(item.value), 1);
         } else {
-          selectValue.push(item.value);
+          state.selectValue.push(item.value);
         }
       } else {
         // 如果是单选
         // 当前项已包含在选中项
-        if (selectValue.includes(item.value)) {
-          showOptions.value = true;
+        if (isSelect) {
+          state.showOptions = true;
           return;
         }
-        selectValue = [];
-        selectValue.push(item.value);
+        state.selectValue = [];
+        state.selectValue.push(item.value);
       }
 
-      const value = props.data.multiple ? selectValue : selectValue[0];
+      const value = props.data.multiple
+        ? state.selectValue
+        : state.selectValue[0];
       /**
        * 下拉框选中值更新
        * @param {Any} value 下拉框选中值，单选为选中值/多选为选中值的数组
@@ -151,26 +173,17 @@ export default defineComponent({
       if (!value) return;
     };
 
-    // watch(
-    //   () => props.data.modelValue,
-    //   (value) => {
-    //     selectValue = Array.isArray(value) ? value : [value];
-    //     console.log(11, selectValue)
-    //     inputData.modelValue = selectValue
-    //       ?.map(
-    //         (value) =>
-    //           props.data.options?.filter(
-    //             (option) => option.value === value
-    //           )?.[0]?.label
-    //       )
-    //       ?.join(",");
-    //   }
-    // );
+    watch(
+      () => props.data.modelValue,
+      (value) => {
+        state.selectValue = Array.isArray(value) ? value : [value];
+        state.inputData.modelValue = onGetInputValue();
+      }
+    );
 
     return {
-      selectValue,
-      inputData,
-      showOptions,
+      state,
+      onGetInputValue,
       onFocus,
       onBlur,
       onInput,

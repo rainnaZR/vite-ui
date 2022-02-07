@@ -52,9 +52,11 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    let checkedValue = Array.isArray(props.data.modelValue)
-      ? reactive(props.data.modelValue)
-      : reactive([props.data.modelValue]); // 当前选中值
+    const state = reactive({
+      checkedValue: Array.isArray(props.data.modelValue)
+        ? props.data.modelValue
+        : [props.data.modelValue], // 当前选中值
+    });
     const defaultIcons = props.data.multiple
       ? ["u-icon-checkbox", "u-icon-checkboxCheck"]
       : ["u-icon-radio", "u-icon-radioCheck"]; // icon图标默认配置项
@@ -79,14 +81,13 @@ export default defineComponent({
      * @returns {String/Object} name/style 选择框icon图标名/选择框icon样式
      */
     const onGetIcon = (item: RadioItem, type: string) => {
+      const isChecked = state.checkedValue.includes(item.value);
       if (type === "name") {
-        return checkedValue.includes(item.value)
+        return isChecked
           ? props.data.checkedIcon || defaultIcons[1]
           : props.data.icon || defaultIcons[0];
       }
-      return checkedValue.includes(item.value)
-        ? props.data.checkedIconStyle
-        : props.data.iconStyle;
+      return isChecked ? props.data.checkedIconStyle : props.data.iconStyle;
     };
 
     /**
@@ -98,23 +99,26 @@ export default defineComponent({
     const onClick = (item: RadioItem, index: number) => {
       if (props.data.disabled || item.disabled) return;
 
+      const isChecked = state.checkedValue.includes(item.value);
       if (props.data.multiple) {
         // 如果是多选
         // 当前项已包含在选中项，则反选
-        if (checkedValue.includes(item.value)) {
-          checkedValue.splice(checkedValue.indexOf(item.value), 1);
+        if (isChecked) {
+          state.checkedValue.splice(state.checkedValue.indexOf(item.value), 1);
         } else {
-          checkedValue.push(item.value);
+          state.checkedValue.push(item.value);
         }
       } else {
         // 如果是单选
         // 当前项已包含在选中项
-        if (checkedValue.includes(item.value)) return;
-        checkedValue = [];
-        checkedValue.push(item.value);
+        if (isChecked) return;
+        state.checkedValue = [];
+        state.checkedValue.push(item.value);
       }
 
-      const value = props.data.multiple ? checkedValue : checkedValue[0];
+      const value = props.data.multiple
+        ? state.checkedValue
+        : state.checkedValue[0];
       /**
        * 选择框选中值更新
        * @param {Any} value 选择框组选中值，单选框为选中值/多选框为选中值的数组
@@ -132,12 +136,12 @@ export default defineComponent({
     watch(
       () => props.data.modelValue,
       (value) => {
-        checkedValue = Array.isArray(value) ? value : [value];
+        state.checkedValue = Array.isArray(value) ? value : [value];
       }
     );
 
     return {
-      checkedValue,
+      state,
       onGetStyle,
       onGetIcon,
       onClick,
