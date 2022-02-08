@@ -42,7 +42,7 @@
       >
         <!-- 下拉选项label插槽 -->
         <slot name="label" :scope="item" :index="index">
-          <div class="f-f1">{{ item.label }}</div>
+          <div class="f-f1 f-txtell">{{ item.label }}</div>
         </slot>
         <!-- 下拉选项status插槽 -->
         <slot

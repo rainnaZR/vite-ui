@@ -22,7 +22,7 @@ export default {
       modelValue: "",
       options: [
         {
-          label: "选项1",
+          label: "选项1选项1选项1选项1选项1选项1选项1选项1选项1选项1",
           value: 1,
         },
         {
