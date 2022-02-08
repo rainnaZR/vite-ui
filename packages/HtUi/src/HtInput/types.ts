@@ -3,7 +3,6 @@ import { PublicProps } from "../types";
 export interface InputData {
   wrapStyle?: any; // 输入框容器自定义样式
   inputStyle?: any; // 输入框自定义样式
-  modelValue: string | number; // input输入框中的值
   type?: string; // 输入框类型
   name?: string; // 输入框名称，原生属性
   placeholder?: string; // 输入框placeholder值
@@ -24,5 +23,6 @@ export interface InputData {
 }
 
 export type Props = PublicProps<{
+  modelValue: string | number;
   data: InputData;
 }>;

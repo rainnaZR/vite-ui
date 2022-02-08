@@ -226,8 +226,15 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
               propNodeValue.properties.forEach((i) => {
                 const keyName = i.key.name;
                 if (keyName === "type") {
-                  result.content[keyName] =
-                    i.value.name || i.value.expression?.name || "Object";
+                  // 如果props是数组，type: [String, Number]
+                  if (i.value?.type === "ArrayExpression") {
+                    result.content[keyName] = i.value?.elements
+                      ?.map((elem) => elem?.name)
+                      ?.join(",");
+                  } else {
+                    result.content[keyName] =
+                      i.value.name || i.value.expression?.name;
+                  }
                   result.content.tsPropType =
                     i.value.typeAnnotation?.typeParameters?.params[0]?.typeName?.name;
                 }

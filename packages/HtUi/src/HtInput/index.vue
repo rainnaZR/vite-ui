@@ -117,11 +117,17 @@ export default defineComponent({
   },
 
   props: {
+    // input输入框中的值
+    modelValue: {
+      type: [String, Number],
+      required: true,
+      default: "",
+    },
+    // 配置数据
     data: {
       type: Object as PropType<InputData>,
       required: true,
       default: () => ({
-        modelValue: "",
         type: "text",
       }),
     },
@@ -261,7 +267,7 @@ export default defineComponent({
 
     // 监听参数 value 的变化
     watch(
-      () => props.data.modelValue,
+      () => props.modelValue,
       (value) => {
         inputVal.value = value; // 设置 value
       },

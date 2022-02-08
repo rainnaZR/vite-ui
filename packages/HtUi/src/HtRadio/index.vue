@@ -41,11 +41,17 @@ export default defineComponent({
   },
 
   props: {
+    // 选择框组选中值
+    modelValue: {
+      type: [String, Number, Array],
+      required: true,
+      default: "",
+    },
+    // 配置数据
     data: {
       type: Object as PropType<RadioData>,
       required: true,
       default: () => ({
-        modelValue: "",
         options: [],
       }),
     },
@@ -53,9 +59,9 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const state = reactive({
-      checkedValue: Array.isArray(props.data.modelValue)
-        ? props.data.modelValue
-        : [props.data.modelValue], // 当前选中值
+      checkedValue: Array.isArray(props.modelValue)
+        ? props.modelValue
+        : [props.modelValue], // 当前选中值
     });
     const defaultIcons = props.data.multiple
       ? ["u-icon-checkbox", "u-icon-checkboxCheck"]
@@ -134,7 +140,7 @@ export default defineComponent({
     };
 
     watch(
-      () => props.data.modelValue,
+      () => props.modelValue,
       (value) => {
         state.checkedValue = Array.isArray(value) ? value : [value];
       }

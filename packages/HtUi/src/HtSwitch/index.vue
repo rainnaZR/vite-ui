@@ -2,7 +2,7 @@
   <div
     :class="[
       'ht-switch',
-      { 'ht-switch-active': !!data.modelValue },
+      { 'ht-switch-active': !!modelValue },
       { 'ht-switch-disabled': data.disabled },
       'f-curp',
       'f-trans',
@@ -26,12 +26,17 @@ export default defineComponent({
   name: "HtSwitch",
 
   props: {
+    // 开关值，true打开，false关闭
+    modelValue: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    // 配置数据
     data: {
       type: Object as PropType<SwitchData>,
       required: false,
-      default: () => ({
-        modelValue: false,
-      }),
+      default: () => ({}),
     },
   },
 
@@ -43,7 +48,7 @@ export default defineComponent({
     const onGetStyle = () => {
       return {
         ...(props.data.style || {}),
-        backgroundColor: props.data.modelValue
+        backgroundColor: props.modelValue
           ? props.data.activeColor || "#13ce66"
           : props.data.inActiveColor || "#dcdfe6",
       };
@@ -56,7 +61,7 @@ export default defineComponent({
     const onChange = () => {
       if (props.data.disabled) return;
 
-      const value = !props.data.modelValue;
+      const value = !props.modelValue;
       /**
        * 开关切换值更新
        * @param {Boolean} value 开关切换值

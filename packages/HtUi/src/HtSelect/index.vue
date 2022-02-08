@@ -81,20 +81,26 @@ export default defineComponent({
   },
 
   props: {
+    // 下拉框选中值
+    modelValue: {
+      type: [String, Number, Array],
+      required: true,
+      default: "",
+    },
+    // 配置数据
     data: {
       type: Object as PropType<SelectData>,
       required: true,
       default: () => ({
-        modelValue: "",
         options: [],
       }),
     },
   },
   setup(props, { emit }) {
     const state = reactive({
-      selectValue: Array.isArray(props.data.modelValue)
-        ? props.data.modelValue
-        : [props.data.modelValue], // 下拉框选中值
+      selectValue: Array.isArray(props.modelValue)
+        ? props.modelValue
+        : [props.modelValue], // 下拉框选中值
       inputData: {
         modelValue: "",
         placeholder: props.data.placeholder || "请选择...",
@@ -242,7 +248,7 @@ export default defineComponent({
     };
 
     watch(
-      () => props.data.modelValue,
+      () => props.modelValue,
       (value) => {
         state.selectValue = Array.isArray(value) ? value : [value];
         state.inputData.modelValue = onGetInputValue();
