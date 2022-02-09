@@ -11,15 +11,15 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" @on-change="onChange" />
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" @on-change="onChange" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(1);
     const radioData = reactive({
-      modelValue: 1,
       options: [
         {
           label: "选项1",
@@ -37,7 +37,11 @@ export default {
     });
     const onChange = (value, item, index) => console.log(`选中值${value}，当前点击框值${item.value}，点击框索引${index}`)
 
-    return { radioData, onChange };
+    return { 
+      modelValue, 
+      radioData, 
+      onChange,
+    };
   },
 };
 </script>
@@ -54,15 +58,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(1);
     const radioData = reactive({
-      modelValue: 1,
       options: [
         {
           label: "选项1",
@@ -75,7 +79,10 @@ export default {
       ],
       column: 1,
     });
-    return { radioData };
+    return { 
+      modelValue, 
+      radioData,
+    };
   },
 };
 </script>
@@ -90,15 +97,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(1);
     const radioData = reactive({
-      modelValue: 1,
       options: [
         {
           label: "选项1",
@@ -111,7 +118,10 @@ export default {
       ],
       column: 2,
     });
-    return { radioData };
+    return { 
+      modelValue,
+      radioData,
+    };
   },
 };
 </script>
@@ -127,15 +137,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(1);
     const radioData = reactive({
-      modelValue: 1,
       options: [
         {
           label: "选项1",
@@ -152,7 +162,10 @@ export default {
       ],
       column: 3,
     });
-    return { radioData };
+    return { 
+      modelValue,
+      radioData,
+    };
   },
 };
 </script>
@@ -171,15 +184,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(1);
     const radioData = reactive({
-      modelValue: 1,
       options: [
         {
           label: "选项1",
@@ -197,7 +210,10 @@ export default {
       icon: "u-icon-hidePreview",
       checkedIcon: "u-icon-preview",
     });
-    return { radioData };
+    return { 
+      modelValue,
+      radioData,
+    };
   },
 };
 </script>
@@ -217,15 +233,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(1);
     const radioData = reactive({
-      modelValue: 1,
       options: [
         {
           label: "选项1",
@@ -247,7 +263,10 @@ export default {
         color: "#f60",
       },
     });
-    return { radioData };
+    return { 
+      modelValue,
+      radioData, 
+    };
   },
 };
 </script>
@@ -265,15 +284,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(2);
     const radioData = reactive({
-      modelValue: 2,
       options: [
         {
           label: "选项1",
@@ -290,7 +309,10 @@ export default {
         },
       ],
     });
-    return { radioData };
+    return { 
+      modelValue, 
+      radioData, 
+    };
   },
 };
 </script>
@@ -306,15 +328,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData" />
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(2);
     const radioData = reactive({
-      modelValue: 2,
       options: [
         {
           label: "选项1",
@@ -331,7 +353,10 @@ export default {
       ],
       disabled: true,
     });
-    return { radioData };
+    return { 
+      modelValue,
+      radioData, 
+    };
   },
 };
 </script>
@@ -346,7 +371,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-radio v-model:modelValue="radioData.modelValue" :data="radioData">
+    <ht-radio v-model:modelValue="modelValue" :data="radioData">
         <template v-slot="detail">
             {{ detail.index + 1 }}-{{ detail.scope.label }}
         </template>
@@ -354,11 +379,11 @@ export default {
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref(1);
     const radioData = reactive({
-      modelValue: 1,
       options: [
         {
           label: "选项1",
@@ -374,7 +399,10 @@ export default {
         },
       ],
     });
-    return { radioData };
+    return { 
+      modelValue,
+      radioData, 
+    };
   },
 };
 </script>

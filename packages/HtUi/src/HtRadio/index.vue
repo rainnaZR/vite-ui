@@ -121,6 +121,9 @@ export default defineComponent({
         state.checkedValue = [];
         state.checkedValue.push(item.value);
       }
+      state.checkedValue = state.checkedValue.filter(
+        (i) => i !== undefined && i !== ""
+      );
 
       const value = props.data.multiple
         ? state.checkedValue

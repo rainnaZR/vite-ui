@@ -19,16 +19,18 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" @on-change="onChange" />
+    <ht-checkbox v-model:modelValue="state.modelValue" :data="checkboxData" @on-change="onChange" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [1, 3],
+    })
     const checkboxData = reactive({
       multiple: true,
-      modelValue: [1, 3],
       options: [
         {
           label: "选项1",
@@ -46,7 +48,11 @@ export default {
     });
     const onChange = (value, item, index) => console.log(`选中值${value}，当前点击框值${item.value}，点击框索引${index}`)
 
-    return { checkboxData, onChange };
+    return { 
+      state, 
+      checkboxData, 
+      onChange 
+    };
   },
 };
 </script>
@@ -64,16 +70,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
+    <ht-checkbox v-model:modelValue="state.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [1],
+    })
     const checkboxData = reactive({
       multiple: true,
-      modelValue: [1],
       options: [
         {
           label: "选项1",
@@ -86,7 +94,10 @@ export default {
       ],
       column: 1,
     });
-    return { checkboxData };
+    return { 
+      state,
+      checkboxData 
+    };
   },
 };
 </script>
@@ -105,16 +116,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
+    <ht-checkbox v-model:modelValue="state.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [1, 3],
+    })
     const checkboxData = reactive({
       multiple: true,
-      modelValue: [1, 3],
       options: [
         {
           label: "选项1",
@@ -132,7 +145,10 @@ export default {
       icon: "u-icon-checkbox",
       checkedIcon: "u-icon-checkboxCheck2",
     });
-    return { checkboxData };
+    return { 
+      state,
+      checkboxData 
+    };
   },
 };
 </script>
@@ -152,16 +168,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
+    <ht-checkbox v-model:modelValue="state.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [1, 3],
+    })
     const checkboxData = reactive({
       multiple: true,
-      modelValue: [1, 3],
       options: [
         {
           label: "选项1",
@@ -183,7 +201,10 @@ export default {
         color: "#2196f3",
       },
     });
-    return { checkboxData };
+    return { 
+      state,
+      checkboxData 
+    };
   },
 };
 </script>
@@ -201,16 +222,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
+    <ht-checkbox v-model:modelValue="state.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [2],
+    })
     const checkboxData = reactive({
       multiple: true,
-      modelValue: [2],
       options: [
         {
           label: "选项1",
@@ -227,7 +250,10 @@ export default {
         },
       ],
     });
-    return { checkboxData };
+    return { 
+      state,
+      checkboxData 
+    };
   },
 };
 </script>
@@ -243,16 +269,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-checkbox v-model:modelValue="checkboxData.modelValue" :data="checkboxData" />
+    <ht-checkbox v-model:modelValue="state.modelValue" :data="checkboxData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [2],
+    })
     const checkboxData = reactive({
       multiple: true,
-      modelValue: [2],
       options: [
         {
           label: "选项1",
@@ -269,7 +297,10 @@ export default {
       ],
       disabled: true,
     });
-    return { checkboxData };
+    return { 
+      state,
+      checkboxData 
+    };
   },
 };
 </script>

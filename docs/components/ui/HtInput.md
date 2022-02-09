@@ -11,17 +11,15 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-input v-model:modelValue="inputData.modelValue" :data="inputData" />
+    <ht-input v-model:modelValue="modelValue" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const inputData = reactive({
-        modelValue: ""
-    });
-    return { inputData };
+    const modelValue = ref("");
+    return { modelValue };
   },
 };
 </script>
@@ -38,18 +36,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input v-model:modelValue="inputData.modelValue" :data="inputData" />
+    <ht-input v-model:modelValue="modelValue" :data="{ type: 'password' }"/>
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const inputData = reactive({
-        modelValue: "",
-        type: "password",
-    });
-    return { inputData };
+    const modelValue = ref("");
+    return { modelValue };
   },
 };
 </script>
@@ -59,21 +54,19 @@ export default {
 
 - 输入框类型type值为 `number`。
 
+
 ::: Demo
 ```vue demo
 <template>
-    <ht-input v-model:modelValue="inputData.modelValue" :data="inputData" />
+    <ht-input v-model:modelValue="modelValue" :data="{ type: 'number' }"/>
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const inputData = reactive({
-        modelValue: "",
-        type: "number",
-    });
-    return { inputData };
+    const modelValue = ref("");
+    return { modelValue };
   },
 };
 </script>
@@ -83,21 +76,19 @@ export default {
 
 - 输入框类型type值为 `textarea`，默认是5行高度。
 
+
 ::: Demo
 ```vue demo
 <template>
-    <ht-input v-model:modelValue="inputData.modelValue" :data="inputData" />
+    <ht-input v-model:modelValue="modelValue" :data="{ type: 'textarea' }"/>
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const inputData = reactive({
-        modelValue: "",
-        type: "textarea",
-    });
-    return { inputData };
+    const modelValue = ref("");
+    return { modelValue };
   },
 };
 </script>
@@ -126,7 +117,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '我是只读内容', readonly: true }" />
+    <ht-input modelValue="我是只读内容" :data="{ readonly: true }" />
 </template>
 ```
 :::
@@ -140,7 +131,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '我是禁用内容', disabled: true }" />
+    <ht-input modelValue="我是禁用内容" :data="{ disabled: true }" />
 </template>
 ```
 :::
@@ -154,7 +145,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', maxLength: 10 }" />
+    <ht-input :data="{ maxLength: 10 }" />
 </template>
 ```
 :::
@@ -182,7 +173,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', color: '#f60' }" />
+    <ht-input :data="{ color: '#f60' }" />
 </template>
 ```
 :::
@@ -196,7 +187,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', borderColor: '#f60' }" />
+    <ht-input :data="{ borderColor: '#f60' }" />
 </template>
 ```
 :::
@@ -210,7 +201,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', focusBorderColor: '#67c23a' }" />
+    <ht-input :data="{ focusBorderColor: '#67c23a' }" />
 </template>
 ```
 :::
@@ -224,7 +215,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', clearable: true }" />
+    <ht-input :data="{ clearable: true }" />
 </template>
 ```
 :::
@@ -238,7 +229,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', password: true }" />
+    <ht-input :data="{ password: true }" />
 </template>
 ```
 :::
@@ -252,7 +243,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', search: true }" />
+    <ht-input :data="{ search: true }" />
 </template>
 ```
 :::
@@ -266,7 +257,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', suffixIcon: 'u-icon-data' }" />
+    <ht-input :data="{ suffixIcon: 'u-icon-data' }" />
 </template>
 ```
 :::
@@ -279,7 +270,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', prefixIcon: 'u-icon-data' }" />
+    <ht-input :data="{ prefixIcon: 'u-icon-data' }" />
 </template>
 ```
 :::
@@ -293,10 +284,10 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ modelValue: '', clearable: true, search: true, password: true }" />
+    <ht-input :data="{ clearable: true, search: true, password: true }" />
     <br />
 
-    <ht-input :data="{ modelValue: '', clearable: true, suffixIcon: 'u-icon-data' }" />
+    <ht-input :data="{ clearable: true, suffixIcon: 'u-icon-data' }" />
 </template>
 ```
 :::
@@ -441,7 +432,7 @@ export default {
 ```vue demo
 <template>
     <ht-input
-      v-model:modelValue="inputData.modelValue"
+      v-model:modelValue="modelValue"
       :data="inputData"
       @on-focus="onFocus"
       @on-blur="onBlur"
@@ -454,22 +445,21 @@ export default {
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
   setup() {
+    const modelValue = ref("");
+    const inputData = reactive({
+        clearable: true,
+        search: true,
+        password: true,
+    });
     const event = reactive({});
     const onSetEvent = (name, params) => {
         event.name = name;
         event.params = params;
         console.log(name, params)
     }
-
-    const inputData = reactive({
-        modelValue: "",
-        clearable: true,
-        search: true,
-        password: true,
-    });
     const onFocus = value => onSetEvent('on-focus', value);
     const onBlur = value => onSetEvent('on-blur', value);
     const onChange = value => onSetEvent('on-change', value);
@@ -477,8 +467,9 @@ export default {
     const onAction = (type, value) => onSetEvent('on-action', `type:'${type}', value:'${value}'`);
 
     return { 
-        event,
+        modelValue,
         inputData,
+        event,
         onFocus,
         onBlur,
         onChange,

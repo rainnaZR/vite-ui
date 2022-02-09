@@ -11,18 +11,19 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-switch v-model:modelValue="switchData.modelValue" :data="switchData" @on-change="onChange" />
+    <ht-switch v-model:modelValue="modelValue" @on-change="onChange" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const switchData = reactive({
-      modelValue: true,
-    });
+    const modelValue = ref(true);
     const onChange = value => console.log(`开关值${value}`);
-    return { switchData, onChange };
+    return { 
+      modelValue, 
+      onChange, 
+    };
   },
 };
 </script>
@@ -38,19 +39,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-switch v-model:modelValue="switchData.modelValue" :data="switchData" />
+    <ht-switch v-model:modelValue="modelValue" :data="{ activeColor: '#f60', inActiveColor: '#999'}" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const switchData = reactive({
-      modelValue: false, 
-      activeColor: "#f60", 
-      inActiveColor: "#999",
-    });
-    return { switchData };
+    const modelValue = ref(false);
+    return { modelValue };
   },
 };
 </script>
@@ -66,18 +63,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-switch v-model:modelValue="switchData.modelValue" :data="switchData" />
+    <ht-switch v-model:modelValue="modelValue" :data="{ circleColor: 'rgba(255, 255, 255, .7)' }" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const switchData = reactive({
-      modelValue: true, 
-      circleColor: "rgba(255, 255, 255, .7)",
-    });
-    return { switchData };
+    const modelValue = ref(true);
+    return { modelValue };
   },
 };
 </script>
@@ -93,20 +87,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-switch v-model:modelValue="switchData.modelValue" :data="switchData" />
+    <ht-switch v-model:modelValue="modelValue" :data="{ style: { transform: 'scale(1.4)' }}" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const switchData = reactive({
-      modelValue: false, 
-      style: {
-          transform: "scale(1.4)"
-      }
-    });
-    return { switchData };
+    const modelValue = ref(false);
+    return { modelValue };
   },
 };
 </script>
@@ -121,18 +110,15 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-switch v-model:modelValue="switchData.modelValue" :data="switchData" />
+    <ht-switch v-model:modelValue="modelValue" :data="{ disabled: true }" />
 </template>
 
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const switchData = reactive({
-      modelValue: true, 
-      disabled: true,
-    });
-    return { switchData };
+    const modelValue = ref(true);
+    return { modelValue };
   },
 };
 </script>

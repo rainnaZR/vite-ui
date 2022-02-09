@@ -11,15 +11,17 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: "",
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1选项1选项1选项1选项1选项1选项1选项1选项1选项1",
@@ -35,7 +37,10 @@ export default {
         },
       ],
     });
-    return { selectData };
+    return { 
+      state, 
+      selectData, 
+    };
   },
 };
 </script>
@@ -51,15 +56,17 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: "",
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1",
@@ -76,7 +83,10 @@ export default {
       ],
       placeholder: "请选择下拉框的值...",
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -93,15 +103,17 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: 2,
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1",
@@ -118,7 +130,10 @@ export default {
       ],
       borderColor: "#f60",
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -135,15 +150,17 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: 2,
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1",
@@ -160,7 +177,10 @@ export default {
       ],
       focusBorderColor: "#67c23a",
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -177,15 +197,17 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: "",
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1",
@@ -206,7 +228,10 @@ export default {
         backgroundColor: 'rgb(233 251 225)', 
       }
     });
-    return { selectData };
+    return { 
+      state,
+      selectData,
+    };
   },
 };
 </script>
@@ -226,16 +251,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [],
+    });
     const selectData = reactive({
       multiple: true,
-      modelValue: [],
       options: [
         {
           label: "选项1",
@@ -255,7 +282,10 @@ export default {
         },
       ],
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -272,16 +302,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [],
+    });
     const selectData = reactive({
       multiple: true,
-      modelValue: [],
       options: [
         {
           label: "选项1",
@@ -302,7 +334,10 @@ export default {
       ],
       maxCount: 2,
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -319,15 +354,17 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: 2,
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1",
@@ -344,7 +381,10 @@ export default {
       ],
       clearable: true,
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -361,16 +401,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [1, 2],
+    });
     const selectData = reactive({
       multiple: true,
-      modelValue: [1, 2],
       options: [
         {
           label: "选项1",
@@ -391,7 +433,10 @@ export default {
       ],
       clearable: true,
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -407,16 +452,18 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
+    const state = reactive({
+      modelValue: [],
+    });
     const selectData = reactive({
       multiple: true,
-      modelValue: [],
       options: [
         {
           label: "选项1",
@@ -445,7 +492,10 @@ export default {
       ],
       filterable: true,
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -466,15 +516,17 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: "",
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1",
@@ -491,7 +543,10 @@ export default {
         },
       ],
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -508,15 +563,17 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: 2,
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1",
@@ -533,7 +590,10 @@ export default {
       ],
       disabled: true,
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -549,19 +609,24 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData" />
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
 </template>
 
 <script lang="ts">
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: "",
+    });
+    const selectData = reactive({
       options: [],
       emptyText: "下拉列表数据为空！稍后再试！",
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
@@ -578,7 +643,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-select v-model:modelValue="selectData.modelValue" :data="selectData">
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData">
       <template v-slot:label="detail">
         <div class="f-f1">{{detail.index+1}}-{{detail.scope.label}}</div>
       </template>
@@ -592,8 +657,10 @@ export default {
 import { reactive } from 'vue'
 export default {
   setup() {
-    const selectData = reactive({
+    const state = reactive({
       modelValue: "",
+    });
+    const selectData = reactive({
       options: [
         {
           label: "选项1",
@@ -609,7 +676,10 @@ export default {
         },
       ],
     });
-    return { selectData };
+    return { 
+      state,
+      selectData, 
+    };
   },
 };
 </script>
