@@ -394,7 +394,7 @@ export default {
     </ht-input>
     <br />
 
-    <ht-input :data="{ inputStyle: { paddingLeft: '80px' } }">
+    <ht-input :data="{ inputStyle: { paddingLeft: '70px' } }">
       <template #prefix>手机号码：</template>
     </ht-input>
 </template>
@@ -422,7 +422,7 @@ export default {
     </ht-input>
     <br />
 
-    <ht-input :data="{ inputStyle: { paddingLeft: '70px', paddingRight: '80px' } }"> 
+    <ht-input :data="{ inputStyle: { paddingLeft: '58px', paddingRight: '80px' } }"> 
         <template #prefix>验证码：</template>
         <template #suffix>
             <span class="s-fc3 f-curp">发送验证码</span>
