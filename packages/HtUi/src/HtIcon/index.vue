@@ -1,7 +1,7 @@
 <template>
   <div class="ht-icon" @click="onClick">
     <i :class="`u-icon ${data.name}`" :style="data.style"></i>
-    <span class="label f-ml5">
+    <span :class="['label', { 'f-ml5': $slots.default }]">
       <!-- 默认内容插槽 -->
       <slot></slot>
     </span>

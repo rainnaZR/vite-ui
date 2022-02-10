@@ -3,7 +3,7 @@ import { PublicProps } from "../types";
 export interface InputData {
   wrapStyle?: any; // 输入框容器自定义样式
   inputStyle?: any; // 输入框自定义样式
-  type?: string; // 输入框类型
+  type: string; // 输入框类型
   name?: string; // 输入框名称，原生属性
   placeholder?: string; // 输入框placeholder值
   readonly?: boolean; // 输入框是否只读

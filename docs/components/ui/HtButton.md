@@ -76,3 +76,18 @@
 </template>
 ```
 :::
+
+
+### 图标按钮
+
+- 带图标的按钮。
+
+::: Demo
+```vue demo
+<template>
+  <ht-button>
+    <ht-icon :data="{name: 'u-icon-bottom'}" />
+  </ht-button>
+</template>
+```
+:::

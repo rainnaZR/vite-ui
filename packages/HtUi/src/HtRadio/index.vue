@@ -19,7 +19,7 @@
           style: onGetIcon(item, 'style'),
         }"
       />
-      <div class="label">
+      <div class="label f-ml5">
         <!-- 默认内容插槽 -->
         <slot :scope="item" :index="index">{{ item.label }}</slot>
       </div>

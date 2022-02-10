@@ -66,14 +66,14 @@
       <!-- 清除icon -->
       <ht-icon
         v-if="data.clearable"
-        class="f-curp"
+        class="f-curp f-ml5"
         :data="{ name: 'u-icon-clear' }"
         @click="onAction('clearable')"
       />
       <!-- 密码显示/隐藏icon -->
       <ht-icon
         v-if="data.password"
-        class="f-curp"
+        class="f-curp f-ml5"
         :data="{
           name: `${
             inputType === 'password' ? 'u-icon-hidePreview' : 'u-icon-preview'
@@ -84,14 +84,14 @@
       <!-- 搜索icon -->
       <ht-icon
         v-if="data.search"
-        class="f-curp"
+        class="f-curp f-ml5"
         :data="{ name: 'u-icon-search' }"
         @click="onAction('search')"
       />
       <!-- 自定义后缀icon名称 -->
       <ht-icon
         v-if="data.suffixIcon"
-        class="f-curp"
+        class="f-curp f-ml5"
         :data="{ name: data.suffixIcon }"
         @click="onAction('suffixIcon')"
       />
@@ -154,7 +154,7 @@ export default defineComponent({
       paddingLeft += actionWidth * leftActionCount;
 
       let paddingRight = 10;
-      props.data.maxLength && props.data.maxLength > 0 && (paddingRight += 45);
+      props.data.maxLength && props.data.maxLength > 0 && (paddingRight += 40);
       let rightActionCount = 0;
       props.data.clearable && rightActionCount++; // 清除icon
       props.data.password && rightActionCount++; // 密码切换icon
