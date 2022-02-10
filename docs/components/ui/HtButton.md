@@ -91,3 +91,18 @@
 </template>
 ```
 :::
+
+
+### 文字图标按钮
+
+- 带图标带文字的按钮。
+
+::: Demo
+```vue demo
+<template>
+  <ht-button :data="{size: 'small'}">
+    <ht-icon :data="{name: 'u-icon-import'}">导入</ht-icon>
+  </ht-button>
+</template>
+```
+:::

@@ -18,7 +18,7 @@ export interface Rules {
 
 export interface FormData {
   model: Model; // 表单数据对象
-  rules: Rules; // 表单验证规则
+  rules?: Rules; // 表单验证规则
   labelPosition?: string; // label的位置，left/right/top
   labelWidth?: string | number; // label宽度
   showValidMessage?: boolean; // 是否显示校验错误信息

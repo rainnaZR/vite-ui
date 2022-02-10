@@ -37,7 +37,7 @@ export default defineComponent({
           valid: true,
           message: "",
           key: "",
-          value: model,
+          model,
         };
         Object.keys(model).forEach((key: string) => {
           if (!result.valid) {
@@ -66,7 +66,9 @@ export default defineComponent({
               // 如果校验没通过，结束此次循环
               if (!valid) {
                 result.valid = valid; // 验证规则
-                result.message = message; // 错误提示信息
+                result.message =
+                  message ||
+                  (required ? `${key}不能为空！` : `${key}校验失败！`); // 错误提示信息
                 result.key = key; // 错误字段key
                 break;
               }

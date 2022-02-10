@@ -1,0 +1,47 @@
+<template>
+  <div class="ht-form-item">
+    <div
+      class="form-label"
+      :style="{
+        width: data.labelWidth,
+        ...(data.labelStyle || {}),
+      }"
+    >
+      <!-- 表单label插槽 -->
+      <slot name="label">{{ data.label }}</slot>
+    </div>
+    <div class="form-content">
+      <!-- 表单默认内容插槽 -->
+      <slot></slot>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
+import { FormItemData } from "./types";
+
+// 表单列表项组件。
+export default defineComponent({
+  name: "HtFormItem",
+
+  props: {
+    // 配置数据
+    data: {
+      type: Object as PropType<FormItemData>,
+      required: true,
+      default: () => ({
+        label: "",
+      }),
+    },
+  },
+
+  setup() {
+    return {};
+  },
+});
+</script>
+
+<style lang="less" scoped>
+@import "./index.less";
+</style>
