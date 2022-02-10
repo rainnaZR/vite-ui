@@ -5,16 +5,20 @@ export interface Model {
 }
 
 export interface RuleItem {
-  type: string;
-  required?: boolean;
+  required: boolean;
   message?: string;
-  validator: (value: any) => boolean;
-  pattern: RegExp;
+  trigger?: string;
+  pattern?: RegExp;
+  validator?: (value: any) => boolean;
+}
+
+export interface Rules {
+  [key: string]: RuleItem[];
 }
 
 export interface FormData {
   model: Model; // 表单数据对象
-  rules: RuleItem[]; // 表单验证规则
+  rules: Rules; // 表单验证规则
   labelPosition?: string; // label的位置，left/right/top
   labelWidth?: string | number; // label宽度
   showValidMessage?: boolean; // 是否显示校验错误信息
