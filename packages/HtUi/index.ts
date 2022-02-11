@@ -16,6 +16,7 @@ import HtCheckbox from "./src/HtCheckbox"; // 多选框
 import HtSwitch from "./src/HtSwitch"; // 开关切换
 import HtSelect from "./src/HtSelect"; // 下拉框
 import HtForm from "./src/HtForm"; // 表单
+import HtFormItem from "./src/HtFormItem"; // 表单项
 
 const components: any[] = [
   HtBreadCrumb,
@@ -33,6 +34,7 @@ const components: any[] = [
   HtSwitch,
   HtSelect,
   HtForm,
+  HtFormItem,
 ];
 
 /**
@@ -61,6 +63,7 @@ export {
   HtSwitch,
   HtSelect,
   HtForm,
+  HtFormItem,
 };
 export default {
   install,

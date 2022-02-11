@@ -1,3 +1,16 @@
 @import "../theme/variables.less";
 
-.ht-form-item{}
+.ht-form-item{
+    .form-label{
+        font-size: @form-item-font-size;
+        color: @form-item-color;
+    }
+    &-left{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .form-label {
+            margin: 0 @form-item-label-margin 0 0;
+        }
+    }
+}

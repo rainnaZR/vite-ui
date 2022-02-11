@@ -1,10 +1,12 @@
 <template>
-  <div class="ht-form-item">
+  <div
+    :class="`ht-form-item ht-form-item-${data.labelPosition || 'left'} f-mb20`"
+  >
     <div
       class="form-label"
       :style="{
-        width: data.labelWidth,
         ...(data.labelStyle || {}),
+        width: data.labelWidth,
       }"
     >
       <!-- 表单label插槽 -->
@@ -34,10 +36,6 @@ export default defineComponent({
         label: "",
       }),
     },
-  },
-
-  setup() {
-    return {};
   },
 });
 </script>
