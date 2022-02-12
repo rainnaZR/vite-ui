@@ -1,15 +1,8 @@
 import { PublicProps } from "../types";
+import { RuleItem } from "../HtFormItem/types";
 
 export interface Model {
   [key: string]: any;
-}
-
-export interface RuleItem {
-  required: boolean;
-  message?: string;
-  trigger?: string;
-  pattern?: RegExp;
-  validator?: (value: any) => boolean;
 }
 
 export interface Rules {

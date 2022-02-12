@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="`ht-form-item ht-form-item-${data.labelPosition || 'left'} f-mb20`"
+    :class="`ht-form-item ht-form-item-${data.labelPosition || 'left'} f-mb25`"
   >
     <div
       class="form-label"
@@ -9,18 +9,24 @@
         width: data.labelWidth,
       }"
     >
+      <!-- 必填图标 -->
+      <span v-if="required" class="s-fc2 f-mr5">*</span>
       <!-- 表单label插槽 -->
       <slot name="label">{{ data.label }}</slot>
     </div>
     <div class="form-content">
       <!-- 表单默认内容插槽 -->
       <slot></slot>
+      <!-- 表单验证错误信息 -->
+      <div v-if="errorMessage" class="message s-fc2 f-fs12">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { FormItemData } from "./types";
 
 // 表单列表项组件。
@@ -36,6 +42,83 @@ export default defineComponent({
         label: "",
       }),
     },
+  },
+
+  setup(props) {
+    const required = ref(false);
+    required.value =
+      props.data.required || props.data.rules?.some((i) => i.required) || false;
+    const errorMessage = ref(props.data.error);
+
+    /**
+     * 表单项数据验证
+     * @param {Object} model 表单值
+     * @returns {Promise} result 表单项验证结果
+     */
+    const onValidate = (model?: any) => {
+      return new Promise((resolve) => {
+        const { prop, label, rules, showValidMessage = true } = props.data;
+        const result = {
+          valid: true,
+          message: "",
+          prop,
+          model,
+        };
+        const value = prop && model[prop];
+
+        // 如果该属性有校验规则
+        if (rules && rules.length) {
+          for (let i = 0, l = rules.length; i < l; i++) {
+            const {
+              validator,
+              pattern,
+              required: ruleRequired,
+              message = "",
+            } = rules[i];
+            const valid =
+              !!validator && typeof validator === "function"
+                ? validator(value)
+                : pattern
+                ? pattern.test(value)
+                : ruleRequired
+                ? value && !!String(value).trim()
+                : true;
+            // 如果校验没通过，结束此次循环
+            if (!valid) {
+              result.valid = valid; // 验证规则
+              result.message =
+                message ||
+                (ruleRequired ? `${label}不能为空！` : `${label}校验失败！`); // 错误提示信息
+              break;
+            }
+          }
+        }
+        // 展示错误信息
+        if (!result.valid && showValidMessage)
+          errorMessage.value = result.message;
+        resolve(result);
+      });
+    };
+
+    /**
+     * 表单项重置
+     * @param {Object} model 表单值
+     * @returns void
+     */
+    const onResetField = (model?: any) => {
+      const { prop } = props.data;
+      if (model && prop) {
+        model[prop] = "";
+        errorMessage.value = "";
+      }
+    };
+
+    return {
+      required,
+      errorMessage,
+      onValidate,
+      onResetField,
+    };
   },
 });
 </script>

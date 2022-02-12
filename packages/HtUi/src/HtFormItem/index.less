@@ -5,12 +5,30 @@
         font-size: @form-item-font-size;
         color: @form-item-color;
     }
-    &-left{
+    .form-content{
+        position: relative;
+        .message{
+            position: absolute;
+            left: 0;
+            top: 100%;
+        }
+    }
+    &-left, &-right{
         display: flex;
         flex-direction: row;
         align-items: center;
         .form-label {
             margin: 0 @form-item-label-margin 0 0;
+        }
+    }
+    &-right{
+        .form-label {
+            text-align: right;
+        }
+    }
+    &-top{
+        .form-label {
+            margin: 0 0 (@form-item-label-margin - 2);
         }
     }
 }
