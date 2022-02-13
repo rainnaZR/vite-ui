@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="formItemRef"
     :class="`ht-form-item ht-form-item-${data.labelPosition || 'left'} f-mb25`"
   >
     <div
@@ -26,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from "vue";
+import { defineComponent, PropType, ref, toRefs, reactive, nextTick, watch } from "vue";
 import { FormItemData } from "./types";
 
 // 表单列表项组件。
@@ -45,6 +46,7 @@ export default defineComponent({
   },
 
   setup(props) {
+    const formItemRef = ref<HTMLDivElement>();
     const required = ref(false);
     required.value =
       props.data.required || props.data.rules?.some((i) => i.required) || false;
@@ -101,17 +103,34 @@ export default defineComponent({
     };
 
     /**
+     * 表单项清除验证信息
+     * @returns void
+     */
+    const onClearValidate = () => {
+      validateMessage.value = "";
+    };
+
+    /**
      * 表单项数据重置
      * @param {Object} model 表单值
      * @returns void
      */
-    const onResetField = (model?: any) => {
+    const onReset = (model?: any) => {
       const { prop } = props.data;
       if (model && prop) {
         model[prop] = "";
-        validateMessage.value = "";
       }
+      nextTick(() => onClearValidate());
     };
+
+    const formItem = reactive({
+      ...toRefs(props),
+      $el: formItemRef,
+      validateMessage,
+      onValidate,
+      onClearValidate,
+      onReset,
+    });
 
     watch(
       () => props.data.error,
@@ -124,10 +143,13 @@ export default defineComponent({
     );
 
     return {
+      formItemRef,
       required,
       validateMessage,
       onValidate,
-      onResetField,
+      onClearValidate,
+      onReset,
+      formItem,
     };
   },
 });

@@ -20,6 +20,14 @@ export interface FormItemData {
   error?: string; // 表单项校验错误信息
 }
 
+export interface FormItemContext {
+  prop?: string;
+  onReset(): void;
+  onValidate(): void;
+  onClearValidate(): void;
+  $el: HTMLDivElement;
+}
+
 export type Props = PublicProps<{
   data: FormItemData;
 }>;

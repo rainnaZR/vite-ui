@@ -6,8 +6,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { FormData, RuleItem } from "./types";
+import { defineComponent, PropType, watch } from "vue";
+import { FormData } from "./types";
+import { FormItemContext } from "../HtFormItem/types";
 
 // 表单组件。
 export default defineComponent({
@@ -26,77 +27,56 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    /**
-     * 表单数据验证
-     * @retruns {Promise} result 表单验证结果
-     */
-    const onValidate = () => {
-      return new Promise((resolve) => {
-        const { model, rules } = props.data;
-        const result = {
-          valid: true,
-          message: "",
-          key: "",
-          model,
-        };
-        Object.keys(model).forEach((key: string) => {
-          if (!result.valid) {
-            resolve(result);
-            return;
-          }
-          const value: any = model[key];
-          const keyRules: RuleItem[] = rules[key];
-          // 如果该属性有校验规则
-          if (keyRules && keyRules.length) {
-            for (let i = 0, l = keyRules.length; i < l; i++) {
-              const {
-                validator,
-                pattern,
-                required,
-                message = "",
-              } = keyRules[i];
-              const valid =
-                !!validator && typeof validator === "function"
-                  ? validator(value)
-                  : pattern
-                  ? pattern.test(value)
-                  : required
-                  ? !!String(value).trim()
-                  : true;
-              // 如果校验没通过，结束此次循环
-              if (!valid) {
-                result.valid = valid; // 验证规则
-                result.message =
-                  message ||
-                  (required ? `${key}不能为空！` : `${key}校验失败！`); // 错误提示信息
-                result.key = key; // 错误字段key
-                break;
-              }
-            }
-          }
-        });
-        resolve(result);
-      });
+    const fields: FormItemContext[] = [];
+    const onFormAction = (
+      targetProps: string | string[] = [],
+      callback: any = () => {}
+    ) => {
+      if (!props.data.model) {
+        console.error("表单model不能为空！");
+        return;
+      }
+      targetProps = Array.isArray(targetProps) ? targetProps : [targetProps];
+      const targetFields = !targetProps.length
+        ? fields
+        : fields.filter(
+            (field) => field.prop && targetProps.includes(field.prop)
+          );
+      targetFields.forEach((field: FormItemContext) => callback(field));
     };
 
-    /**
-     * 表单提交
-     * @param {Object} event MouseEvent对象
-     */
-    const onSubmit = (e: Event) => {
-      e.preventDefault(); // 取消默认行为，防止form提交
-      onValidate().then((result) => {
-        /**
-         * 表单提交事件触发
-         * @param {Object} result 表单返回值
-         */
-        emit("on-submit", result);
-      });
+    const onAddField = (field: FormItemContext) => fields.push(field);
+
+    const onRemoveField = (field: FormItemContext) =>
+      field.prop && fields.splice(fields.indexOf(field), 1);
+
+    const onResetFields = (targetProps: string | string[] = []) => {
+      onFormAction(targetProps, (field: FormItemContext) => field.onReset());
+    };
+
+    const onValidateFields = (targetProps: string | string[] = []) => {
+      onFormAction(targetProps, (field: FormItemContext) => field.onValidate());
+    };
+
+    const onClearValidate = (targetProps: string | string[] = []) => {
+      onFormAction(targetProps, (field: FormItemContext) =>
+        field.onClearValidate()
+      );
+    };
+
+    const onScrollToField = (prop: string) => {
+      fields.forEach(
+        (field) => field.prop === prop && field.$el.scrollIntoView()
+      );
     };
 
     return {
-      onValidate,
-      onSubmit,
+      onAddField,
+      onRemoveField,
+      onResetFields,
+      onValidateFields,
+      onClearValidate,
+      onScrollToField,
     };
   },
 });

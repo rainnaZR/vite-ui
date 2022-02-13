@@ -18,7 +18,7 @@
         background: @select-options-background-color;
         box-shadow: @select-options-box-shadow;
         overflow-y: auto;
-        transform: translateY(5px);
+        transform: translateY(8px);
         opacity: 0;
         &-show{
             z-index: 99;
@@ -47,7 +47,8 @@
             }
         }
         &-empty{
-            line-height: @select-option-line-height * 1.5;
+            padding-top: @select-option-line-height * 0.5;
+            padding-bottom: @select-option-line-height * 0.5;
             color: @select-option-disabled-color;
             &:hover{
                 background: none;
