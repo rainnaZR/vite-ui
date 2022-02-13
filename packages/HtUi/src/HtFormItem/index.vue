@@ -18,15 +18,15 @@
       <!-- 表单默认内容插槽 -->
       <slot></slot>
       <!-- 表单验证错误信息 -->
-      <div v-if="errorMessage" class="message s-fc2 f-fs12">
-        {{ errorMessage }}
+      <div v-if="validateMessage" class="message s-fc2 f-fs12">
+        {{ validateMessage }}
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType, ref, watch } from "vue";
 import { FormItemData } from "./types";
 
 // 表单列表项组件。
@@ -48,7 +48,7 @@ export default defineComponent({
     const required = ref(false);
     required.value =
       props.data.required || props.data.rules?.some((i) => i.required) || false;
-    const errorMessage = ref(props.data.error);
+    const validateMessage = ref(props.data.error);
 
     /**
      * 表单项数据验证
@@ -94,14 +94,14 @@ export default defineComponent({
           }
         }
         // 展示错误信息
-        if (!result.valid && showValidMessage)
-          errorMessage.value = result.message;
+        validateMessage.value =
+          !result.valid && showValidMessage ? result.message : "";
         resolve(result);
       });
     };
 
     /**
-     * 表单项重置
+     * 表单项数据重置
      * @param {Object} model 表单值
      * @returns void
      */
@@ -109,13 +109,23 @@ export default defineComponent({
       const { prop } = props.data;
       if (model && prop) {
         model[prop] = "";
-        errorMessage.value = "";
+        validateMessage.value = "";
       }
     };
 
+    watch(
+      () => props.data.error,
+      (val) => {
+        validateMessage.value = val;
+      },
+      {
+        immediate: true,
+      }
+    );
+
     return {
       required,
-      errorMessage,
+      validateMessage,
       onValidate,
       onResetField,
     };
