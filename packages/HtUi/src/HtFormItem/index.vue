@@ -1,13 +1,13 @@
 <template>
   <div
     ref="formItemRef"
-    :class="`ht-form-item ht-form-item-${data.labelPosition || 'left'} f-mb25`"
+    :class="`ht-form-item ht-form-item-${data.labelPosition || 'right'} f-mb25`"
   >
     <div
       class="form-label"
       :style="{
         ...(data.labelStyle || {}),
-        width: data.labelWidth,
+        width: data.labelWidth || (form && form.data && form.data.labelWidth),
       }"
     >
       <!-- 必填图标 -->
@@ -27,8 +27,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, toRefs, reactive, nextTick, watch } from "vue";
+import { defineComponent, PropType, inject, ref, toRefs, reactive, nextTick, watch } from "vue";
 import { FormItemData } from "./types";
+import { formKey } from "../HtForm/types";
 
 // 表单列表项组件。
 export default defineComponent({
@@ -46,6 +47,7 @@ export default defineComponent({
   },
 
   setup(props) {
+    const form = inject(formKey);
     const formItemRef = ref<HTMLDivElement>();
     const required = ref(false);
     required.value =
@@ -143,6 +145,7 @@ export default defineComponent({
     );
 
     return {
+      form,
       formItemRef,
       required,
       validateMessage,

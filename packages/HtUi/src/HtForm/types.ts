@@ -1,5 +1,6 @@
+import type { InjectionKey } from "vue";
 import { PublicProps } from "../types";
-import { RuleItem } from "../HtFormItem/types";
+import { RuleItem, FormItemContext } from "../HtFormItem/types";
 
 export interface Model {
   [key: string]: any;
@@ -12,6 +13,7 @@ export interface Rules {
 export interface FormData {
   model: Model; // 表单数据对象
   rules?: Rules; // 表单验证规则
+  inline?: boolean; // 是否行内表单
   labelWidth?: string | number; // 表单项label宽度
   labelStyle?: any; // 表单项label样式
   labelPosition?: string; // 表单项label位置，left/right/top
@@ -23,3 +25,15 @@ export interface FormData {
 export type Props = PublicProps<{
   data: FormData;
 }>;
+
+export interface FormContext {
+  data: FormData;
+  onAddField: (field: FormItemContext) => number;
+  onRemoveField: (field: FormItemContext) => "" | FormItemContext[] | undefined;
+  onResetFields: (targetProps?: string | string[]) => void;
+  onValidateFields: (targetProps?: string | string[]) => void;
+  onClearValidate: (targetProps?: string | string[]) => void;
+  onScrollToField: (prop: string) => void;
+}
+
+export const formKey: InjectionKey<FormContext> = Symbol("form");

@@ -1,13 +1,17 @@
 <template>
-  <form class="ht-form" @submit="onSubmit">
+  <form
+    :class="['ht-form', { 'ht-form-inline': data.inline }]"
+    :style="data.formStyle"
+    @submit="onSubmit"
+  >
     <!-- 表单内容区域插槽 -->
     <slot></slot>
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, watch } from "vue";
-import { FormData } from "./types";
+import { defineComponent, PropType, reactive, toRefs, provide } from "vue";
+import { FormData, formKey } from "./types";
 import { FormItemContext } from "../HtFormItem/types";
 
 // 表单组件。
@@ -70,6 +74,22 @@ export default defineComponent({
       );
     };
 
+    const onSubmit = () => {
+      emit("on-submit");
+    };
+
+    const form = reactive({
+      ...toRefs(props),
+      onAddField,
+      onRemoveField,
+      onResetFields,
+      onValidateFields,
+      onClearValidate,
+      onScrollToField,
+    });
+
+    provide(formKey, form);
+
     return {
       onAddField,
       onRemoveField,
@@ -82,6 +102,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "./index.less";
 </style>

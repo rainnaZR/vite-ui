@@ -84,7 +84,7 @@ export default {
 ### label位置
 
 
-- 表单项label的位置属性`labelPosition`, 值选项为`left`，`right`，`top`，默认值为`left`。
+- 表单项label的位置属性`labelPosition`, 值选项为`left`，`right`，`top`，默认值为`right`。
 - `labelPosition`值为`right`时，需要设置`labelWidth`，代表label右对齐。
 
 
