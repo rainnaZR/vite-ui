@@ -109,8 +109,8 @@ export default {
 
 
 - 自定义图标包括`正常图标`和`选中图标`两种。
-- 组件自定义正常图标的属性`icon`，值为`样式名`。
-- 组件自定义选中图标的属性`checkedIcon`，值为`样式名`。
+- 组件自定义正常图标的属性`icon`，值为字符串，为`样式名`。
+- 组件自定义选中图标的属性`checkedIcon`，值为字符串，为`样式名`。
 
 
 ::: Demo
@@ -195,10 +195,10 @@ export default {
         },
       ],
       iconStyle: {
-        color: "#999",
+        fontSize: "14px",
       },
       checkedIconStyle: {
-        color: "#2196f3",
+        fontSize: "18px",
       },
     });
     return { 
@@ -210,6 +210,61 @@ export default {
 </script>
 ```
 :::
+
+### 选择框样式
+
+- 选择框可自定义样式属性`style`，值为`样式对象`。
+- 选择框可自定义选中样式属性`checkedStyle`，值为`样式对象`。
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-checkbox v-model:modelValue="state.modelValue" :data="checkboxData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const state = reactive({
+      modelValue: [1, 3],
+    })
+    const checkboxData = reactive({
+      multiple: true,
+      options: [
+        {
+          label: "选项1",
+          value: 1,
+        },
+        {
+          label: "选项2",
+          value: 2,
+        },
+        {
+          label: "选项3",
+          value: 3,
+        },
+      ],
+      style: {
+        color: "#999",
+        fontSize: "12px",
+      },
+      checkedStyle: {
+        color: "#359f4e",
+        fontSize: "12px",
+      },
+    });
+    return { 
+      state,
+      checkboxData 
+    };
+  },
+};
+</script>
+```
+:::
+
 
 
 ### 单个禁用
