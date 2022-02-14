@@ -32,7 +32,7 @@ export default {
 
 ### 开关颜色
 
-- 组件可通过属性`activeColor`控制`开启颜色`，默认颜色`#13ce66`。
+- 组件可通过属性`activeColor`控制`开启颜色`，默认颜色`#57a3f3`。
 - 组件可通过属性`inActiveColor`控制`关闭颜色`，默认颜色`#dcdfe6`。
 
 

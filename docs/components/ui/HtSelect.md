@@ -97,7 +97,7 @@ export default {
 ### 边框颜色
 
 - 选择框边框颜色修改属性 `borderColor`，默认颜色`#dcdee2`。
-- 下拉框选中值的颜色优先取`focusBorderColor`，然后取`borderColor`，最后取默认值`#606266`。
+- 下拉框选中值的颜色优先取`focusBorderColor`，然后取`borderColor`，最后取默认值`#57a3f3`。
 
 
 ::: Demo
@@ -144,7 +144,7 @@ export default {
 ### 聚焦边框颜色
 
 - 选择框聚焦边框颜色修改属性 `focusBorderColor`，默认颜色`#57a3f3`。
-- 下拉框选中值的颜色优先取`focusBorderColor`，然后取`borderColor`，最后取默认值`#606266`。
+- 下拉框选中值的颜色优先取`focusBorderColor`，然后取`borderColor`，最后取默认值`#57a3f3`。
 
 
 ::: Demo
@@ -190,7 +190,7 @@ export default {
 
 ### 下拉框样式
 
-- 下拉框自定义样式属性`inputStyle`，值为`Object`。
+- 下拉框自定义样式属性`inputStyle`，值为`样式对象`。
 
 
 
