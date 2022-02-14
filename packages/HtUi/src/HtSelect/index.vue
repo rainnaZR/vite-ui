@@ -107,6 +107,7 @@ export default defineComponent({
         borderColor: props.data.borderColor,
         focusBorderColor: props.data.focusBorderColor,
         inputStyle: props.data.inputStyle,
+        wrapStyle: props.data.wrapStyle,
         clearable: props.data.clearable,
         suffixIcon: "u-icon-arrowDown",
         readonly: !props.data.filterable,

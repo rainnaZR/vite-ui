@@ -46,6 +46,7 @@
       @blur="onBlur"
       @change="onChange"
       @input="onInput"
+      @keyup.enter="onChange"
     />
     <div class="action">
       <!-- 输入框前缀插槽 -->

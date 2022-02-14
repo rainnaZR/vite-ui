@@ -98,6 +98,14 @@ input[type=range]::-ms-fill-lower {
     height: 2px;
     background: #484746;
 }
+/* 隐藏输入框类型为Number时增减指示器 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 option{
     -webkit-appearance: none;   /* google */
     -moz-appearance: none;  /* firefox */
