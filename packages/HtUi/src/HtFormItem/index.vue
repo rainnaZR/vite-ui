@@ -32,9 +32,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, inject, ref, toRefs, reactive, nextTick, watch } from "vue";
+import {
+  defineComponent,
+  PropType,
+  inject,
+  ref,
+  computed,
+  nextTick,
+  reactive,
+  toRefs,
+  watch,
+} from "vue";
 import { FormItemData } from "./types";
-import { formKey } from "../HtForm/types";
+import { formKey, FormContext } from "../HtForm/types";
 
 // 表单列表项组件。
 export default defineComponent({
@@ -52,11 +62,21 @@ export default defineComponent({
   },
 
   setup(props) {
-    const form = inject(formKey);
+    const form: FormContext | undefined = inject(formKey);
     const formItemRef = ref<HTMLDivElement>();
-    const required = ref(false);
-    required.value =
-      props.data.required || props.data.rules?.some((i) => i.required) || false;
+    const onGetRules = () => {
+      const { rules = [], prop, required: ruleRequired } = props.data;
+      const formRules = form && form.data?.rules;
+      const targetFormRules = (prop && formRules && formRules[prop]) || [];
+      const requiredRule =
+        ruleRequired !== undefined ? { required: !!ruleRequired } : {};
+
+      return [...targetFormRules, ...rules, requiredRule];
+    };
+    const required = computed(() => {
+      const rules = onGetRules();
+      return rules.some((i) => i.required);
+    });
     const validateMessage = ref(props.data.error);
 
     /**

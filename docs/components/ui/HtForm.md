@@ -222,9 +222,7 @@ export default {
       />
     </ht-form-item>
     <ht-form-item>
-      <ht-button :data="{ type: 'primary' }" @on-click="onSubmit"
-        >提 交</ht-button
-      >
+      <ht-button :data="{ type: 'primary' }" @on-click="onSubmit">提 交</ht-button>
       <ht-button>取 消</ht-button>
     </ht-form-item>
   </ht-form>
@@ -258,9 +256,7 @@ export default {
 :::Demo
 ```vue demo
 <template>
-  <ht-form
-    :data="{ model: model, labelStyle: { color: '#aaa', fontSize: '16px' } }"
-  >
+  <ht-form :data="{ model: model, labelStyle: { color: '#57a3f3', fontSize: '16px' } }">
     <ht-form-item :data="{ label: '姓名', prop: 'name' }">
       <ht-input v-model:modelValue="model.name" />
     </ht-form-item>
@@ -290,9 +286,7 @@ export default {
       />
     </ht-form-item>
     <ht-form-item>
-      <ht-button :data="{ type: 'primary' }" @on-click="onSubmit"
-        >提 交</ht-button
-      >
+      <ht-button :data="{ type: 'primary' }" @on-click="onSubmit">提 交</ht-button>
       <ht-button>取 消</ht-button>
     </ht-form-item>
   </ht-form>
@@ -347,7 +341,7 @@ export default {
       <ht-input v-model:modelValue="model.contact" :data="{ type: 'number' }" />
     </ht-form-item>
     <ht-form-item>
-      <ht-button :data="{ type: 'primary' }">提 交</ht-button>
+      <ht-button :data="{ type: 'primary' }" @on-click="onSubmit">提 交</ht-button>
       <ht-button>取 消</ht-button>
     </ht-form-item>
   </ht-form>
@@ -362,9 +356,11 @@ export default {
       name: "",
       contact: "",
     });
+    const onSubmit = () => console.log("submit", model);
     return {
       tabValue,
       model,
+      onSubmit,
     };
   },
 };
@@ -378,6 +374,12 @@ export default {
 - 表单校验可设置必填属性`required`，值为布尔值，默认值为`false`。
 
 
+:::Demo
+```vue demo
+
+
+```
+:::
 
 
 
