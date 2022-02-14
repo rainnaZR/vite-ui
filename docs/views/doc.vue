@@ -21,7 +21,7 @@
       <!-- 边栏 -->
       <div class="m-side f-pd20">
         <ht-tab
-          v-model:currentValue="tabData.currentValue"
+          v-model:modelValue="tabData.currentValue"
           :data="tabData"
           @on-change="onClickTab"
         />

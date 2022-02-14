@@ -22,10 +22,9 @@
       <slot name="center" :scope="data">
         <ht-tab
           class="tabs"
-          v-model:currentValue="data.tabCurrentValue"
+          v-model:modelValue="data.tabCurrentValue"
           :data="{
             list: data.tabList,
-            currentValue: data.tabCurrentValue,
             color: data.tabColor,
             activeColor: data.tabActiveColor,
           }"
