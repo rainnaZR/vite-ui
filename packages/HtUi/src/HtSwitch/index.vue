@@ -46,12 +46,11 @@ export default defineComponent({
      * @returns {Object} style 开关样式对象
      */
     const onGetStyle = () => {
-      return {
-        ...(props.data.style || {}),
-        backgroundColor: props.modelValue
-          ? props.data.activeColor || "#13ce66"
-          : props.data.inActiveColor || "#dcdfe6",
-      };
+      const { style = {}, activeColor, inActiveColor } = props.data;
+      if (activeColor || inActiveColor) {
+        style.backgroundColor = props.modelValue ? activeColor : inActiveColor;
+      }
+      return style;
     };
 
     /**

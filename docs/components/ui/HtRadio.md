@@ -257,10 +257,10 @@ export default {
         },
       ],
       iconStyle: {
-        color: "#2196f3",
+        fontSize: "14px",
       },
       checkedIconStyle: {
-        color: "#f60",
+        fontSize: "18px",
       },
     });
     return { 
@@ -291,7 +291,7 @@ export default {
 import { ref, reactive } from 'vue'
 export default {
   setup() {
-    const modelValue = ref(2);
+    const modelValue = ref(1);
     const radioData = reactive({
       options: [
         {

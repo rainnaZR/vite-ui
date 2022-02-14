@@ -35,7 +35,7 @@
             data.disabled || item.disabled
               ? '#ccc'
               : state.selectValue.includes(item.value)
-              ? data.focusBorderColor || data.borderColor || '#606266'
+              ? data.focusBorderColor || data.borderColor || '#57a3f3'
               : '#606266',
         }"
         @click="onChange(item, index)"

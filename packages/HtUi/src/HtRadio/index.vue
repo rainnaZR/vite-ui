@@ -6,6 +6,9 @@
       :class="[
         'item',
         {
+          'item-active': state.checkedValue.includes(item.value),
+        },
+        {
           'item-disabled': data.disabled || item.disabled,
         },
         'f-curp',
