@@ -15,6 +15,8 @@ export interface RadioData {
   checkedIcon?: string; // 选择框选中icon名称
   iconStyle?: any; // 选择框icon样式
   checkedIconStyle?: any; // 选择框icon选中样式
+  style?: any; // 选择框样式
+  checkedStyle?: any; // 选择框选中样式
   disabled?: boolean; // 选择框组是否禁用
 }
 

@@ -273,6 +273,57 @@ export default {
 ```
 :::
 
+### 选择框样式
+
+- 选择框可自定义样式属性`style`，值为`样式对象`。
+- 选择框可自定义选中样式属性`checkedStyle`，值为`样式对象`。
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-radio v-model:modelValue="modelValue" :data="radioData" />
+</template>
+
+<script lang="ts">
+import { ref, reactive } from 'vue'
+export default {
+  setup() {
+    const modelValue = ref(1);
+    const radioData = reactive({
+      options: [
+        {
+          label: "选项1",
+          value: 1,
+        },
+        {
+          label: "选项2",
+          value: 2,
+        },
+        {
+          label: "选项3",
+          value: 3,
+        },
+      ],
+      style: {
+        color: "#999",
+        fontSize: "12px",
+      },
+      checkedStyle: {
+        color: "#f00",
+        fontSize: "12px",
+      },
+    });
+    return { 
+      modelValue,
+      radioData, 
+    };
+  },
+};
+</script>
+```
+:::
+
 
 ### 单个禁用
 

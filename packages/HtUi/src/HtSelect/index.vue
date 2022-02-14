@@ -30,14 +30,7 @@
           'f-curp',
           'f-trans',
         ]"
-        :style="{
-          color:
-            data.disabled || item.disabled
-              ? '#ccc'
-              : state.selectValue.includes(item.value)
-              ? data.focusBorderColor || data.borderColor || '#57a3f3'
-              : '#606266',
-        }"
+        :style="onGetOptionsStyle(item)"
         @click="onChange(item, index)"
       >
         <!-- 下拉选项label插槽 -->
@@ -107,7 +100,7 @@ export default defineComponent({
         borderColor: props.data.borderColor,
         focusBorderColor: props.data.focusBorderColor,
         inputStyle: props.data.inputStyle,
-        wrapStyle: props.data.wrapStyle,
+        wrapStyle: props.data.inputWrapStyle,
         clearable: props.data.clearable,
         suffixIcon: "u-icon-arrowDown",
         readonly: !props.data.filterable,
@@ -248,6 +241,22 @@ export default defineComponent({
       emit("on-change", value, item, index);
     };
 
+    /**
+     * 获取下拉框选项样式
+     * @param {Object} item 当前下拉框选项
+     * @returns {Object} style 下拉框选项样式
+     */
+    const onGetOptionsStyle = (item: SelectItem) => {
+      const { optionsStyle = {}, focusBorderColor, borderColor } = props.data;
+      if (
+        state.selectValue.includes(item.value) &&
+        (focusBorderColor || borderColor)
+      ) {
+        optionsStyle.color = focusBorderColor || borderColor;
+      }
+      return optionsStyle;
+    };
+
     watch(
       () => props.modelValue,
       (value) => {
@@ -264,6 +273,7 @@ export default defineComponent({
       onInput,
       onAction,
       onChange,
+      onGetOptionsStyle,
     };
   },
 });

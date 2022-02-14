@@ -13,7 +13,7 @@
         },
         'f-curp',
       ]"
-      :style="onGetStyle()"
+      :style="onGetStyle(item)"
       @click="onClick(item, index)"
     >
       <ht-icon
@@ -72,14 +72,14 @@ export default defineComponent({
 
     /**
      * 获取选择框样式
+     * @param {Object} item 当前选择框数据
      * @returns {Object} style 选择框样式
      */
-    const onGetStyle = () => {
-      const { column } = props.data;
-      if (!column) return {};
-
+    const onGetStyle = (item: RadioItem) => {
+      const { column, style = {}, checkedStyle = {} } = props.data;
       return {
-        width: `${(100 / ~~column).toFixed(2)}%`,
+        ...(state.checkedValue.includes(item.value) ? checkedStyle : style),
+        width: column ? `${(100 / ~~column).toFixed(2)}%` : "auto",
       };
     };
 
