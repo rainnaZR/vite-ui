@@ -91,8 +91,6 @@ export default defineComponent({
       currentValue: Array.isArray(modelValue) ? modelValue : [modelValue], // 当前选中值
     });
 
-    console.log(state.currentValue)
-
     /**
      * 获取tab样式
      * @param {Object} tab 当前tab对象

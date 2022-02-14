@@ -184,10 +184,204 @@ export default {
 :::
 
 
-### label宽度
-### label样式
-### label位置
+### 表单label宽度
+
+- 表单label宽度属性`labelWidth`，值为字符串，为`css里支持的宽度值`。
+- 如果表单项formItem也定义了`labelWidth`，则优先取表单项设置的值；若无定义，则取表单设置的`labelWidth`值。
+
+::: Demo
+```vue demo
+<template>
+  <ht-form :data="{ model: model, labelWidth: '200px' }">
+    <ht-form-item :data="{ label: '姓名', prop: 'name' }">
+      <ht-input v-model:modelValue="model.name" />
+    </ht-form-item>
+    <ht-form-item :data="{ label: '年龄', prop: 'age' }">
+      <ht-select
+        v-model:modelValue="model.age"
+        :data="{
+          options: [
+            {
+              label: '10-20岁',
+              value: 1,
+            },
+            {
+              label: '20-30岁',
+              value: 2,
+            },
+            {
+              label: '30-40岁',
+              value: 3,
+            },
+            {
+              label: '40岁以上',
+              value: 4,
+            },
+          ],
+        }"
+      />
+    </ht-form-item>
+    <ht-form-item>
+      <ht-button :data="{ type: 'primary' }" @on-click="onSubmit"
+        >提 交</ht-button
+      >
+      <ht-button>取 消</ht-button>
+    </ht-form-item>
+  </ht-form>
+</template>
+
+<script lang="ts">
+import { reactive } from "vue";
+export default {
+  setup() {
+    const model = reactive({
+      name: "",
+      age: "",
+    });
+    const onSubmit = () => console.log("submit", model);
+    return {
+      model,
+      onSubmit,
+    };
+  },
+};
+</script>
+```
+:::
+
+
+### 表单label样式
+
+- 表单label的自定义样式属性`labelStyle`, 值为`样式对象`。
+- 如果表单form和表单项formItem同时定义了`labelStyle`，则会将表单form的`labelStyle`和表单项formItem的`labelStyle`样式合并。
+
+:::Demo
+```vue demo
+<template>
+  <ht-form
+    :data="{ model: model, labelStyle: { color: '#aaa', fontSize: '16px' } }"
+  >
+    <ht-form-item :data="{ label: '姓名', prop: 'name' }">
+      <ht-input v-model:modelValue="model.name" />
+    </ht-form-item>
+    <ht-form-item :data="{ label: '年龄', prop: 'age' }">
+      <ht-select
+        v-model:modelValue="model.age"
+        :data="{
+          options: [
+            {
+              label: '10-20岁',
+              value: 1,
+            },
+            {
+              label: '20-30岁',
+              value: 2,
+            },
+            {
+              label: '30-40岁',
+              value: 3,
+            },
+            {
+              label: '40岁以上',
+              value: 4,
+            },
+          ],
+        }"
+      />
+    </ht-form-item>
+    <ht-form-item>
+      <ht-button :data="{ type: 'primary' }" @on-click="onSubmit"
+        >提 交</ht-button
+      >
+      <ht-button>取 消</ht-button>
+    </ht-form-item>
+  </ht-form>
+</template>
+
+<script lang="ts">
+import { reactive } from "vue";
+export default {
+  setup() {
+    const model = reactive({
+      name: "",
+      age: "",
+    });
+    const onSubmit = () => console.log("submit", model);
+    return {
+      model,
+      onSubmit,
+    };
+  },
+};
+</script>
+```
+:::
+
+
+### 表单label位置
+
+- 表单label的位置属性`labelPosition`, 值选项为`left`，`right`，`top`，默认值为`right`。
+- `labelPosition`值为`right`时，需要设置`labelWidth`，代表label右对齐。
+- 如果表单项formItem也定义了`labelPosition`，则优先取表单项设置的值；若无定义，则取表单设置的`labelPosition`值。
+
+
+:::Demo
+```vue demo
+<template>
+  <ht-tab
+    class="f-mb25"
+    v-model:modelValue="tabValue"
+    :data="{
+      list: [
+        { label: '左对齐', value: 'left' },
+        { label: '右对齐', value: 'right' },
+        { label: '顶部对齐', value: 'top' },
+      ],
+    }"
+  />
+  <ht-form :data="{ model: model, labelPosition: tabValue, labelWidth: '70px' }">
+    <ht-form-item :data="{ label: '姓名', prop: 'name' }">
+      <ht-input v-model:modelValue="model.name" />
+    </ht-form-item>
+    <ht-form-item :data="{ label: '联系方式', prop: 'contact' }">
+      <ht-input v-model:modelValue="model.contact" :data="{ type: 'number' }" />
+    </ht-form-item>
+    <ht-form-item>
+      <ht-button :data="{ type: 'primary' }">提 交</ht-button>
+      <ht-button>取 消</ht-button>
+    </ht-form-item>
+  </ht-form>
+</template>
+
+<script lang="ts">
+import { ref, reactive } from "vue";
+export default {
+  setup() {
+    const tabValue = ref("right");
+    const model = reactive({
+      name: "",
+      contact: "",
+    });
+    return {
+      tabValue,
+      model,
+    };
+  },
+};
+</script>
+```
+:::
+
+
 ### 必填校验
+
+- 表单校验可设置必填属性`required`，值为布尔值，默认值为`false`。
+
+
+
+
+
+
 ### 正则校验
 ### 自定义校验
 ### 表单样式

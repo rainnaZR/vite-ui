@@ -1,7 +1,11 @@
 <template>
   <div
     ref="formItemRef"
-    :class="`ht-form-item ht-form-item-${data.labelPosition || 'right'} f-mb25`"
+    :class="`ht-form-item ht-form-item-${
+      data.labelPosition ||
+      (form && form.data && form.data.labelPosition) ||
+      'right'
+    } f-mb25`"
   >
     <div
       class="form-label"

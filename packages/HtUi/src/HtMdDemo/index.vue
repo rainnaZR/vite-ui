@@ -4,7 +4,7 @@
     <!-- 工具栏插槽 -->
     <slot name="entry">
       <div class="entry">
-        <ht-button class="f-mr5" @click="onViewSource" :data="{ size: 'small' }"
+        <ht-button @click="onViewSource" :data="{ size: 'small' }"
           >查看源码</ht-button
         >
         <ht-button @click="onCopySource" :data="{ size: 'small' }"

@@ -194,6 +194,10 @@ img[src=""],img:not([src]){
 .f-mr25{ margin-right: 25px;  }
 .f-ml25{ margin-left: 25px; }
 .f-mt25{ margin-top: 25px; }
+.f-mb30{ margin-bottom: 30px; }
+.f-mr30{ margin-right: 30px;  }
+.f-ml30{ margin-left: 30px; }
+.f-mt30{ margin-top: 30px; }
 .f-mb50{ margin-bottom: 50px; }
 .f-mr50 { margin-right: 50px; }
 .f-ml50 { margin-left: 50px; }
