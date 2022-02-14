@@ -162,7 +162,13 @@ export default defineComponent({
   }
   .ht-input,
   .ht-select {
-    max-width: 300px;
+    width: 300px;
+  }
+  .ht-pager {
+    .ht-input,
+    .ht-select {
+      width: auto;
+    }
   }
 }
 </style>
