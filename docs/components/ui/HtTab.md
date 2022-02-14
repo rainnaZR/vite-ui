@@ -9,13 +9,14 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-tab v-model:currentValue="tabData.currentValue" :data="tabData" @on-change="onClickTab"/>
+    <ht-tab v-model:modelValue="modelValue" :data="tabData" @on-change="onClickTab"/>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
     setup(){
+        const modelValue = ref("");
         const tabData = reactive({
             list: [{
                 label: 'tab1', 
@@ -26,10 +27,10 @@ export default {
             },{
                 label: 'tab3', 
                 value: 3
-            }], 
-            currentValue: [2],
+            }],
         })
         return {
+            modelValue,
             tabData,
             onClickTab: (tab, index, depth) => alert(`第${index+1}个导航点击，导航label值 '${tab.label}'，导航深度为${depth}`)
         }
@@ -47,13 +48,14 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-tab style="width: 100px" v-model:currentValue="tabData.currentValue" :data="tabData" @on-change="onClickTab" />
+    <ht-tab style="width: 100px" v-model:modelValue="modelValue" :data="tabData" />
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
     setup(){
+        const modelValue = ref("");
         const tabData = reactive({
             direction: 'column',
             list: [{
@@ -66,13 +68,12 @@ export default {
                 label: 'tab3', 
                 value: 3
             }], 
-            currentValue: [1], 
             color: '#666', 
             activeColor: '#f00'
         })
         return {
+            modelValue,
             tabData,
-            onClickTab: (tab, index, depth) => alert(`第${index+1}个导航点击，导航label值 '${tab.label}'，导航深度为${depth}`)
         }
     }
 }
@@ -87,13 +88,14 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-tab v-model:currentValue="tabData.currentValue" :data="tabData" @on-change="onClickTab"/>
+    <ht-tab v-model:modelValue="modelValue" :data="tabData" />
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
     setup(){
+        const modelValue = ref("");
         const tabData = reactive({
             list: [{
                 label: 'tab1', 
@@ -105,13 +107,12 @@ export default {
                 label: 'tab3', 
                 value: 3
             }], 
-            currentValue: [2],
             activeColor: '#fff',
             activeBgColor: 'rgb(45, 140, 240)',
         })
         return {
+            modelValue,
             tabData,
-            onClickTab: (tab, index, depth) => alert(`第${index+1}个导航点击，导航label值 '${tab.label}'，导航深度为${depth}`)
         }
     }
 }
@@ -125,13 +126,14 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-tab style="width:200px" v-model:currentValue="tabData.currentValue" :data="tabData" @on-change="onClickTab"/>
+    <ht-tab style="width:200px" v-model:modelValue="modelValue" :data="tabData" />
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
     setup(){
+        const modelValue = ref(2);
         const tabData = reactive({
             direction: 'column',
             list: [{
@@ -143,14 +145,13 @@ export default {
             },{
                 label: 'tab3', 
                 value: 3
-            }], 
-            currentValue: [2],
+            }],
             activeColor: '#fff',
             activeBgColor: 'rgb(45, 140, 240)',
         })
         return {
+            modelValue,
             tabData,
-            onClickTab: (tab, index, depth) => alert(`第${index+1}个导航点击，导航label值 '${tab.label}'，导航深度为${depth}`)
         }
     }
 }
@@ -167,13 +168,14 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-tab v-model:currentValue="tabData.currentValue" :data="tabData" @on-change="onClickTab"/>
+    <ht-tab v-model:modelValue="modelValue" :data="tabData" />
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
     setup(){
+        const modelValue = ref(['2', '2-1']);
         const tabData = reactive({
             list: [{
                 label: 'tab1', 
@@ -208,12 +210,11 @@ export default {
                 label: 'tab4', 
                 value: 4,
                 icon: 'u-icon-edit',
-            }], 
-            currentValue: ['2', '2-1'],
+            }],
         })
         return {
+            modelValue,
             tabData,
-            onClickTab: (tab, index, depth) => console.log(`第${index+1}个导航点击，导航label值 '${tab.label}'，导航深度为${depth}`)
         }
     }
 }
@@ -229,13 +230,14 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-tab style="width:250px;background:rgb(25, 26, 35)" v-model:currentValue="tabData.currentValue" :data="tabData" @on-change="onClickTab"/>
+    <ht-tab style="width:250px;background:rgb(25, 26, 35)" v-model:modelValue="modelValue" :data="tabData" />
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { ref, reactive } from 'vue'
 export default {
     setup(){
+        const modelValue = ref([2, '2-1']);
         const tabData = reactive({
             direction: 'column',
             list: [{
@@ -272,14 +274,13 @@ export default {
                 value: 4,
                 icon: 'u-icon-edit',
             }], 
-            currentValue: ['2', '2-1'],
             color: '#ffffffb3',
             activeColor: '#fff',
             activeBgColor: 'rgb(45, 140, 240)',
         })
         return {
+            modelValue,
             tabData,
-            onClickTab: (tab, index, depth) => console.log(`第${index+1}个导航点击，导航label值 '${tab.label}'，导航深度为${depth}`)
         }
     }
 }

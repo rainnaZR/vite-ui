@@ -1,11 +1,11 @@
 <template>
-  <div :class="['ht-tab', `ht-tab-${data.direction}`]">
+  <div :class="['ht-tab', `ht-tab-${data.direction || 'row'}`]">
     <div v-for="(tab, index) in data.list" :key="index">
       <div
         :class="[
           'content',
           {
-            'content-curr': data.currentValue[0] === tab.value,
+            'content-curr': state.currentValue[0] == tab.value,
           },
           'f-curp',
         ]"
@@ -33,7 +33,7 @@
         class="children f-trans f-oh"
         :style="{
           height:
-            data.currentValue[0] === tab.value
+            state.currentValue[0] === tab.value
               ? `${tab.children.length * itemHeight}px`
               : '0px',
         }"
@@ -44,7 +44,8 @@
           :class="[
             'child',
             {
-              'child-curr': data.currentValue[1] === child.value,
+              'child-curr':
+                state.currentValue[1] && state.currentValue[1] === child.value,
             },
             'f-curp',
           ]"
@@ -59,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, reactive, watch } from "vue";
 import { TabItem, TabData } from "./types";
 
 // tab导航切换功能。
@@ -67,6 +68,12 @@ export default defineComponent({
   name: "HtTab",
 
   props: {
+    // tab选中值
+    modelValue: {
+      type: [String, Number, Array],
+      required: false,
+      default: "",
+    },
     data: {
       type: Object as PropType<TabData>,
       required: true,
@@ -79,6 +86,12 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const itemHeight = 48;
+    const modelValue = props.modelValue || props.data?.list[0]?.value;
+    const state = reactive({
+      currentValue: Array.isArray(modelValue) ? modelValue : [modelValue], // 当前选中值
+    });
+
+    console.log(state.currentValue)
 
     /**
      * 获取tab样式
@@ -87,12 +100,11 @@ export default defineComponent({
      * @returns {Object} tab样式
      */
     const onGetStyle = (tab: TabItem, depth: number) => {
-      const currentValue: any = props.data?.currentValue;
-      const isCurrent = tab.value === currentValue[depth];
-      const color = isCurrent ? props.data.activeColor : props.data.color;
+      const isCurrent = tab.value === state.currentValue?.[depth];
+      const color = isCurrent ? props.data?.activeColor : props.data?.color;
       const backgroundColor =
         isCurrent && (depth > 0 || (!depth && !tab.children))
-          ? props.data.activeBgColor
+          ? props.data?.activeBgColor
           : "transparent";
       return {
         color,
@@ -108,8 +120,8 @@ export default defineComponent({
      * @returns void
      */
     const onTabClick = (tab: TabItem, index: number, depth: number) => {
-      const currentValue: any = props.data?.currentValue;
-      const params =
+      const { currentValue } = state;
+      const value =
         !depth && !tab.children
           ? [tab.value]
           : !depth && tab.children
@@ -117,11 +129,12 @@ export default defineComponent({
             ? [currentValue[0], currentValue[1]]
             : [tab.value, tab.children[0].value]
           : [currentValue[0], tab.value];
+      state.currentValue = value;
       /**
        * 当前tab点击的value值更新
-       * @param {Array} params 当前点击tab的value值数组
+       * @param {Array} value 当前点击tab的value值数组
        */
-      emit("update:currentValue", params);
+      emit("update:modelValue", value);
 
       /**
        * tab事件点击触发
@@ -132,7 +145,19 @@ export default defineComponent({
       emit("on-change", tab, index, depth);
     };
 
-    return { itemHeight, onGetStyle, onTabClick };
+    watch(
+      () => props.modelValue,
+      (value) => {
+        state.currentValue = Array.isArray(value) ? value : [value];
+      }
+    );
+
+    return {
+      state,
+      itemHeight,
+      onGetStyle,
+      onTabClick,
+    };
   },
 });
 </script>

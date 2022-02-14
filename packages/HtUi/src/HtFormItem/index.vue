@@ -6,6 +6,7 @@
     <div
       class="form-label"
       :style="{
+        ...((form && form.data && form.data.labelStyle) || {}),
         ...(data.labelStyle || {}),
         width: data.labelWidth || (form && form.data && form.data.labelWidth),
       }"
