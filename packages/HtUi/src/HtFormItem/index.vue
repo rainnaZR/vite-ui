@@ -77,10 +77,12 @@ export default defineComponent({
       const { prop = "", required: ruleRequired, rules = [] } = props.data;
       const formRules = form?.data?.rules;
       const targetFormRules = formRules?.[prop] || [];
-      const requiredRule =
-        ruleRequired !== undefined ? { required: !!ruleRequired } : {};
-
-      return [...targetFormRules, ...rules, requiredRule];
+      if (ruleRequired !== undefined) {
+        rules.push({
+          required: !!ruleRequired,
+        });
+      }
+      return [...targetFormRules, ...rules];
     };
     const required = computed(() => {
       const rules: RuleItem[] = onGetRules();
@@ -116,6 +118,8 @@ export default defineComponent({
               required: ruleRequired,
               message = "",
             } = rules[i];
+            // 解决正则多次执行结果不一致的问题
+            pattern && (pattern.lastIndex = 0);
             const valid =
               !!validator && typeof validator === "function"
                 ? validator(value)
