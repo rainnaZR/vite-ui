@@ -1,7 +1,7 @@
 import { PublicProps } from "../types";
 
 export interface RuleItem {
-  required: boolean;
+  required?: boolean;
   message?: string;
   trigger?: string;
   pattern?: RegExp;
@@ -21,11 +21,11 @@ export interface FormItemData {
 }
 
 export interface FormItemContext {
-  prop?: string;
-  onReset(): void;
+  data?: FormItemData;
+  $el: HTMLDivElement | undefined;
   onValidate(): void;
   onClearValidate(): void;
-  $el: HTMLDivElement;
+  onReset(): void;
 }
 
 export type Props = PublicProps<{

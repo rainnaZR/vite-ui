@@ -30,8 +30,8 @@ export interface FormContext {
   data: FormData;
   onAddField: (field: FormItemContext) => number;
   onRemoveField: (field: FormItemContext) => "" | FormItemContext[] | undefined;
-  onResetFields: (targetProps?: string | string[]) => void;
-  onValidateFields: (targetProps?: string | string[]) => void;
+  onReset: (targetProps?: string | string[]) => void;
+  onValidate: (targetProps?: string | string[]) => void;
   onClearValidate: (targetProps?: string | string[]) => void;
   onScrollToField: (prop: string) => void;
 }

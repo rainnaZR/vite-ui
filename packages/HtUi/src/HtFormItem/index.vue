@@ -1,11 +1,18 @@
 <template>
   <div
     ref="formItemRef"
-    :class="`ht-form-item ht-form-item-${
-      data.labelPosition ||
-      (form && form.data && form.data.labelPosition) ||
-      'right'
-    } f-mb25`"
+    :class="[
+      'ht-form-item',
+      `ht-form-item-${
+        data.labelPosition ||
+        (form && form.data && form.data.labelPosition) ||
+        'right'
+      }`,
+      {
+        'ht-form-item-error': validateMessage,
+      },
+      'f-mb25',
+    ]"
   >
     <div
       class="form-label"
@@ -42,8 +49,10 @@ import {
   reactive,
   toRefs,
   watch,
+  onMounted,
+  onBeforeUnmount,
 } from "vue";
-import { FormItemData } from "./types";
+import { FormItemData, RuleItem, FormItemContext } from "./types";
 import { formKey, FormContext } from "../HtForm/types";
 
 // 表单列表项组件。
@@ -65,35 +74,36 @@ export default defineComponent({
     const form: FormContext | undefined = inject(formKey);
     const formItemRef = ref<HTMLDivElement>();
     const onGetRules = () => {
-      const { rules = [], prop, required: ruleRequired } = props.data;
+      const { prop, required: ruleRequired, rules = [] } = props.data;
       const formRules = form && form.data?.rules;
-      const targetFormRules = (prop && formRules && formRules[prop]) || [];
+      const targetFormRules = prop && formRules ? formRules[prop] || [] : [];
       const requiredRule =
         ruleRequired !== undefined ? { required: !!ruleRequired } : {};
 
       return [...targetFormRules, ...rules, requiredRule];
     };
     const required = computed(() => {
-      const rules = onGetRules();
+      const rules: RuleItem[] = onGetRules();
       return rules.some((i) => i.required);
     });
     const validateMessage = ref(props.data.error);
 
     /**
      * 表单项数据验证
-     * @param {Object} model 表单值
      * @returns {Promise} result 表单项验证结果
      */
-    const onValidate = (model?: any) => {
+    const onValidate = () => {
       return new Promise((resolve) => {
-        const { prop, label, rules, showValidMessage = true } = props.data;
+        const model = form && form.data.model;
+        const { prop, label, showValidMessage = true } = props.data;
+        const rules: RuleItem[] = onGetRules();
         const result = {
           valid: true,
           message: "",
           prop,
           model,
         };
-        const value = prop && model[prop];
+        const value = prop && model && model[prop];
 
         // 如果该属性有校验规则
         if (rules && rules.length) {
@@ -110,7 +120,7 @@ export default defineComponent({
                 : pattern
                 ? pattern.test(value)
                 : ruleRequired
-                ? value && !!String(value).trim()
+                ? !!String(value || "").trim()
                 : true;
             // 如果校验没通过，结束此次循环
             if (!valid) {
@@ -139,10 +149,10 @@ export default defineComponent({
 
     /**
      * 表单项数据重置
-     * @param {Object} model 表单值
      * @returns void
      */
-    const onReset = (model?: any) => {
+    const onReset = () => {
+      const model = form && form.data.model;
       const { prop } = props.data;
       if (model && prop) {
         model[prop] = "";
@@ -150,10 +160,9 @@ export default defineComponent({
       nextTick(() => onClearValidate());
     };
 
-    const formItem = reactive({
+    const formItem: FormItemContext = reactive({
       ...toRefs(props),
       $el: formItemRef,
-      validateMessage,
       onValidate,
       onClearValidate,
       onReset,
@@ -168,6 +177,14 @@ export default defineComponent({
         immediate: true,
       }
     );
+
+    onMounted(() => {
+      if (props.data.prop) form?.onAddField(formItem);
+    });
+
+    onBeforeUnmount(() => {
+      form?.onRemoveField(formItem);
+    });
 
     return {
       form,

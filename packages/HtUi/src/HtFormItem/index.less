@@ -12,6 +12,7 @@
             position: absolute;
             left: 0;
             top: 100%;
+            line-height: 2;
         }
     }
     &-left, &-right{
@@ -24,6 +25,11 @@
     &-right{
         .form-label {
             text-align: right;
+        }
+    }
+    &-error{
+        :deep(.ht-input input){
+            border-color: @form-item-error-color;
         }
     }
 }

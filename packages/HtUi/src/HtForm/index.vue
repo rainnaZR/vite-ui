@@ -2,7 +2,6 @@
   <form
     :class="['ht-form', { 'ht-form-inline': data.inline }]"
     :style="data.formStyle"
-    @submit="onSubmit"
   >
     <!-- 表单内容区域插槽 -->
     <slot></slot>
@@ -54,11 +53,11 @@ export default defineComponent({
     const onRemoveField = (field: FormItemContext) =>
       field.prop && fields.splice(fields.indexOf(field), 1);
 
-    const onResetFields = (targetProps: string | string[] = []) => {
+    const onReset = (targetProps: string | string[] = []) => {
       onFormAction(targetProps, (field: FormItemContext) => field.onReset());
     };
 
-    const onValidateFields = (targetProps: string | string[] = []) => {
+    const onValidate = (targetProps: string | string[] = []) => {
       onFormAction(targetProps, (field: FormItemContext) => field.onValidate());
     };
 
@@ -74,16 +73,12 @@ export default defineComponent({
       );
     };
 
-    const onSubmit = () => {
-      emit("on-submit");
-    };
-
     const form = reactive({
       ...toRefs(props),
       onAddField,
       onRemoveField,
-      onResetFields,
-      onValidateFields,
+      onReset,
+      onValidate,
       onClearValidate,
       onScrollToField,
     });
@@ -93,8 +88,8 @@ export default defineComponent({
     return {
       onAddField,
       onRemoveField,
-      onResetFields,
-      onValidateFields,
+      onReset,
+      onValidate,
       onClearValidate,
       onScrollToField,
     };
