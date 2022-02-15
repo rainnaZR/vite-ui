@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import type { InjectionKey } from "vue";
 import { PublicProps } from "../types";
 import { RuleItem, FormItemContext } from "../HtFormItem/types";
@@ -22,10 +23,6 @@ export interface FormData {
   disabled?: boolean; // 表单是否禁用
 }
 
-export type Props = PublicProps<{
-  data: FormData;
-}>;
-
 export interface FormContext {
   data: FormData;
   onAddField: (field: FormItemContext) => number;
@@ -37,3 +34,7 @@ export interface FormContext {
 }
 
 export const formKey: InjectionKey<FormContext> = Symbol("form");
+
+export type Props = PublicProps<{
+  data: FormData;
+}>;

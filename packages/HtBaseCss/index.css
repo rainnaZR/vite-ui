@@ -28,10 +28,10 @@ li{
 }
 body{
     -webkit-text-size-adjust: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
     -webkit-overflow-scrolling: touch;
     -webkit-font-smoothing: antialiased;
-    font-family: PingFangSC-Light,sans-serif;
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
     line-height: 1.8;
 }
 ::-webkit-scrollbar {
@@ -44,10 +44,14 @@ body{
     background: #359f4e;
 }
 input, button, textarea, select{
-  border: 0 none;
-  outline: none;
-  text-decoration:none;
-  background: none;
+    border: 0 none;
+    outline: none;
+    text-decoration:none;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
 }
 input[type="search"]{
     -webkit-appearance:none;

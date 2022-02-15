@@ -52,7 +52,7 @@ import {
   onMounted,
   onBeforeUnmount,
 } from "vue";
-import { FormItemData, RuleItem, FormItemContext } from "./types";
+import { FormItemData, RuleItem, MessageItem, FormItemContext } from "./types";
 import { formKey, FormContext } from "../HtForm/types";
 
 // 表单列表项组件。
@@ -74,9 +74,9 @@ export default defineComponent({
     const form: FormContext | undefined = inject(formKey);
     const formItemRef = ref<HTMLDivElement>();
     const onGetRules = () => {
-      const { prop, required: ruleRequired, rules = [] } = props.data;
-      const formRules = form && form.data?.rules;
-      const targetFormRules = prop && formRules ? formRules[prop] || [] : [];
+      const { prop = "", required: ruleRequired, rules = [] } = props.data;
+      const formRules = form?.data?.rules;
+      const targetFormRules = formRules?.[prop] || [];
       const requiredRule =
         ruleRequired !== undefined ? { required: !!ruleRequired } : {};
 
@@ -94,18 +94,19 @@ export default defineComponent({
      */
     const onValidate = () => {
       return new Promise((resolve) => {
-        const model = form && form.data.model;
-        const { prop, label, showValidMessage = true } = props.data;
+        const model = form?.data.model;
+        const { prop = "", label, showValidMessage = true } = props.data;
         const rules: RuleItem[] = onGetRules();
-        const result = {
+        const result: MessageItem = {
           valid: true,
           message: "",
           prop,
           model,
+          rule: {},
         };
-        const value = prop && model && model[prop];
+        const value = model?.[prop];
 
-        // 如果该属性有校验规则
+        // 如果该属性有验证规则
         if (rules && rules.length) {
           for (let i = 0, l = rules.length; i < l; i++) {
             const {
@@ -122,12 +123,13 @@ export default defineComponent({
                 : ruleRequired
                 ? !!String(value || "").trim()
                 : true;
-            // 如果校验没通过，结束此次循环
+            // 如果当前规则验证没通过，结束此次循环，后续规则不再验证
             if (!valid) {
-              result.valid = valid; // 验证规则
+              result.valid = valid; // 验证结果
               result.message =
                 message ||
-                (ruleRequired ? `${label}不能为空！` : `${label}校验失败！`); // 错误提示信息
+                (ruleRequired ? `${label}不能为空！` : `${label}验证失败！`); // 验证信息
+              result.rule = rules[i]; // 验证规则
               break;
             }
           }
@@ -152,11 +154,9 @@ export default defineComponent({
      * @returns void
      */
     const onReset = () => {
-      const model = form && form.data.model;
+      const model = form?.data.model;
       const { prop } = props.data;
-      if (model && prop) {
-        model[prop] = "";
-      }
+      if (model && prop) model[prop] = "";
       nextTick(() => onClearValidate());
     };
 
@@ -179,7 +179,7 @@ export default defineComponent({
     );
 
     onMounted(() => {
-      if (props.data.prop) form?.onAddField(formItem);
+      form?.onAddField(formItem);
     });
 
     onBeforeUnmount(() => {

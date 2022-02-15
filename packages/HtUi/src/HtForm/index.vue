@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, PropType, reactive, toRefs, provide } from "vue";
 import { FormData, formKey } from "./types";
-import { FormItemContext } from "../HtFormItem/types";
+import { FormItemContext, MessageItem } from "../HtFormItem/types";
 
 // 表单组件。
 export default defineComponent({
@@ -42,8 +42,8 @@ export default defineComponent({
       targetProps = Array.isArray(targetProps) ? targetProps : [targetProps];
       const targetFields = !targetProps.length
         ? fields
-        : fields.filter(
-            (field) => field.prop && targetProps.includes(field.prop)
+        : fields.filter((field) =>
+            targetProps.includes(field?.data?.prop || "")
           );
       targetFields.forEach((field: FormItemContext) => callback(field));
     };
@@ -51,14 +51,30 @@ export default defineComponent({
     const onAddField = (field: FormItemContext) => fields.push(field);
 
     const onRemoveField = (field: FormItemContext) =>
-      field.prop && fields.splice(fields.indexOf(field), 1);
+      fields.splice(fields.indexOf(field), 1);
 
     const onReset = (targetProps: string | string[] = []) => {
       onFormAction(targetProps, (field: FormItemContext) => field.onReset());
     };
 
     const onValidate = (targetProps: string | string[] = []) => {
-      onFormAction(targetProps, (field: FormItemContext) => field.onValidate());
+      return new Promise((resolve) => {
+        const results: MessageItem[] = [];
+        onFormAction(targetProps, (field: FormItemContext) => {
+          field.onValidate().then((result) => {
+            results.push(result);
+            // 最后一个field，表单全部验证完成
+            if (results.length === fields.length) {
+              // 将验证失败的结果过滤出来
+              const invalidFields = results.filter((i) => !i.valid);
+              resolve({
+                valid: invalidFields.length === 0,
+                invalidFields,
+              });
+            }
+          });
+        });
+      });
     };
 
     const onClearValidate = (targetProps: string | string[] = []) => {
@@ -69,7 +85,7 @@ export default defineComponent({
 
     const onScrollToField = (prop: string) => {
       fields.forEach(
-        (field) => field.prop === prop && field.$el.scrollIntoView()
+        (field) => field?.data?.prop === prop && field?.$el?.scrollIntoView()
       );
     };
 
@@ -97,6 +113,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 @import "./index.less";
 </style>

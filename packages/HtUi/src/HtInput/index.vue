@@ -5,7 +5,7 @@
     <textarea
       v-if="data.type === 'textarea'"
       v-model="inputVal"
-      class="textarea"
+      class="textarea f-trans"
       :style="onGetStyle()"
       :rows="data.rows || 5"
       :name="data.name"
@@ -32,6 +32,7 @@
         {
           'input-disabled': data.disabled,
         },
+        'f-trans',
       ]"
       :style="onGetStyle()"
       :type="inputType"

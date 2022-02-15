@@ -12,7 +12,8 @@
             position: absolute;
             left: 0;
             top: 100%;
-            line-height: 2;
+            line-height: 1.8;
+            white-space: nowrap;
         }
     }
     &-left, &-right{
@@ -28,8 +29,11 @@
         }
     }
     &-error{
-        :deep(.ht-input input){
+        :deep(.ht-input input), :deep(.ht-input textarea), :deep(.ht-input input:focus), :deep(.ht-input textarea:focus){
             border-color: @form-item-error-color;
+        }
+        :deep(.ht-input input:focus), :deep(.ht-input textarea:focus){
+            box-shadow: 0 0 0 2px fade(@form-item-error-color, 20%);
         }
     }
 }

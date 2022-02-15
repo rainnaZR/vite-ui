@@ -1,4 +1,13 @@
+import { Model } from "../HtForm/types";
 import { PublicProps } from "../types";
+
+export interface MessageItem {
+  valid: boolean;
+  message?: string;
+  prop?: string;
+  model?: Model;
+  rule?: any;
+}
 
 export interface RuleItem {
   required?: boolean;
