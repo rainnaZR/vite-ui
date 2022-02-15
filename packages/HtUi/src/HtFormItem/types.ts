@@ -23,7 +23,7 @@ export interface FormItemData {
 export interface FormItemContext {
   data?: FormItemData;
   $el: HTMLDivElement | undefined;
-  onValidate(): void;
+  onValidate(): Promise<any>;
   onClearValidate(): void;
   onReset(): void;
 }

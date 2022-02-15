@@ -3,8 +3,11 @@
 .ht-select{
     position: relative;
     outline: none;
-    .input-readonly{
+    :deep(.input-readonly){
         cursor: pointer;
+    }
+    :deep(.input-disabled){
+        cursor: not-allowed;
     }
     .list{
         position: absolute;
