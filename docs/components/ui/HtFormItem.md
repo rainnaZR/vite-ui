@@ -124,7 +124,7 @@ export default {
 ```
 :::
 
-- 如果`required`未设置，则根据校验规则自动生成。
+- 如果`required`未设置，则根据验证规则自动生成。
 
 
 ::: Demo
@@ -138,9 +138,10 @@ export default {
 :::
 
 
-### 校验
+### 验证
 
-- 表单项校验规则属性`rules`，值为rule数组，rule属性包括`required`，`message`，`trigger`，`pattern`，`validator`。
+- 表单项验证规则属性`rules`，值为rule数组，rule属性包括`required`，`message`，`trigger`，`pattern`，`validator`。
+- 表单项验证方式支持：必填项`required`，正则验证`pattern`，自定义方法验证`validator`。
 - 表单项显示错误信息属性`showValidMessage`，值为布尔值，true为显示，false为不显示，默认值为`true`。
 
 
@@ -151,7 +152,7 @@ export default {
         <ht-input v-model:modelValue="model.name"/>
     </ht-form-item>
 
-    <ht-button @on-click="onValidate">校验</ht-button>
+    <ht-button @on-click="onValidate">验 证</ht-button>
 </template>
 
 <script lang="ts">

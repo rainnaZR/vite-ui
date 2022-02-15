@@ -53,7 +53,7 @@ import {
   onBeforeUnmount,
 } from "vue";
 import { FormItemData, RuleItem, MessageItem, FormItemContext } from "./types";
-import { formKey, FormContext } from "../HtForm/types";
+import { FormContext, formKey, Model } from "../HtForm/types";
 
 // 表单列表项组件。
 export default defineComponent({
@@ -90,11 +90,12 @@ export default defineComponent({
 
     /**
      * 表单项数据验证
+     * @param {Object} model 表单数据对象
      * @returns {Promise} result 表单项验证结果
      */
-    const onValidate = () => {
+    const onValidate = (model?: Model) => {
       return new Promise((resolve) => {
-        const model = form?.data.model;
+        model = model || form?.data.model;
         const { prop = "", label, showValidMessage = true } = props.data;
         const rules: RuleItem[] = onGetRules();
         const result: MessageItem = {
@@ -151,10 +152,11 @@ export default defineComponent({
 
     /**
      * 表单项数据重置
+     * @param {Object} model 表单数据对象
      * @returns void
      */
-    const onReset = () => {
-      const model = form?.data.model;
+    const onReset = (model?: Model) => {
+      model = model || form?.data.model;
       const { prop } = props.data;
       if (model && prop) model[prop] = "";
       nextTick(() => onClearValidate());
