@@ -857,7 +857,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-  <ht-form ref="formRef" :data="{ model: model, labelWidth: '70px' }">
+  <ht-form ref="formRef" :data="{ model: model, labelWidth: '70px', contentStyle: { display: 'flex' } }">
     <ht-form-item
       v-for="(tag, index) in model.tags"
       :key="index"
@@ -868,12 +868,12 @@ export default {
       }"
     >
       <ht-input v-model="tag.value"></ht-input>
-      <ht-button @click.prevent="onRemove(tag)">删除</ht-button>
+      <ht-button class="f-ml10" @click.prevent="onRemove(tag)">删除</ht-button>
     </ht-form-item>
     <ht-form-item>
       <ht-button :data="{ type: 'primary' }" @on-click="onSubmit">提 交</ht-button>
       <ht-button @on-click="onReset">重 置</ht-button>
-      <ht-button @click="onAdd">新 增</ht-button>
+  <ht-button :data="{ type: 'primary' }" @click="onAdd">新增标签</ht-button>
     </ht-form-item>
   </ht-form>
 </template>
@@ -890,6 +890,12 @@ export default {
         },
       ],
     });
+    const onRemove = (item) => {
+      const index = model.tags.indexOf(item);
+      if (index !== -1) {
+        model.tags.splice(index, 1);
+      }
+    };
     const onSubmit = () => {
       formRef.value.onValidate().then(({ valid, invalidFields }) => {
         alert(`${valid ? "submit" : "valid fail"}`);
@@ -899,12 +905,6 @@ export default {
     const onReset = () => {
       formRef.value.onReset();
     };
-    const onRemove = (item) => {
-      const index = model.tags.indexOf(item);
-      if (index !== -1) {
-        model.tags.splice(index, 1);
-      }
-    };
     const onAdd = () => {
       model.tags.push({
         value: "",
@@ -913,9 +913,9 @@ export default {
     return {
       formRef,
       model,
+      onRemove,
       onSubmit,
       onReset,
-      onRemove,
       onAdd,
     };
   },

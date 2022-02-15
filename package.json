@@ -33,7 +33,7 @@
     "@htfed/doc-loader": "^0.0.10",
     "@htfed/icon": "^0.0.3",
     "@htfed/ui": "^0.2.12",
-    "@htfed/utils": "0.1.10",
+    "@htfed/utils": "0.1.12",
     "@htfed/vue-doc-css": "^0.0.5",
     "vue": "^3.2.25",
     "vue-router": "4.0.6"

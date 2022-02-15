@@ -90,10 +90,30 @@ const dataFormat = (data, options = { type: "underlineToHump" }) => {
   return data;
 };
 
+// 获取对象指定prop的值 prop格式为'value[1].value1.value2.value3'
+const onGetValueByProps = (object = {}, prop = "") => {
+  if (object.hasOwnProperty(prop)) return object[prop];
+  prop = prop
+    ?.replace(/\[(\w+)\]/g, ".$1")
+    ?.replace(/^\./, "")
+    ?.split(".");
+  for (let i = 0, l = prop.length; i < l; i++) {
+    const key = prop[i];
+    if (key in object) {
+      object = object[key];
+    } else {
+      object = "";
+      break;
+    }
+  }
+  return object;
+};
+
 export default {
   throttle,
   debounce,
   cssSupport,
   convertHEX2RGBA,
   dataFormat,
+  onGetValueByProps,
 };
