@@ -5,13 +5,22 @@
     <textarea
       v-if="data.type === 'textarea'"
       v-model="inputVal"
-      class="textarea f-trans"
+      :class="[
+        'textarea',
+        {
+          'textarea-readonly': data.readonly,
+        },
+        {
+          'textarea-disabled': disabled,
+        },
+        'f-trans',
+      ]"
       :style="onGetStyle()"
       :rows="data.rows || 5"
       :name="data.name"
       :placeholder="data.placeholder || '请输入...'"
       :readonly="data.readonly"
-      :disabled="data.disabled"
+      :disabled="disabled"
       :autofocus="data.autofocus"
       :autocomplete="data.autocomplete"
       :maxlength="data.maxLength || -1"
@@ -30,7 +39,7 @@
           'input-readonly': data.readonly,
         },
         {
-          'input-disabled': data.disabled,
+          'input-disabled': disabled,
         },
         'f-trans',
       ]"
@@ -39,7 +48,7 @@
       :name="data.name"
       :placeholder="data.placeholder || '请输入...'"
       :readonly="data.readonly"
-      :disabled="data.disabled"
+      :disabled="disabled"
       :autofocus="data.autofocus"
       :autocomplete="data.autocomplete"
       :maxlength="data.maxLength || -1"
@@ -106,9 +115,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from "vue";
+import { defineComponent, PropType, inject, ref, watch } from "vue";
 import HtIcon from "../HtIcon";
 import { InputData } from "./types";
+import { FormContext, formKey } from "../HtForm/types";
 
 // 表单中的输入框组件。
 export default defineComponent({
@@ -136,9 +146,11 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const form: FormContext | undefined = inject(formKey);
     const inputType = ref<string>("text"); // 输入框类型
     const inputVal = ref<string | number>(""); // 输入框值
     const isFocus = ref(false); // 是否聚焦
+    const disabled = props.data.disabled || form?.data.disabled;
     inputType.value = props.data.password
       ? "password"
       : props.data.type || "text";
@@ -186,7 +198,7 @@ export default defineComponent({
      * @returns void
      */
     const onFocus = (e: MouseEvent) => {
-      if (props.data.disabled) return;
+      if (disabled) return;
       isFocus.value = true;
       /**
        * 输入框focus事件触发
@@ -202,7 +214,7 @@ export default defineComponent({
      * @returns void
      */
     const onBlur = (e: MouseEvent) => {
-      if (props.data.disabled) return;
+      if (disabled) return;
       isFocus.value = false;
       /**
        * 输入框blur事件触发
@@ -218,7 +230,7 @@ export default defineComponent({
      * @returns void
      */
     const onChange = (e: MouseEvent) => {
-      if (props.data.disabled) return;
+      if (disabled) return;
       /**
        * 输入框change事件触发
        * @param {String} value 输入框value值
@@ -233,7 +245,7 @@ export default defineComponent({
      * @returns void
      */
     const onInput = (e: MouseEvent) => {
-      if (props.data.disabled) return;
+      if (disabled) return;
       /**
        * 输入框input事件触发
        * @param {String} value 输入框value值
@@ -288,9 +300,11 @@ export default defineComponent({
     });
 
     return {
+      form,
       inputType,
       inputVal,
       isFocus,
+      disabled,
       onGetStyle,
       onFocus,
       onBlur,

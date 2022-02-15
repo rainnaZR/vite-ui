@@ -3,7 +3,7 @@
     :class="[
       'ht-switch',
       { 'ht-switch-active': !!modelValue },
-      { 'ht-switch-disabled': data.disabled },
+      { 'ht-switch-disabled': data.disabled || form?.data.disabled },
       'f-curp',
       'f-trans',
     ]"
@@ -18,8 +18,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, inject } from "vue";
 import { SwitchData } from "./types";
+import { FormContext, formKey } from "../HtForm/types";
 
 // 表单中的开关切换组件。
 export default defineComponent({
@@ -41,6 +42,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const form: FormContext | undefined = inject(formKey);
     /**
      * 获取开关按钮样式
      * @returns {Object} style 开关样式对象
@@ -58,7 +60,7 @@ export default defineComponent({
      * @returns void
      */
     const onChange = () => {
-      if (props.data.disabled) return;
+      if (props.data.disabled || form?.data.disabled) return;
 
       const value = !props.modelValue;
       /**
@@ -75,6 +77,7 @@ export default defineComponent({
     };
 
     return {
+      form,
       onGetStyle,
       onChange,
     };

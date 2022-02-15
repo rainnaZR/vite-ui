@@ -9,7 +9,7 @@
           'item-active': state.checkedValue.includes(item.value),
         },
         {
-          'item-disabled': data.disabled || item.disabled,
+          'item-disabled': item.disabled || disabled,
         },
         'f-curp',
       ]"
@@ -31,9 +31,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch } from "vue";
+import { defineComponent, PropType, inject, reactive, watch } from "vue";
 import HtIcon from "../HtIcon";
 import { RadioItem, RadioData } from "./types";
+import { FormContext, formKey } from "../HtForm/types";
 
 // 表单中的单选框组件。
 export default defineComponent({
@@ -61,6 +62,8 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const form: FormContext | undefined = inject(formKey);
+    const disabled: boolean = props.data.disabled || !!form?.data.disabled;
     const state = reactive({
       checkedValue: Array.isArray(props.modelValue)
         ? props.modelValue
@@ -106,7 +109,7 @@ export default defineComponent({
      * @returns void
      */
     const onClick = (item: RadioItem, index: number) => {
-      if (props.data.disabled || item.disabled) return;
+      if (item.disabled || disabled) return;
 
       const isChecked = state.checkedValue.includes(item.value);
       if (props.data.multiple) {
@@ -153,6 +156,8 @@ export default defineComponent({
     );
 
     return {
+      form,
+      disabled,
       state,
       onGetStyle,
       onGetIcon,

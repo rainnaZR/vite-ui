@@ -23,10 +23,12 @@ export interface FormItemData {
   labelWidth?: string | number; // 表单项label宽度
   labelStyle?: any; // 表单项label样式
   labelPosition?: string; // 表单项label位置，left/right/top
+  contentStyle?: any; // 表单项content样式
   required?: boolean; // 表单项是否必填
   rules?: RuleItem[]; // 表单项验证规则
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   error?: string; // 表单项验证错误信息
+  disabled?: boolean; // 表单项是否禁用
 }
 
 export interface FormItemContext {
