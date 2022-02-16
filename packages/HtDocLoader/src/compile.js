@@ -342,7 +342,11 @@ const traverserTemplateAst = (ast, visitor = {}) => {
   function traverseNode(node, parent) {
     visitor.enter && visitor.enter(node, parent);
     visitor[node.tag] && visitor[node.tag](node, parent);
-    node.children && traverseArray(node.children, node);
+    if (node.children) {
+      traverseArray(node.children, node);
+    } else if (node.branches) {
+      traverseArray(node.branches, node);
+    }
     visitor.exit && visitor.exit(node, parent);
   }
 

@@ -136,6 +136,7 @@ img[src=""],img:not([src]){
 
 /* 字号 */
 .f-fs12{ font-size: 12px; }
+.f-fs13{ font-size: 13px; }
 .f-fs14{ font-size: 14px; }
 .f-fs16{ font-size: 16px; }
 .f-fs18{ font-size: 18px; }
