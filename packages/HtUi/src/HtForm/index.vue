@@ -3,7 +3,7 @@
     :class="['ht-form', { 'ht-form-inline': data.inline }]"
     :style="data.formStyle"
   >
-    <!-- 表单内容区域插槽 -->
+    <!-- 表单内容插槽 -->
     <slot></slot>
   </form>
 </template>

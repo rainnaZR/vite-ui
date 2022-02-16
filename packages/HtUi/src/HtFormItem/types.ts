@@ -22,7 +22,7 @@ export interface FormItemData {
   label: string; // 表单项的label标签
   labelWidth?: string | number; // 表单项label宽度
   labelStyle?: any; // 表单项label样式
-  labelPosition?: string; // 表单项label位置，left/right/top
+  labelPosition?: string; // 表单项label位置，left/right/top，默认值right
   contentStyle?: any; // 表单项content样式
   required?: boolean; // 表单项是否必填
   rules?: RuleItem[]; // 表单项验证规则

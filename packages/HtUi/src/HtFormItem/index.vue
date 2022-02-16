@@ -34,7 +34,7 @@
         ...(data.contentStyle || {}),
       }"
     >
-      <!-- 表单默认内容插槽 -->
+      <!-- 表单内容插槽 -->
       <slot></slot>
       <!-- 表单验证错误信息 -->
       <div v-if="validateMessage" class="message s-fc2 f-fs12">
@@ -104,7 +104,7 @@ export default defineComponent({
 
     /**
      * 表单项数据验证
-     * @param {Object} model 表单数据对象
+     * @param {Object} model 指定数据对象，不传取默认表单数据
      * @returns {Promise} result 表单项验证结果
      */
     const onValidate = (model?: Model) => {
@@ -180,7 +180,7 @@ export default defineComponent({
 
     /**
      * 表单项数据重置
-     * @param {Object} data 表单项数据对象
+     * @param {Object} model 指定数据对象，不传取默认表单数据
      * @returns void
      */
     const onReset = (model?: Model) => {

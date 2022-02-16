@@ -17,7 +17,7 @@ export interface FormData {
   inline?: boolean; // 是否行内表单
   labelWidth?: string | number; // 表单项label宽度
   labelStyle?: any; // 表单项label样式
-  labelPosition?: string; // 表单项label位置，left/right/top
+  labelPosition?: string; // 表单项label位置，left/right/top，默认值right
   contentStyle?: any; // 表单项content样式
   formStyle?: any; // 表单自定义样式
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true

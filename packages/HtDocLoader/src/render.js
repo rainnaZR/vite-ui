@@ -167,9 +167,11 @@ class RenderMd {
     return params
       .map(
         (item) =>
-          `${item.name}:${item.type}${item.desc ? `(${item.desc})` : ""}`
+          `\`\`${item.name}\`\`: ${item.type} ${
+            item.desc ? `${item.desc}` : ""
+          }`
       )
-      .join(",");
+      .join("<br />");
   }
 }
 
