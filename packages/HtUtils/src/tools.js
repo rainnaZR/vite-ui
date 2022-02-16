@@ -90,23 +90,42 @@ const dataFormat = (data, options = { type: "underlineToHump" }) => {
   return data;
 };
 
-// 获取对象指定prop的值 prop格式为'value[1].value1.value2.value3'
-const onGetValueByProps = (object = {}, prop = "") => {
-  if (object.hasOwnProperty(prop)) return object[prop];
+// 获取/设置对象指定prop的值 prop格式为'value[1].value1.value2.value3'
+const onDoValueByProps = ({ object = {}, prop = "", value, type = "get" }) => {
+  if (object.hasOwnProperty(prop)) {
+    if (type === "get") {
+      return object[prop];
+    }
+    if (type === "set") {
+      object[prop] = value;
+      return;
+    }
+  }
   prop = prop
     ?.replace(/\[(\w+)\]/g, ".$1")
     ?.replace(/^\./, "")
     ?.split(".");
   for (let i = 0, l = prop.length; i < l; i++) {
     const key = prop[i];
-    if (key in object) {
-      object = object[key];
-    } else {
-      object = "";
-      break;
+    if (type === "get") {
+      if (key in object) {
+        object = object[key];
+      } else {
+        object = "";
+        break;
+      }
+    }
+    if (type === "set") {
+      if (key in object) {
+        if (i === prop.length - 1) {
+          object[key] = value;
+        } else {
+          object = object[key];
+        }
+      }
     }
   }
-  return object;
+  if (type === "get") return object;
 };
 
 export default {
@@ -115,5 +134,5 @@ export default {
   cssSupport,
   convertHEX2RGBA,
   dataFormat,
-  onGetValueByProps,
+  onDoValueByProps,
 };

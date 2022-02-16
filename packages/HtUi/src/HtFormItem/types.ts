@@ -28,7 +28,6 @@ export interface FormItemData {
   rules?: RuleItem[]; // 表单项验证规则
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   error?: string; // 表单项验证错误信息
-  disabled?: boolean; // 表单项是否禁用
 }
 
 export interface FormItemContext {

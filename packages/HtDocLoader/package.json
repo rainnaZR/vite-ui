@@ -1,6 +1,6 @@
 {
   "name": "@htfed/doc-loader",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Auto generate doc files from ui library.",
   "main": "index.js",
   "repository": {

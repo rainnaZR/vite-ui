@@ -27,7 +27,13 @@
       <!-- 表单label插槽 -->
       <slot name="label">{{ data.label }}</slot>
     </div>
-    <div class="form-content">
+    <div
+      class="form-content"
+      :style="{
+        ...((form && form.data && form.data.contentStyle) || {}),
+        ...(data.contentStyle || {}),
+      }"
+    >
       <!-- 表单默认内容插槽 -->
       <slot></slot>
       <!-- 表单验证错误信息 -->
@@ -52,10 +58,11 @@ import {
   onMounted,
   onBeforeUnmount,
 } from "vue";
+import { tools } from "@htfed/utils";
 import { FormItemData, RuleItem, MessageItem, FormItemContext } from "./types";
 import { FormContext, formKey, Model } from "../HtForm/types";
 
-// 表单列表项组件。
+// 表单项组件。
 export default defineComponent({
   name: "HtFormItem",
 
@@ -70,9 +77,14 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  setup(props, { emit }) {
     const form: FormContext | undefined = inject(formKey);
     const formItemRef = ref<HTMLDivElement>();
+
+    /**
+     * 获取表单项验证规则
+     * @returns {Array} rules 表单项验证规则
+     */
     const onGetRules = () => {
       const { prop = "", required: ruleRequired, rules = [] } = props.data;
       const formRules = form?.data?.rules;
@@ -107,7 +119,7 @@ export default defineComponent({
           model,
           rule: {},
         };
-        const value = model?.[prop];
+        const value = tools.onDoValueByProps({ object: model, prop });
 
         // 如果该属性有验证规则
         if (rules && rules.length) {
@@ -143,6 +155,12 @@ export default defineComponent({
         validateMessage.value =
           !result.valid && showValidMessage ? result.message : "";
         resolve(result);
+
+        /**
+         * 表单项验证事件触发
+         * @param {Object} result 表单项验证结果
+         */
+        emit("on-validate", result);
       });
     };
 
@@ -152,18 +170,37 @@ export default defineComponent({
      */
     const onClearValidate = () => {
       validateMessage.value = "";
+
+      /**
+       * 表单项清除验证信息事件触发
+       * @param {Object} data 表单项数据对象
+       */
+      emit("on-clear-validate", props.data);
     };
 
     /**
      * 表单项数据重置
-     * @param {Object} model 表单数据对象
+     * @param {Object} data 表单项数据对象
      * @returns void
      */
     const onReset = (model?: Model) => {
       model = model || form?.data.model;
       const { prop } = props.data;
-      if (model && prop) model[prop] = "";
-      nextTick(() => onClearValidate());
+      if (model && prop)
+        tools.onDoValueByProps({
+          object: model,
+          prop,
+          value: undefined,
+          type: "set",
+        });
+      nextTick(() => {
+        onClearValidate();
+        /**
+         * 表单项重置事件触发
+         * @param {Object} data 表单项数据对象
+         */
+        emit("on-reset", props.data);
+      });
     };
 
     const formItem: FormItemContext = reactive({

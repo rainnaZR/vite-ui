@@ -873,7 +873,7 @@ export default {
     <ht-form-item>
       <ht-button :data="{ type: 'primary' }" @on-click="onSubmit">提 交</ht-button>
       <ht-button @on-click="onReset">重 置</ht-button>
-  <ht-button :data="{ type: 'primary' }" @click="onAdd">新增标签</ht-button>
+      <ht-button :data="{ type: 'success' }" @click="onAdd">新增标签</ht-button>
     </ht-form-item>
   </ht-form>
 </template>

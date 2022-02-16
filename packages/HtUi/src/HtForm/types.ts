@@ -19,15 +19,15 @@ export interface FormData {
   labelStyle?: any; // 表单项label样式
   labelPosition?: string; // 表单项label位置，left/right/top
   contentStyle?: any; // 表单项content样式
-  showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   formStyle?: any; // 表单自定义样式
+  showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   disabled?: boolean; // 表单是否禁用
 }
 
 export interface FormContext {
   data: FormData;
-  onAddField: (field: FormItemContext) => number;
-  onRemoveField: (field: FormItemContext) => "" | FormItemContext[] | undefined;
+  onAddField: (field: FormItemContext) => void;
+  onRemoveField: (field: FormItemContext) => void;
   onReset: (targetProps?: string | string[]) => void;
   onValidate: (targetProps?: string | string[]) => void;
   onClearValidate: (targetProps?: string | string[]) => void;

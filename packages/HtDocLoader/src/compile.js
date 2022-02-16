@@ -96,7 +96,7 @@ const onExtractMethodInfo = (comment) => {
     }
     // 提取 参数说明
     const paramsRes = comment.value.matchAll(
-      /(@param)[\s]*{([a-zA-Z]*)}[\s]*(\w*)(.*)/g
+      /(@param)[\s]*{([a-zA-Z/|]*)}[\s]*(\w*)(.*)/g
     );
     // eslint-disable-next-line no-restricted-syntax
     if (paramsRes) {
