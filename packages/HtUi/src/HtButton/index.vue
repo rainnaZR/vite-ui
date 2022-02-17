@@ -12,7 +12,7 @@
       },
     ]"
     :type="data.nativeType || 'button'"
-    :style="data.buttonStyle"
+    :style="data.style"
     :disabled="data.disabled"
     @click="onClick"
   >

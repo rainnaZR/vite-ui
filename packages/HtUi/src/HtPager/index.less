@@ -13,9 +13,12 @@
   .item{
     width: @pager-item-width;
     margin: 0 @pager-item-margin;
-    box-sizing: border-box;
     border-radius: @pager-item-border-radius;
-    &:hover, &-active {
+    box-sizing: border-box;
+    &:hover{
+      opacity: 0.7;
+    }
+    &-active {
       color: @pager-active-color;
     }
   }

@@ -1,11 +1,7 @@
 <template>
   <div
-    :class="[
-      'ht-pager',
-      {
-        'ht-pager-disabled': data.disabled,
-      },
-    ]"
+    v-if="pageCount > 1 || data.showSinglePage"
+    class="ht-pager"
     :style="data.wrapStyle"
   >
     <div v-for="layout in layoutList" :key="layout" class="f-mr10">
@@ -24,7 +20,10 @@
         :data="{
           type: 'text',
           size: 'small',
-          buttonStyle: { color: '#303133' },
+          style: {
+            color: '#303133',
+            ...(data.pagerItemStyle || {}),
+          },
           ...(data.buttonConfigData || {}),
           disabled: currentPageIndex <= 1,
         }"
@@ -37,8 +36,8 @@
       </ht-button>
 
       <!-- 页码模块 -->
-      <ul v-if="layout === 'pager'" class="list f-df f-unselect">
-        <li
+      <div v-if="layout === 'pager'" class="list f-df f-unselect">
+        <div
           v-for="(item, index) in pager"
           :key="item"
           :class="[
@@ -47,17 +46,21 @@
             'f-tac',
             'f-curp',
             { 'item-active f-curd': item.value === currentPageIndex },
+            'f-trans',
           ]"
           :style="
             item.value === currentPageIndex
-              ? data.activePagerItemStyle
+              ? {
+                  ...(data.pagerItemStyle || {}),
+                  ...(data.activePagerItemStyle || {}),
+                }
               : data.pagerItemStyle
           "
           @click="onGoPage(item)"
         >
           <span v-if="item.type === 'pageNumber'">
             <!-- 数字页码插槽 -->
-            <slot name="pageNumber" :scope="{ pager, index }">
+            <slot name="pageNumber" :scope="{ value: item.value }">
               {{ item.value }}
             </slot>
           </span>
@@ -68,8 +71,8 @@
             @mouseover="onChangePagerIcon(item.type, 'mouseover')"
             @mouseleave="onChangePagerIcon(item.type, 'mouseleave')"
           />
-        </li>
-      </ul>
+        </div>
+      </div>
 
       <!-- 下一页按钮模块 -->
       <ht-button
@@ -77,7 +80,10 @@
         :data="{
           type: 'text',
           size: 'small',
-          buttonStyle: { color: '#303133' },
+          style: {
+            color: '#303133',
+            ...(data.pagerItemStyle || {}),
+          },
           ...(data.buttonConfigData || {}),
           disabled: currentPageIndex >= pageCount,
         }"
@@ -226,29 +232,42 @@ export default defineComponent({
           }));
       }
       // 如果总页数大于指定页码数量限制pageShowLimit（默认是7）
-      const centerNum = Math.ceil((pageShowLimit + 1) / 2);
-      const centerValue = Math.floor(centerNum / 2);
-      const center: any[] = new Array(centerNum + 1)
+      // 除去首尾页码，剩余显示页码数量为 pageShowLimit-2
+      const count = pageShowLimit - 2;
+      // 页码显示均分，每侧显示的数量
+      const symmetryCount = Math.ceil((count - 1) / 2);
+      // 中间页码值
+      const center: any[] = new Array(count)
         .fill(undefined)
         .map((value, index) => {
-          if (currentPageIndex.value < centerNum + 1)
-            return centerValue + index;
-          if (currentPageIndex.value > pageCount.value - centerNum)
-            return pageCount.value - centerNum - 1 + index;
-          return currentPageIndex.value + index - centerValue;
+          // 如果当前页码为首页，则顺移显示下一页
+          if (currentPageIndex.value === 1)
+            return currentPageIndex.value + index + 1;
+          // 如果当前页码与中轴数量首部无缝衔接时
+          if (currentPageIndex.value < symmetryCount + 2) return 1 + index + 1;
+          // 如果当前页码与中轴数量尾部无缝衔接时
+          if (currentPageIndex.value > pageCount.value - count)
+            return pageCount.value - count + index;
+          return currentPageIndex.value - symmetryCount + index;
         })
         .map((value) => ({
           type: "pageNumber",
           value,
         }));
       // 判断添加快速跳转按钮
-      if (currentPageIndex.value >= centerNum + 1) {
+      if (
+        currentPageIndex.value > 2 &&
+        currentPageIndex.value > symmetryCount + 2
+      ) {
         center.unshift({
           type: "pagePrev",
           value: -1,
         });
       }
-      if (currentPageIndex.value <= pageCount.value - centerNum) {
+      if (
+        currentPageIndex.value < pageCount.value - 1 &&
+        currentPageIndex.value <= pageCount.value - count
+      ) {
         center.push({
           type: "pageNext",
           value: -1,
@@ -276,7 +295,7 @@ export default defineComponent({
       if (item.type === "pageNumber" && currentPageIndex.value === item.value)
         return;
       const { pageShowLimit } = propsData;
-      const centerNum = Math.ceil((pageShowLimit + 1) / 2) + 1;
+      const centerNum = pageShowLimit - 2;
       const value =
         item.type === "pageNumber"
           ? item.value
