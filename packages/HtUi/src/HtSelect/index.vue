@@ -31,7 +31,7 @@
           'f-trans',
         ]"
         :style="onGetOptionsStyle(item)"
-        @click="onChange(item, index)"
+        @click.stop="onChange(item, index)"
       >
         <!-- 下拉选项label插槽 -->
         <slot name="label" :scope="item" :index="index">

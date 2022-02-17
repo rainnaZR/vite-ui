@@ -9,6 +9,7 @@
     :style="data.wrapStyle"
   >
     <div v-for="layout in layoutList" :key="layout" class="f-mr10">
+      <!-- 总数模块 -->
       <div v-if="layout === 'total'" class="total">
         <!-- 总数显示插槽 -->
         <slot name="total" :scope="{ total: data.total }">
@@ -16,6 +17,7 @@
         </slot>
       </div>
 
+      <!-- 上一页按钮模块 -->
       <ht-button
         v-if="layout === 'prev'"
         :key="layout"
@@ -34,6 +36,7 @@
         </slot>
       </ht-button>
 
+      <!-- 页码模块 -->
       <ul v-if="layout === 'pager'" class="list f-df f-unselect">
         <li
           v-for="(item, index) in pager"
@@ -68,6 +71,7 @@
         </li>
       </ul>
 
+      <!-- 下一页按钮模块 -->
       <ht-button
         v-if="layout === 'next'"
         :data="{
@@ -85,13 +89,14 @@
         </slot>
       </ht-button>
 
+      <!-- 每页数量下拉模块 -->
       <ht-select
         v-if="layout === 'sizes'"
         v-model:modelValue="currentPageSize"
         :data="{
           options: pageSizeOptions,
           inputStyle: {
-            width: '100px',
+            width: '105px',
             height: '28px',
             textAlign: 'center',
             ...(data.sizesSelectStyle || {}),
@@ -103,6 +108,7 @@
         @on-change="onChangePageSize"
       />
 
+      <!-- 页码输入模块 -->
       <div v-if="layout === 'jumper'" class="jumper f-df f-aic">
         <span class="f-mr5">前往</span>
         <ht-input
@@ -117,8 +123,8 @@
               ...(data.jumperInputStyle || {}),
             },
           }"
-          @on-blur="onInputBlur"
-          @on-change="onInputBlur"
+          @on-blur="onValidInput"
+          @on-change="onValidInput"
         />
         <span class="f-ml5">页</span>
       </div>
@@ -127,12 +133,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref } from "vue";
+import { defineComponent, PropType, computed, reactive, ref, watch } from "vue";
 import HtButton from "../HtButton";
 import HtIcon from "../HtIcon";
 import HtSelect from "../HtSelect";
 import HtInput from "../HtInput";
-import { PagerData } from "./types";
+import { PagerData, PagerItem } from "./types";
 
 // 翻页组件，用于列表的数据分页处理。
 export default defineComponent({
@@ -173,76 +179,43 @@ export default defineComponent({
   ],
 
   setup(props, { emit }) {
-    const propsData = computed<PagerData>(() => ({
+    const propsData = reactive({
       total: 0,
       pageSizes: [10, 20, 30, 50, 100],
       layout: "total, prev, pager, next, sizes, jumper",
       pageShowLimit: 7,
       ...(props.data || {}),
-    }));
+    });
     // 当前页码
-    const currentPageIndex = ref(props.pageIndex || 1);
+    const currentPageIndex = ref(~~props.pageIndex || 1);
     // 当前每页数量
-    const currentPageSize = ref(props.pageSize || propsData.value.pageSizes[0]);
+    const currentPageSize = ref(props.pageSize || propsData.pageSizes[0]);
     // 翻页icon名
     const pagerIconName = ref("u-icon-more");
-    // 跳转输入框值
+    // 输入框页码值
     const inputPageValue = ref(1);
-    // 布局
+    // 模块布局
     const layoutList = computed(() =>
-      propsData.value?.layout
+      propsData.layout
         ?.split(",")
         ?.map((v) => v.trim())
         ?.filter((i) => !!i)
     );
-    // 分页选项
+    // 分页下拉选项
     const pageSizeOptions = computed(() =>
-      propsData.value?.pageSizes?.map((value) => ({
+      propsData.pageSizes?.map((value) => ({
         label: `${value}条/页`,
         value,
       }))
     );
     // 总页数
     const pageCount = computed(() =>
-      Math.ceil(~~propsData.value.total / ~~currentPageSize.value)
+      Math.ceil(~~propsData.total / ~~currentPageSize.value)
     );
 
-    // 当前页码
-    // const current = computed({
-    //   get() {
-    //     return currentPageIndex.value;
-    //   },
-    //   set(value: number) {
-    //     value = value || 1;
-    //     /**
-    //      * 更新分页页码
-    //      * @param {Number} value 当前页码
-    //      */
-    //     emit("update:pageIndex", value);
-    //     currentPageIndex.value = value;
-    //     inputPageValue.value = value;
-    //   },
-    // });
-
-    // 每页数量
-    // const size = computed({
-    //   get() {
-    //     return currentPageSize.value;
-    //   },
-    //   set(value: number) {
-    //     value = value || propsData.value.pageSizes[0];
-    //     /**
-    //      * 更新每页数量
-    //      * @param {Number} val 当前分页数量
-    //      */
-    //     emit("update:pageSize", value);
-    //     currentPageSize.value = value;
-    //   },
-    // });
-
-    // 渲染分页对象
+    // 渲染分页页码对象
     const pager = computed(() => {
-      const { pageShowLimit } = propsData.value;
+      const { pageShowLimit } = propsData;
       // 如果总页数小于指定页码数量限制pageShowLimit（默认是7）
       if (pageCount.value <= pageShowLimit) {
         return new Array(pageCount.value)
@@ -252,7 +225,6 @@ export default defineComponent({
             value: index + 1,
           }));
       }
-
       // 如果总页数大于指定页码数量限制pageShowLimit（默认是7）
       const centerNum = Math.ceil((pageShowLimit + 1) / 2);
       const centerValue = Math.floor(centerNum / 2);
@@ -269,21 +241,19 @@ export default defineComponent({
           type: "pageNumber",
           value,
         }));
-
       // 判断添加快速跳转按钮
       if (currentPageIndex.value >= centerNum + 1) {
         center.unshift({
           type: "pagePrev",
-          value: "",
+          value: -1,
         });
       }
       if (currentPageIndex.value <= pageCount.value - centerNum) {
         center.push({
           type: "pageNext",
-          value: "",
+          value: -1,
         });
       }
-
       return [
         {
           type: "pageNumber",
@@ -298,13 +268,14 @@ export default defineComponent({
     });
 
     /**
-     * 点击分页项
-     * @param {Object} item 点击的分页信息（类型：分页或快进快退；值：第几页）
+     * 点击页码值
+     * @param {Object} item 当前点击的分页信息（类型：页码/快进/快退；值：第几页）
+     * @returns void
      */
-    const onGoPage = (item) => {
+    const onGoPage = (item: PagerItem) => {
       if (item.type === "pageNumber" && currentPageIndex.value === item.value)
         return;
-      const { pageShowLimit } = propsData.value;
+      const { pageShowLimit } = propsData;
       const centerNum = Math.ceil((pageShowLimit + 1) / 2) + 1;
       const value =
         item.type === "pageNumber"
@@ -317,8 +288,8 @@ export default defineComponent({
       currentPageIndex.value = value;
 
       /**
-       * 更新分页
-       * @param {Number} value 当前分页页数
+       * 页码更新事件触发
+       * @param {Number} value 当前页码值
        */
       emit("on-page-change", value);
     };
@@ -331,8 +302,8 @@ export default defineComponent({
       currentPageIndex.value -= 1;
 
       /**
-       * 更新分页
-       * @param {Number} num 当前分页页数
+       * 页码更新事件触发
+       * @param {Number} value 当前页码值
        */
       emit("on-page-change", currentPageIndex.value);
     };
@@ -345,12 +316,18 @@ export default defineComponent({
       currentPageIndex.value += 1;
 
       /**
-       * 更新分页
-       * @param {Number} num 当前分页页数
+       * 页码更新事件触发
+       * @param {Number} value 当前页码值
        */
       emit("on-page-change", currentPageIndex.value);
     };
 
+    /**
+     * 获取快速翻页icon名称
+     * @param {String} type 快速翻页类型，值为前进翻页/后退翻页
+     * @param {String} eventType 事件名称类型，值为鼠标hover或鼠标移出
+     * @returns void
+     */
     const onChangePagerIcon = (type?: string, eventType?: string) => {
       pagerIconName.value =
         eventType === "mouseleave"
@@ -361,28 +338,66 @@ export default defineComponent({
     };
 
     /**
-     * 切换分页大小
+     * 切换分页器每页的数量
      * @param {Number} value 选择的分页大小值
+     * @returns void
      */
-    const onChangePageSize = (value) => {
+    const onChangePageSize = (value: number) => {
       currentPageSize.value = value;
       /**
-       * 改变分页大小
-       * @param {Number} value 分页大小
+       * 分页器每页的数量变更事件触发
+       * @param {Number} value 分页大小值
        */
       emit("on-size-change", value);
     };
 
     /**
-     * 跳转控件失去焦点事件
+     * 输入框页码值做校验
+     * @returns void
      */
-    const onInputBlur = () => {
-      const value =
-        Math.min(inputPageValue.value, pageCount.value) &&
-        Math.max(1, inputPageValue.value);
-      inputPageValue.value = value;
+    const onValidInput = () => {
+      let value = Math.min(inputPageValue.value, pageCount.value);
+      value = Math.max(1, value);
       currentPageIndex.value = value;
+      inputPageValue.value = value;
     };
+
+    watch(
+      () => props.pageIndex,
+      (value) => {
+        currentPageIndex.value = value;
+      },
+      {
+        immediate: true,
+      }
+    );
+
+    watch(currentPageIndex, (value) => {
+      inputPageValue.value = value;
+      /**
+       * 页码索引值更新
+       * @param {Number} value 当前页码值
+       */
+      emit("update:pageIndex", value);
+    });
+
+    watch(
+      () => props.pageSize,
+      (value) => {
+        currentPageSize.value = value;
+      },
+      {
+        immediate: true,
+      }
+    );
+
+    watch(currentPageSize, (value) => {
+      /**
+       * 每页数量值更新
+       * @param {Number} value 页面大小值
+       */
+      emit("update:pageSize", value);
+    });
 
     return {
       currentPageIndex,
@@ -398,7 +413,7 @@ export default defineComponent({
       onGoNext,
       onChangePagerIcon,
       onChangePageSize,
-      onInputBlur,
+      onValidInput,
     };
   },
 });
