@@ -146,10 +146,10 @@
 ```
 :::
 
-### 页码大小下拉框/输入框样式
+### 页码大小下拉框/输入框边框颜色
 
-- 组件控制页码大小下拉框样式属性`sizesSelectStyle`，值为`样式对象`。
-- 组件控制页码输入框样式属性`jumperInputStyle`，值为`样式对象`。
+- 组件控制页码大小下拉框边框颜色属性`sizeBorderColor`，值为`字符串`。
+- 组件控制页码输入框边框颜色属性`inputBorderColor`，值为`字符串`。
 
 :::Demo
 ```vue demo
@@ -157,14 +157,11 @@
   <ht-pager
     :data="{
       total: 1000,
-      sizesSelectStyle: {
-        background: '#f60',
-        color: '#fff',
-      },
-      jumperInputStyle: {
-        background: '#f60',
-        color: '#fff',
-      },
+      sizeBorderColor: '#f60',
+      inputBorderColor: '#f60',
+      activePagerItemStyle: {
+        color: '#f60',
+      }
     }"
   />
 </template>

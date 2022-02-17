@@ -15,8 +15,8 @@ export interface PagerData {
   wrapStyle?: any; // 翻页器容器样式，值为样式对象
   pagerItemStyle?: any; // 翻页器页码样式，值为样式对象
   activePagerItemStyle?: any; // 翻页器页码选中样式，值为样式对象
-  sizesSelectStyle?: any; // 页码下拉框样式，值为样式对象
-  jumperInputStyle?: any; // 输入框页码跳转样式，值为样式对象
+  sizeBorderColor?: string; // 页码下拉框边框色值
+  inputBorderColor?: string; // 页码输入框边框色值
   buttonConfigData?: ButtonData; // 上一页/下一页按钮配置
 }
 

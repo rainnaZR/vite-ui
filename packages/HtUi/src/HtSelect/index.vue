@@ -248,13 +248,14 @@ export default defineComponent({
      */
     const onGetOptionsStyle = (item: SelectItem) => {
       const { optionsStyle = {}, focusBorderColor, borderColor } = props.data;
+      const style = { ...optionsStyle };
       if (
         state.selectValue.includes(item.value) &&
         (focusBorderColor || borderColor)
       ) {
-        optionsStyle.color = focusBorderColor || borderColor;
+        style.color = focusBorderColor || borderColor;
       }
-      return optionsStyle;
+      return style;
     };
 
     watch(

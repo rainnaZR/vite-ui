@@ -17,7 +17,7 @@ export interface SelectData {
   placeholder?: string; // 输入框placeholder值
   borderColor?: string; // 输入框的边框颜色
   focusBorderColor?: string; // 输入框focus的边框颜色
-  inputStyle?: string; // 输入框自定义样式
+  inputStyle?: any; // 输入框自定义样式
   inputWrapStyle?: string; // 输入框外层自定义样式
   clearable?: boolean; // 输入框是否展示清空icon
   filterable?: boolean; // 输入框是否启动筛选

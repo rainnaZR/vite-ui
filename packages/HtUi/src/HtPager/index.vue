@@ -105,11 +105,11 @@
             width: '105px',
             height: '28px',
             textAlign: 'center',
-            ...(data.sizesSelectStyle || {}),
           },
           optionsStyle: {
             lineHeight: '34px',
           },
+          borderColor: data.sizeBorderColor,
         }"
         @on-change="onChangePageSize"
       />
@@ -126,8 +126,8 @@
               width: '50px',
               height: '28px',
               textAlign: 'center',
-              ...(data.jumperInputStyle || {}),
             },
+            borderColor: data.inputBorderColor,
           }"
           @on-blur="onValidInput"
           @on-change="onValidInput"
