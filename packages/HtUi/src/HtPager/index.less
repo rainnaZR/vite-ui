@@ -1,0 +1,25 @@
+@import "../theme/variables.less";
+
+.ht-pager {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: @pager-font-size;
+  line-height: @pager-line-height;
+  color: @pager-color;
+  .total{
+    color: fade(@pager-color, 75);
+  }
+  .item{
+    width: @pager-item-width;
+    margin: 0 @pager-item-margin;
+    box-sizing: border-box;
+    border-radius: @pager-item-border-radius;
+    &:hover, &-active {
+      color: @pager-active-color;
+    }
+  }
+  :deep(.u-icon) {
+    font-size: @pager-icon-font-size;
+  }
+}

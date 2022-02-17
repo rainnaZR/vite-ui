@@ -213,6 +213,7 @@ img[src=""],img:not([src]){
 .f-nopointer{ pointer-events: none; }
 .f-pointer{ pointer-events: auto; }
 .f-curp{ cursor: pointer; }
+.f-curd{ cursor: default; }
 .f-trans{ transition: all .3s; }
 
 /* 单行隐藏 */
