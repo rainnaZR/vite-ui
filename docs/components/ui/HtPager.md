@@ -181,10 +181,7 @@
 ```vue demo
 <template>
   <ht-pager
-    :data="{
-      total: 5,
-      showSinglePage: true,
-    }"
+    :data="{ total: 5, showSinglePage: true }"
   />
 </template>
 ```
