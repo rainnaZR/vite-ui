@@ -158,11 +158,11 @@
     :data="{
       total: 1000,
       sizesSelectStyle: {
-        background: '#409eff',
+        background: '#f60',
         color: '#fff',
       },
       jumperInputStyle: {
-        background: '#409eff',
+        background: '#f60',
         color: '#fff',
       },
     }"
@@ -204,6 +204,7 @@
     <template v-slot:pageNumber="detail">{{ detail.scope.value }}页</template>
     <template #next>下一页</template>
   </ht-pager>
+  <br />
 
   <ht-pager :data="{ total: 54000, buttonConfigData: { type: 'primary', style: '#fff' } }">
     <template #prev>上一页</template>

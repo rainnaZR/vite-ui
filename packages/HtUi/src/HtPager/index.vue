@@ -173,7 +173,7 @@ export default defineComponent({
     // 配置数据
     data: {
       type: Object as PropType<PagerData>,
-      required: false,
+      required: true,
     },
   },
 
