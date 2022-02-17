@@ -364,7 +364,7 @@ export default defineComponent({
     const onChangePageSize = (value: number) => {
       currentPageSize.value = value;
       /**
-       * 分页器每页的数量变更事件触发
+       * 分页器每页的数量更新事件触发
        * @param {Number} value 分页大小值
        */
       emit("on-size-change", value);
