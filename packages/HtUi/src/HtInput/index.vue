@@ -180,7 +180,7 @@ export default defineComponent({
         paddingLeft: `${paddingLeft}px`,
         paddingRight: `${paddingRight}px`,
         "box-shadow": isFocus.value
-          ? `0 0 4px -1px ${
+          ? `0 0 5px -1px ${
               props.data.focusBorderColor || props.data.borderColor
             }`
           : "",
