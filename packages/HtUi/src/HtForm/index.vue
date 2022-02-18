@@ -24,7 +24,7 @@ export default defineComponent({
       required: true,
       default: () => ({
         model: {},
-        rules: [],
+        rules: {},
       }),
     },
   },

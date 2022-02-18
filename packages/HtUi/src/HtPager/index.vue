@@ -185,16 +185,16 @@ export default defineComponent({
   ],
 
   setup(props, { emit }) {
-    const propsData = reactive({
+    const propsData = computed(() => ({
       pageSizes: [10, 20, 30, 50, 100],
       layout: "total, prev, pager, next, sizes, jumper",
       pageShowLimit: 7,
       ...(props.data || {}),
-    });
+    }));
     // 当前页码
     const currentPageIndex = ref(~~props.pageIndex || 1);
     // 当前每页数量
-    const currentPageSize = ref(props.pageSize || propsData.pageSizes[0]);
+    const currentPageSize = ref(props.pageSize || propsData.value.pageSizes[0]);
     // 翻页icon名
     const pagerIconName = reactive({
       pagePrev: "u-icon-more",
@@ -204,26 +204,26 @@ export default defineComponent({
     const inputPageValue = ref(1);
     // 模块布局
     const layoutList = computed(() =>
-      propsData.layout
+      propsData.value.layout
         ?.split(",")
         ?.map((v) => v.trim())
         ?.filter((i) => !!i)
     );
     // 分页下拉选项
     const pageSizeOptions = computed(() =>
-      propsData.pageSizes?.map((value) => ({
+      propsData.value.pageSizes?.map((value) => ({
         label: `${value}条/页`,
         value,
       }))
     );
     // 总页数
     const pageCount = computed(() =>
-      Math.ceil(~~propsData.total / ~~currentPageSize.value)
+      Math.ceil(~~propsData.value.total / ~~currentPageSize.value)
     );
 
     // 渲染分页页码对象
     const pager = computed(() => {
-      const { pageShowLimit } = propsData;
+      const { pageShowLimit } = propsData.value;
       // 如果总页数小于指定页码数量限制pageShowLimit（默认是7）
       if (pageCount.value <= pageShowLimit) {
         return new Array(pageCount.value)
@@ -296,7 +296,7 @@ export default defineComponent({
     const onGoPage = (item: PagerItem) => {
       if (item.type === "pageNumber" && currentPageIndex.value === item.value)
         return;
-      const { pageShowLimit } = propsData;
+      const { pageShowLimit } = propsData.value;
       const count = pageShowLimit - 2;
       const value =
         item.type === "pageNumber"
