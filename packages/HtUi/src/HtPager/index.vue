@@ -67,7 +67,7 @@
           <ht-icon
             v-if="['pagePrev', 'pageNext'].includes(item.type)"
             class="f-jcc"
-            :data="{ name: pagerIconName }"
+            :data="{ name: pagerIconName[item.type] }"
             @mouseover="onChangePagerIcon(item.type, 'mouseover')"
             @mouseleave="onChangePagerIcon(item.type, 'mouseleave')"
           />
@@ -196,7 +196,10 @@ export default defineComponent({
     // 当前每页数量
     const currentPageSize = ref(props.pageSize || propsData.pageSizes[0]);
     // 翻页icon名
-    const pagerIconName = ref("u-icon-more");
+    const pagerIconName = reactive({
+      pagePrev: "u-icon-more",
+      pageNext: "u-icon-more",
+    });
     // 输入框页码值
     const inputPageValue = ref(1);
     // 模块布局
@@ -344,8 +347,8 @@ export default defineComponent({
      * @param {String} eventType 事件名称类型，值为鼠标hover或鼠标移出
      * @returns void
      */
-    const onChangePagerIcon = (type?: string, eventType?: string) => {
-      pagerIconName.value =
+    const onChangePagerIcon = (type: string, eventType: string) => {
+      pagerIconName[type] =
         eventType === "mouseleave"
           ? "u-icon-more"
           : type === "pagePrev"
