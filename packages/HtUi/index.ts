@@ -19,6 +19,8 @@ import HtFormItem from "./src/HtFormItem"; // 表单项
 import HtForm from "./src/HtForm"; // 表单
 import HtPager from "./src/HtPager"; // 分页
 
+import HtFormPage from "./src/HtFormPage"; // 表单页
+
 const components: any[] = [
   HtBreadCrumb,
   HtImage,
@@ -37,6 +39,7 @@ const components: any[] = [
   HtFormItem,
   HtForm,
   HtPager,
+  HtFormPage,
 ];
 
 /**
@@ -67,6 +70,7 @@ export {
   HtFormItem,
   HtForm,
   HtPager,
+  HtFormPage,
 };
 export default {
   install,

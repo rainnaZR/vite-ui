@@ -38,7 +38,7 @@
       <!-- 页码模块 -->
       <div v-if="layout === 'pager'" class="list f-df f-unselect">
         <div
-          v-for="(item, index) in pager"
+          v-for="item in pager"
           :key="item"
           :class="[
             'item',
@@ -186,7 +186,6 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const propsData = reactive({
-      total: 0,
       pageSizes: [10, 20, 30, 50, 100],
       layout: "total, prev, pager, next, sizes, jumper",
       pageShowLimit: 7,
@@ -244,7 +243,7 @@ export default defineComponent({
           if (currentPageIndex.value === 1)
             return currentPageIndex.value + index + 1;
           // 如果当前页码与中轴数量首部无缝衔接时
-          if (currentPageIndex.value < symmetryCount + 2) return 1 + index + 1;
+          if (currentPageIndex.value < symmetryCount + 2) return 2 + index;
           // 如果当前页码与中轴数量尾部无缝衔接时
           if (currentPageIndex.value > pageCount.value - count)
             return pageCount.value - count + index;
@@ -295,14 +294,14 @@ export default defineComponent({
       if (item.type === "pageNumber" && currentPageIndex.value === item.value)
         return;
       const { pageShowLimit } = propsData;
-      const centerNum = pageShowLimit - 2;
+      const count = pageShowLimit - 2;
       const value =
         item.type === "pageNumber"
           ? item.value
           : item.type === "pagePrev"
-          ? Math.max(1, currentPageIndex.value - centerNum)
+          ? Math.max(1, currentPageIndex.value - count)
           : item.type === "pageNext"
-          ? Math.min(currentPageIndex.value + centerNum, pageCount.value)
+          ? Math.min(currentPageIndex.value + count, pageCount.value)
           : 0;
       currentPageIndex.value = value;
 
@@ -319,7 +318,6 @@ export default defineComponent({
     const onGoPrev = () => {
       if (currentPageIndex.value <= 1) return;
       currentPageIndex.value -= 1;
-
       /**
        * 页码更新事件触发
        * @param {Number} value 当前页码值
@@ -333,7 +331,6 @@ export default defineComponent({
     const onGoNext = () => {
       if (currentPageIndex.value >= pageCount.value) return;
       currentPageIndex.value += 1;
-
       /**
        * 页码更新事件触发
        * @param {Number} value 当前页码值
