@@ -137,20 +137,6 @@ export default defineComponent({
       margin: 0 10px 20px;
     }
   }
-  .copy-demo {
-    .ht-copy {
-      width: 600px;
-      margin: 0 0 35px;
-      &:last-child {
-        margin: 0;
-      }
-    }
-  }
-  .image-demo {
-    .ht-image {
-      margin: 0 0 20px;
-    }
-  }
   .icon-demo {
     .ht-icon {
       margin: 0 0 10px;

@@ -1,6 +1,15 @@
 <template>
   <!-- 首页 -->
   <div class="g-page f-lt2">
+    <video
+      class="video"
+      autoplay="autoplay"
+      preload="auto"
+      muted="muted"
+      playsinline="true"
+      webkit-playsinline="true"
+      src="https://lofter.lf127.net/1611821341381/jwhaideyanjing~1.mp4"
+    />
     <!-- 头部 -->
     <div class="m-header">
       <ht-header
@@ -107,6 +116,15 @@ export default defineComponent({
   }
 }
 .g-page {
+  .video {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
   .m-header {
     position: fixed;
     left: 0;
@@ -137,10 +155,11 @@ export default defineComponent({
       max-width: 400px;
       padding: 20px;
       box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.1);
-      border-radius: 4px;
+      border-radius: 16px;
       box-sizing: border-box;
       background: #fff;
       animation: floating ease-in-out 1.6s infinite alternate;
+      opacity: 0.85;
     }
   }
 }
