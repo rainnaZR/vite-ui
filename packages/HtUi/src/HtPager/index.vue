@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="pageCount > 1 || data.showSinglePage"
-    class="ht-pager"
-    :style="data.wrapStyle"
-  >
+  <div v-if="!hidePager" class="ht-pager" :style="data.wrapStyle">
     <div v-for="layout in layoutList" :key="layout" class="f-mr10">
       <!-- 总数模块 -->
       <div v-if="layout === 'total'" class="total">
@@ -191,6 +187,13 @@ export default defineComponent({
       pageShowLimit: 7,
       ...(props.data || {}),
     }));
+    // 初始化时且开启hideSinglePage时 隐藏分页
+    const hidePager = computed(() => {
+      return (
+        propsData.value.total <= propsData.value.pageSizes[0] &&
+        propsData.value.hideSinglePage
+      );
+    });
     // 当前页码
     const currentPageIndex = ref(~~props.pageIndex || 1);
     // 当前每页数量
@@ -419,6 +422,7 @@ export default defineComponent({
     });
 
     return {
+      hidePager,
       currentPageIndex,
       currentPageSize,
       pagerIconName,

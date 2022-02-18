@@ -11,7 +11,7 @@ export interface PagerData {
   pageSizes?: Array<number>; // 每页页码选项，默认值10, 20, 30, 50, 100
   layout?: string; // 分页模块布局，可选项total, prev, pager, next, sizes, jumper
   pageShowLimit?: number; // 页码展示数量限制，默认值7
-  showSinglePage?: boolean; // 仅一页时是否隐藏，默认false
+  hideSinglePage?: boolean; // 仅一页时是否隐藏，默认false
   wrapStyle?: any; // 翻页器容器样式，值为样式对象
   pagerItemStyle?: any; // 翻页器页码样式，值为样式对象
   activePagerItemStyle?: any; // 翻页器页码选中样式，值为样式对象

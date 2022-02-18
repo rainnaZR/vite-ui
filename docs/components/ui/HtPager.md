@@ -168,19 +168,23 @@
 ```
 :::
 
-### 仅一页时显示页码
+### 仅一页时隐藏页码
 
-- 组件仅一页时显示翻页器属性`showSinglePage`，值为`布尔值`，默认值为`false`。
+- 组件仅一页时隐藏翻页器属性`hideSinglePage`，值为`布尔值`，默认值为`false`。
 
 
 
 :::Demo
 ```vue demo
 <template>
-  <ht-pager
-    :data="{ total: 5, showSinglePage: true }"
-  />
+  <ht-switch v-model="value" />
+  <ht-pager :data="{ total: 5, hideSinglePage: value }" />
 </template>
+
+<script setup>
+import { ref } from "vue"
+const value = ref(false)
+</script>
 ```
 :::
 

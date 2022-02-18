@@ -9,7 +9,12 @@ export interface Rules {
   [key: string]: RuleItem[];
 }
 
+export interface GroupItem {}
+
 export interface FormPageData {
+  title?: string; // 表单标题
+  subTitle?: string; // 表单副标题
+
   model: Model; // 表单数据对象
   rules?: Rules; // 表单验证规则
   inline?: boolean; // 是否行内表单
@@ -20,6 +25,8 @@ export interface FormPageData {
   formStyle?: any; // 表单自定义样式
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   disabled?: boolean; // 表单是否禁用
+
+  group: GroupItem[]; // 表单选项组
 }
 
 export type Props = PublicProps<{
