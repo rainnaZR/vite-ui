@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { PublicProps } from "../types";
 import { RuleItem } from "../HtFormItem/types";
 
@@ -10,7 +11,7 @@ export interface Rules {
 }
 
 export interface FieldItem {
-  type?: string; // 表单项类型，可填表单内组件名
+  type: string; // 表单项类型，可填表单内组件名
   hide?: boolean; // 表单项是否隐藏，默认为false
   prop?: string; // 表单项对应的表单属性值
   label: string; // 表单项的label标签
@@ -35,9 +36,37 @@ export interface GroupItem {
 export interface ActionItem {
   type: string; // 表单操作类型
   text: string; // 表单操作文案
+  btnType?: string; // 表单按钮类型
+  size?: string; // 按钮尺寸
+  nativeType?: string; // 按钮原生类型
+  disabled?: boolean; // 按钮是否禁用
+  full?: boolean; // 按钮是否宽度占满
+  style?: any; // 按钮自定义样式
+  hide?: boolean; // 按钮是否隐藏
+  limit?: any; // 按钮显示的限制条件，值为对象或函数
+  onClick?: (formModel: any) => void; // 点击事件
+}
+
+export interface ApiItem {
+  xhr: any;
+  getParams(value?: any): any;
+  callback(value?: any): any;
+}
+
+export interface ApiData {
+  [key: string]: ApiItem;
+}
+
+export interface HooksData {
+  onAfterGetFormHooks(value?: any): any;
+  onFormValidateHooks(value?: any): any;
+  onBeforeSubmitHooks(value?: any): any;
+  onAfterSubmitHooks(value?: any): any;
+  onResetFormHooks(value?: any): any;
 }
 
 export interface FormPageData {
+  id?: string | number; // 页面id
   title?: string; // 表单标题
   subTitle?: string; // 表单副标题
 
@@ -52,8 +81,10 @@ export interface FormPageData {
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   disabled?: boolean; // 表单是否禁用
 
-  groups: GroupItem[]; // 表单选项组
-  actions: string | ActionItem[]; // 表单操作按钮集合
+  group: GroupItem[]; // 表单选项组
+  action: string[] | ActionItem[]; // 操作按钮
+  api?: ApiData; // 接口
+  hooks?: HooksData; // 钩子函数
 }
 
 export type Props = PublicProps<{

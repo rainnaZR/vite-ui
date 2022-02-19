@@ -26,11 +26,11 @@ export interface FormData {
 
 export interface FormContext {
   data: FormData;
-  onAddField: (field: FormItemContext) => void;
-  onRemoveField: (field: FormItemContext) => void;
-  onReset: (targetProps?: string | string[]) => void;
-  onValidate: (targetProps?: string | string[]) => void;
-  onClearValidate: (targetProps?: string | string[]) => void;
+  onAddField(field: FormItemContext): void;
+  onRemoveField(field: FormItemContext): void;
+  onReset(targetProps?: string | string[]): void;
+  onValidate(targetProps?: string | string[]): Promise<any>;
+  onClearValidate(targetProps?: string | string[]): void;
   onScrollToField: (prop: string) => void;
 }
 

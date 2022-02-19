@@ -266,6 +266,12 @@ export default defineComponent({
         state.options = props.data.options;
       }
     );
+    watch(
+      () => props.data.options,
+      (value) => {
+        state.options = value;
+      }
+    );
 
     return {
       state,

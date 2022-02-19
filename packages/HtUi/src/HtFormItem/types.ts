@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Model } from "../HtForm/types";
 import { PublicProps } from "../types";
 
@@ -14,7 +15,7 @@ export interface RuleItem {
   message?: string;
   trigger?: string;
   pattern?: RegExp;
-  validator?: (value: any) => boolean;
+  validator?(value: any): boolean;
 }
 
 export interface FormItemData {
