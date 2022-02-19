@@ -13,7 +13,7 @@
     </div>
 
     <!-- 表单内容区 -->
-    <ht-form ref="form" :data="formConfig">
+    <ht-form ref="formRef" :data="formConfig">
       <div
         v-for="(group, index) in data.group"
         :key="`group-${index}`"
@@ -109,10 +109,10 @@ export default defineComponent({
       showValidMessage,
       disabled,
     } = props.data;
-    let formModel = reactive(model);
+    const formModel = ref(model);
     // 表单配置数据
     const formConfig: FormData = reactive({
-      model,
+      model: formModel,
       rules,
       inline,
       labelWidth,
@@ -212,7 +212,7 @@ export default defineComponent({
     };
 
     const onInitFormDetail = (formInfo: any) => {
-      formModel = {
+      formModel.value = {
         ...(formModel || {}),
         ...(formInfo || {}),
       };
@@ -279,7 +279,7 @@ export default defineComponent({
 
     // 表单重置
     const onFormReset = () => {
-       formRef.value?.onReset();
+      formRef.value?.onReset();
       // hooks操作
       const { onResetFormHooks } = props.data.hooks || {};
       onResetFormHooks && onResetFormHooks(formModel);
