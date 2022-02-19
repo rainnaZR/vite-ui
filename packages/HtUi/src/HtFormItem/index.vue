@@ -11,7 +11,7 @@
       {
         'ht-form-item-error': validateMessage,
       },
-      'f-mb25',
+      'f-mb20',
     ]"
   >
     <div

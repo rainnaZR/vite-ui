@@ -9,7 +9,33 @@ export interface Rules {
   [key: string]: RuleItem[];
 }
 
-export interface GroupItem {}
+export interface FieldItem {
+  type?: string; // 表单项类型，可填表单内组件名
+  hide?: boolean; // 表单项是否隐藏，默认为false
+  prop?: string; // 表单项对应的表单属性值
+  label: string; // 表单项的label标签
+  labelWidth?: string | number; // 表单项label宽度
+  labelStyle?: any; // 表单项label样式
+  labelPosition?: string; // 表单项label位置，left/right/top，默认值right
+  contentStyle?: any; // 表单项content样式
+  required?: boolean; // 表单项是否必填
+  rules?: RuleItem[]; // 表单项验证规则
+  showValidMessage?: boolean; // 是否显示验证错误信息，默认true
+  error?: string; // 表单项验证错误信息
+  itemProps?: Model; // 表单内组件props，比如输入框，下拉框的props
+  itemEvents?: Model; // 表单内组件events
+}
+
+export interface GroupItem {
+  title?: string; // 表单项标题
+  subTitle?: string; // 表单项副标题
+  fields?: FieldItem[]; // 表单项列表
+}
+
+export interface ActionItem {
+  type: string; // 表单操作类型
+  text: string; // 表单操作文案
+}
 
 export interface FormPageData {
   title?: string; // 表单标题
@@ -26,7 +52,8 @@ export interface FormPageData {
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   disabled?: boolean; // 表单是否禁用
 
-  group: GroupItem[]; // 表单选项组
+  groups: GroupItem[]; // 表单选项组
+  actions: string | ActionItem[]; // 表单操作按钮集合
 }
 
 export type Props = PublicProps<{
