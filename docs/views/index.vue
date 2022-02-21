@@ -133,7 +133,7 @@ export default defineComponent({
     height: 100%;
     object-fit: cover;
     object-position: center center;
-    animation: fadeIn ease-in-out 1.5s;
+    animation: fadeIn ease-in-out 2s;
   }
   .m-header {
     position: fixed;
