@@ -148,7 +148,7 @@ export default defineComponent({
   }
   .ht-input,
   .ht-select {
-    width: 300px;
+    width: 350px;
   }
   .ht-pager {
     .ht-input,

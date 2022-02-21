@@ -5,8 +5,8 @@
 ### 基础用法
 
 - 组件是在`HtForm`组件基础上封装，通过配置数据生成表单。
-- 组件表单属性均与`HtForm`组件data上的属性配置一致。
-- 组件分组表单项属性均与`HtFormItem`组件data上的属性配置一致。
+- 组件表单属性与[HtForm 表单](http://localhost:1768/doc/HtForm)组件data上的属性配置一致。
+- 组件分组表单项属性与[HtFormItem 表单项](http://localhost:1768/doc/HtFormItem)组件data上的属性配置一致。
 
 :::Demo
 ```vue demo
@@ -213,7 +213,7 @@ import { defineComponent, reactive } from "vue";
 export default defineComponent({
   setup() {
     const formData = reactive({
-      title: "表单",
+      title: "表单标题",
       subTitle:
         "我是表单描述，我是表单描述，我是表单描述，我是表单描述，我是表单描述。",
       labelWidth: "100px",
@@ -405,7 +405,7 @@ export default defineComponent({
 ### 操作项
 
 - 组件默认操作项`submit`和`reset`。
-- 组件可定义操作项属性`action`，值为`数组`，每个项可以是`字符串`或`对象`。
+- 组件可自定义操作项属性`action`，值为`数组`，每个子项可以是`字符串`或`对象`。
 
 
 ::: Demo
