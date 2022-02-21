@@ -81,7 +81,8 @@ export interface FormPageData {
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   disabled?: boolean; // 表单是否禁用
 
-  group: GroupItem[]; // 表单选项组
+  fields?: FieldItem[]; // 表单字段组
+  group?: GroupItem[]; // 表单选项组
   action: string[] | ActionItem[]; // 操作按钮
   api?: ApiData; // 接口
   hooks?: HooksData; // 钩子函数

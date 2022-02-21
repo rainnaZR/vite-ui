@@ -2,4 +2,18 @@
 
 .ht-form-page{
     line-height: @page-form-line-height;
+    :deep(.ht-form-inline){
+        flex-direction: column;
+    }
+    :deep(.ht-form-inline .ht-form-item){
+        margin-right: 0;
+    }
+    &-inline .list{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        :deep(.ht-form-item){
+            margin-right: @form-items-margin;
+        }
+    }
 }

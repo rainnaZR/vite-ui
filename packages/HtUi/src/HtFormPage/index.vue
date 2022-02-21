@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-form-page">
+  <div :class="['ht-form-page', { 'ht-form-page-inline': data.inline }]">
     <!-- 表单描述区 -->
     <div
       :class="[
@@ -22,7 +22,7 @@
     <!-- 表单内容区 -->
     <ht-form ref="formRef" :data="formConfig">
       <div
-        v-for="(group, index) in data.group"
+        v-for="(group, index) in formGroup"
         :key="`group-${index}`"
         class="f-mb30"
       >
@@ -46,23 +46,25 @@
         </div>
 
         <!-- 表单项内容区 -->
-        <ht-form-item
-          v-for="(field, fieldIndex) in group.fields"
-          :key="`field-${fieldIndex}`"
-          :data="onGetFormItemConfig(field)"
-        >
-          <!-- 表单项内容插槽 -->
-          <slot :name="field.prop" :scope="field">
-            <component
-              v-if="field.type"
-              v-model:modelValue="formModel[field.prop]"
-              :is="`ht-${field.type}`"
-              :data="field.itemProps"
-              v-on="field.itemEvents"
-            />
-            <div v-else>{{ formModel[field.prop] }}</div>
-          </slot>
-        </ht-form-item>
+        <div class="list">
+          <ht-form-item
+            v-for="(field, fieldIndex) in group.fields"
+            :key="`field-${fieldIndex}`"
+            :data="onGetFormItemConfig(field)"
+          >
+            <!-- 表单项内容插槽 -->
+            <slot :name="field.prop" :scope="field">
+              <component
+                v-if="field.type"
+                v-model:modelValue="formModel[field.prop]"
+                :is="`ht-${field.type}`"
+                :data="field.itemProps"
+                v-on="field.itemEvents"
+              />
+              <div v-else>{{ formModel[field.prop] }}</div>
+            </slot>
+          </ht-form-item>
+        </div>
       </div>
 
       <!-- 表单项操作按钮区 -->
@@ -142,6 +144,9 @@ export default defineComponent({
       showValidMessage,
       disabled,
     });
+    const formGroup = computed(() =>
+      props.data.fields ? [{ fields: props.data.fields }] : props.data.group
+    );
 
     /**
      * 表单项配置数据
@@ -163,7 +168,7 @@ export default defineComponent({
      * @returns {Array} result 表单项操作按钮配置
      * */
     const onInitActions = (
-      list: string[] | ActionItem[] = [],
+      list: string[] | ActionItem[] = ["submit", "reset"],
       defaultActions = {},
       data = {}
     ) =>
@@ -379,6 +384,7 @@ export default defineComponent({
       formRef,
       formModel,
       formConfig,
+      formGroup,
       onGetFormItemConfig,
       formActions,
       onGetFormInitInfo,
