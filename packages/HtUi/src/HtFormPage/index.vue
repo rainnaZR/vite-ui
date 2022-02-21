@@ -133,7 +133,7 @@ export default defineComponent({
     const formModel = ref(model);
     // 表单配置数据
     const formConfig: FormData = reactive({
-      model: formModel.value,
+      model: formModel,
       rules,
       inline,
       labelWidth,
