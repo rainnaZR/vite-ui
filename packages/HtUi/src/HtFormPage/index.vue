@@ -51,30 +51,36 @@
           :key="`field-${fieldIndex}`"
           :data="onGetFormItemConfig(field)"
         >
-          <component
-            v-if="field.type"
-            v-model:modelValue="formModel[field.prop]"
-            :is="`ht-${field.type}`"
-            :data="field.itemProps"
-            v-on="field.itemEvents"
-          />
-          <div v-else>{{ formModel[field.prop] }}</div>
+          <!-- 表单项内容插槽 -->
+          <slot :name="field.prop" :scope="field">
+            <component
+              v-if="field.type"
+              v-model:modelValue="formModel[field.prop]"
+              :is="`ht-${field.type}`"
+              :data="field.itemProps"
+              v-on="field.itemEvents"
+            />
+            <div v-else>{{ formModel[field.prop] }}</div>
+          </slot>
         </ht-form-item>
       </div>
 
       <!-- 表单项操作按钮区 -->
       <ht-form-item>
-        <ht-button
-          v-for="(action, index) in formActions"
-          :key="`action-${index}`"
-          :data="{
-            ...action,
-            type: action.btnType,
-          }"
-          @click="onFormAction(action)"
-        >
-          {{ action.text }}
-        </ht-button>
+        <!-- 表单项操作按钮插槽 -->
+        <slot name="formAction" :scope="formActions">
+          <ht-button
+            v-for="(action, index) in formActions"
+            :key="`action-${index}`"
+            :data="{
+              ...action,
+              type: action.btnType,
+            }"
+            @click="onFormAction(action)"
+          >
+            {{ action.text }}
+          </ht-button>
+        </slot>
       </ht-form-item>
     </ht-form>
   </div>
@@ -82,7 +88,6 @@
 
 <script lang="ts">
 import {
-  computed,
   defineComponent,
   PropType,
   ref,
@@ -137,14 +142,26 @@ export default defineComponent({
       showValidMessage,
       disabled,
     });
-    // 表单项配置数据
+
+    /**
+     * 表单项配置数据
+     * @param {Object} field 当前表单项字段field数据
+     * @returns {Object} config 表单项formItem配置数据
+     */
     const onGetFormItemConfig = (field: FieldItem) => {
       const config = { ...field };
       config.itemProps && delete config.itemProps;
       config.itemEvents && delete config.itemEvents;
       return config;
     };
-    // 表单操作行为初始化
+
+    /**
+     * 表单操作行为初始化
+     * @param {Array} list 表单的操作按钮列表
+     * @param {Object} defaultActions 表单的默认操作配置项
+     * @param {Object} data 当前业务数据，用于操作按钮的显示过滤
+     * @returns {Array} result 表单项操作按钮配置
+     * */
     const onInitActions = (
       list: string[] | ActionItem[] = [],
       defaultActions = {},
@@ -203,13 +220,22 @@ export default defineComponent({
       onInitActions(props.data?.action, defaultActions)
     );
 
+    /**
+     * 表单字段的循环操作
+     * @param {Function} callback 循环字段时执行的回调函数
+     * @returns void
+     */
     const onLoopFields = (callback: any) => {
       props.data.group.forEach((group) => {
         group?.fields?.forEach((field) => callback && callback(field));
       });
     };
 
-    // 初始化表单创建
+    /**
+     * 初始化表单创建
+     * @param {Object} createInfo 接口返回的表单初始配置数据，比如下拉框的选项
+     * @returns void
+     * */
     const onInitFormCreate = (createInfo: any) => {
       if (!createInfo) return;
       onLoopFields((field: FieldItem) => {
@@ -225,6 +251,11 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 初始化表单生成
+     * @param {Object} formInfo 接口返回的表单初始化显示值
+     * @returns void
+     */
     const onInitFormDetail = (formInfo: Model) => {
       formModel.value = {
         ...(formModel || {}),
@@ -232,7 +263,10 @@ export default defineComponent({
       };
     };
 
-    // 初始获取表单数据
+    /**
+     * 初始化获取表单数据
+     * @returns void
+     */
     const onGetFormInitInfo = async () => {
       const api: undefined | ApiItem = props.data?.api?.getForm;
       if (!api) return;
@@ -253,7 +287,10 @@ export default defineComponent({
       onAfterGetFormHooks && onAfterGetFormHooks(formModel);
     };
 
-    // 表单提交
+    /**
+     * 表单提交
+     * @returns void
+     */
     const onFormSubmit = () => {
       formRef.value?.onValidate().then(async ({ valid }) => {
         if (!valid) return;
@@ -291,7 +328,10 @@ export default defineComponent({
       });
     };
 
-    // 表单重置
+    /**
+     * 表单重置
+     * @returns void
+     */
     const onFormReset = () => {
       formRef.value?.onReset();
       // hooks操作
@@ -299,7 +339,11 @@ export default defineComponent({
       onResetFormHooks && onResetFormHooks(formModel);
     };
 
-    // 表单操作
+    /**
+     * 表单操作
+     * @param {Object} action 表单按钮数据
+     * @returns void
+     */
     const onFormAction = (action: ActionItem) => {
       const { type, onClick } = action;
       // 如果自定义了onClick，则执行onClick自定义点击事件
@@ -316,6 +360,11 @@ export default defineComponent({
       // 表单默认重置
       if (type === "reset") onFormReset();
 
+      /**
+       * 表单按钮点击事件触发
+       * @param {String} type 按钮点击类型
+       * @param {Object} formModel 表单数据
+       */
       emit("on-btn-click", {
         type,
         formModel,

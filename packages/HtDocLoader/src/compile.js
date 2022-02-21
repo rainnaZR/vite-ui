@@ -381,12 +381,23 @@ const compileTemplate = (templateStr, options = {}, callback = () => {}) => {
           desc = tag.content.trim();
         }
       }
-      // 获取插槽name名称 <slot name="header"></slot> 获取值"header"
+      // 获取插槽name名称
+      // <slot name="header"></slot> 获取值"header"
+      // <slot :name="field.prop"></slot> 获取值"field.prop"
       if (node.props && node.props.length) {
         const targetProp = node.props.filter(
-          (prop) => prop.type === 6 && prop.name === "name"
+          (prop) =>
+            (prop.type === 6 && prop.name === "name") ||
+            (prop.type === 7 &&
+              prop.name === "bind" &&
+              prop.arg?.content === "name")
         )[0];
-        targetProp && (name = targetProp.value.content);
+        if (targetProp) {
+          name =
+            targetProp.type === 6
+              ? targetProp.value?.content
+              : `:${targetProp.exp?.loc?.source}\`dynamic\``;
+        }
       }
       // 执行回调，将值保存到componentInfo.slots中
       callback({
