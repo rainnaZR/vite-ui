@@ -163,7 +163,7 @@ export default defineComponent({
       box-sizing: border-box;
       background: #fff;
       animation: floating ease-in-out 1.6s infinite alternate;
-      opacity: 0.85;
+      opacity: 0.9;
     }
   }
 }
