@@ -8,6 +8,7 @@
       muted="muted"
       playsinline="true"
       webkit-playsinline="true"
+      loop="true"
       src="https://lofter.lf127.net/1611821341381/jwhaideyanjing~1.mp4"
     />
     <!-- 头部 -->
@@ -26,8 +27,7 @@
     </div>
 
     <!-- 内容 -->
-    <div class="m-main f-flexc">
-      <h1 class="f-mb50 f-fs30">前端基础建设平台</h1>
+    <div class="m-main f-flexc f-pr">
       <div class="m-list">
         <router-link
           class="item f-flexc f-mb20"
@@ -115,7 +115,16 @@ export default defineComponent({
     transform: translateY(15px);
   }
 }
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .g-page {
+  background: #1274a8;
   .video {
     position: fixed;
     left: 0;
@@ -124,6 +133,7 @@ export default defineComponent({
     height: 100%;
     object-fit: cover;
     object-position: center center;
+    animation: fadeIn ease-in-out 1.5s;
   }
   .m-header {
     position: fixed;
@@ -135,14 +145,8 @@ export default defineComponent({
   }
   .m-main {
     min-height: 100vh;
-    padding: 100px 0;
+    padding: 160px 0 100px;
     box-sizing: border-box;
-    background: linear-gradient(
-      180deg,
-      rgba(#ecf6fb, 1),
-      rgba(#ecf6fb, 0.8),
-      rgba(#ecf6fb, 0.6)
-    );
   }
   .m-list {
     display: flex;
