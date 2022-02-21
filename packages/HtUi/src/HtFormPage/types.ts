@@ -58,11 +58,11 @@ export interface ApiData {
 }
 
 export interface HooksData {
-  onAfterGetFormHooks(value?: any): any;
-  onFormValidateHooks(value?: any): any;
-  onBeforeSubmitHooks(value?: any): any;
-  onAfterSubmitHooks(value?: any): any;
-  onResetFormHooks(value?: any): any;
+  onAfterGetFormHooks(value?: Model): any;
+  onFormValidateHooks(value?: Model): any;
+  onBeforeSubmitHooks(value?: Model): any;
+  onAfterSubmitHooks(value?: Model): any;
+  onResetFormHooks(value?: Model): any;
 }
 
 export interface FormPageData {

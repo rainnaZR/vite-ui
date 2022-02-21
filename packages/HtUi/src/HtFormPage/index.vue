@@ -1,7 +1,14 @@
 <template>
   <div class="ht-form-page">
     <!-- 表单描述区 -->
-    <div class="header">
+    <div
+      :class="[
+        'header',
+        {
+          'f-mb20': data.title || data.subTitle,
+        },
+      ]"
+    >
       <div class="f-fs18 f-fw1 s-fc4">
         <!-- 表单标题插槽 -->
         <slot name="formTitle">{{ data.title }}</slot>
@@ -20,7 +27,14 @@
         class="f-mb30"
       >
         <!-- 表单项描述区 -->
-        <div class="header f-mb20">
+        <div
+          :class="[
+            'header',
+            {
+              'f-mb20': group.title || group.subTitle,
+            },
+          ]"
+        >
           <div class="f-fs16 s-fc4">
             <!-- 表单项标题插槽 -->
             <slot name="formItemTitle">{{ group.title }}</slot>
@@ -76,10 +90,10 @@ import {
   computed,
   onMounted,
 } from "vue";
-import { FormData, FormContext } from "../HtForm/types";
+import { FormData, FormContext, Model } from "../HtForm/types";
 import { FormPageData, FieldItem, ActionItem, ApiItem } from "./types";
 
-// 复杂表单组件。
+// 复杂表单配置组件。
 export default defineComponent({
   name: "HtFormPage",
 
@@ -211,7 +225,7 @@ export default defineComponent({
       });
     };
 
-    const onInitFormDetail = (formInfo: any) => {
+    const onInitFormDetail = (formInfo: Model) => {
       formModel.value = {
         ...(formModel || {}),
         ...(formInfo || {}),
@@ -267,10 +281,10 @@ export default defineComponent({
         if (!api) return;
 
         // 提交表单
-        // loading开始
+        // todo: loading开始
         // ...
         const result = await api.xhr(params);
-        // loading结束
+        // todo: loading结束
         // ...
         // 请求结果
         onAfterSubmitHooks && onAfterSubmitHooks(result);
@@ -302,7 +316,7 @@ export default defineComponent({
       // 表单默认重置
       if (type === "reset") onFormReset();
 
-      emit("on-action-btn-click", {
+      emit("on-btn-click", {
         type,
         formModel,
       });
