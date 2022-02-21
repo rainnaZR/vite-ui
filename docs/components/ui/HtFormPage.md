@@ -11,7 +11,7 @@
 :::Demo
 ```vue demo
 <template>
-  <ht-form-page :data="formData" @on-btn-click="onBtnClick" />
+  <ht-form-page :data="formData" @on-action="onAction" />
 </template>
 
 <script lang="ts">
@@ -181,14 +181,14 @@ export default defineComponent({
       },
       hooks: {},
     });
-    const onBtnClick = ({type, formModel}) => {
-      alert(type);
-      console.log("formModel", formModel);
+    const onAction = (options) => {
+      alert(options.type);
+      console.log("options", options);
     };
 
     return {
       formData,
-      onBtnClick,
+      onAction,
     };
   },
 });
@@ -205,7 +205,7 @@ export default defineComponent({
 ::: Demo
 ```vue demo
 <template>
-  <ht-form-page :data="formData" @on-btn-click="onBtnClick" />
+  <ht-form-page :data="formData" @on-action="onAction" />
 </template>
 
 <script lang="ts">
@@ -250,14 +250,14 @@ export default defineComponent({
         },
       ],
     });
-    const onBtnClick = ({type, formModel}) => {
-      alert(type);
-      console.log("formModel", formModel);
+    const onAction = (options) => {
+      alert(options.type);
+      console.log("options", options);
     };
 
     return {
       formData,
-      onBtnClick,
+      onAction,
     };
   },
 });
@@ -276,7 +276,7 @@ export default defineComponent({
 ::: Demo
 ```vue demo
 <template>
-  <ht-form-page :data="formData" @on-btn-click="onBtnClick" />
+  <ht-form-page :data="formData" @on-action="onAction" />
 </template>
 
 <script lang="ts">
@@ -336,14 +336,14 @@ export default defineComponent({
         },
       ],
     });
-    const onBtnClick = ({type, formModel}) => {
-      alert(type);
-      console.log("formModel", formModel);
+    const onAction = (options) => {
+      alert(options.type);
+      console.log("options", options);
     };
 
     return {
       formData,
-      onBtnClick,
+      onAction,
     };
   },
 });
@@ -360,7 +360,7 @@ export default defineComponent({
 ::: Demo
 ```vue demo
 <template>
-  <ht-form-page :data="formData" @on-btn-click="onBtnClick" />
+  <ht-form-page :data="formData" @on-action="onAction" />
 </template>
 
 <script lang="ts">
@@ -387,14 +387,14 @@ export default defineComponent({
         },
       ],
     });
-    const onBtnClick = ({ type, formModel }) => {
-      alert(type);
-      console.log("formModel", formModel);
+    const onAction = (options) => {
+      alert(options.type);
+      console.log("options", options);
     };
 
     return {
       formData,
-      onBtnClick,
+      onAction,
     };
   },
 });
@@ -411,7 +411,7 @@ export default defineComponent({
 ::: Demo
 ```vue demo
 <template>
-  <ht-form-page :data="formData" @on-btn-click="onBtnClick" />
+  <ht-form-page :data="formData" @on-action="onAction" />
 </template>
 
 <script lang="ts">
@@ -464,14 +464,14 @@ export default defineComponent({
         },
       ],
     });
-    const onBtnClick = ({type, formModel}) => {
-      alert(type);
-      console.log("formModel", formModel);
+    const onAction = (options) => {
+      alert(options.type);
+      console.log("options", options);
     };
 
     return {
       formData,
-      onBtnClick,
+      onAction,
     };
   },
 });

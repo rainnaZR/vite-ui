@@ -133,7 +133,7 @@ export default defineComponent({
     const formModel = ref(model);
     // 表单配置数据
     const formConfig: FormData = reactive({
-      model: formModel,
+      model: formModel.value,
       rules,
       inline,
       labelWidth,
@@ -231,7 +231,7 @@ export default defineComponent({
      * @returns void
      */
     const onLoopFields = (callback: any) => {
-      props.data.group.forEach((group) => {
+      props.data?.group?.forEach((group) => {
         group?.fields?.forEach((field) => callback && callback(field));
       });
     };
@@ -263,7 +263,7 @@ export default defineComponent({
      */
     const onInitFormDetail = (formInfo: Model) => {
       formModel.value = {
-        ...(formModel || {}),
+        ...(formModel.value || {}),
         ...(formInfo || {}),
       };
     };
@@ -289,7 +289,8 @@ export default defineComponent({
       onInitFormDetail(formInfo);
       // hooks操作
       const { onAfterGetFormHooks } = props.data.hooks || {};
-      onAfterGetFormHooks && onAfterGetFormHooks(formModel);
+      onAfterGetFormHooks &&
+        onAfterGetFormHooks({ formModel: formModel.value });
     };
 
     /**
@@ -297,10 +298,21 @@ export default defineComponent({
      * @returns void
      */
     const onFormSubmit = () => {
-      formRef.value?.onValidate().then(async ({ valid }) => {
-        if (!valid) return;
+      formRef.value?.onValidate().then(async ({ valid, invalidFields }) => {
+        /**
+         * 表单按钮点击事件触发
+         * @param {String} type 按钮点击类型
+         * @param {Object} formModel 表单数据
+         */
+        emit("on-action", {
+          type: "submit",
+          formModel: formModel.value,
+          valid,
+          invalidFields,
+        });
 
-        const params = { ...formModel };
+        if (!valid) return;
+        const params = { ...formModel.value };
         const { id } = props.data;
         id && (params.id = id);
 
@@ -329,7 +341,8 @@ export default defineComponent({
         // todo: loading结束
         // ...
         // 请求结果
-        onAfterSubmitHooks && onAfterSubmitHooks(result);
+        onAfterSubmitHooks &&
+          onAfterSubmitHooks({ result, formModel: formModel.value });
       });
     };
 
@@ -341,7 +354,7 @@ export default defineComponent({
       formRef.value?.onReset();
       // hooks操作
       const { onResetFormHooks } = props.data.hooks || {};
-      onResetFormHooks && onResetFormHooks(formModel);
+      onResetFormHooks && onResetFormHooks({ formModel: formModel.value });
     };
 
     /**
@@ -351,28 +364,35 @@ export default defineComponent({
      */
     const onFormAction = (action: ActionItem) => {
       const { type, onClick } = action;
+
       // 如果自定义了onClick，则执行onClick自定义点击事件
       if (typeof onClick === "function") {
         onClick({
-          formModel,
+          formModel: formModel.value,
         });
         return;
       }
 
       // 表单默认提交
-      if (type === "submit") onFormSubmit();
+      if (type === "submit") {
+        onFormSubmit();
+        return;
+      }
 
       // 表单默认重置
-      if (type === "reset") onFormReset();
+      if (type === "reset") {
+        onFormReset();
+        return;
+      }
 
       /**
        * 表单按钮点击事件触发
        * @param {String} type 按钮点击类型
        * @param {Object} formModel 表单数据
        */
-      emit("on-btn-click", {
+      emit("on-action", {
         type,
-        formModel,
+        formModel: formModel.value,
       });
     };
 
