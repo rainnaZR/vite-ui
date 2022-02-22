@@ -13,11 +13,11 @@
         @click="onTabClick(tab, index, 0)"
       >
         <!-- 左侧图标插槽 -->
-        <slot name="icon" :scope="data">
+        <slot name="icon" :scope="{ tab, index }">
           <span v-if="tab.icon" :class="`u-icon ${tab.icon} f-mr10`"></span>
         </slot>
         <!-- 内容默认插槽 -->
-        <slot :scope="data">
+        <slot :scope="{ tab, index }">
           <span class="label">{{ tab.label }}</span>
         </slot>
         <!-- 下拉子菜单 -->

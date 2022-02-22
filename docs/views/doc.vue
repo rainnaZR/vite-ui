@@ -20,11 +20,13 @@
     <div class="m-main">
       <!-- 边栏 -->
       <div class="m-side f-pd20">
-        <ht-tab
-          v-model:modelValue="tabData.currentValue"
-          :data="tabData"
-          @on-change="onClickTab"
-        />
+        <div v-for="(item, index) in sideData" :key="index" class="f-mb15">
+          <div class="f-fw1">{{ item.title }}</div>
+          <ht-tab
+            :data="{ direction: 'column', ...item.tabData }"
+            @on-change="onClickTab"
+          />
+        </div>
       </div>
 
       <!-- 正文 -->
@@ -71,17 +73,7 @@ export default defineComponent({
       time: time.getTodayLeftTime(),
       unit: "s",
     });
-    const tabData = reactive({
-      direction: "column",
-      list: docs.map((i) => ({
-        label: i.meta?.title || i.name,
-        value: i.name,
-        path: `/doc/${i.path}`,
-      })),
-      currentValue: $route.name,
-      color: "",
-      activeColor: "",
-    });
+    const sideData = reactive(docs);
     const onClickLogo = () => {
       $router.push("/");
     };
@@ -92,7 +84,7 @@ export default defineComponent({
     return {
       headerData,
       countDownData,
-      tabData,
+      sideData,
       onClickLogo,
       onClickTab,
     };
