@@ -23,6 +23,7 @@
         <div v-for="(item, index) in sideData" :key="index" class="f-mb15">
           <div class="f-fw1">{{ item.title }}</div>
           <ht-tab
+            v-model:modelValue="tabCurrentValue"
             :data="{
               direction: 'column',
               list: item.list,
@@ -41,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from "vue";
+import { defineComponent, ref, reactive, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { time } from "@htfed/utils";
 import { groupDocs } from "../router/docs";
@@ -50,6 +51,7 @@ export default defineComponent({
   setup() {
     const $route = useRoute();
     const $router = useRouter();
+    const tabCurrentValue = ref($route.name);
     const headerData = reactive({
       logoUrl: "../logo.png",
       logoWidth: 40,
@@ -68,7 +70,7 @@ export default defineComponent({
           path: "/doc/button",
         },
       ],
-      tabCurrentValue: $route.name,
+      tabCurrentValue,
       tabColor: "",
       tabActiveColor: "",
     });
@@ -94,6 +96,7 @@ export default defineComponent({
     };
 
     return {
+      tabCurrentValue,
       headerData,
       countDownData,
       sideData,
