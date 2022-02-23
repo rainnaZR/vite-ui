@@ -41,10 +41,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { time } from "@htfed/utils";
-import docs from "../router/docs";
+import { groupDocs } from "../router/docs";
 
 export default defineComponent({
   setup() {
@@ -76,7 +76,16 @@ export default defineComponent({
       time: time.getTodayLeftTime(),
       unit: "s",
     });
-    const sideData = reactive(docs);
+    const sideData = computed(() =>
+      Object.keys(groupDocs)?.map((key) => ({
+        title: key !== "default" ? key : "",
+        list: groupDocs[key]?.map((i: any) => ({
+          label: i.meta?.title || i.name,
+          value: i.name,
+          path: `/doc/${i.path}`,
+        })),
+      }))
+    );
     const onClickLogo = () => {
       $router.push("/");
     };

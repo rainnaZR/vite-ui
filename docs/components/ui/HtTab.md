@@ -1,5 +1,7 @@
 # HtTab 导航
 
+### `Category: base`
+
 ## 代码演示
 
 - tab导航支持两种显示方式，垂直方式`column` 和 水平方式`row`，默认为水平方式 `row`。

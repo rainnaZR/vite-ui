@@ -1,5 +1,8 @@
 # HtIcon 图标
 
+
+### `Category: base`
+
 ## 代码演示
 
 ### 基础用法
@@ -35,7 +38,7 @@
 </template>
 
 <script>
-// import iconList from './icon.js'
+import iconList from './icon.js'
 
 export default {
     setup(){

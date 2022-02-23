@@ -1,5 +1,7 @@
 # HtInput 输入框
 
+### `Category: form`
+
 ## 代码演示
 
 ### 基本用法

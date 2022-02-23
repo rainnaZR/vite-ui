@@ -1,5 +1,7 @@
 # HtHeader 通用顶部
 
+### `Category: base`
+
 ## 代码演示
 
 ### 基础用法

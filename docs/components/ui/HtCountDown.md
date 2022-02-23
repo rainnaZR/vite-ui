@@ -1,5 +1,7 @@
 # HtCountDown 倒计时
 
+### `Category: base`
+
 ## 代码演示
 
 ### 基本用法

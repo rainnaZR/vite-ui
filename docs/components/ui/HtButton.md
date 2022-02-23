@@ -1,5 +1,7 @@
 # HtButton 按钮
 
+### `Category: base`
+
 ## 代码演示
 
 ### 按钮类型

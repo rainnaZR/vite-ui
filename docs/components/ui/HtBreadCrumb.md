@@ -1,5 +1,7 @@
 # HtBreadCrumb 面包屑
 
+### `Category: base`
+
 ## 代码演示
 
 - 面包屑支持自定义分隔符 `separator`，默认为 `/`。
