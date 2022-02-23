@@ -51,7 +51,7 @@ export default defineComponent({
   setup() {
     const $route = useRoute();
     const $router = useRouter();
-    const tabCurrentValue = ref($route.name);
+    const tabCurrentValue = computed(() => $route.name);
     const headerData = computed(() => ({
       logoUrl: "../logo.png",
       logoWidth: 40,
