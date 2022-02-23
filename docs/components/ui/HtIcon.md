@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import iconList from './icon.js'
+// import iconList from './icon.js'
 
 export default {
     setup(){

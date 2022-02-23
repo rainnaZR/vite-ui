@@ -31,6 +31,7 @@ export interface Doc {
   name: string;
   fileName: string;
   fileExtension?: string;
+  fileDirectory?: string;
   filePath: string;
   fileContent?: any;
 }

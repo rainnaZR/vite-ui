@@ -23,7 +23,10 @@
         <div v-for="(item, index) in sideData" :key="index" class="f-mb15">
           <div class="f-fw1">{{ item.title }}</div>
           <ht-tab
-            :data="{ direction: 'column', ...item.tabData }"
+            :data="{
+              direction: 'column',
+              list: item.list,
+            }"
             @on-change="onClickTab"
           />
         </div>
