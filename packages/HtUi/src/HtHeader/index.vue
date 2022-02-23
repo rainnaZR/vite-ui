@@ -25,8 +25,8 @@
           v-model:modelValue="data.tabCurrentValue"
           :data="{
             list: data.tabList,
-            color: data.tabColor,
-            activeColor: data.tabActiveColor,
+            style: data.tabStyle,
+            activeStyle: data.tabActiveStyle,
           }"
           @on-change="onClickTab"
         />

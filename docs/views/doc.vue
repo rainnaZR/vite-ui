@@ -52,7 +52,7 @@ export default defineComponent({
     const $route = useRoute();
     const $router = useRouter();
     const tabCurrentValue = ref($route.name);
-    const headerData = reactive({
+    const headerData = computed(() => ({
       logoUrl: "../logo.png",
       logoWidth: 40,
       logoHeight: 40,
@@ -61,19 +61,19 @@ export default defineComponent({
       tabList: [
         {
           label: "指南",
-          value: 1,
+          value: "introduce",
           path: "/doc/introduce",
         },
         {
           label: "组件",
-          value: 2,
-          path: "/doc/button",
+          value: "HtBreadCrumb",
+          path: "/doc/HtBreadCrumb",
         },
       ],
-      tabCurrentValue,
-      tabColor: "",
-      tabActiveColor: "",
-    });
+      tabCurrentValue: tabCurrentValue.value,
+      tabStyle: "color: #fff",
+      tabActiveStyle: "background: rgba(255, 255, 255, .85);",
+    }));
     const countDownData = reactive({
       time: time.getTodayLeftTime(),
       unit: "s",
@@ -116,6 +116,10 @@ export default defineComponent({
     right: 0;
     z-index: 2;
     box-shadow: 0 2px 5px rgb(197 217 232 / 50%);
+    :deep(.ht-header) {
+      background: #1274a8;
+      color: #fff;
+    }
   }
   .m-main {
     display: flex;

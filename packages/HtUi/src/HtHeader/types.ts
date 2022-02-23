@@ -13,8 +13,8 @@ export interface HeaderData {
   logoText?: string; // logo标语
   tabList: TabItem[]; // 导航列表，item数组，item格式为：{label:'', value:''}
   tabCurrentValue?: number | string | any[]; // 当前定位的导航value值
-  tabColor?: string; // 导航颜色值
-  tabActiveColor?: string; // 导航选中的颜色值
+  tabStyle?: string; // 导航样式
+  tabActiveStyle?: string; // 导航选中样式
 }
 
 export type Props = PublicProps<{

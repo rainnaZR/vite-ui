@@ -69,9 +69,7 @@ export default {
             },{
                 label: 'tab3', 
                 value: 3
-            }], 
-            color: '#666', 
-            activeColor: '#f00'
+            }],
         })
         return {
             modelValue,
@@ -85,7 +83,9 @@ export default {
 
 ### 自定义样式水平导航
 
-- 可自定义 tab 的 `color`, `activeColor`, `activeBgColor` 属性控制样式。
+- tab自定义样式属性`style`。
+- tab自定义选中样式属性`activeStyle`。
+
 
 ::: Demo
 ```vue demo
@@ -108,9 +108,9 @@ export default {
             },{
                 label: 'tab3', 
                 value: 3
-            }], 
-            activeColor: '#fff',
-            activeBgColor: 'rgb(45, 140, 240)',
+            }],
+            style: "color: #666",
+            activeStyle: "color: rgb(255, 102, 0);background: rgba(255, 102, 0, 0.12);",
         })
         return {
             modelValue,
@@ -148,8 +148,8 @@ export default {
                 label: 'tab3', 
                 value: 3
             }],
-            activeColor: '#fff',
-            activeBgColor: 'rgb(45, 140, 240)',
+            style: "color: #666",
+            activeStyle: "color: rgb(255, 102, 0);background: rgba(255, 102, 0, 0.12);",
         })
         return {
             modelValue,
@@ -275,10 +275,9 @@ export default {
                 label: 'tab4', 
                 value: 4,
                 icon: 'u-icon-edit',
-            }], 
-            color: '#ffffffb3',
-            activeColor: '#fff',
-            activeBgColor: 'rgb(45, 140, 240)',
+            }],
+            style: "color: #ffffffb3",
+            activeStyle: "color: #fff;background: rgb(45, 140, 240);border-radius: 0;",
         })
         return {
             modelValue,

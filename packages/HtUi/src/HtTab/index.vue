@@ -14,7 +14,7 @@
       >
         <!-- 左侧图标插槽 -->
         <slot name="icon" :scope="{ tab, index }">
-          <span v-if="tab.icon" :class="`u-icon ${tab.icon} f-mr10`"></span>
+          <ht-icon v-if="tab.icon" class="f-mr10" :data="{ name: tab.icon }" />
         </slot>
         <!-- 内容默认插槽 -->
         <slot :scope="{ tab, index }">
@@ -61,11 +61,16 @@
 
 <script lang="ts">
 import { defineComponent, PropType, reactive, watch } from "vue";
+import HtIcon from "../HtIcon";
 import { TabItem, TabData } from "./types";
 
 // tab导航切换功能。
 export default defineComponent({
   name: "HtTab",
+
+  components: {
+    HtIcon,
+  },
 
   props: {
     // tab选中值
@@ -95,19 +100,15 @@ export default defineComponent({
      * 获取tab样式
      * @param {Object} tab 当前tab对象
      * @param {Number} depth 当前点击的tab深度
-     * @returns {Object} tab样式
+     * @returns {String} tab样式
      */
     const onGetStyle = (tab: TabItem, depth: number) => {
+      const { style, activeStyle } = props.data;
       const isCurrent = tab.value === state.currentValue?.[depth];
-      const color = isCurrent ? props.data?.activeColor : props.data?.color;
-      const backgroundColor =
-        isCurrent && (depth > 0 || (!depth && !tab.children))
-          ? props.data?.activeBgColor
-          : "transparent";
-      return {
-        color,
-        backgroundColor,
-      };
+      const currStyle = isCurrent ? activeStyle : style;
+      return isCurrent && tab.children && !depth
+        ? `${currStyle};background:none`
+        : currStyle;
     };
 
     /**

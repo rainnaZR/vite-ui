@@ -62,18 +62,15 @@ export default defineComponent({
       tabList: [
         {
           label: "指南",
-          value: 1,
+          value: "introduce",
           path: "/doc/introduce",
         },
         {
           label: "组件",
-          value: 2,
-          path: "/doc/button",
+          value: "HtBreadCrumb",
+          path: "/doc/HtBreadCrumb",
         },
       ],
-      tabCurrentValue: "",
-      tabColor: "#999",
-      tabActiveColor: "#f60",
     });
     const countDownData = reactive({
       time: time.getTodayLeftTime(),

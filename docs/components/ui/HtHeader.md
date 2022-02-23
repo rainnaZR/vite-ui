@@ -49,8 +49,8 @@ export default {
                 },
             ],
             tabCurrentValue: 3,
-            tabColor: "#666",
-            tabActiveColor: "#f60",
+            tabStyle: "color: #666",
+            tabActiveStyle: "color: rgb(255, 102, 0);background: rgba(255, 102, 0, 0.12);",
         });
 
         return {
