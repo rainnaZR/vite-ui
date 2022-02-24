@@ -28,6 +28,7 @@
       @blur="onBlur"
       @change="onChange"
       @input="onInput"
+      @keyup.enter="onChange"
     >
     </textarea>
     <input
