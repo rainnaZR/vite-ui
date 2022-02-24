@@ -1,6 +1,6 @@
 # HtFormPage 表单页
 
-### `Category: business`
+### `Category: form`
 
 ## 代码演示
 
