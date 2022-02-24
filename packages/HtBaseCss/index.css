@@ -241,4 +241,6 @@ img[src=""],img:not([src]){
     -ms-user-select: none;
     user-select: none;
 }
-.f-lt2{letter-spacing: 2px; }
+.f-lt2{ letter-spacing: 2px; }
+.f-vw100{ width: 100vw; }
+.f-vh100 { height: 100vh; }
