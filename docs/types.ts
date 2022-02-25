@@ -15,6 +15,7 @@ export interface File {
 export interface DocMeta {
   title: string;
   category?: string;
+  isRecommend?: boolean;
 }
 
 // 导出的文档信息

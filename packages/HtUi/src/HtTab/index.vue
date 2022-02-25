@@ -52,7 +52,18 @@
           :style="onGetStyle(child, 1)"
           @click="onTabClick(child, childIndex, 1)"
         >
-          <span class="label">{{ child.label }}</span>
+          <!-- 二级tab左侧图标插槽 -->
+          <slot name="childIcon" :scope="{ tab: child, index: childIndex }">
+            <ht-icon
+              v-if="child.icon"
+              class="f-mr10"
+              :data="{ name: child.icon }"
+            />
+          </slot>
+          <!-- 二级tab内容默认插槽 -->
+          <slot name="childLabel" :scope="{ tab: child, index: childIndex }">
+            <span class="label">{{ child.label }}</span>
+          </slot>
         </div>
       </div>
     </div>

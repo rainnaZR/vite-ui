@@ -29,7 +29,16 @@
               list: item.list,
             }"
             @on-change="onClickTab"
-          />
+          >
+            <template v-slot="detail">
+              {{ detail.scope.tab.label }}
+              <ht-icon
+                v-if="detail.scope.tab.isRecommend"
+                class="f-ml10 s-fc1"
+                :data="{ name: 'u-icon-star' }"
+              />
+            </template>
+          </ht-tab>
         </div>
       </div>
 
@@ -42,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from "vue";
+import { defineComponent, reactive, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { time } from "@htfed/utils";
 import { groupDocs } from "../router/docs";
@@ -85,6 +94,7 @@ export default defineComponent({
           label: i.meta?.title || i.name,
           value: i.name,
           path: `/doc/${i.path}`,
+          isRecommend: i.meta?.isRecommend,
         })),
       }))
     );

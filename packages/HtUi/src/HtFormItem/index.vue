@@ -15,6 +15,7 @@
     ]"
   >
     <div
+      v-if="data.label"
       class="form-label"
       :style="{
         ...((form && form.data && form.data.labelStyle) || {}),
@@ -145,7 +146,9 @@ export default defineComponent({
               result.valid = valid; // 验证结果
               result.message =
                 message ||
-                (ruleRequired ? `${label}不能为空！` : `${label}验证失败！`); // 验证信息
+                (ruleRequired
+                  ? `${label || prop}不能为空！`
+                  : `${label || prop}验证失败！`); // 验证信息
               result.rule = rules[i]; // 验证规则
               break;
             }

@@ -43,6 +43,9 @@ load({
         ?.split(":")?.[1]
         ?.trim()
         ?.replace(/^\w{1}/g, ($1: string) => $1?.toUpperCase()) || "default";
+    const isRecommend =
+      fileContent?.default?.$vd?.toc[2]?.content?.replace(/`/g, "") ===
+      "Recommend";
     // 构造文档数据
     const doc: Doc = {
       name,
@@ -50,6 +53,7 @@ load({
       meta: {
         title: fileContent?.default?.$vd?.toc[0]?.content || name,
         category,
+        isRecommend,
       },
       component: fileContent?.default,
     };
