@@ -19,7 +19,7 @@ import HtFormItem from "./src/HtFormItem"; // 表单项
 import HtForm from "./src/HtForm"; // 表单
 import HtPager from "./src/HtPager"; // 分页
 import HtFormPage from "./src/HtFormPage"; // 表单页
-import HtLogin from "./src/HtLogin"; // 登录
+import HtLoginPwd from "./src/HtLoginPwd"; // 密码登录
 
 const components: any[] = [
   HtBreadCrumb,
@@ -40,7 +40,7 @@ const components: any[] = [
   HtForm,
   HtPager,
   HtFormPage,
-  HtLogin,
+  HtLoginPwd,
 ];
 
 /**
@@ -72,7 +72,7 @@ export {
   HtForm,
   HtPager,
   HtFormPage,
-  HtLogin,
+  HtLoginPwd,
 };
 export default {
   install,

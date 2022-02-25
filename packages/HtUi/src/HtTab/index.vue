@@ -144,7 +144,7 @@ export default defineComponent({
        * 当前tab点击的value值更新
        * @param {Array} value 当前点击tab的value值数组
        */
-      emit("update:modelValue", value);
+      emit("update:modelValue", value.length === 1 ? value[0] : value);
 
       /**
        * tab事件点击触发
