@@ -57,8 +57,8 @@ export default defineComponent({
       logoUrl: "logo.png",
       logoWidth: 40,
       logoHeight: 40,
-      logoAlt: "前端基础建设平台",
-      logoText: "前端基础建设平台",
+      logoAlt: "前端资源管理平台",
+      logoText: "前端资源管理平台",
       tabList: [
         {
           label: "指南",

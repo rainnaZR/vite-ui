@@ -19,6 +19,7 @@ import HtFormItem from "./src/HtFormItem"; // 表单项
 import HtForm from "./src/HtForm"; // 表单
 import HtPager from "./src/HtPager"; // 分页
 import HtFormPage from "./src/HtFormPage"; // 表单页
+import HtCodeInput from "./src/HtCodeInput"; // 验证码输入框
 import HtLoginPwd from "./src/HtLoginPwd"; // 密码登录
 
 const components: any[] = [
@@ -40,6 +41,7 @@ const components: any[] = [
   HtForm,
   HtPager,
   HtFormPage,
+  HtCodeInput,
   HtLoginPwd,
 ];
 
@@ -72,6 +74,7 @@ export {
   HtForm,
   HtPager,
   HtFormPage,
+  HtCodeInput,
   HtLoginPwd,
 };
 export default {

@@ -2,23 +2,24 @@
   <div class="ht-code-input">
     <ht-input
       v-model:modelValue="inputVal"
+      class="f-f1"
       :data="{
         type: 'text',
-        wrapStyle: data.wrapStyle,
-        inputStyle: data.inputStyle,
-        placeholder: data.placeholder,
-        disabled: data.disabled || form.data.disabled,
-        color: data.color,
-        borderColor: data.borderColor,
-        focusBorderColor: data.focusBorderColor,
-        clearable: data.clearable,
+        wrapStyle: data?.wrapStyle,
+        inputStyle: data?.inputStyle,
+        placeholder: data?.placeholder,
+        disabled: data?.disabled || form?.data?.disabled,
+        color: data?.color,
+        borderColor: data?.borderColor,
+        focusBorderColor: data?.focusBorderColor,
+        clearable: data?.clearable,
       }"
     />
     <div class="f-df f-ml10 f-curp" @click="onGetCode">
       <img
-        :width="data.verifyImgWidth || 120"
-        :height="data.verifyImgHeight || 40"
-        :src="data.verifyImgUrl"
+        :width="data?.verifyImgWidth || 120"
+        :height="data?.verifyImgHeight || 40"
+        :src="data?.verifyImgUrl"
       />
     </div>
   </div>
@@ -48,7 +49,7 @@ export default defineComponent({
     // 配置数据
     data: {
       type: Object as PropType<CodeInputData>,
-      required: true,
+      required: false,
       default: () => ({
         type: "text",
       }),
@@ -60,12 +61,12 @@ export default defineComponent({
     const inputVal = ref<string | number>(""); // 输入框值
 
     /**
-     * 获取验证码信息
+     * 获取验证码
      * @returns void
      */
     const onGetCode = () => {
       /**
-       * 获取验证码信息事件触发
+       * 获取验证码事件触发
        */
       emit("on-get-code");
     };

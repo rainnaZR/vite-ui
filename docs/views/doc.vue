@@ -65,8 +65,8 @@ export default defineComponent({
       logoUrl: "../logo.png",
       logoWidth: 40,
       logoHeight: 40,
-      logoAlt: "前端基础建设平台",
-      logoText: "前端基础建设平台",
+      logoAlt: "前端资源管理平台",
+      logoText: "前端资源管理平台",
       tabList: [
         {
           label: "指南",
@@ -139,7 +139,7 @@ export default defineComponent({
     box-sizing: border-box;
   }
   .m-side {
-    width: 200px;
+    width: 220px;
     height: 100%;
     overflow-y: scroll;
     box-shadow: 2px 0 5px rgb(197 217 232 / 50%);
@@ -171,7 +171,8 @@ export default defineComponent({
   .ht-select {
     width: 350px;
   }
-  .ht-pager {
+  .ht-pager,
+  .ht-login-pwd {
     .ht-input,
     .ht-select {
       width: auto;
