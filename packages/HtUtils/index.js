@@ -6,5 +6,6 @@ import request from "./src/request";
 import time from "./src/time";
 import tools from "./src/tools";
 import url from "./src/url";
+import store from "./src/store";
 
-export { device, dom, error, file, request, time, tools, url };
+export { device, dom, error, file, request, time, tools, url, store };

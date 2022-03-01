@@ -81,13 +81,13 @@ export default defineComponent({
 
     /**
      * 表单行为点击
-     * @param {Object} fomrModel 表单数据
+     * @param {Object} formModel 表单数据
      * @returns void
      */
     const onAction = (result: any) => {
       /**
        * 表单行为点击事件触发
-       * @param {Object} fomrModel 表单数据
+       * @param {Object} formModel 表单数据
        */
       emit("on-login", result.formModel);
     };
@@ -106,6 +106,7 @@ export default defineComponent({
       targetField &&
         targetField.itemProps &&
         (targetField.itemProps.verifyImgUrl = value);
+      formData.model[targetProp] = "";
     };
 
     return {
