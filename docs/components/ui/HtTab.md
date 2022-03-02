@@ -177,7 +177,7 @@ export default {
 import { ref, reactive } from 'vue'
 export default {
     setup(){
-        const modelValue = ref(['2', '2-1']);
+        const modelValue = ref([2, '2-1']);
         const tabData = reactive({
             list: [{
                 label: 'tab1', 

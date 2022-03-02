@@ -5,7 +5,7 @@
         :class="[
           'content',
           {
-            'content-curr': state.currentValue[0] == tab.value,
+            'content-curr': state.currentValue[0] == tab.value && spread,
           },
           'f-curp',
         ]"
@@ -34,7 +34,7 @@
         class="children f-trans f-oh"
         :style="{
           height:
-            state.currentValue[0] === tab.value
+            state.currentValue[0] == tab.value && spread
               ? `${tab.children.length * itemHeight}px`
               : '0px',
         }"
@@ -72,7 +72,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch } from "vue";
+import { defineComponent, PropType, reactive, watch, ref } from "vue";
 import HtIcon from "../HtIcon";
 import { TabItem, TabData } from "./types";
 
@@ -107,6 +107,7 @@ export default defineComponent({
     const state = reactive({
       currentValue: Array.isArray(modelValue) ? modelValue : [modelValue], // 当前选中值
     });
+    const spread = ref(true);
 
     /**
      * 获取tab样式
@@ -140,7 +141,13 @@ export default defineComponent({
             ? [currentValue[0], currentValue[1]]
             : [tab.value, tab.children[0].value]
           : [currentValue[0], tab.value];
+      !depth &&
+        (spread.value =
+          tab.children && currentValue.includes(tab.value)
+            ? !spread.value
+            : true);
       state.currentValue = value;
+
       /**
        * 当前tab点击的value值更新
        * @param {Array} value 当前点击tab的value值数组
@@ -164,8 +171,9 @@ export default defineComponent({
     );
 
     return {
-      state,
       itemHeight,
+      state,
+      spread,
       onGetStyle,
       onTabClick,
     };
