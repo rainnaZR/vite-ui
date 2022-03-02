@@ -21,10 +21,11 @@
           <span class="label">{{ tab.label }}</span>
         </slot>
         <!-- 下拉子菜单 -->
-        <span
+        <ht-icon
           v-if="tab.children && tab.children.length"
-          class="u-icon u-icon-arrowbottom f-ml10 f-trans"
-        ></span>
+          class="icon f-ml10 f-trans"
+          :data="{ name: 'u-icon-arrowDown' }"
+        />
       </div>
 
       <!-- 子菜单列表 -->
