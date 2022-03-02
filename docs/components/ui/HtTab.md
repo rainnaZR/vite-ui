@@ -18,7 +18,7 @@
 import { ref, reactive } from 'vue'
 export default {
     setup(){
-        const modelValue = ref("");
+        const modelValue = ref(1);
         const tabData = reactive({
             list: [{
                 label: 'tab1', 
@@ -57,7 +57,7 @@ export default {
 import { ref, reactive } from 'vue'
 export default {
     setup(){
-        const modelValue = ref("");
+        const modelValue = ref(1);
         const tabData = reactive({
             direction: 'column',
             list: [{
@@ -97,7 +97,7 @@ export default {
 import { ref, reactive } from 'vue'
 export default {
     setup(){
-        const modelValue = ref("");
+        const modelValue = ref(1);
         const tabData = reactive({
             list: [{
                 label: 'tab1', 
@@ -263,6 +263,81 @@ export default {
                 },{
                     label: 'tab2-2',
                     value: '2-2',
+                },{
+                    label: 'tab2-3',
+                    value: '2-3',
+                }]
+            },{
+                label: 'tab3', 
+                value: 3,
+                icon: 'u-icon-edit',
+            },{
+                label: 'tab4', 
+                value: 4,
+                icon: 'u-icon-edit',
+            }],
+            style: "color: #ffffffb3",
+            activeStyle: "color: #fff;background: rgb(45, 140, 240);border-radius: 0;",
+        })
+        return {
+            modelValue,
+            tabData,
+        }
+    }
+}
+</script>
+```
+:::
+
+
+### 插槽
+
+::: Demo
+```vue demo
+<template>
+    <ht-tab style="width:250px;background:rgb(25, 26, 35)" v-model:modelValue="modelValue" :data="tabData">
+        <template v-slot="detail">
+            <div class="f-f1">{{detail.scope.tab?.label}}</div>
+            <ht-badge v-if="detail.scope.tab?.isNew" :data="{ text: 'New' }"/>
+        </template>
+        <template v-slot:childLabel="detail">
+            <div class="f-f1">{{detail.scope.tab?.label}}</div>
+            <ht-badge v-if="detail.scope.tab?.isNew" :data="{ text: 'New' }"/>
+        </template>
+    </ht-tab>
+</template>
+
+<script>
+import { ref, reactive } from 'vue'
+export default {
+    setup(){
+        const modelValue = ref([2, '2-1']);
+        const tabData = reactive({
+            direction: 'column',
+            list: [{
+                label: 'tab1', 
+                value: 1,
+                icon: 'u-icon-edit',
+                isNew: true,
+                children: [{
+                    label: 'tab1-1', 
+                    value: '1-1',
+                },{
+                    label: 'tab1-2',
+                    value: '1-2',
+                    isNew: true,
+                }]
+            },{
+                label: 'tab2', 
+                value: 2,
+                icon: 'u-icon-edit',
+                children: [{
+                    label: 'tab2-1',
+                    value: '2-1',
+                },{
+                    label: 'tab2-2',
+                    value: '2-2',
+                    isNew: true,
                 },{
                     label: 'tab2-3',
                     value: '2-3',
