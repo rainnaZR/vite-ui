@@ -197,6 +197,48 @@ function onCopy(value, node, tagClassName = "j-copy-textarea-only") {
   });
 }
 
+/**
+ * 全屏
+ */
+function onRequestFullScreen() {
+  const docElm = document.documentElement;
+  if (docElm.requestFullscreen) {
+    docElm.requestFullscreen();
+  } else if (docElm.msRequestFullscreen) {
+    docElm.msRequestFullscreen();
+  } else if (docElm.mozRequestFullScreen) {
+    docElm.mozRequestFullScreen();
+  } else if (docElm.webkitRequestFullScreen) {
+    docElm.webkitRequestFullScreen();
+  }
+}
+
+/**
+ * 退出全屏
+ */
+function onExitFullScreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitCancelFullScreen) {
+    document.webkitCancelFullScreen();
+  }
+}
+
+/**
+ * 是否全屏
+ */
+function onIsFullScreen() {
+  return (
+    document.fullscreenElement ||
+    document.mozFullScreenElement ||
+    document.webkitFullScreenElement
+  );
+}
+
 export default {
   windowWidth,
   windowHeight,
@@ -211,4 +253,7 @@ export default {
   onShowGoTop,
   createElement,
   onCopy,
+  onRequestFullScreen,
+  onExitFullScreen,
+  onIsFullScreen,
 };
