@@ -259,7 +259,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ suffixIcon: 'u-icon-data' }" />
+    <ht-input :data="{ suffixIcon: 'u-icon-user' }" />
 </template>
 ```
 :::
@@ -272,7 +272,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ prefixIcon: 'u-icon-data' }" />
+    <ht-input :data="{ prefixIcon: 'u-icon-user' }" />
 </template>
 ```
 :::
@@ -289,7 +289,7 @@ export default {
     <ht-input :data="{ clearable: true, search: true, password: true }" />
     <br />
 
-    <ht-input :data="{ clearable: true, suffixIcon: 'u-icon-data' }" />
+    <ht-input :data="{ clearable: true, suffixIcon: 'u-icon-user' }" />
 </template>
 ```
 :::
@@ -405,7 +405,7 @@ export default {
 <template>
     <ht-input :data="{ inputStyle: { paddingRight: '35px' } }">
         <template #suffix>
-            <ht-icon :data="{ name: 'u-icon-data' }" />
+            <ht-icon :data="{ name: 'u-icon-user' }" />
         </template>
     </ht-input>
     <br />
