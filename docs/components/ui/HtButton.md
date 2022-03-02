@@ -103,7 +103,7 @@
 ```vue demo
 <template>
   <ht-button :data="{size: 'small'}">
-    <ht-icon :data="{name: 'u-icon-import'}">导入</ht-icon>
+    <ht-icon :data="{name: 'u-icon-delete'}">删除</ht-icon>
   </ht-button>
 </template>
 ```
