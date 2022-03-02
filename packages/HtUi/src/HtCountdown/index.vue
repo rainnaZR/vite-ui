@@ -20,6 +20,7 @@ export default defineComponent({
   name: "htCountDown",
 
   props: {
+    // 配置数据
     data: {
       type: Object as PropType<CountDownData>,
       required: true,

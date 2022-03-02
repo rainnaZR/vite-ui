@@ -16,6 +16,7 @@ export default defineComponent({
   name: "HtBadge",
 
   props: {
+    // 配置数据
     data: {
       type: Object as PropType<BadgeData>,
       required: false,

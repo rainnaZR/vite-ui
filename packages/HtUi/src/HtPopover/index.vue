@@ -22,6 +22,7 @@ export default defineComponent({
   name: "HtPopover",
 
   props: {
+    // 配置数据
     data: {
       type: Object as PropType<PopoverData>,
       required: false,

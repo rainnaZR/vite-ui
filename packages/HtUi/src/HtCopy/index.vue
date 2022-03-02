@@ -27,6 +27,7 @@ export default defineComponent({
   name: "HtCopy",
 
   props: {
+    // 配置数据
     data: {
       type: Object as PropType<CopyData>,
       required: false,

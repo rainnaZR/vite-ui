@@ -19,6 +19,7 @@ export default defineComponent({
   name: "HtIcon",
 
   props: {
+    // 配置数据
     data: {
       type: Object as PropType<IconData>,
       required: true,

@@ -37,6 +37,7 @@ export default defineComponent({
   name: "HtBreadCrumb",
 
   props: {
+    // 配置数据
     data: {
       type: Object as PropType<BreadCrumbData>,
       required: true,

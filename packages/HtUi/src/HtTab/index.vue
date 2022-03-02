@@ -91,6 +91,7 @@ export default defineComponent({
       required: false,
       default: "",
     },
+    // 配置数据
     data: {
       type: Object as PropType<TabData>,
       required: true,

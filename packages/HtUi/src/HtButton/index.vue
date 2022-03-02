@@ -32,6 +32,7 @@ export default defineComponent({
   name: "HtButton",
 
   props: {
+    // 配置数据
     data: {
       type: Object as PropType<ButtonData>,
       required: false,
