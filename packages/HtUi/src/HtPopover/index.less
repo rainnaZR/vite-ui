@@ -8,13 +8,13 @@
         opacity: 0;
         z-index: -1;
         .box{
+            position: relative;
             width: @popover-width;
             border-radius: @popover-border-radius;
             border: 1px solid @popover-border-color;
             background: @popover-background-color;
             box-shadow: @popover-box-shadow;
             box-sizing: border-box;
-            overflow: hidden;
         }
         .arrow{
             position: absolute;
@@ -39,7 +39,7 @@
             transform: translateY(-100%);
             .arrow{
                 left: 50%;
-                bottom: 0;
+                bottom: -12px;
                 transform: translate(-50%, -50%) rotate(45deg);
                 transform-origin: center center;
             }
@@ -66,7 +66,7 @@
             padding: @popover-split-padding 0 0;
             .arrow{
                 left: 50%;
-                top: 0;
+                top: -12px;
                 transform: translate(-50%, 50%) rotate(45deg);
                 transform-origin: center center;
             }
@@ -93,7 +93,7 @@
             padding: 0 @popover-split-padding 0 0;
             transform: translateX(-100%);
             .arrow{
-                right: 0;
+                right: -12px;
                 top: 50%;
                 transform: translate(-50%, -50%) rotate(45deg);
                 transform-origin: center center;
@@ -121,7 +121,7 @@
             padding: 0 0 0 @popover-split-padding;
             transform: translateX(100%);
             .arrow{
-                left: 0;
+                left: -12px;
                 top: 50%;
                 transform: translate(50%, -50%) rotate(45deg);
                 transform-origin: center center;

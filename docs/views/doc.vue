@@ -178,5 +178,8 @@ export default defineComponent({
       width: auto;
     }
   }
+  .ht-popover {
+    margin: 0 300px;
+  }
 }
 </style>

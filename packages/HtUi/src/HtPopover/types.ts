@@ -9,10 +9,11 @@ export interface PopoverData {
   position?: string; // 弹出内容显示的坐标位置
   hideArrow?: boolean; // 是否隐藏弹出窗的箭头标识
   trigger?: string; // 弹出层触发方式
-  offset?: number; // 弹出层偏移值，为数字
   tabIndex?: number; // 组件的tabIndex值
+  offset?: number; // 弹出层偏移值，为数字
 }
 
 export type Props = PublicProps<{
-  data: PopoverData;
+  modelValue?: boolean; // 是否显示弹出窗
+  data: PopoverData; // 配置数据
 }>;
