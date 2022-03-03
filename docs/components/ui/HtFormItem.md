@@ -150,7 +150,7 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-    <ht-form-item ref="formItemRef" :data="{ label: '名称', prop: 'name', rules: [{ required: true }]}">
+    <ht-form-item ref="formItemRef" :data="{ label: '统计人数', prop: 'name', rules: [{ required: true }, { pattern: /^\d+$/g }]}">
         <ht-input v-model:modelValue="model.name"/>
     </ht-form-item>
 

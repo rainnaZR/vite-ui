@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "dependencies": {
-    "@htfed/base-css": "^1.0.13",
+    "@htfed/base-css": "^1.0.14",
     "@htfed/doc-loader": "^0.0.14",
     "@htfed/ui": "^0.2.20",
     "@htfed/utils": "0.1.16",

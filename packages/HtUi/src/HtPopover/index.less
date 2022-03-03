@@ -1,3 +1,157 @@
 @import "../theme/variables.less";
 
-.ht-popover {}
+.ht-popover {
+    position: relative;
+    display: inline-block;
+    .popover{
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+        .box{
+            width: @popover-width;
+            border-radius: @popover-border-radius;
+            border: 1px solid @popover-border-color;
+            background: @popover-background-color;
+            box-shadow: @popover-box-shadow;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .arrow{
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border: 1px solid @popover-border-color;
+            background: @popover-background-color;
+            box-shadow: @popover-box-shadow;
+        }
+        .content{
+            position: relative;
+            padding: @popover-padding;
+            box-sizing: border-box;
+            background: @popover-background-color;
+            color: @popover-color;
+            font-size: @popover-font-size;
+            line-height: @popover-line-height;
+        }
+        &-top-left, &-top-center, &-top-right{
+            top: 0;
+            padding: 0 0 @popover-split-padding;
+            transform: translateY(-100%);
+            .arrow{
+                left: 50%;
+                bottom: 0;
+                transform: translate(-50%, -50%) rotate(45deg);
+                transform-origin: center center;
+            }
+        }
+        &-top-left{
+            left: 0;
+            .arrow{
+                left: @popover-arrow-position;
+            }
+        }
+        &-top-center{
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+        &-top-right{
+            right: 0;
+            .arrow{
+                left: auto;
+                right: @popover-arrow-position;
+            }
+        }
+        &-bottom-left, &-bottom-center, &-bottom-right{
+            top: 100%;
+            padding: @popover-split-padding 0 0;
+            .arrow{
+                left: 50%;
+                top: 0;
+                transform: translate(-50%, 50%) rotate(45deg);
+                transform-origin: center center;
+            }
+        }
+        &-bottom-left{
+            left: 0;
+            .arrow{
+                left: @popover-arrow-position;
+            }
+        }
+        &-bottom-center{
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        &-bottom-right{
+            right: 0;
+            .arrow{
+                left: auto;
+                right: @popover-arrow-position;
+            }
+        }
+        &-left-top, &-left-center, &-left-bottom{
+            left: 0;
+            padding: 0 @popover-split-padding 0 0;
+            transform: translateX(-100%);
+            .arrow{
+                right: 0;
+                top: 50%;
+                transform: translate(-50%, -50%) rotate(45deg);
+                transform-origin: center center;
+            }
+        }
+        &-left-top{
+            top: 0;
+            .arrow{
+                top: @popover-arrow-position * 0.5;
+            }
+        }
+        &-left-center{
+            top: 50%;
+            transform: translate(-100%, -50%);
+        }
+        &-left-bottom{
+            bottom: 0;
+            .arrow{
+                top: auto;
+                bottom: @popover-arrow-position * 0.5;
+            }
+        }
+        &-right-top, &-right-center, &-right-bottom{
+            right: 0;
+            padding: 0 0 0 @popover-split-padding;
+            transform: translateX(100%);
+            .arrow{
+                left: 0;
+                top: 50%;
+                transform: translate(50%, -50%) rotate(45deg);
+                transform-origin: center center;
+            }
+        }
+        &-right-top{
+            top: 0;
+            .arrow{
+                top: @popover-arrow-position * 0.5;
+            }
+        }
+        &-right-center{
+            top: 50%;
+            transform: translate(100%, -50%);
+        }
+        &-right-bottom{
+            bottom: 0;
+            .arrow{
+                top: auto;
+                bottom: @popover-arrow-position * 0.5;
+            }
+        }
+        &-hide-arrow{
+            .arrow{
+                display: none;
+            }
+        }
+        &-show{
+            opacity: 1;
+            z-index: 2;
+        }
+    }
+}
