@@ -70,16 +70,36 @@
 ### 自定义显示文本
 
 
-- 组件配置显示的文本属性`text`，值为`字符串`或`数字`。
+- 组件配置显示的文本属性`content`，值为`字符串`或`数字`。
 
 ::: Demo
 ```vue demo
 <template>
-  <ht-popover :data="{ text: '我是自定义文本' }">
+  <ht-popover :data="{ content: '我是自定义文本' }">
     <template #popover>
       和熙的阳光打在身上，秋风轻轻拂过脸颊。我恍惚间睁眼，才发觉已到了大漠。透过车窗，我只见满目黄沙，唯有太阳半挂在天上，给大漠似镀了一层金衣。和熙的阳光打在身上，秋风轻轻拂过脸颊。我恍惚间睁眼，才发觉已到了大漠。透过车窗，我只见满目黄沙，唯有太阳半挂在天上，给大漠似镀了一层金衣。
     </template>
   </ht-popover>
+</template>
+```
+:::
+
+
+### 弹出窗文本
+
+
+- 组件配置弹出窗的文本属性`popContent`，值为`字符串`或`数字`。
+
+::: Demo
+```vue demo
+<template>
+  <ht-popover :data="{ popContent: '用户' }">
+    <ht-icon :data="{ name: 'u-icon-user' }" />
+  </ht-popover>
+  <br />
+  <br />
+
+  <ht-popover :data="{ content: '我是显示内容', popContent: '我是弹出内容' }" />
 </template>
 ```
 :::
