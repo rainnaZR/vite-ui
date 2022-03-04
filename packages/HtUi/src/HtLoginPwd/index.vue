@@ -71,7 +71,7 @@ export default defineComponent({
       action: [
         {
           type: "submit",
-          text: "登录",
+          content: "登录",
           btnType: "primary",
           full: true,
         },

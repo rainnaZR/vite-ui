@@ -80,7 +80,7 @@
             }"
             @click="onFormAction(action)"
           >
-            {{ action.text }}
+            {{ action.content }}
           </ht-button>
         </slot>
       </ht-form-item>
@@ -208,14 +208,14 @@ export default defineComponent({
     // 表单默认行为数据
     const defaultActions = reactive({
       submit: {
-        text: "提交",
+        content: "提交",
         btnType: "primary",
       },
       reset: {
-        text: "重置",
+        content: "重置",
       },
       search: {
-        text: "搜索",
+        content: "搜索",
         btnType: "primary",
       },
     });

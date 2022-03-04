@@ -11,10 +11,10 @@
 ::: Demo
 ```vue demo
 <template>
-    <ht-badge :data="{text: 'New'}" />
+    <ht-badge :data="{content: 'New'}" />
     <br />
 
-    <ht-badge :data="{text: '3', style: 'background: #f00'}" />
+    <ht-badge :data="{content: '3', style: 'background: #f00'}" />
 </template>
 ```
 :::
@@ -23,12 +23,12 @@
 
 ### 自定义文本
 
-- 组件data属性支持自定义文本属性`text`，值为`数字`或`字符串`。
+- 组件data属性支持自定义文本属性`content`，值为`数字`或`字符串`。
 
 ::: Demo
 ```vue demo
 <template>
-    <ht-badge :data="{text: '热门'}" />
+    <ht-badge :data="{content: '热门'}" />
 </template>
 ```
 :::

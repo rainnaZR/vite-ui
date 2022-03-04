@@ -122,16 +122,16 @@ export default defineComponent({
       action: [
         {
           type: "submit",
-          text: "确认",
+          content: "确认",
           btnType: "primary",
         },
         {
           type: "reset",
-          text: "重置",
+          content: "重置",
         },
         {
           type: "search",
-          text: "搜索",
+          content: "搜索",
           onClick: () => alert("search事件触发！"),
         },
       ],
@@ -454,16 +454,16 @@ export default defineComponent({
       action: [
         {
           type: "submit",
-          text: "确认",
+          content: "确认",
           btnType: "primary",
         },
         {
           type: "reset",
-          text: "重置",
+          content: "重置",
         },
         {
           type: "search",
-          text: "搜索",
+          content: "搜索",
           onClick: () => alert("search事件触发！"),
         },
       ],

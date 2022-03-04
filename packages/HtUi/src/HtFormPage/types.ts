@@ -35,7 +35,7 @@ export interface GroupItem {
 
 export interface ActionItem {
   type: string; // 表单操作类型
-  text: string; // 表单操作文案
+  content: string; // 表单操作文案
   btnType?: string; // 表单按钮类型
   size?: string; // 按钮尺寸
   nativeType?: string; // 按钮原生类型

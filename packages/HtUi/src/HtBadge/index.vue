@@ -1,7 +1,7 @@
 <template>
   <div class="ht-badge" :style="data.style">
     <!-- 默认内容插槽 -->
-    <slot>{{ data.text }}</slot>
+    <slot>{{ data.content }}</slot>
   </div>
 </template>
 
