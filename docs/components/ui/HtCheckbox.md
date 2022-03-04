@@ -2,7 +2,7 @@
 
 ### `Category: form`
 
-`HtCheckbox 多选框`与`HtRadio 单选框`继承自同一个组件，区别主要有以下两点：
+`HtCheckbox 多选框`与`HtRadio 单选框`扩展自同一个组件，区别主要有以下两点：
 
 - `multiple` 多选传值true，单选传值false。
 - `modelValue` 多选时传数组，单选时传字符串或数字。

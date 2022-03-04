@@ -44,9 +44,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from "vue";
+import { defineComponent, PropType, getCurrentInstance, ref, watch } from "vue";
 import { PopoverData } from "./types";
-import { isTooltip } from "./hooks";
 
 /**
  * 气泡弹窗提示。
@@ -69,6 +68,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const { proxy } = getCurrentInstance() || {};
     const show = ref(props.modelValue);
     const trigger = ref(props.data.trigger || "hover");
 
@@ -163,7 +163,7 @@ export default defineComponent({
 
     return {
       show,
-      isTooltip,
+      isTooltip: proxy?.$options?.extendProps?.isTooltip,
       onMouseOver,
       onMouseOut,
       onClick,

@@ -23,7 +23,7 @@
 :::
 
 
-### 自定义容器样式
+### 容器样式
 
 - 组件配置容器自定义样式属性`style`，值为`字符串`或`对象`。
 
@@ -31,7 +31,7 @@
 ```vue demo
 <template>
   <ht-popover :data="{ style: 'margin: 50px 100px;' }">
-    <ht-button>自定义容器样式</ht-button>
+    <ht-button>容器样式</ht-button>
     <template #popover>
       和熙的阳光打在身上，秋风轻轻拂过脸颊。我恍惚间睁眼，才发觉已到了大漠。透过车窗，我只见满目黄沙，唯有太阳半挂在天上，给大漠似镀了一层金衣。和熙的阳光打在身上，秋风轻轻拂过脸颊。我恍惚间睁眼，才发觉已到了大漠。透过车窗，我只见满目黄沙，唯有太阳半挂在天上，给大漠似镀了一层金衣。
     </template>
@@ -42,7 +42,7 @@
 
 
 
-### 自定义弹窗样式
+### 弹出窗样式
 
 - 组件配置弹出窗箭头自定义样式属性`arrowStyle`，值为`字符串`或`对象`。
 - 组件配置弹出窗内容自定义样式属性`contentStyle`，值为`字符串`或`对象`。
@@ -57,7 +57,7 @@
       contentStyle: 'background: #191a23; color: #fff;',
     }"
   >
-    <ht-button>自定义弹窗样式</ht-button>
+    <ht-button>弹出窗样式</ht-button>
     <template #popover>
       和熙的阳光打在身上，秋风轻轻拂过脸颊。我恍惚间睁眼，才发觉已到了大漠。透过车窗，我只见满目黄沙，唯有太阳半挂在天上，给大漠似镀了一层金衣。和熙的阳光打在身上，秋风轻轻拂过脸颊。我恍惚间睁眼，才发觉已到了大漠。透过车窗，我只见满目黄沙，唯有太阳半挂在天上，给大漠似镀了一层金衣。
     </template>
@@ -67,7 +67,7 @@
 :::
 
 
-### 自定义显示文本
+### 显示文本
 
 
 - 组件配置显示的文本属性`content`，值为`字符串`或`数字`。
@@ -99,9 +99,9 @@
 :::
 
 
-### 弹窗位置
+### 弹出窗位置
 
-- 组件配置弹窗显示位置属性`position`，值为`字符串`。
+- 组件配置弹出窗显示位置属性`position`，值为`字符串`。
 - 位置可选项有`top-left`，`top-center`，`top-right`，`bottom-left`，`bottom-center`，`bottom-right`，`left-top`，`left-center`，`left-bottom`，`right-top`，`right-center`，`right-bottom`。
 - `position`默认值为`bottom-center`。
 
@@ -220,7 +220,7 @@
 
 
 
-### 弹窗偏移
+### 弹出窗偏移
 
 
 - 组件控制弹出窗偏移量属性`offset`，值为`数字`，默认值为`10`，单位是px。
@@ -230,7 +230,7 @@
 ```vue demo
 <template>
   <ht-popover :data="{ offset: 30 }">
-    <ht-button>弹窗偏移</ht-button>
+    <ht-button>弹出窗偏移</ht-button>
     <template #popover>
       和熙的阳光打在身上，秋风轻轻拂过脸颊。我恍惚间睁眼，才发觉已到了大漠。透过车窗，我只见满目黄沙，唯有太阳半挂在天上，给大漠似镀了一层金衣。和熙的阳光打在身上，秋风轻轻拂过脸颊。我恍惚间睁眼，才发觉已到了大漠。透过车窗，我只见满目黄沙，唯有太阳半挂在天上，给大漠似镀了一层金衣。
     </template>
