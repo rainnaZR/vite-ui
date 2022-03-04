@@ -69,14 +69,14 @@ export default defineComponent({
       logoText: "前端资源管理平台",
       tabList: [
         {
-          label: "指南",
+          label: "简介",
           value: "introduce",
           path: "/doc/introduce",
         },
         {
           label: "组件",
-          value: "HtBreadCrumb",
-          path: "/doc/HtBreadCrumb",
+          value: "HtBadge",
+          path: "/doc/HtBadge",
         },
       ],
       tabCurrentValue: tabCurrentValue.value,
