@@ -93,13 +93,7 @@
 ::: Demo
 ```vue demo
 <template>
-  <ht-popover :data="{ popContent: '用户' }">
-    <ht-icon :data="{ name: 'u-icon-user' }" />
-  </ht-popover>
-  <br />
-  <br />
-
-  <ht-popover :data="{ content: '我是显示内容', popContent: '我是弹出内容' }" />
+  <ht-popover :data="{ content: '我要定制弹出窗文本', popContent: '我是弹出内容我是弹出内容我是弹出内容我是弹出内容我是弹出内容我是弹出内容容' }" />
 </template>
 ```
 :::
