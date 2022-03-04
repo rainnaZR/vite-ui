@@ -136,12 +136,12 @@ export default defineComponent({
 
     watch(show, (value) => {
       /**
-       * 弹出窗口是否显示
+       * 弹出窗是否显示
        * @param {Boolean} value 弹出窗是否显示
        */
       emit("update:modelValue", value);
       /**
-       * 弹出窗口状态变化事件
+       * 弹出窗状态变化事件
        * @param {Boolean} show 弹出窗是否显示
        */
       emit("on-popover-change", { show: value });

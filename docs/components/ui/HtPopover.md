@@ -87,9 +87,9 @@
 
 ### 弹窗位置
 
-- 组件配置弹窗显示位置属性`position`，值为`字符串`或`数字`。
+- 组件配置弹窗显示位置属性`position`，值为`字符串`。
 - 位置可选项有`top-left`，`top-center`，`top-right`，`bottom-left`，`bottom-center`，`bottom-right`，`left-top`，`left-center`，`left-bottom`，`right-top`，`right-center`，`right-bottom`。
-- 位置默认值为`bottom-center`。
+- `position`默认值为`bottom-center`。
 
 
 ::: Demo
@@ -209,7 +209,7 @@
 ### 弹窗偏移
 
 
-- 组件控制弹出窗偏移量属性`offset`，值为`数字`。
+- 组件控制弹出窗偏移量属性`offset`，值为`数字`，默认值为`10`，单位是px。
 
 
 ::: Demo
@@ -229,7 +229,7 @@
 
 ### 隐藏箭头
 
-- 组件配置箭头隐藏属性`hideArrow`，值为`布尔值`。
+- 组件配置箭头隐藏属性`hideArrow`，值为`布尔值`，默认值为`false`。
 
 
 ::: Demo
@@ -323,7 +323,7 @@ export default defineComponent({
       contentStyle: 'padding: 0',
     }"
   >
-    <div class="f-df f-aic">
+    <div class="f-df f-aic f-curp">
       <ht-image
         :data="{
           src: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
@@ -334,7 +334,6 @@ export default defineComponent({
         }"
       />
       <div class="f-ml10 f-mr5">我是管理员</div>
-      <ht-icon :data="{ name: 'u-icon-arrowDown' }" />
     </div>
     <template #popover>
       <ht-tab
@@ -354,7 +353,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 export default defineComponent({
   setup() {
     const onClickTab = (tab, index) => console.log(`第${index + 1}个导航点击，导航label值 '${tab.label}'`);
