@@ -19,6 +19,9 @@
         {
           'popover-show': show,
         },
+        {
+          'popover-tooltip': isTooltip,
+        },
         'f-trans',
       ]"
       :style="onGetStyle()"
@@ -43,6 +46,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from "vue";
 import { PopoverData } from "./types";
+import { isTooltip } from "./hooks";
 
 /**
  * 气泡弹窗提示。
@@ -159,6 +163,7 @@ export default defineComponent({
 
     return {
       show,
+      isTooltip,
       onMouseOver,
       onMouseOut,
       onClick,

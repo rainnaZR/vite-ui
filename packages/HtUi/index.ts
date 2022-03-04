@@ -12,6 +12,7 @@ import HtCopy from "./src/HtCopy"; // 复制
 import HtMdDemo from "./src/HtMdDemo"; // 文档demo
 import HtBadge from "./src/HtBadge"; // 徽章
 import HtPopover from "./src/HtPopover"; // 气泡弹窗
+import HtTooltip from "./src/HtTooltip"; // 工具提示
 import HtInput from "./src/HtInput"; // 输入框
 import HtRadio from "./src/HtRadio"; // 单选框
 import HtCheckbox from "./src/HtCheckbox"; // 多选框
@@ -36,6 +37,7 @@ const components: any[] = [
   HtMdDemo,
   HtBadge,
   HtPopover,
+  HtTooltip,
   HtInput,
   HtRadio,
   HtCheckbox,
@@ -71,6 +73,7 @@ export {
   HtMdDemo,
   HtBadge,
   HtPopover,
+  HtTooltip,
   HtInput,
   HtRadio,
   HtCheckbox,
