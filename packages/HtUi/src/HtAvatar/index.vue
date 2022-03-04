@@ -7,6 +7,7 @@
       borderRadius: `${data.height || defaultWidth}px`,
       ...(data.style || {}),
     }"
+    @click="onClick"
   >
     <!-- 文字头像 -->
     <div v-if="type == 'text'" class="content f-tac" :style="onGetStyle()">
@@ -66,6 +67,9 @@ export default defineComponent({
     );
     const avatarImg = computed(() => src || defaultImg);
     const defaultWidth = ref(30);
+    const onClick = () => {
+      emit("on-click");
+    };
     const onGetStyle = () => {
       if (!content)
         return {
@@ -84,6 +88,7 @@ export default defineComponent({
       type,
       avatarImg,
       defaultWidth,
+      onClick,
       onGetStyle,
     };
   },
