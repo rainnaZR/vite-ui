@@ -67,8 +67,8 @@ export default defineComponent({
         },
         {
           label: "组件",
-          value: "HtBreadCrumb",
-          path: "/doc/HtBreadCrumb",
+          value: "HtAvatar",
+          path: "/doc/HtAvatar",
         },
       ],
     });

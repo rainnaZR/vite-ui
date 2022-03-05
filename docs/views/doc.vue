@@ -75,8 +75,8 @@ export default defineComponent({
         },
         {
           label: "组件",
-          value: "HtBadge",
-          path: "/doc/HtBadge",
+          value: "HtAvatar",
+          path: "/doc/HtAvatar",
         },
       ],
       tabCurrentValue: tabCurrentValue.value,
