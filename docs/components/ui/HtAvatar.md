@@ -99,10 +99,10 @@
 ::: Demo
 ```vue demo
 <template>
-  <ht-avatar :data="{ limit: 1, width: 60, height: 60, content: '管理员' }" />
-  <br />
-
   <ht-avatar :data="{ limit: 2, content: '管理员' }" />
+  <br />
+  
+  <ht-avatar :data="{ limit: 1, width: 60, height: 60, content: '管理员' }" />
   <br />
 
   <ht-avatar :data="{ limit: 2, width: 60, height: 60, content: '管理员' }" />
