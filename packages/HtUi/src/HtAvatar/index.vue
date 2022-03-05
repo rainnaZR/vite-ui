@@ -67,9 +67,22 @@ export default defineComponent({
     );
     const avatarImg = computed(() => src || defaultImg);
     const defaultWidth = ref(30);
+
+    /**
+     * 头像点击事件
+     * @returns void
+     */
     const onClick = () => {
+      /**
+       * 头像点击事件触发
+       */
       emit("on-click");
     };
+
+    /**
+     * 根据文字内容获取样式
+     * @returns {Object} style 样式对象
+     */
     const onGetStyle = () => {
       if (!content)
         return {

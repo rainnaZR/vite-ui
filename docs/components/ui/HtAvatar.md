@@ -82,7 +82,7 @@
 ::: Demo
 ```vue demo
 <template>
-  <ht-avatar :data="{ content: '三' }" />
+  <ht-avatar :data="{ content: '张' }" />
   <br />
 
   <ht-avatar :data="{ content: '张三' }" />
