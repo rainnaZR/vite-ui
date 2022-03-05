@@ -10,7 +10,11 @@
     @click="onClick"
   >
     <!-- 文字头像 -->
-    <div v-if="type == 'text'" class="content f-tac" :style="onGetStyle()">
+    <div
+      v-if="type == 'text'"
+      class="content f-df f-jcc f-tac"
+      :style="onGetStyle()"
+    >
       <!-- 默认内容插槽 -->
       <slot>{{ data.content }}</slot>
     </div>
