@@ -20,6 +20,22 @@
 :::
 
 
+### 最大数量
+
+- 组件设置最大数量显示属性`max`，值为`数字`，当数量超过最大值时，加号显示。
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-badge :data="{max: 10, content: 20, style: 'background: #f00'}" />
+    <br />
+
+    <ht-badge :data="{max: 99, content: '150', style: 'background: #409eff'}" />
+</template>
+```
+:::
+
 
 ### 自定义文本
 
