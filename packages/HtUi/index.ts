@@ -11,6 +11,7 @@ import HtCountDown from "./src/HtCountdown"; // 倒计时
 import HtCopy from "./src/HtCopy"; // 复制
 import HtMdDemo from "./src/HtMdDemo"; // 文档demo
 import HtBadge from "./src/HtBadge"; // 徽章
+import HtTag from "./src/HtTag"; // 标签
 import HtPopover from "./src/HtPopover"; // 气泡弹窗
 import HtTooltip from "./src/HtTooltip"; // 工具提示
 import HtAvatar from "./src/HtAvatar"; // 头像
@@ -37,6 +38,7 @@ const components: any[] = [
   HtCopy,
   HtMdDemo,
   HtBadge,
+  HtTag,
   HtPopover,
   HtTooltip,
   HtAvatar,
@@ -74,6 +76,7 @@ export {
   HtCopy,
   HtMdDemo,
   HtBadge,
+  HtTag,
   HtPopover,
   HtTooltip,
   HtAvatar,

@@ -24,7 +24,7 @@ export default defineComponent({
     data: {
       type: Object as PropType<BadgeData>,
       required: false,
-      default: () => {},
+      default: () => ({}),
     },
   },
 });

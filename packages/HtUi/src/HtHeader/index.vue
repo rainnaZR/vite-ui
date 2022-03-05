@@ -60,7 +60,7 @@ export default defineComponent({
     data: {
       type: Object as PropType<HeaderData>,
       required: true,
-      default: () => {},
+      default: () => ({}),
     },
   },
 

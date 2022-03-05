@@ -1,0 +1,23 @@
+@import "../theme/variables.less";
+
+.ht-tag {
+    display: inline-block;
+    .content {
+        display: flex;
+        align-items: center;
+        padding: @tag-padding-top @tag-padding-left;
+        border-radius: @tag-radius;
+        border: 1px solid @tag-border-color;
+        background: @tag-background-color;
+        box-sizing: border-box;
+        font-size: @tag-font-size;
+        line-height: @tag-line-height;
+        color: @tag-color;
+        word-break: break-word;
+        &-curr{
+            border-color: @tag-active-border-color;
+            background: @tag-active-background-color;
+            color: @tag-active-color;
+        }
+    }
+} 
