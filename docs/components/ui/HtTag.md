@@ -53,9 +53,6 @@
 ```vue demo 
 <template>
   <ht-tag :data="{ icon: 'u-icon-user' }">标签</ht-tag>
-  &nbsp;&nbsp;
-
-  <ht-tag :data="{ icon: 'u-icon-user', closable: true }">标签</ht-tag>
 </template>
 ```
 :::
@@ -71,6 +68,9 @@
 ```vue demo 
 <template>
   <ht-tag :data="{ closable: true }" @on-close="onClose">标签</ht-tag>
+  &nbsp;&nbsp;
+
+  <ht-tag :data="{ icon: 'u-icon-user', closable: true }" @on-close="onClose">标签</ht-tag>
 </template>
 
 <script lang="ts">
