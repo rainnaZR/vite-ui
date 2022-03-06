@@ -85,31 +85,6 @@ export default {
 :::
 
 
-### 选中
-
-- 组件选中属性`isActive`，值为`布尔值`，默认值为`false`。
-
-:::Demo
-```vue demo 
-<template>
-  <ht-tag :data="{ isActive: true }">标签</ht-tag>
-</template>
-```
-:::
-
-
-- 组件可自定义选中样式属性`activeStyle`，值为`字符串`或`样式对象`。
-
-
-:::Demo
-```vue demo 
-<template>
-  <ht-tag :data="{ activeStyle: 'background: #f56c6c;border-color: #f56c6c;color: #fff' }">标签</ht-tag>
-</template>
-```
-:::
-
-
 ### 动态编辑
 
 - 组件可定义`on-click`和`on-close`事件实现动态编辑。

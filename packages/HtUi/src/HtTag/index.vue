@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-tag f-trans f-unselect" @click="onClick">
+  <div class="ht-tag f-trans f-unselect" :style="data.style" @click="onClick">
     <!-- 前缀图标插槽 -->
     <slot name="prefix">
       <ht-icon v-if="data.icon" class="f-mr5" :data="{ name: data.icon }" />
