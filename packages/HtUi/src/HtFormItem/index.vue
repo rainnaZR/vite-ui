@@ -15,7 +15,6 @@
     ]"
   >
     <div
-      v-if="data.label"
       class="form-label"
       :style="{
         ...((form && form.data && form.data.labelStyle) || {}),
@@ -23,10 +22,12 @@
         width: data.labelWidth || (form && form.data && form.data.labelWidth),
       }"
     >
-      <!-- 必填图标 -->
-      <span v-if="required" class="s-fc2 f-mr5">*</span>
-      <!-- 表单label插槽 -->
-      <slot name="label">{{ data.label }}</slot>
+      <div v-if="data.label">
+        <!-- 必填图标 -->
+        <span v-if="required" class="s-fc2 f-mr5">*</span>
+        <!-- 表单label插槽 -->
+        <slot name="label">{{ data.label }}</slot>
+      </div>
     </div>
     <div
       class="form-content"
