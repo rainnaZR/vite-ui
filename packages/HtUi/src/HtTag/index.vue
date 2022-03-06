@@ -1,39 +1,27 @@
 <template>
-  <div class="ht-tag" @click="onClick">
-    <div
-      :class="[
-        'content',
-        {
-          'content-curr': isActive,
-        },
-        'f-trans',
-        'f-unselect',
-      ]"
-      :style="isActive ? data.activeStyle || data.style : data.style"
-    >
-      <!-- 前缀图标插槽 -->
-      <slot name="prefix">
-        <ht-icon v-if="data.icon" class="f-mr5" :data="{ name: data.icon }" />
-      </slot>
+  <div class="ht-tag f-trans f-unselect" @click="onClick">
+    <!-- 前缀图标插槽 -->
+    <slot name="prefix">
+      <ht-icon v-if="data.icon" class="f-mr5" :data="{ name: data.icon }" />
+    </slot>
 
-      <!-- 默认内容插槽 -->
-      <slot></slot>
+    <!-- 默认内容插槽 -->
+    <slot></slot>
 
-      <!-- 关闭操作 -->
-      <ht-icon
-        v-if="data.closable"
-        class="f-ml5 f-curp"
-        :data="{ name: 'u-icon-close', style: 'font-size: 14px' }"
-        @on-click.stop="onClose"
-      />
-      <!-- 后缀插槽 -->
-      <slot name="suffix"></slot>
-    </div>
+    <!-- 关闭操作 -->
+    <ht-icon
+      v-if="data.closable"
+      class="f-ml5 f-curp"
+      :data="{ name: 'u-icon-close', style: 'font-size: 14px' }"
+      @on-click.stop="onClose"
+    />
+    <!-- 后缀插槽 -->
+    <slot name="suffix"></slot>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType } from "vue";
 import { TagData } from "./types";
 
 /**
@@ -52,14 +40,11 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const isActive = ref(props.data?.isActive);
-
     /**
      * 标签点击事件
      * @returns void
      */
     const onClick = () => {
-      isActive.value = !isActive.value;
       /**
        * 标签点击事件触发
        */
@@ -78,7 +63,6 @@ export default defineComponent({
     };
 
     return {
-      isActive,
       onClick,
       onClose,
     };
