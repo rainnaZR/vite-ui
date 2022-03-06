@@ -34,7 +34,7 @@
       >
         <div class="arrow" :style="data.arrowStyle"></div>
         <div class="content" :style="data.contentStyle">
-          <div class="f-tac">{{ data.popContent }}</div>
+          <div v-if="data.popContent" class="f-tac">{{ data.popContent }}</div>
           <!-- 弹出内容插槽 -->
           <slot name="popover" scope="data"></slot>
         </div>
