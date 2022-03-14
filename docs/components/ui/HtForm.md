@@ -185,6 +185,66 @@ export default {
 ```
 :::
 
+- `labelPosition`为`top`值时的行内表单。
+
+::: Demo
+```vue demo
+<template>
+    <ht-form :data="{ model: model, inline: true, labelPosition: 'top' }">
+      <ht-form-item :data="{ label: '姓名', prop: 'name' }">
+        <ht-input v-model:modelValue="model.name" />
+      </ht-form-item>
+      <ht-form-item :data="{ label: '年龄', prop: 'age' }">
+        <ht-select
+          v-model:modelValue="model.age"
+          :data="{
+            options: [
+              {
+                label: '10-20岁',
+                value: 1,
+              },
+              {
+                label: '20-30岁',
+                value: 2,
+              },
+              {
+                label: '30-40岁',
+                value: 3,
+              },
+              {
+                label: '40岁以上',
+                value: 4,
+              },
+            ],
+          }"
+        />
+      </ht-form-item>
+      <ht-form-item>
+        <ht-button :data="{ type: 'primary' }" @on-click="onSubmit">提 交</ht-button>
+        <ht-button>取 消</ht-button>
+      </ht-form-item>
+    </ht-form>
+</template>
+
+<script lang="ts">
+import { reactive } from "vue";
+export default {
+  setup() {
+    const model = reactive({
+      name: "",
+      age: "",
+    });
+    const onSubmit = () => console.log("submit", model);
+    return {
+      model,
+      onSubmit,
+    };
+  },
+};
+</script>
+```
+:::
+
 
 ### 表单label宽度
 

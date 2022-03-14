@@ -46,7 +46,7 @@
         </div>
 
         <!-- 表单项内容区 -->
-        <div class="list">
+        <div class="main">
           <ht-form-item
             v-for="(field, fieldIndex) in group.fields"
             :key="`field-${fieldIndex}`"

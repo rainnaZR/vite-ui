@@ -5,8 +5,13 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        :deep(.ht-form-item){
+        .ht-form-item{
             margin-right: @form-items-margin;
+            &-top{
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+            }  
         }
     }
 }
