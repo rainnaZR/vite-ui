@@ -24,7 +24,7 @@
       <div
         v-for="(group, index) in formGroup"
         :key="`group-${index}`"
-        class="f-mb30"
+        :class="`${formGroup.length > 1 ? 'f-mb30' : ''}`"
       >
         <!-- 表单项描述区 -->
         <div

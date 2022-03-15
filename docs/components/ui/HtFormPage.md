@@ -406,6 +406,53 @@ export default defineComponent({
 ```
 :::
 
+
+### 行内表单
+
+::: Demo
+```vue demo
+<template>
+    <ht-form-page :data="formData" @on-action="onAction" />
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive } from 'vue'
+export default defineComponent({
+    setup () {
+        const formData = reactive({
+            inline: true,
+            labelPosition: "top",
+            model: {},
+            rules: {},
+            fields: [
+                {
+                    type: "input",
+                    label: "公司名称",
+                    prop: "name",
+                },
+                {
+                    type: "select",
+                    label: "状态",
+                    prop: "status",
+                    itemProps: {
+                        options: [{
+                            label: 1,
+                            value: 1
+                        }],
+                    },
+                },
+            ],
+        });
+        return {
+            formData
+        }
+    }
+})
+</script>
+```
+:::
+
+
 ### 操作项
 
 - 组件默认操作项`submit`和`reset`。
