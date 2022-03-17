@@ -4,14 +4,14 @@
     display: inline-block;
     padding: @button-padding;
     border-radius: @button-border-radius;
-    border: 1px solid @button-border-color;
+    border: 1px solid fade(@button-background-color, 20);
     background: @button-background-color;
     font-size: @button-font-size;
     color: @button-font-color;
     text-align: center;
     line-height: 1.7;
     cursor: pointer;
-    .button-type(@backgroundColor, @borderColor, @Color: @button-font-color-white) {
+    .button-type(@backgroundColor, @borderColor, @Color: @base-color) {
         background: @backgroundColor;
         border-color: @borderColor;
         color: @Color;
@@ -39,7 +39,7 @@
         .button-type(@button-background-color-danger, @button-background-color-danger);
     }
     &-text {
-        .button-type(@button-background-color-text, @button-background-color-text, @button-font-color-blue);
+        .button-type(@button-background-color-text, @button-background-color-text, @active-color);
     }
 
     &-normal{}

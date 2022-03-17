@@ -103,7 +103,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const itemHeight = 48;
+    const itemHeight = 45.2;
     const { modelValue } = props;
     const state = reactive({
       currentValue: Array.isArray(modelValue) ? modelValue : [modelValue], // 当前选中值
