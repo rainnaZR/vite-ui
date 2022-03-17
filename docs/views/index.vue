@@ -121,7 +121,7 @@ export default defineComponent({
   }
 }
 .g-page {
-  background: #bf0205;
+  background: #1274a8;
   .video {
     position: fixed;
     left: 0;
