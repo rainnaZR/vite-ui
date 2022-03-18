@@ -31,7 +31,7 @@
   "dependencies": {
     "@htfed/base-css": "^1.0.16",
     "@htfed/doc-loader": "^0.0.14",
-    "@htfed/ui": "^0.2.33",
+    "@htfed/ui": "^0.2.34",
     "@htfed/utils": "0.1.16",
     "@htfed/vue-doc-css": "^0.0.7",
     "vue": "^3.2.25",

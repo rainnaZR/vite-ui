@@ -214,10 +214,6 @@ export default defineComponent({
       reset: {
         content: "重置",
       },
-      search: {
-        content: "搜索",
-        btnType: "primary",
-      },
     });
 
     // 表单操作行为
@@ -316,22 +312,16 @@ export default defineComponent({
           valid,
           invalidFields,
         });
-
         if (!valid) return;
-        const params = { ...formModel.value };
-        const { id } = props.data;
-        id && (params.id = id);
 
         // 获取接口配置
-        // 如果存在id，则调用编辑接口；否则调用新增接口
-        const { formCreate, formUpdate } = props.data?.api || {};
-        const api = id ? formUpdate || formCreate : formCreate || formUpdate;
+        const api = props.data?.api?.formSubmit;
         if (!api) return;
 
         // 提交表单
         // todo: loading开始
         // ...
-        const result = await api(params);
+        const result = await api({ ...formModel.value });
         // 回调事件定义
         onSetEvent("onFormSubmitCallback", {
           result,

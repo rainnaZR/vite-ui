@@ -48,8 +48,7 @@ export interface ActionItem {
 }
 export interface ApiData {
   formInitial(value?: Model): any; // 表单初始化
-  formCreate(value?: Model): any; // 表单创建
-  formUpdate(value?: Model): any; // 表单更新
+  formSubmit(value?: Model): any; // 表单提交
 }
 
 export interface HooksData {
