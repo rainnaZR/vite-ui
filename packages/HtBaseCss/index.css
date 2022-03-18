@@ -245,3 +245,4 @@ img[src=""],img:not([src]){
 .f-lt2{ letter-spacing: 2px; }
 .f-vw100{ width: 100vw; }
 .f-vh100 { height: 100vh; }
+.f-vam{ vertical-align: middle;}

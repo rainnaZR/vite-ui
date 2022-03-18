@@ -99,13 +99,13 @@
 
 - 带图标带文字的按钮。
 - 可通过设置`icon`属性定义图标名称。
-- 可通过插槽定义按钮图标名称。
+- 可通过`插槽`定义按钮图标名称。
 
 ::: Demo
 ```vue demo
 <template>
-  <ht-button :data="{icon: 'u-icon-delete', size: 'small'}">删除</ht-button>
-  <br />
+  <ht-button :data="{icon: 'u-icon-delete', content: '删除', size: 'small'}" />
+  <br /><br />
 
 
   <ht-button :data="{size: 'small'}">

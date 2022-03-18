@@ -16,9 +16,11 @@
     :disabled="data.disabled"
     @click="onClick"
   >
-    <ht-icon v-if="data.icon" :data="{ name: data.icon }" />
+    <div v-if="data.icon" class="f-dib f-mr5">
+      <ht-icon :data="{ name: data.icon }" />
+    </div>
     <!-- 自定义按钮内容 -->
-    <slot></slot>
+    <slot>{{ data.content }}</slot>
   </button>
 </template>
 
