@@ -124,6 +124,7 @@ class RenderMd {
 
     Object.keys(content).forEach((contentKey) => {
       const element = content[contentKey];
+      if (!element) return;
       const row = [];
       Object.keys(option).forEach((optionKey) => {
         if (key === "methods" && optionKey === "name") {

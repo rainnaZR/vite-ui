@@ -98,10 +98,16 @@
 ### 文字图标按钮
 
 - 带图标带文字的按钮。
+- 可通过设置`icon`属性定义图标名称。
+- 可通过插槽定义按钮图标名称。
 
 ::: Demo
 ```vue demo
 <template>
+  <ht-button :data="{icon: 'u-icon-delete', size: 'small'}">删除</ht-button>
+  <br />
+
+
   <ht-button :data="{size: 'small'}">
     <ht-icon :data="{name: 'u-icon-delete'}">删除</ht-icon>
   </ht-button>

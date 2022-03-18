@@ -16,6 +16,7 @@
     :disabled="data.disabled"
     @click="onClick"
   >
+    <ht-icon v-if="data.icon" :data="{ name: data.icon }" />
     <!-- 自定义按钮内容 -->
     <slot></slot>
   </button>
