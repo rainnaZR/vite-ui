@@ -73,18 +73,18 @@
     <div class="action action-1">
       <!-- 字数 -->
       <span v-if="data.maxLength > 0">
-        {{ inputVal.length }}/{{ data.maxLength }}
+        {{ String(inputVal).length }}/{{ data.maxLength }}
       </span>
       <!-- 清除icon -->
       <ht-icon
-        v-if="data.clearable"
+        v-if="inputVal && data.clearable"
         class="f-curp f-ml5"
         :data="{ name: 'u-icon-clear' }"
         @click="onAction('clearable')"
       />
       <!-- 密码显示/隐藏icon -->
       <ht-icon
-        v-if="data.password"
+        v-if="inputVal && data.password"
         class="f-curp f-ml5"
         :data="{
           name: `${
