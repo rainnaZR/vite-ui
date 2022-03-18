@@ -98,7 +98,7 @@ import {
   onMounted,
 } from "vue";
 import { FormData, FormContext, Model } from "../HtForm/types";
-import { FormPageData, FieldItem, ActionItem, ApiItem } from "./types";
+import { FormPageData, FieldItem, ActionItem } from "./types";
 
 // 复杂表单配置组件。
 export default defineComponent({
@@ -231,7 +231,7 @@ export default defineComponent({
      * @returns void
      */
     const onLoopFields = (callback: any) => {
-      props.data?.group?.forEach((group) => {
+      formGroup.value?.forEach((group) => {
         group?.fields?.forEach((field) => callback && callback(field));
       });
     };
@@ -244,14 +244,14 @@ export default defineComponent({
     const onInitFormCreate = (createInfo: any) => {
       if (!createInfo) return;
       onLoopFields((field: FieldItem) => {
-        if (field.prop && createInfo[field.prop]) {
-          // 初始值设定
-          if (["select", "radio", "checkbox"].includes(field.type)) {
-            field.itemProps = {
-              ...(field.itemProps || {}),
-              options: createInfo[field.prop],
-            };
-          }
+        const { prop, type, itemProps = {} } = field;
+        if (!prop || !createInfo[prop]) return;
+        // 初始值设定
+        if (["select", "radio", "checkbox"].includes(type)) {
+          field.itemProps = {
+            ...itemProps,
+            options: createInfo[prop],
+          };
         }
       });
     };
@@ -269,28 +269,34 @@ export default defineComponent({
     };
 
     /**
+     * 事件设置，支持emit和callback两种方式
+     * @param {String} eventName 事件名称
+     * @param {Object} eventParams 事件调用参数
+     * @returns void
+     */
+    const onSetEvent = (eventName: string, eventParams?: any) => {
+      emit(eventName, eventParams);
+
+      const hooks = props.data.hooks || {};
+      hooks[eventName] && hooks[eventName](eventParams);
+    };
+
+    /**
      * 初始化获取表单数据
      * @returns void
      */
     const onGetFormInitInfo = async () => {
-      const api: undefined | ApiItem = props.data?.api?.getForm;
+      const api = props.data?.api?.formInitial;
       if (!api) return;
 
-      const { xhr, getParams = () => {}, callback } = api;
-      const params = getParams();
-      let result = await xhr(params);
-      if (typeof callback === "function") {
-        result = callback(result);
-      }
-      const { createInfo, formInfo } = result?.data?.data || {};
+      const result = await api();
+      const { createInfo, formInfo } = result || {};
       // 初始化表单创建
       onInitFormCreate(createInfo);
       // 初始化表单详情
       onInitFormDetail(formInfo);
-      // hooks操作
-      const { onAfterGetFormHooks } = props.data.hooks || {};
-      onAfterGetFormHooks &&
-        onAfterGetFormHooks({ formModel: formModel.value });
+      // 回调事件定义
+      onSetEvent("onFormInitialCallback", { formModel: formModel.value });
     };
 
     /**
@@ -316,33 +322,21 @@ export default defineComponent({
         const { id } = props.data;
         id && (params.id = id);
 
-        const { onFormValidateHooks, onBeforeSubmitHooks, onAfterSubmitHooks } =
-          props.data?.hooks || {};
-        // 表单外部验证
-        const outerValid = onFormValidateHooks
-          ? onFormValidateHooks(params)
-          : true;
-        if (!outerValid) return;
-
-        // 表单提交前数据整理
-        onBeforeSubmitHooks && onBeforeSubmitHooks(params); // 对象是引用数据，外部可直接修改
-
         // 获取接口配置
         // 如果存在id，则调用编辑接口；否则调用新增接口
-        const api = id
-          ? props.data?.api?.updateForm
-          : props.data?.api?.postForm;
+        const { formCreate, formUpdate } = props.data?.api || {};
+        const api = id ? formUpdate || formCreate : formCreate || formUpdate;
         if (!api) return;
 
         // 提交表单
         // todo: loading开始
         // ...
-        const result = await api.xhr(params);
-        // todo: loading结束
-        // ...
-        // 请求结果
-        onAfterSubmitHooks &&
-          onAfterSubmitHooks({ result, formModel: formModel.value });
+        const result = await api(params);
+        // 回调事件定义
+        onSetEvent("onFormSubmitCallback", {
+          result,
+          formModel: formModel.value,
+        });
       });
     };
 
@@ -352,9 +346,10 @@ export default defineComponent({
      */
     const onFormReset = () => {
       formRef.value?.onReset();
-      // hooks操作
-      const { onResetFormHooks } = props.data.hooks || {};
-      onResetFormHooks && onResetFormHooks({ formModel: formModel.value });
+      // 回调事件定义
+      onSetEvent("onFormResetCallback", {
+        formModel: formModel.value,
+      });
     };
 
     /**

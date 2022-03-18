@@ -136,51 +136,41 @@ export default defineComponent({
         },
       ],
       api: {
-        getForm: {
-          xhr: async () => ({
-            data: {
-              data: {
-                createInfo: {
-                  address: [
-                    { label: "11账号多选1", value: 1 },
-                    { label: "22账号多选2", value: 2 },
-                    { label: "33账号多选3", value: 3 },
-                  ],
-                  source: [
-                    {
-                      label: "招商银行",
-                      value: 1,
-                    },
-                    {
-                      label: "农业银行",
-                      value: 2,
-                    },
-                    {
-                      label: "中信银行",
-                      value: 3,
-                    },
-                    {
-                      label: "杭州银行",
-                      value: 4,
-                    },
-                  ],
+        formInitial: async () => {
+          return {
+            createInfo: {
+              address: [
+                { label: "11账号多选1", value: 1 },
+                { label: "22账号多选2", value: 2 },
+                { label: "33账号多选3", value: 3 },
+              ],
+              source: [
+                {
+                  label: "招商银行",
+                  value: 1,
                 },
-                formInfo: {
-                  name: "我是标题",
-                  desc: "我是简介我是简介我是简介我是简介我是简介我是简介我是简介",
-                  address: 2,
-                  source: 3,
-                  invalid: true,
+                {
+                  label: "农业银行",
+                  value: 2,
                 },
-              },
+                {
+                  label: "中信银行",
+                  value: 3,
+                },
+                {
+                  label: "杭州银行",
+                  value: 4,
+                },
+              ],
             },
-          }),
-        },
-        postForm: {
-          xhr: async () => {},
-        },
-        updateForm: {
-          xhr: async () => {},
+            formInfo: {
+              name: "我是标题",
+              desc: "我是简介我是简介我是简介我是简介我是简介我是简介我是简介",
+              address: 2,
+              source: 3,
+              invalid: true,
+            },
+          };
         },
       },
       hooks: {},

@@ -46,23 +46,16 @@ export interface ActionItem {
   limit?: any; // 按钮显示的限制条件，值为对象或函数
   onClick?: (formModel: any) => void; // 点击事件
 }
-
-export interface ApiItem {
-  xhr: any;
-  getParams(value?: any): any;
-  callback(value?: any): any;
-}
-
 export interface ApiData {
-  [key: string]: ApiItem;
+  formInitial(value?: Model): any; // 表单初始化
+  formCreate(value?: Model): any; // 表单创建
+  formUpdate(value?: Model): any; // 表单更新
 }
 
 export interface HooksData {
-  onAfterGetFormHooks(value?: Model): any;
-  onFormValidateHooks(value?: Model): any;
-  onBeforeSubmitHooks(value?: Model): any;
-  onAfterSubmitHooks(value?: Model): any;
-  onResetFormHooks(value?: Model): any;
+  onFormInitialCallback(value?: Model): any;
+  onFormSubmitCallback(value?: Model): any;
+  onFormResetCallback(value?: Model): any;
 }
 
 export interface FormPageData {
