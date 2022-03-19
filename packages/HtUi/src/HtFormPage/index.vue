@@ -337,9 +337,7 @@ export default defineComponent({
     const onFormReset = () => {
       formRef.value?.onReset();
       // 回调事件定义
-      onSetEvent("onFormResetCallback", {
-        formModel: formModel.value,
-      });
+      onSetEvent("onFormResetCallback");
     };
 
     /**
