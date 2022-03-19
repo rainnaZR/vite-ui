@@ -104,11 +104,11 @@
 ::: Demo
 ```vue demo
 <template>
-  <ht-button :data="{icon: 'u-icon-delete', content: '删除', size: 'small'}" />
+  <ht-button :data="{icon: 'u-icon-delete', content: '删除'}" />
   <br /><br />
 
 
-  <ht-button :data="{size: 'small'}">
+  <ht-button>
     <ht-icon :data="{name: 'u-icon-delete'}">删除</ht-icon>
   </ht-button>
 </template>

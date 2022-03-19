@@ -2,55 +2,50 @@
 
 .ht-button {
     display: inline-block;
-    padding: @button-padding;
-    border-radius: @button-border-radius;
-    border: 1px solid fade(@button-background-color, 20);
-    background: @button-background-color;
-    font-size: @button-font-size;
-    color: @button-font-color;
+    box-sizing: border-box;
     text-align: center;
-    line-height: 1.7;
     cursor: pointer;
-    .button-type(@backgroundColor, @borderColor, @Color: @base-color) {
+    .button-type(@backgroundColor: @button-background-color, @Color: @normal-color) {
         background: @backgroundColor;
-        border-color: @borderColor;
+        border: 1px solid fade(@backgroundColor, 20);
         color: @Color;
     }
-    .button-size(@padding, @borderRadius: @button-border-radius, @fontSize) {
-        padding: @padding;
+    .button-size(@height: @button-height, @borderRadius: @button-border-radius, @fontSize: @button-font-size) {
+        height: @height;
+        padding: 0 @height * 0.4;
         border-radius: @borderRadius;
         font-size: @fontSize;
+        line-height: @height - 2;
     }
-
-    &-default {}
+    .button-type();
+    .button-size();
     &-primary {
-        .button-type(@button-background-color-primary, @button-background-color-primary);
+        .button-type(@button-background-color-primary, @base-color);
     }
     &-success {
-        .button-type(@button-background-color-success, @button-background-color-success);
+        .button-type(@button-background-color-success, @base-color);
     }
     &-info {
-        .button-type(@button-background-color-info, @button-background-color-info);
+        .button-type(@button-background-color-info, @base-color);
     }
     &-warning {
-        .button-type(@button-background-color-warning, @button-background-color-warning);
+        .button-type(@button-background-color-warning, @base-color);
     }
     &-danger {
-        .button-type(@button-background-color-danger, @button-background-color-danger);
+        .button-type(@button-background-color-danger, @base-color);
     }
     &-text {
-        .button-type(@button-background-color-text, @button-background-color-text, @active-color);
+        .button-type(@button-background-color-text, @active-color);
     }
 
-    &-normal{}
     &-small{
-        .button-size(@button-padding-small, @button-border-radius, @button-font-size-small);
+        .button-size(@button-height-small, @button-border-radius-small, @button-font-size-small);
     }
     &-big{
-        .button-size(@button-padding, @button-border-radius-big, @button-font-size-big);
+        .button-size(@button-height-big, @button-border-radius, @button-font-size);
     }
     &-huge{
-        .button-size(@button-padding-huge, @button-border-radius-huge, @button-font-size-huge);
+        .button-size(@button-height-huge, @button-border-radius-huge, @button-font-size-huge);
     }
     &-full{
         width: 100%;
