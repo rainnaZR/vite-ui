@@ -49,6 +49,7 @@
         <div class="main">
           <ht-form-item
             v-for="(field, fieldIndex) in group.fields"
+            v-show="!field.hide"
             :key="`field-${fieldIndex}`"
             :data="onGetFormItemConfig(field)"
           >
