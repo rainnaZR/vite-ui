@@ -20,6 +20,7 @@
         position: relative;
         display: flex;
         justify-content: center;
+        min-width: @upload-img-height;
         height: @upload-img-height;
         background: @base-color;
         border-radius: @upload-img-border-radius;
@@ -36,6 +37,10 @@
             position: absolute;
             right: 0;
             top: 0;
+        }
+        &-disabled{
+            background: fade(@info-color, 15);
+            cursor: not-allowed;
         }
         &:hover{
             .tools{

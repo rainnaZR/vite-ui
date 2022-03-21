@@ -6,6 +6,7 @@
       class="input"
       :multiple="data.multiple || false"
       :accept="data.accept || FILE_ACCEPT"
+      :disabled="data.disabled"
       @change="onChange"
     />
     <div v-if="data.showTips || data.tips" class="tips f-mb10">
@@ -21,6 +22,7 @@
               icon: data.uploadBtnIcon,
               content: data.uploadBtnText,
               size: data.uploadBtnSize,
+              disabled: data.disabled,
             }"
             @click="onUpload"
           />
@@ -28,6 +30,7 @@
         <div
           v-else
           class="item item-1 f-mr10 f-mb10 f-trans f-curp"
+          :class="{ 'item-disabled': data.disabled }"
           @click="onUpload"
         >
           <ht-icon
@@ -44,9 +47,10 @@
       <slot name="preview">
         <div
           v-for="(file, index) in files"
+          v-show="!data.hideFiles"
           :key="index"
           class="item item-2 f-mr10 f-mb10 f-curp"
-          @click="onPreview(file)"
+          @click="onPreview(file, index)"
         >
           <!-- 文件区域 -->
           <ht-image
@@ -63,14 +67,14 @@
             <!-- 删除 -->
             <ht-icon
               :data="{ name: 'u-icon-delete' }"
-              @on-click.stop="onDelete(index)"
+              @on-click.stop="onDelete(file, index)"
             />
             <!-- 下载 -->
             <ht-icon
-              v-if="!file.isImage"
+              v-if="!data.hideDownload"
               class="f-ml15"
               :data="{ name: 'u-icon-download' }"
-              @on-click.stop="onDownload(file)"
+              @on-click.stop="onDownload(file, index)"
             />
           </div>
         </div>
@@ -81,7 +85,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, reactive, computed } from "vue";
-import { request } from "@htfed/utils";
+import { request, dom } from "@htfed/utils";
 import { UploadData } from "./types";
 
 request.init();
@@ -119,7 +123,7 @@ export default defineComponent({
       const limitTips = limit > 0 ? `${limit}张` : "不限";
       const widthTips = width ? `${width}px` : "不限";
       const heightTips = height ? `${height}px` : "不限";
-      return `每次上传${
+      return `单次上传${
         multiple ? "多" : "单"
       }个文件，总数${limitTips}，宽度${widthTips}，高度${heightTips}，后缀${
         extensions || "不限"
@@ -300,7 +304,11 @@ export default defineComponent({
                 )}/h/200`,
               };
               files.push(imgData);
-              emit("on-success", imgData);
+              emit("on-success", {
+                files,
+                file: imgData,
+                index: files.length - 1,
+              });
             });
         });
     };
@@ -347,7 +355,7 @@ export default defineComponent({
     const onUpload = () => {
       inputFileRef.value?.click();
     };
-    const onPreview = (item) => {
+    const onPreview = (item, index) => {
       let { src, extension } = item;
       if (!src) return;
       extension = extension || onGetExtension(src)?.extension;
@@ -355,13 +363,29 @@ export default defineComponent({
         ? `https://view.officeapps.live.com/op/view.aspx?src=${src}`
         : src;
       window.open(src);
+      emit("on-preview", {
+        files,
+        file: item,
+        index,
+      });
     };
-    const onDelete = (index) => {
+    const onDelete = (file, index) => {
       files.splice(index, 1);
       onReset();
+      emit("on-delete", {
+        files,
+        file,
+        index,
+      });
     };
-    const onDownload = (file) => {};
-
+    const onDownload = (file, index) => {
+      dom.onDownloadFile({ url: file.src });
+      emit("on-download", {
+        files,
+        file,
+        index,
+      });
+    };
     return {
       inputFileRef,
       SIZE_UNITS,

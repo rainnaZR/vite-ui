@@ -239,6 +239,41 @@ function onIsFullScreen() {
   );
 }
 
+/**
+ * 下载文件
+ */
+function onDownloadFile(options = {}) {
+  const { url } = options;
+  if (!url) return;
+
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url, true);
+  xhr.responseType = "blob";
+  xhr.onload = () => {
+    if (xhr.status === 200) onSaveFile(xhr.response, options);
+  };
+  xhr.send();
+}
+
+/**
+ * 保存文件
+ */
+function onSaveFile(data, options = {}) {
+  let { url, name } = options;
+  if (!name) {
+    const arr = url.split("/");
+    name = arr[arr.length - 1];
+  }
+  const blob = new Blob([data]);
+  const href = window.URL.createObjectURL(blob);
+  const element = document.createElement("a");
+  element.href = href;
+  element.download = name;
+  element.click();
+  element.remove();
+  window.URL.revokeObjectURL(href);
+}
+
 export default {
   windowWidth,
   windowHeight,
@@ -256,4 +291,6 @@ export default {
   onRequestFullScreen,
   onExitFullScreen,
   onIsFullScreen,
+  onDownloadFile,
+  onSaveFile,
 };
