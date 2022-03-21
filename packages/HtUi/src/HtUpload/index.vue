@@ -9,12 +9,15 @@
       :disabled="data.disabled"
       @change="onChange"
     />
-    <div v-if="data.showTips || data.tips" class="tips f-mb10">
-      {{ data.tips || limitTips }}
-    </div>
+    <!-- 上传提示插槽 -->
+    <slot name="tips">
+      <div v-if="data.showTips || data.tips" class="tips f-mb10">
+        {{ data.tips || limitTips }}
+      </div>
+    </slot>
     <div class="list">
       <!-- 上传按钮插槽 -->
-      <slot name="upload">
+      <slot name="upload" :files="files">
         <div v-if="data.uploadBtnText" class="btn f-mb10">
           <ht-button
             :data="{
@@ -33,18 +36,20 @@
           :class="{ 'item-disabled': data.disabled }"
           @click="onUpload"
         >
-          <ht-icon
-            class="icon"
-            :data="{
-              name: 'u-icon-add',
-              style: 'font-size: 44px;color: #99999980',
-            }"
-          />
+          <div class="content">
+            <ht-icon
+              class="icon"
+              :data="{
+                name: 'u-icon-add',
+                style: 'font-size: 44px;color: #99999980',
+              }"
+            />
+          </div>
         </div>
       </slot>
 
-      <!-- 图片预览插槽 -->
-      <slot name="preview">
+      <!-- 文件预览插槽 -->
+      <slot name="preview" :files="files">
         <div
           v-for="(file, index) in files"
           v-show="!data.hideFiles"
@@ -52,31 +57,52 @@
           class="item item-2 f-mr10 f-mb10 f-curp"
           @click="onPreview(file, index)"
         >
-          <!-- 文件区域 -->
-          <ht-image
-            :data="{
-              src: file.isImage
-                ? file.thumbSrc || `${file.src}?imageView2/1/w/200/h/200`
-                : FILE_COVER,
-            }"
-          />
-          <!-- 文件标签 -->
-          <ht-tag v-if="!file.isImage" class="tag">{{ file.extension }}</ht-tag>
-          <!-- 文件操作 -->
-          <div class="tools f-df f-jcc f-trans">
-            <!-- 删除 -->
-            <ht-icon
-              :data="{ name: 'u-icon-delete' }"
-              @on-click.stop="onDelete(file, index)"
+          <div class="content">
+            <!-- 文件区域 -->
+            <ht-image
+              :data="{
+                src: file.isImage
+                  ? file.thumbSrc || `${file.src}?imageView2/1/w/200/h/200`
+                  : FILE_COVER,
+              }"
             />
-            <!-- 下载 -->
-            <ht-icon
-              v-if="!data.hideDownload"
-              class="f-ml15"
-              :data="{ name: 'u-icon-download' }"
-              @on-click.stop="onDownload(file, index)"
-            />
+            <!-- 文件标签 -->
+            <ht-tag v-if="!file.isImage" class="tag">{{
+              file.extension
+            }}</ht-tag>
+            <!-- 文件操作 -->
+            <div class="tools f-df f-jcc f-trans">
+              <!-- 左移 -->
+              <ht-icon
+                v-if="!data.hideMove && index > 0"
+                class="f-ml5 f-mr5"
+                :data="{ name: 'u-icon-moveLeft' }"
+                @on-click.stop="onMove('prev', file, index)"
+              />
+              <!-- 删除 -->
+              <ht-icon
+                class="f-ml5 f-mr5"
+                :data="{ name: 'u-icon-delete' }"
+                @on-click.stop="onDelete(file, index)"
+              />
+              <!-- 下载 -->
+              <ht-icon
+                class="f-ml5 f-mr5"
+                v-if="!data.hideDownload"
+                :data="{ name: 'u-icon-download' }"
+                @on-click.stop="onDownload(file, index)"
+              />
+              <!-- 右移 -->
+              <ht-icon
+                v-if="!data.hideMove && index < files.length - 1"
+                class="f-ml5 f-mr5"
+                :data="{ name: 'u-icon-moveRight' }"
+                @on-click.stop="onMove('next', file, index)"
+              />
+            </div>
           </div>
+          <!-- 文件名称 -->
+          <div class="s-fc5 f-tac">{{ file.name }}</div>
         </div>
       </slot>
     </div>
@@ -295,10 +321,12 @@ export default defineComponent({
             .then(async (result) => {
               onReset();
               const src = `${IMAGE_DOMAIN}/${result.data.key}.${extension}`;
+              const srcArr = src.split("/");
               const { imgWidth, imgHeight } = options;
               const imgData = {
                 ...options,
                 src,
+                name: srcArr[srcArr.length - 1],
                 thumbSrc: `${src}?imageView2/1/w/${Math.round(
                   (imgWidth / imgHeight) * 200
                 )}/h/200`,
@@ -355,8 +383,19 @@ export default defineComponent({
     const onUpload = () => {
       inputFileRef.value?.click();
     };
-    const onPreview = (item, index) => {
-      let { src, extension } = item;
+    const onMove = (type, file, index) => {
+      files.splice(index, 1);
+      type === "prev"
+        ? files.splice(index - 1, 0, file)
+        : files.splice(index + 1, 0, file);
+      emit(`on-move-${type}`, {
+        files,
+        file,
+        index,
+      });
+    };
+    const onPreview = (file, index) => {
+      let { src, extension } = file;
       if (!src) return;
       extension = extension || onGetExtension(src)?.extension;
       src = ["xlsx", "doc", "docx"].includes(extension)
@@ -365,7 +404,7 @@ export default defineComponent({
       window.open(src);
       emit("on-preview", {
         files,
-        file: item,
+        file,
         index,
       });
     };
@@ -379,7 +418,8 @@ export default defineComponent({
       });
     };
     const onDownload = (file, index) => {
-      dom.onDownloadFile({ url: file.src });
+      const { src, name } = file;
+      dom.onDownloadFile({ url: src, name });
       emit("on-download", {
         files,
         file,
@@ -395,6 +435,7 @@ export default defineComponent({
       limitTips,
       onChange,
       onUpload,
+      onMove,
       onPreview,
       onDelete,
       onDownload,

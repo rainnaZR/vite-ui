@@ -19,6 +19,7 @@ export interface UploadData {
   limit?: number; // 上传限制数量
   hideDownload?: boolean; // 是否隐藏非图片形式的文件下载
   hideFiles?: boolean; // 是否隐藏文件列表
+  hideMove?: boolean; // 是否隐藏文件移动操作
 }
 
 export type Props = PublicProps<{

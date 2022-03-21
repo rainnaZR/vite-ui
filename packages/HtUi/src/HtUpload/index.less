@@ -17,15 +17,17 @@
         width: 100%;
     }
     .item{
-        position: relative;
-        display: flex;
-        justify-content: center;
-        min-width: @upload-img-height;
-        height: @upload-img-height;
-        background: @base-color;
-        border-radius: @upload-img-border-radius;
-        border: 1px dashed fade(@info-color, 50);
-        overflow: hidden;
+        .content{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            min-width: @upload-img-height;
+            height: @upload-img-height;
+            background: @base-color;
+            border-radius: @upload-img-border-radius;
+            border: 1px dashed fade(@info-color, 50);
+            overflow: hidden;
+        }
         .tools{
             position: absolute;
             left: 0;
