@@ -18,15 +18,14 @@
   <br />
   <br />
 
-  <ht-upload v-model:modelValue="files" @on-success="onSuccess" />
+  <ht-upload v-model:modelValue="files" />
 </template>
 <script lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 export default {
   setup() {
-    const files = reactive(['https://img11.360buyimg.com/babel/s1180x940_jfs/t1/157979/23/24933/170822/61d81108E1cd6a5c7/9baaa560e1d5a871.jpg.webp'])
-    const onSuccess = (options) => alert(`当前上传文件路径为${options.file.src}`)
-    return { files, onSuccess };
+    let files = ref(["https://img11.360buyimg.com/babel/s1180x940_jfs/t1/157979/23/24933/170822/61d81108E1cd6a5c7/9baaa560e1d5a871.jpg.webp"])
+    return { files };
   },
 };
 </script>
