@@ -27,31 +27,35 @@
             border-radius: @upload-img-border-radius;
             border: 1px dashed fade(@info-color, 50);
             overflow: hidden;
-        }
-        .tools{
-            position: absolute;
-            left: 0;
-            bottom: -36px;
-            width: 100%;
-            background: fade(@base-color, 80);
-        }
-        .tag{
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
-        &-disabled{
-            background: fade(@info-color, 15);
-            cursor: not-allowed;
-        }
-        &:hover{
             .tools{
-                bottom: 0;
+                position: absolute;
+                left: 0;
+                bottom: -36px;
+                width: 100%;
+                background: fade(@normal-color, 70);
+                color: @base-color;
             }
-        }
-        &-1{
-            aspect-ratio: 1;
+            .tag{
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            &-disabled{
+                background: fade(@info-color, 15);
+                cursor: not-allowed;
+            }
             &:hover{
+                .tools{
+                    bottom: 0;
+                }
+            }
+            &-1{
+                aspect-ratio: 1;
+                &:hover{
+                    background: fade(@info-color, 15);
+                }
+            }
+            &-2{
                 background: fade(@info-color, 15);
             }
         }

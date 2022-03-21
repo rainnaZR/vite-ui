@@ -1,6 +1,7 @@
 import { PublicProps } from "../types";
 
 export interface UploadData {
+  action?: string; // 文件上传接口地址
   style?: string | object; // 自定义样式
   multiple: boolean; // 是否多选
   accept?: string; // 上传文件类型
@@ -14,12 +15,11 @@ export interface UploadData {
   uploadBtnIcon?: string; // 上传按钮图标名
   uploadBtnSize?: string; // 上传按钮大小
   files?: string | string[]; // 预览文件图，支持单张/多张
-  showTips?: boolean; // 是否展示上传限制信息
   tips?: string; // 自定义提示信息
   limit?: number; // 上传限制数量
-  hideDownload?: boolean; // 是否隐藏非图片形式的文件下载
+  hideTips?: boolean; // 是否隐藏上传限制信息
+  hideOperation?: boolean; // 是否隐藏文件操作按钮
   hideFiles?: boolean; // 是否隐藏文件列表
-  hideMove?: boolean; // 是否隐藏文件移动操作
 }
 
 export type Props = PublicProps<{

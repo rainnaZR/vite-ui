@@ -11,8 +11,8 @@
     />
     <!-- 上传提示插槽 -->
     <slot name="tips">
-      <div v-if="data.showTips || data.tips" class="tips f-mb10">
-        {{ data.tips || limitTips }}
+      <div v-if="!data.hideTips || data.tips" class="tips f-mb10">
+        {{ data.tips || tips }}
       </div>
     </slot>
     <div class="list">
@@ -30,13 +30,12 @@
             @click="onUpload"
           />
         </div>
-        <div
-          v-else
-          class="item item-1 f-mr10 f-mb10 f-trans f-curp"
-          :class="{ 'item-disabled': data.disabled }"
-          @click="onUpload"
-        >
-          <div class="content">
+        <div v-else class="item f-mr10 f-mb10">
+          <div
+            class="content content-1 f-trans f-curp"
+            :class="{ 'content-disabled': data.disabled }"
+            @click="onUpload"
+          >
             <ht-icon
               class="icon"
               :data="{
@@ -45,6 +44,14 @@
               }"
             />
           </div>
+          <ht-button
+            v-if="files.length"
+            class="f-mt5"
+            :data="{ size: 'small', style: 'width: 100px' }"
+            @click="onDeleteAll"
+          >
+            删除全部
+          </ht-button>
         </div>
       </slot>
 
@@ -54,10 +61,10 @@
           v-for="(file, index) in files"
           v-show="!data.hideFiles"
           :key="index"
-          class="item item-2 f-mr10 f-mb10 f-curp"
+          class="item f-mr10 f-mb10"
           @click="onPreview(file, index)"
         >
-          <div class="content">
+          <div class="content content-2 f-curp">
             <!-- 文件区域 -->
             <ht-image
               :data="{
@@ -71,10 +78,10 @@
               file.extension
             }}</ht-tag>
             <!-- 文件操作 -->
-            <div class="tools f-df f-jcc f-trans">
+            <div v-if="!data.hideOperation" class="tools f-df f-jcc f-trans">
               <!-- 左移 -->
               <ht-icon
-                v-if="!data.hideMove && index > 0"
+                v-if="index > 0"
                 class="f-ml5 f-mr5"
                 :data="{ name: 'u-icon-moveLeft' }"
                 @on-click.stop="onMove('prev', file, index)"
@@ -88,13 +95,12 @@
               <!-- 下载 -->
               <ht-icon
                 class="f-ml5 f-mr5"
-                v-if="!data.hideDownload"
                 :data="{ name: 'u-icon-download' }"
                 @on-click.stop="onDownload(file, index)"
               />
               <!-- 右移 -->
               <ht-icon
-                v-if="!data.hideMove && index < files.length - 1"
+                v-if="index < files.length - 1"
                 class="f-ml5 f-mr5"
                 :data="{ name: 'u-icon-moveRight' }"
                 @on-click.stop="onMove('next', file, index)"
@@ -102,7 +108,7 @@
             </div>
           </div>
           <!-- 文件名称 -->
-          <div class="s-fc5 f-tac">{{ file.name }}</div>
+          <div class="f-mt5 s-fc5 f-tac">{{ file.name }}</div>
         </div>
       </slot>
     </div>
@@ -110,19 +116,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, reactive, computed } from "vue";
+import { defineComponent, PropType, ref, reactive, computed, watch } from "vue";
 import { request, dom } from "@htfed/utils";
 import { UploadData } from "./types";
 
 request.init();
 
 /**
- * 文件上传组件。
+ * 文件上传组件，支持所有格式的文件上传。
  * */
 export default defineComponent({
   name: "HtUpload",
 
   props: {
+    // 文件列表
+    modelValue: {
+      type: Array,
+      required: true,
+      default: () => [],
+    },
     // 配置数据
     data: {
       type: Object as PropType<UploadData>,
@@ -138,24 +150,32 @@ export default defineComponent({
       MB: 1024 * 1024,
       GB: 1024 * 1024 * 1024,
     };
+    const ACTION = "https://production.api.dahuangf.com/api/base/getQiNiuToken";
     const IMAGE_DOMAIN = "https://image.dahuangf.com";
     const FILE_COVER =
       "https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b295ba4df889443b81b8434d046a39e5~tplv-k3u1fbpfcp-watermark.image";
     const FILE_ACCEPT = "image/*,application/pdf,*/mp4";
     const loading = ref(false);
-    const limitTips = computed(() => {
+    // 文件上传提示
+    const tips = computed(() => {
       const { multiple, limit, width, height, extensions, maxSize } =
         props.data;
-      const limitTips = limit > 0 ? `${limit}张` : "不限";
+      const limitTips = limit && limit > 0 ? `${limit}张` : "不限";
       const widthTips = width ? `${width}px` : "不限";
       const heightTips = height ? `${height}px` : "不限";
-      return `单次上传${
+      return `${
         multiple ? "多" : "单"
-      }个文件，总数${limitTips}，宽度${widthTips}，高度${heightTips}，后缀${
+      }张上传，总数${limitTips}，宽度${widthTips}，高度${heightTips}，后缀${
         extensions || "不限"
       }，大小${maxSize || "不限"}`;
     });
-    const onGetExtension = (path) => {
+
+    /**
+     * 获取文件后缀信息
+     * @param {String} path 文件路径
+     * @returns {Object} object 文件后缀对象，值包含extension，isImage
+     */
+    const onGetExtension = (path: string) => {
       const extension = path
         ?.substring(path.lastIndexOf(".") + 1)
         ?.toLowerCase();
@@ -164,10 +184,13 @@ export default defineComponent({
         isImage: ["png", "jpg", "jpeg", "bmp", "webp"].includes(extension),
       };
     };
-    const onGetFiles = () => {
-      const files = Array.isArray(props.data.files)
-        ? props.data.files
-        : [props.data.files];
+
+    /**
+     * 获取显示的文件列表
+     * @returns {Array} files 文件对象列表
+     */
+    const onGetFiles = (value) => {
+      const files = Array.isArray(value) ? value : [value];
       return files
         ?.filter((file) => !!file)
         ?.map((file) => {
@@ -183,13 +206,23 @@ export default defineComponent({
           };
         });
     };
-    const files = reactive(onGetFiles());
+    const files = reactive(onGetFiles(props.modelValue));
+
+    /**
+     * 重置上传界面
+     * @returns void
+     */
     const onReset = () => {
       loading.value = false;
-      inputFileRef.value.value = "";
+      inputFileRef.value && (inputFileRef.value.value = "");
     };
 
-    // 检查文件后缀名
+    /**
+     * 文件后缀名校验
+     * @param {Object} file 当前文件对象
+     * @param {String} extensions 可支持的文件扩展名
+     * @returns {Promise} result 校验结果
+     */
     const onCheckExtensions = (file, extensions) => {
       return new Promise((resolve, reject) => {
         const result = onGetExtension(file.name);
@@ -197,13 +230,20 @@ export default defineComponent({
         if (extensions.indexOf(result.extension) > -1) return resolve(result);
         const params = {
           name: "ExtensionError",
-          message: `只能上传${extensions}类型的文件！`,
+          message: `仅支持上传${extensions}类型的文件！`,
           data: result,
         };
         return reject(params);
       });
     };
-    // 检查文件大小
+
+    /**
+     * 文件大小校验
+     * @param {Object} file 当前文件对象
+     * @param {String} maxSize 可支持的文件最大值
+     * @param {Object} options 文件结果对象
+     * @returns {Promise} result 校验结果
+     */
     const onCheckSize = (file, maxSize, options) => {
       return new Promise((resolve, reject) => {
         const result = {
@@ -219,7 +259,7 @@ export default defineComponent({
           if (!SIZE_UNITS[unit]) {
             const params = {
               name: "SizeUnitError",
-              message: "尺寸单位不支持！",
+              message: "尺寸单位不支持！可选单位是KB/MB/GB",
               data: {
                 unknownUnit: unit,
                 units: Object.keys(SIZE_UNITS),
@@ -241,7 +281,15 @@ export default defineComponent({
         return reject(params);
       });
     };
-    // 检查文件的尺寸
+
+    /**
+     * 文件尺寸校验
+     * @param {Object} file 当前文件对象
+     * @param {Number} width 上传文件指定宽度
+     * @param {Number} height 上传文件指定高度
+     * @param {Object} options 文件结果对象
+     * @returns {Promise} result 校验结果
+     */
     const onCheckDimension = (file, width, height, options) => {
       return new Promise((resolve, reject) => {
         // 如果是图片，则校验尺寸，否则不校验
@@ -272,7 +320,7 @@ export default defineComponent({
 
               const params = {
                 name: "DimensionError",
-                message: "图片没有按照指定宽度和高度上传！",
+                message: `图片没有按照指定宽度和高度上传！指定尺寸为${width}px*${height}px`,
                 data: result,
               };
               return reject(params);
@@ -283,7 +331,7 @@ export default defineComponent({
 
               const params = {
                 name: "DimensionWidthError",
-                message: "图片没有按照指定宽度上传！",
+                message: `图片没有按照指定宽度上传！指定宽度为${width}px`,
                 data: result,
               };
               return reject(params);
@@ -294,7 +342,7 @@ export default defineComponent({
 
               const params = {
                 name: "DimensionHeightError",
-                message: "图片没有按照指定高度上传！",
+                message: `图片没有按照指定高度上传！指定高度为${height}px`,
                 data: result,
               };
               return reject(params);
@@ -305,42 +353,57 @@ export default defineComponent({
         reader.readAsDataURL(file);
       });
     };
-    const onUploadFile = (file, options) => {
-      return request
-        .get("https://production.api.dahuangf.com/api/base/getQiNiuToken")
-        .then((res) => {
-          const { token, key } = res.data.data;
-          const { extension } = options;
 
-          const formData = new FormData();
-          formData.append("token", token);
-          formData.append("file", file);
-          formData.append("key", `${key}.${extension}`);
-          return request
-            .post("https://upload.qiniup.com/", formData)
-            .then(async (result) => {
-              onReset();
-              const src = `${IMAGE_DOMAIN}/${result.data.key}.${extension}`;
-              const srcArr = src.split("/");
-              const { imgWidth, imgHeight } = options;
-              const imgData = {
-                ...options,
-                src,
-                name: srcArr[srcArr.length - 1],
-                thumbSrc: `${src}?imageView2/1/w/${Math.round(
-                  (imgWidth / imgHeight) * 200
-                )}/h/200`,
-              };
-              files.push(imgData);
-              emit("on-success", {
-                files,
-                file: imgData,
-                index: files.length - 1,
-              });
+    /**
+     * 文件上传
+     * @param {Object} file 当前文件对象
+     * @param {Object} options 文件结果对象
+     * @returns {Promise} result 上传结果
+     */
+    const onUploadFile = (file, options) => {
+      return request.get(props.data.action || ACTION).then((res) => {
+        const { token, key } = res.data.data;
+        const { extension } = options;
+
+        const formData = new FormData();
+        formData.append("token", token);
+        formData.append("file", file);
+        formData.append("key", `${key}.${extension}`);
+        return request
+          .post("https://upload.qiniup.com/", formData)
+          .then(async (result) => {
+            onReset();
+            const src = `${IMAGE_DOMAIN}/${result.data.key}.${extension}`;
+            const srcArr = src.split("/");
+            const { imgWidth, imgHeight } = options;
+            const imgData = {
+              ...options,
+              src,
+              name: srcArr[srcArr.length - 1],
+              thumbSrc: `${src}?imageView2/1/w/${Math.round(
+                (imgWidth / imgHeight) * 200
+              )}/h/200`,
+            };
+            files.push(imgData);
+
+            /**
+             * 文件上传成功
+             * @param {Object} result 文件对象，值有files, file, index
+             */
+            emit("on-success", {
+              files,
+              file: imgData,
+              index: files.length - 1,
             });
-        });
+          });
+      });
     };
 
+    /**
+     * 文件校验
+     * @param {Object} file 当前文件对象
+     * @returns void
+     */
     const onCheckFile = (file) => {
       // 校验文件是否有名字
       if (!file || !file.name) return;
@@ -352,9 +415,18 @@ export default defineComponent({
         .catch((err) => {
           onReset();
           console.error(err);
+          /**
+           * 文件上传失败
+           * @param {Object} result 失败对象
+           */
           emit("on-error", err);
         });
     };
+
+    /**
+     * 文件选择更新
+     * @returns void
+     */
     const onChange = () => {
       const targetFiles = inputFileRef.value.files || [
         {
@@ -369,6 +441,10 @@ export default defineComponent({
           ? Math.max(limit - files.length, 0)
           : targetFiles.length;
       if (count === 0) {
+        /**
+         * 文件上传失败
+         * @param {Object} result 失败对象
+         */
         emit("on-error", {
           name: "LimitError",
           message: "图片总数超过上传总数限制！",
@@ -380,20 +456,30 @@ export default defineComponent({
         onCheckFile(targetFiles[i]);
       }
     };
+
+    /**
+     * 文件上传
+     * @returns void
+     */
     const onUpload = () => {
       inputFileRef.value?.click();
     };
-    const onMove = (type, file, index) => {
-      files.splice(index, 1);
-      type === "prev"
-        ? files.splice(index - 1, 0, file)
-        : files.splice(index + 1, 0, file);
-      emit(`on-move-${type}`, {
-        files,
-        file,
-        index,
-      });
+
+    /**
+     * 文件全部删除
+     * @returns void
+     */
+    const onDeleteAll = () => {
+      files.length = 0;
+      onReset();
     };
+
+    /**
+     * 文件预览
+     * @param {Object} file 文件对象
+     * @param {Number} index 文件索引
+     * @returns void
+     */
     const onPreview = (file, index) => {
       let { src, extension } = file;
       if (!src) return;
@@ -402,39 +488,124 @@ export default defineComponent({
         ? `https://view.officeapps.live.com/op/view.aspx?src=${src}`
         : src;
       window.open(src);
+
+      /**
+       * 文件预览
+       * @param {Object} result 文件对象，值有files, file, index
+       */
       emit("on-preview", {
         files,
         file,
         index,
       });
     };
+
+    /**
+     * 文件移动
+     * @param {String} type 移动类型，prev为前移，next为后移
+     * @param {Object} file 文件对象
+     * @param {Number} index 文件索引
+     * @returns void
+     */
+    const onMove = (type, file, index) => {
+      files.splice(index, 1);
+      type === "prev"
+        ? files.splice(index - 1, 0, file)
+        : files.splice(index + 1, 0, file);
+
+      /**
+       * 文件移动
+       * @param {Object} result 文件对象，值有files, file, index
+       */
+      emit(`on-move-${type}`, {
+        files,
+        file,
+        index,
+      });
+    };
+
+    /**
+     * 文件删除
+     * @param {Object} file 文件对象
+     * @param {Number} index 文件索引
+     * @returns void
+     */
     const onDelete = (file, index) => {
       files.splice(index, 1);
       onReset();
+
+      /**
+       * 文件删除
+       * @param {Object} result 文件对象，值有files, file, index
+       */
       emit("on-delete", {
         files,
         file,
         index,
       });
     };
+
+    /**
+     * 文件下载
+     * @param {Object} file 文件对象
+     * @param {Number} index 文件索引
+     * @returns void
+     */
     const onDownload = (file, index) => {
       const { src, name } = file;
       dom.onDownloadFile({ url: src, name });
+
+      /**
+       * 文件下载
+       * @param {Object} result 文件对象，值有files, file, index
+       */
       emit("on-download", {
         files,
         file,
         index,
       });
     };
+
+    // 监听参数 modelValue 的变化
+    watch(
+      () => props.modelValue,
+      (value) => {
+        files.length = 0;
+        files.push(...onGetFiles(value));
+      },
+      {
+        immediate: true,
+      }
+    );
+
+    // 监听文件列表变化
+    watch(files, (value) => {
+      /**
+       * 文件列表更新
+       * @param {Array} value 文件列表
+       */
+      emit(
+        "update:modelValue",
+        value.map((i) => i.src)
+      );
+
+      /**
+       * 文件列表更新
+       * @param {Array} value 文件列表
+       */
+      emit("on-change", value);
+    });
+
     return {
       inputFileRef,
       SIZE_UNITS,
       FILE_COVER,
       FILE_ACCEPT,
       files,
-      limitTips,
+      tips,
       onChange,
       onUpload,
+      onDeleteAll,
       onMove,
       onPreview,
       onDelete,

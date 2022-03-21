@@ -28,7 +28,7 @@ export default defineComponent({
     const loginRef = ref(null);
     const onGetCode = () => {
       request
-        .get("https://test.api.dahuangf.com/common/captcha")
+        .get("https://xxx.com/common/captcha")
         .then((res) => {
           loginRef.value.onSetCode(res.data.data.img, 'verifyCode');
         });
