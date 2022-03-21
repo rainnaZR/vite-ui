@@ -20,6 +20,7 @@ import HtRadio from "./src/HtRadio"; // 单选框
 import HtCheckbox from "./src/HtCheckbox"; // 多选框
 import HtSwitch from "./src/HtSwitch"; // 开关切换
 import HtSelect from "./src/HtSelect"; // 下拉框
+import HtUpload from "./src/HtUpload"; // 上传
 import HtFormItem from "./src/HtFormItem"; // 表单项
 import HtForm from "./src/HtForm"; // 表单
 import HtPager from "./src/HtPager"; // 分页
@@ -47,6 +48,7 @@ const components: any[] = [
   HtCheckbox,
   HtSwitch,
   HtSelect,
+  HtUpload,
   HtFormItem,
   HtForm,
   HtPager,
@@ -85,6 +87,7 @@ export {
   HtCheckbox,
   HtSwitch,
   HtSelect,
+  HtUpload,
   HtFormItem,
   HtForm,
   HtPager,
