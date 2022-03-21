@@ -14,10 +14,10 @@
 ```vue demo
 <template>
   <div class="icon-demo icon-demo-1">
-    <ht-icon :data="{ name: 'u-icon-bottom' }" />
-    <ht-icon :data="{ name: 'u-icon-bottom', style: 'color: red' }" />
-    <ht-icon :data="{ name: 'u-icon-bottom', style: 'font-size: 24px;' }" />
-    <ht-icon :data="{ name: 'u-icon-bottom' }">置底</ht-icon>
+    <ht-icon :data="{ name: 'u-icon-delete' }" />
+    <ht-icon :data="{ name: 'u-icon-delete', style: 'color: red' }" />
+    <ht-icon :data="{ name: 'u-icon-delete', style: 'font-size: 24px;' }" />
+    <ht-icon :data="{ name: 'u-icon-delete' }">删除</ht-icon>
   </div>
 </template>
 ```

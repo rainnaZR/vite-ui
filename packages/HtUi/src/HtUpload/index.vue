@@ -8,63 +8,79 @@
       :accept="data.accept || FILE_ACCEPT"
       @change="onChange"
     />
-
-    <!-- 上传按钮插槽 -->
-    <slot name="upload">
-      <div v-if="data.uploadBtnText" class="btn f-mb10">
-        <ht-button
-          :data="{
-            type: data.uploadBtnType,
-            icon: data.uploadBtnIcon,
-            content: data.uploadBtnText,
-            size: data.uploadBtnSize,
-          }"
-          @click="onUpload"
-        />
-      </div>
-      <div
-        v-else
-        class="item item-1 f-mr10 f-mb10 f-trans f-curp"
-        @click="onUpload"
-      >
-        <ht-icon
-          class="icon"
-          :data="{
-            name: 'u-icon-add',
-            style: 'font-size: 44px;color: #99999980',
-          }"
-        />
-      </div>
-    </slot>
-
-    <!-- 图片预览插槽 -->
-    <slot name="preview">
-      <div
-        v-for="(img, index) in previewImg"
-        :key="index"
-        class="item item-2 f-mr10 f-mb10 f-curp"
-      >
-        <ht-image
-          :data="{
-            src: img.isImage
-              ? img.thrumbSrc || `${img.src}?imageView2/1/w/200/h/200`
-              : FILE_COVER,
-          }"
-          @on-click="onPreviewImg(img)"
-        />
-        <div class="tools f-trans">
-          <ht-icon
-            :data="{ name: 'u-icon-delete' }"
-            @on-click="onDeleteImg(img, index)"
+    <div v-if="data.showTips || data.tips" class="tips f-mb10">
+      {{ data.tips || limitTips }}
+    </div>
+    <div class="list">
+      <!-- 上传按钮插槽 -->
+      <slot name="upload">
+        <div v-if="data.uploadBtnText" class="btn f-mb10">
+          <ht-button
+            :data="{
+              type: data.uploadBtnType,
+              icon: data.uploadBtnIcon,
+              content: data.uploadBtnText,
+              size: data.uploadBtnSize,
+            }"
+            @click="onUpload"
           />
         </div>
-      </div>
-    </slot>
+        <div
+          v-else
+          class="item item-1 f-mr10 f-mb10 f-trans f-curp"
+          @click="onUpload"
+        >
+          <ht-icon
+            class="icon"
+            :data="{
+              name: 'u-icon-add',
+              style: 'font-size: 44px;color: #99999980',
+            }"
+          />
+        </div>
+      </slot>
+
+      <!-- 图片预览插槽 -->
+      <slot name="preview">
+        <div
+          v-for="(file, index) in files"
+          :key="index"
+          class="item item-2 f-mr10 f-mb10 f-curp"
+          @click="onPreview(file)"
+        >
+          <!-- 文件区域 -->
+          <ht-image
+            :data="{
+              src: file.isImage
+                ? file.thumbSrc || `${file.src}?imageView2/1/w/200/h/200`
+                : FILE_COVER,
+            }"
+          />
+          <!-- 文件标签 -->
+          <ht-tag v-if="!file.isImage" class="tag">{{ file.extension }}</ht-tag>
+          <!-- 文件操作 -->
+          <div class="tools f-df f-jcc f-trans">
+            <!-- 删除 -->
+            <ht-icon
+              :data="{ name: 'u-icon-delete' }"
+              @on-click.stop="onDelete(index)"
+            />
+            <!-- 下载 -->
+            <ht-icon
+              v-if="!file.isImage"
+              class="f-ml15"
+              :data="{ name: 'u-icon-download' }"
+              @on-click.stop="onDownload(file)"
+            />
+          </div>
+        </div>
+      </slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, reactive } from "vue";
+import { defineComponent, PropType, ref, reactive, computed } from "vue";
 import { request } from "@htfed/utils";
 import { UploadData } from "./types";
 
@@ -97,6 +113,18 @@ export default defineComponent({
       "https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b295ba4df889443b81b8434d046a39e5~tplv-k3u1fbpfcp-watermark.image";
     const FILE_ACCEPT = "image/*,application/pdf,*/mp4";
     const loading = ref(false);
+    const limitTips = computed(() => {
+      const { multiple, limit, width, height, extensions, maxSize } =
+        props.data;
+      const limitTips = limit > 0 ? `${limit}张` : "不限";
+      const widthTips = width ? `${width}px` : "不限";
+      const heightTips = height ? `${height}px` : "不限";
+      return `每次上传${
+        multiple ? "多" : "单"
+      }个文件，总数${limitTips}，宽度${widthTips}，高度${heightTips}，后缀${
+        extensions || "不限"
+      }，大小${maxSize || "不限"}`;
+    });
     const onGetExtension = (path) => {
       const extension = path
         ?.substring(path.lastIndexOf(".") + 1)
@@ -106,26 +134,30 @@ export default defineComponent({
         isImage: ["png", "jpg", "jpeg", "bmp", "webp"].includes(extension),
       };
     };
-    const onGetPreviewImg = () => {
-      const imgs = Array.isArray(props.data.previewImg)
-        ? props.data.previewImg
-        : [props.data.previewImg];
-      return imgs
-        ?.filter((img) => !!img)
-        ?.map((img) => {
-          if (typeof img === "string") {
+    const onGetFiles = () => {
+      const files = Array.isArray(props.data.files)
+        ? props.data.files
+        : [props.data.files];
+      return files
+        ?.filter((file) => !!file)
+        ?.map((file) => {
+          if (typeof file === "string") {
             return {
-              src: img,
-              ...(onGetExtension(img) || {}),
+              src: file,
+              ...(onGetExtension(file) || {}),
             };
           }
           return {
-            ...img,
-            ...(onGetExtension(img.src) || {}),
+            ...file,
+            ...(onGetExtension(file.src) || {}),
           };
         });
     };
-    const previewImg = reactive(onGetPreviewImg());
+    const files = reactive(onGetFiles());
+    const onReset = () => {
+      loading.value = false;
+      inputFileRef.value.value = "";
+    };
 
     // 检查文件后缀名
     const onCheckExtensions = (file, extensions) => {
@@ -257,18 +289,17 @@ export default defineComponent({
           return request
             .post("https://upload.qiniup.com/", formData)
             .then(async (result) => {
-              loading.value = false;
-              inputFileRef.value.value = "";
+              onReset();
               const src = `${IMAGE_DOMAIN}/${result.data.key}.${extension}`;
               const { imgWidth, imgHeight } = options;
               const imgData = {
                 ...options,
                 src,
-                thrumbSrc: `${src}?imageView2/1/w/${Math.round(
+                thumbSrc: `${src}?imageView2/1/w/${Math.round(
                   (imgWidth / imgHeight) * 200
                 )}/h/200`,
               };
-              previewImg.push(imgData);
+              files.push(imgData);
               emit("on-success", imgData);
             });
         });
@@ -283,41 +314,66 @@ export default defineComponent({
         .then((options) => onCheckDimension(file, width, height, options))
         .then((options) => onUploadFile(file, options))
         .catch((err) => {
-          loading.value = false;
-          inputFileRef.value.value = "";
+          onReset();
           console.error(err);
           emit("on-error", err);
         });
     };
     const onChange = () => {
-      const files = inputFileRef.value.files || [
+      const targetFiles = inputFileRef.value.files || [
         {
           name: inputFileRef.value.value,
           size: 0,
         },
       ];
-      for (let i = 0; i < files.length; i++) {
-        onCheckFile(files[i]);
+      // 限制文件上传数量逻辑
+      const { limit } = props.data;
+      const count =
+        limit && limit > 0
+          ? Math.max(limit - files.length, 0)
+          : targetFiles.length;
+      if (count === 0) {
+        emit("on-error", {
+          name: "LimitError",
+          message: "图片总数超过上传总数限制！",
+          data: { limit },
+        });
+        return;
+      }
+      for (let i = 0; i < count; i++) {
+        onCheckFile(targetFiles[i]);
       }
     };
     const onUpload = () => {
       inputFileRef.value?.click();
     };
-    const onPreviewImg = (item) => {
-      item.src && window.open(item.src);
+    const onPreview = (item) => {
+      let { src, extension } = item;
+      if (!src) return;
+      extension = extension || onGetExtension(src)?.extension;
+      src = ["xlsx", "doc", "docx"].includes(extension)
+        ? `https://view.officeapps.live.com/op/view.aspx?src=${src}`
+        : src;
+      window.open(src);
     };
-    const onDeleteImg = () => {};
+    const onDelete = (index) => {
+      files.splice(index, 1);
+      onReset();
+    };
+    const onDownload = (file) => {};
 
     return {
       inputFileRef,
       SIZE_UNITS,
       FILE_COVER,
       FILE_ACCEPT,
-      previewImg,
+      files,
+      limitTips,
       onChange,
       onUpload,
-      onPreviewImg,
-      onDeleteImg,
+      onPreview,
+      onDelete,
+      onDownload,
     };
   },
 });

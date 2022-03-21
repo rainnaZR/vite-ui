@@ -88,7 +88,7 @@
 ```vue demo
 <template>
   <ht-button>
-    <ht-icon :data="{name: 'u-icon-bottom'}" />
+    <ht-icon :data="{name: 'u-icon-download'}" />
   </ht-button>
 </template>
 ```

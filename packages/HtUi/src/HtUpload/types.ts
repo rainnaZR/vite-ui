@@ -12,7 +12,10 @@ export interface UploadData {
   uploadBtnType?: string; // 上传按钮类型
   uploadBtnIcon?: string; // 上传按钮图标名
   uploadBtnSize?: string; // 上传按钮大小
-  previewImg?: string | string[]; // 预览图，支持单张/多张
+  files?: string | string[]; // 预览文件图，支持单张/多张
+  showTips?: boolean; // 是否展示上传限制信息
+  tips?: string; // 自定义提示信息
+  limit?: number; // 上传限制数量
 }
 
 export type Props = PublicProps<{

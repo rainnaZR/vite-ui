@@ -17,8 +17,8 @@ export interface InputData {
   clearable?: boolean; // 是否展示清空icon
   password?: boolean; // 是否展示密码显示/隐藏icon
   search?: boolean; // 是否展示搜索icon
-  prefixIcon?: string; // 自定义前缀icon样式名称，比如u-icon-top
-  suffixIcon?: string; // 自定义后缀icon样式名称，比如u-icon-top
+  prefixIcon?: string; // 自定义前缀icon样式名称，比如u-icon-user
+  suffixIcon?: string; // 自定义后缀icon样式名称，比如u-icon-user
   rows?: number; // 多行文本框时的显示行数
 }
 

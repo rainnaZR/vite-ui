@@ -1,10 +1,17 @@
 @import "../theme/variables.less";
 
 .ht-upload{
-    display: flex;
-    flex-wrap: wrap;
     .input{
         display: none;
+    }
+    .tips{
+        font-size: @font-size-small;
+        color: @info-color;
+        line-height: @line-height;
+    }
+    .list{
+        display: flex;
+        flex-wrap: wrap;
     }
     .btn{
         width: 100%;
@@ -24,6 +31,11 @@
             bottom: -36px;
             width: 100%;
             background: fade(@base-color, 80);
+        }
+        .tag{
+            position: absolute;
+            right: 0;
+            top: 0;
         }
         &:hover{
             .tools{
