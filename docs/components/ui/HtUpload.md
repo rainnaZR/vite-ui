@@ -33,7 +33,7 @@
 
 ### 上传按钮
 
-- 组件可配置上传按钮属性`uploadBtnText 上传按钮文案`，`uploadBtnType 上传按钮类型`，`uploadBtnIcon 上传按钮图标名`，`uploadBtnSize 上传按钮大小`。
+- 组件可配置上传按钮属性`uploadBtnText`上传按钮文案，`uploadBtnType`上传按钮类型，`uploadBtnIcon`上传按钮图标名，`uploadBtnSize`上传按钮大小。
 - 若不配置`uploadBtnText`，则展示默认上传样式。
 
 
@@ -189,7 +189,7 @@ export default {
 
 ### 操作隐藏
 
-- 组件隐藏文件操作属性`hideOperation`，值为布尔值，默认为`false`。
+- 组件隐藏文件操作属性`hideOperation`，值为布尔值，默认为`false`。操作包括前移，删除，下载，后移，删除全部等操作。
 
 
 

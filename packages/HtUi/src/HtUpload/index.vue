@@ -45,7 +45,7 @@
             />
           </div>
           <ht-button
-            v-if="files.length"
+            v-if="!data.hideOperation && files.length"
             class="f-mt5"
             :data="{ size: 'small', style: 'width: 100px' }"
             @click="onDeleteAll"
