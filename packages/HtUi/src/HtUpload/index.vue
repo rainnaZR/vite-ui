@@ -472,6 +472,11 @@ export default defineComponent({
     const onDeleteAll = () => {
       files.length = 0;
       onReset();
+
+      /**
+       * 文件全部删除
+       */
+      emit("on-delete-all");
     };
 
     /**
@@ -509,19 +514,32 @@ export default defineComponent({
      */
     const onMove = (type, file, index) => {
       files.splice(index, 1);
-      type === "prev"
-        ? files.splice(index - 1, 0, file)
-        : files.splice(index + 1, 0, file);
 
-      /**
-       * 文件移动
-       * @param {Object} result 文件对象，值有files, file, index
-       */
-      emit(`on-move-${type}`, {
-        files,
-        file,
-        index,
-      });
+      if (type === "prev") {
+        files.splice(index - 1, 0, file);
+        /**
+         * 文件前移
+         * @param {Object} result 文件对象，值有files, file, index
+         */
+        emit("on-move-prev", {
+          files,
+          file,
+          index,
+        });
+      }
+
+      if (type === "next") {
+        files.splice(index + 1, 0, file);
+        /**
+         * 文件后移
+         * @param {Object} result 文件对象，值有files, file, index
+         */
+        emit("on-move-next", {
+          files,
+          file,
+          index,
+        });
+      }
     };
 
     /**

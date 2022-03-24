@@ -134,7 +134,7 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
       // 提取所有的emit方法
       if (funcName === "emit") {
         // emit('on-click', params, params) 第一个参数'on-click'为emit的方法名emitName，后面是参数列表emitParams
-        const emitName = currNode.arguments[0].value;
+        const emitName = currNode.arguments[0].value || "``动态事件名``";
         const emitParams = currNode.arguments
           .slice(1)
           .map((i, index) => `param${index + 1}`)
