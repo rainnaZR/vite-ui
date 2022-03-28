@@ -310,7 +310,7 @@ export default defineComponent({
      * @returns {Promise} result 校验结果
      */
     const onCheckDimension = (
-      file: InputFileItem | Blob,
+      file: Blob,
       width: string | number | undefined,
       height: string | number | undefined,
       options: any
