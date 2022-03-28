@@ -1,5 +1,19 @@
 import { PublicProps } from "../types";
 
+export interface FileItem {
+  src: string;
+  thumbSrc: string;
+  extension: string;
+  isImage: boolean;
+  name: string;
+}
+
+export interface InputFileItem {
+  name: string;
+  size: number;
+  extension?: string | string[];
+}
+
 export interface UploadData {
   action?: string; // 文件上传接口地址
   style?: string | object; // 自定义样式
@@ -14,7 +28,7 @@ export interface UploadData {
   uploadBtnType?: string; // 上传按钮类型
   uploadBtnIcon?: string; // 上传按钮图标名
   uploadBtnSize?: string; // 上传按钮大小
-  files?: string | string[]; // 预览文件图，支持单张/多张
+  files?: string | FileItem[]; // 预览文件图，支持单张/多张
   tips?: string; // 自定义提示信息
   limit?: number; // 上传限制数量
   hideTips?: boolean; // 是否隐藏上传限制信息
