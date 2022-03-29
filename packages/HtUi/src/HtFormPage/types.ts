@@ -54,7 +54,6 @@ export interface ApiData {
 export interface HooksData {
   onFormInitialCallback(value?: Model): any;
   onFormSubmitCallback(value?: Model): any;
-  onFormResetCallback(value?: Model): any;
 }
 
 export interface FormPageData {

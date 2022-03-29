@@ -1,5 +1,9 @@
 <template>
-  <div v-if="!hidePager" class="ht-pager" :style="data.wrapStyle">
+  <div
+    v-if="!hidePager && data.total > 0"
+    class="ht-pager"
+    :style="data.wrapStyle"
+  >
     <div v-for="layout in layoutList" :key="layout" class="f-mr10">
       <!-- 总数模块 -->
       <div v-if="layout === 'total'" class="total">
@@ -39,6 +43,8 @@
           :class="[
             'item',
             `item-${item.type}`,
+            'f-ml5',
+            'f-mr5',
             'f-tac',
             'f-curp',
             { 'item-active f-curd': item.value === currentPageIndex },

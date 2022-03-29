@@ -337,8 +337,6 @@ export default defineComponent({
      */
     const onFormReset = () => {
       formRef.value?.onReset();
-      // 回调事件定义
-      onSetEvent("onFormResetCallback");
     };
 
     /**
@@ -364,10 +362,7 @@ export default defineComponent({
       }
 
       // 表单默认重置
-      if (type === "reset") {
-        onFormReset();
-        return;
-      }
+      if (type === "reset") onFormReset();
 
       /**
        * 表单按钮点击事件触发
