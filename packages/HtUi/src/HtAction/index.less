@@ -1,4 +1,27 @@
+@import "../theme/variables.less";
+
 .ht-action {
     display: flex;
     flex-wrap: wrap;
+    .item{
+        position: relative;
+        margin: 0 @action-margin;
+        color: @active-color;
+        &-noline{
+            margin: 0 @action-margin*0.5;
+            &:after {
+                display: none;
+            }
+        }
+    }
+    .item+.item:after{
+        content: '';
+        position: absolute;
+        left: -@action-margin;
+        top: 50%;
+        width: 1px;
+        height: 12px;
+        background-color: fade(@info-color, 50);
+        transform: translate(-50%,-50%);
+    }
 }
