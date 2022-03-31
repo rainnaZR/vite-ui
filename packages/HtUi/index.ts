@@ -28,6 +28,7 @@ import HtCodeInput from "./src/HtCodeInput"; // 验证码输入框
 import HtLoginPwd from "./src/HtLoginPwd"; // 密码登录
 import HtPager from "./src/HtPager"; // 分页
 import HtAction from "./src/HtAction"; // 行动点
+import HtLoading from "./src/HtLoading"; // 加载
 
 const components: any[] = [
   HtBreadCrumb,
@@ -57,6 +58,7 @@ const components: any[] = [
   HtLoginPwd,
   HtPager,
   HtAction,
+  HtLoading,
 ];
 
 /**
@@ -97,6 +99,7 @@ export {
   HtLoginPwd,
   HtPager,
   HtAction,
+  HtLoading,
 };
 export default {
   install,
