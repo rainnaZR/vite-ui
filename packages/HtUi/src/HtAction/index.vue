@@ -18,7 +18,7 @@
 
     <ht-popover
       v-if="showMoreIndex < data.list.length"
-      :data="{ width: 'auto' }"
+      :data="{ width: 'auto', contentStyle: 'padding: 5px 10px' }"
     >
       <div :class="`${data.hideLine ? 'f-ml10' : 'f-ml5'} f-curp`">
         <!-- 更多下拉按钮插槽 -->
