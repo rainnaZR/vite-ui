@@ -157,3 +157,44 @@
 </template>
 ```
 :::
+
+
+### 指令调用
+
+- 组件可通过指令`v-loading`调用。
+
+:::Demo
+```vue demo
+<template>
+  <div v-loading="true" style="position: relative; height: 200px"></div>
+</template>
+```
+:::
+
+
+### 方法调用
+
+- 组件可通过实例方法`$loading`实现全局调用。
+
+
+:::Demo
+```vue demo
+<template>
+  <ht-button @click="onShow">实例方法调用</ht-button>
+</template>
+
+<script lang="ts">
+import { getCurrentInstance } from "vue";
+export default {
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const onShow = () => {
+      const loading = proxy.$loading();
+      setTimeout(loading.close, 2000);
+    };
+    return { onShow };
+  },
+};
+</script>
+```
+:::

@@ -68,7 +68,7 @@ const components: any[] = [
  */
 const install = (app: App) => {
   // 注册组件
-  components.forEach((component) => app.component(component.name, component));
+  components.forEach((component) => app.use(component));
 };
 
 export {

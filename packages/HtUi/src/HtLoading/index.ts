@@ -1,4 +1,4 @@
-import type { App, render, createVNode } from "vue";
+import { App, render, createVNode } from "vue";
 import component from "./index.vue";
 import { SFCWithInstall } from "../types";
 
@@ -9,7 +9,9 @@ const Loading = (option: { lock: boolean } = { lock: false }) => {
     },
   });
   const show = () => {
-    option.lock && (document.body.style.overflow = "hidden");
+    if (option.lock) {
+      document.body.style.overflow = "hidden";
+    }
     render(vnode, document.body);
   };
   const close = () => {
