@@ -2,7 +2,8 @@
 
 .ht-action {
     display: flex;
-    flex-wrap: wrap;
+    white-space: nowrap;
+    align-items: center;
     .item{
         position: relative;
         margin: 0 @action-margin;
@@ -13,8 +14,14 @@
                 display: none;
             }
         }
+        &-2{
+            margin: @action-margin*0.5;
+        }
+        &:hover{
+            opacity: .7;
+        }
     }
-    .item+.item:after{
+    .item-1+.item-1:after{
         content: '';
         position: absolute;
         left: -@action-margin;

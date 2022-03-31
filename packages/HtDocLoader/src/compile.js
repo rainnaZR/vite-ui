@@ -340,6 +340,7 @@ const compileTypeScript = (
 // 遍历模板AST
 const traverserTemplateAst = (ast, visitor = {}) => {
   function traverseNode(node, parent) {
+    if (!node) return;
     visitor.enter && visitor.enter(node, parent);
     visitor[node.tag] && visitor[node.tag](node, parent);
     if (node.children) {
@@ -361,12 +362,16 @@ const traverserTemplateAst = (ast, visitor = {}) => {
 // template模板内容编译
 const compileTemplate = (templateStr, options = {}, callback = () => {}) => {
   if (!templateStr) return;
-  const { ast } = baseCompile(templateStr, {
-    ...defaultTemplateCompileOptions,
-    ...options,
-  });
+  let compileResult = {};
+  try {
+    compileResult = baseCompile(templateStr, {
+      ...defaultTemplateCompileOptions,
+      ...options,
+    });
+  } catch (err) {}
+
   // 遍历模板ast
-  traverserTemplateAst(ast, {
+  traverserTemplateAst(compileResult?.ast, {
     // 插槽标签
     slot(node, parent) {
       // 提取所有的插槽slot

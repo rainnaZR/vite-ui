@@ -30,7 +30,7 @@
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "dependencies": {
     "@htfed/base-css": "^1.0.18",
-    "@htfed/doc-loader": "^0.0.14",
+    "@htfed/doc-loader": "^0.0.16",
     "@htfed/ui": "^0.2.37",
     "@htfed/utils": "0.1.18",
     "@htfed/vue-doc-css": "^0.0.7",
