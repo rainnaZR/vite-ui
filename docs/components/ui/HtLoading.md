@@ -21,7 +21,7 @@
 ### 加载动画
 
 - 组件定制加载动画有两种方式：通过属性`data.imageData`指定加载动画数据；通过动画插槽定义。
-- 组件定制加载动画数据属性`imageData`，值为`[HtImage 图片组件](http://localhost:1768/doc/HtImage)`的配置数据。
+- 组件定制加载动画数据属性`imageData`，值为[HtImage 图片组件](http://localhost:1768/doc/HtImage)的配置数据。
 
 
 :::Demo
