@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-action" ref="actionRef">
+  <div v-if="data.list" class="ht-action" ref="actionRef">
     <div
       v-for="(action, index) in data.list.slice(0, showMoreIndex)"
       :key="index"
@@ -20,13 +20,14 @@
       v-if="showMoreIndex < data.list.length"
       :data="{ width: 'auto' }"
     >
-      <!-- 更多下拉插槽 -->
-      <slot name="more">
-        <ht-icon
-          class="f-ml5 f-curp"
-          :data="{ name: 'u-icon-arrowsBottom', style: 'font-size:12px' }"
-        />
-      </slot>
+      <div :class="`${data.hideLine ? 'f-ml10' : 'f-ml5'} f-curp`">
+        <!-- 更多下拉按钮插槽 -->
+        <slot name="more">
+          <ht-icon
+            :data="{ name: 'u-icon-arrowsBottom', style: 'font-size:12px' }"
+          />
+        </slot>
+      </div>
       <template #popover>
         <div
           v-for="(action, index) in data.list.slice(showMoreIndex)"
@@ -34,8 +35,7 @@
           class="item item-2 f-curp f-trans"
           @click="onAction(action, index)"
         >
-          <!-- 更多行动点按钮插槽 -->
-          <slot name="moreButton" :detail="action">{{ action.content }}</slot>
+          {{ action.content }}
         </div>
       </template>
     </ht-popover>
@@ -47,7 +47,7 @@ import { defineComponent, PropType, ref, onMounted, nextTick } from "vue";
 import { dom } from "@htfed/utils";
 import { ActionData, ActionItem } from "./types";
 
-// 行动点按钮集合，常用于表格的操作项
+// 行动点按钮集合，常用于表格的操作项。
 export default defineComponent({
   name: "HtAction",
 
@@ -64,19 +64,20 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const actionRef = ref<HTMLDivElement>();
-    const showMoreIndex = ref(props.data.list.length);
+    const showMoreIndex = ref(props.data?.list?.length);
+    const buttonMargin = 10;
 
     /**
      * 行动点点击
-     * @params {Object} action 点击的按钮数据
-     * @params {Number} index 点击的按钮索引
+     * @param {Object} action 点击的按钮数据
+     * @param {Number} index 点击的按钮索引
      * @returns void
      */
     const onAction = (action: ActionItem, index: number) => {
       /**
        * 行动点点击事件触发
-       * @params {Object} action 点击的按钮数据
-       * @params {Number} index 点击的按钮索引
+       * @param {Object} action 点击的按钮数据
+       * @param {Number} index 点击的按钮索引
        */
       emit("on-action", action, index);
     };
@@ -88,7 +89,9 @@ export default defineComponent({
         if (!nodes || !nodes.length) return;
 
         const { length } = nodes;
-        const marginWidth = props.data.hideLine ? 5 * 2 : 10 * 2;
+        const marginWidth = props.data.hideLine
+          ? (buttonMargin / 2) * 2
+          : buttonMargin * 2;
         let showWidth = 0;
         for (let i = 0; i < length; i++) {
           const nodeWidth = dom.getClientWidth(nodes[i]);
