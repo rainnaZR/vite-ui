@@ -153,7 +153,7 @@
   <div style="position: relative; height: 200px">
     <ht-loading>
       <template #content>
-        <p>页面正在加载中...</p>
+        <div>页面正在加载中...</div>
         <div class="f-fs13 s-fc6">如果访问遇到问题，请联系管理员。</div>
       </template>
     </ht-loading>
