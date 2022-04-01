@@ -63,45 +63,7 @@
 :::
 
 
-### 加载内容
-
-
-- 组件定制加载内容有两种方式：通过属性`data.content`指定文本内容；通过内容插槽定义。
-
-
-:::Demo
-```vue demo
-<template>
-  <div style="position: relative; height: 200px">
-    <ht-loading :data="{ content: '加载中...' }" />
-  </div>
-</template>
-```
-:::
-
-
-- 通过插槽定义文本内容，插槽name值为`content`。
-
-
-:::Demo
-```vue demo
-<template>
-  <div style="position: relative; height: 200px">
-    <ht-loading>
-      <template #content>
-        <p>页面正在加载中...</p>
-        <div class="f-fs13 s-fc6">如果访问遇到问题，请联系管理员。</div>
-      </template>
-    </ht-loading>
-  </div>
-</template>
-```
-:::
-
-
-### 加载样式
-
-- 组件可指定加载样式属性`type`，值为`数字`，不传值则为默认样式。
+- 组件有内置四种加载样式，属性为`type`，值为`数字`，不传值则为默认样式。
 - `type`值为`1`样式如下：
 
 
@@ -153,6 +115,43 @@
 <template>
   <div style="position: relative; height: 200px">
     <ht-loading :data="{ type: 4 }" />
+  </div>
+</template>
+```
+:::
+
+
+
+### 加载内容
+
+
+- 组件定制加载内容有两种方式：通过属性`data.content`指定文本内容；通过内容插槽定义。
+
+
+:::Demo
+```vue demo
+<template>
+  <div style="position: relative; height: 200px">
+    <ht-loading :data="{ content: '加载中...' }" />
+  </div>
+</template>
+```
+:::
+
+
+- 通过插槽定义文本内容，插槽name值为`content`。
+
+
+:::Demo
+```vue demo
+<template>
+  <div style="position: relative; height: 200px">
+    <ht-loading>
+      <template #content>
+        <p>页面正在加载中...</p>
+        <div class="f-fs13 s-fc6">如果访问遇到问题，请联系管理员。</div>
+      </template>
+    </ht-loading>
   </div>
 </template>
 ```

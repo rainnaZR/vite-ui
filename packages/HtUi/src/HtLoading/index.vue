@@ -1,6 +1,6 @@
 <template>
   <div class="ht-loading f-flexc f-trans" :style="data.style">
-    <div class="content f-tac">
+    <div class="wrap f-tac">
       <!-- loading动画插槽 -->
       <slot name="media">
         <!-- 自定义图片数据 -->
@@ -39,7 +39,7 @@
           <circle cx="50" cy="50" r="20" fill="none" class="path"></circle>
         </svg>
       </slot>
-      <div v-if="data.content || $slots.content" class="f-mt15">
+      <div v-if="data.content || $slots.content" class="content f-mt15">
         <!-- loading内容插槽 -->
         <slot name="content">
           <p v-html="data.content"></p>

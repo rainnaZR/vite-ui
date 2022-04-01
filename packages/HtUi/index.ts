@@ -29,6 +29,7 @@ import HtLoginPwd from "./src/HtLoginPwd"; // 密码登录
 import HtPager from "./src/HtPager"; // 分页
 import HtAction from "./src/HtAction"; // 行动点
 import HtLoading from "./src/HtLoading"; // 加载
+import HtEmpty from "./src/HtEmpty"; // 空态
 
 const components: any[] = [
   HtBreadCrumb,
@@ -59,6 +60,7 @@ const components: any[] = [
   HtPager,
   HtAction,
   HtLoading,
+  HtEmpty,
 ];
 
 /**
@@ -100,6 +102,7 @@ export {
   HtPager,
   HtAction,
   HtLoading,
+  HtEmpty,
 };
 export default {
   install,
