@@ -42,7 +42,7 @@
       <div v-if="data.content || $slots.content" class="content f-mt15">
         <!-- loading内容插槽 -->
         <slot name="content">
-          <p v-html="data.content"></p>
+          <div v-html="data.content"></div>
         </slot>
       </div>
     </div>

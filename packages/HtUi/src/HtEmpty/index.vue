@@ -13,7 +13,7 @@
     <div class="content f-mt15">
       <!-- 空态内容插槽 -->
       <slot name="content">
-        <p v-html="data.content || defaultData.content"></p>
+        <div v-html="data.content || defaultData.content"></div>
       </slot>
     </div>
   </div>

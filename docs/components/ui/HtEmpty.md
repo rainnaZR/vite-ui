@@ -94,3 +94,18 @@
 </template>
 ```
 :::
+
+
+### 隐藏图片/隐藏文案
+
+- 组件隐藏图片元素属性`hideImage`，值为`布尔值`，默认值为`false`。
+- 组件隐藏文案元素属性`hideContent`，值为`布尔值`，默认值为`false`。
+
+
+:::Demo
+```vue demo
+<template>
+  <ht-empty :data="{ hideImage: true }" />
+</template>
+```
+:::
