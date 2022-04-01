@@ -20,9 +20,12 @@
 
 ### 加载动画
 
-- 组件定制加载动画有两种方式：通过属性`data.imageData`指定加载动画数据；通过动画插槽定义。
-- 组件定制加载动画数据属性`imageData`，值为[HtImage 图片组件](http://localhost:1768/doc/HtImage)的配置数据。
+- 组件定制加载动画有三种方式：
+- 通过属性`data.imageData`指定加载动画数据，值为[HtImage 图片组件](http://localhost:1768/doc/HtImage)的配置数据。
+- 通过插槽定义加载动画，插槽name值为`media`。
+- 使用组件内置加载样式，内置样式有`四种`，属性为`type`，值为`1/2/3/4`，不传则为默认样式。
 
+- 通过`data.imageData`调用如下：
 
 :::Demo
 ```vue demo
@@ -31,8 +34,8 @@
     <ht-loading
       :data="{
         imageData: {
-          src: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01ccee5cf75dc1a801205e4b392210.gif&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651314625&t=5f571f4a54f1d7524ed2d22d3430f303',
           width: 150,
+          src: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01ccee5cf75dc1a801205e4b392210.gif&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651314625&t=5f571f4a54f1d7524ed2d22d3430f303',
         },
       }"
     />
@@ -42,7 +45,7 @@
 :::
 
 
-- 通过插槽定义加载动画，插槽name值为`media`。
+- 通过插槽定义如下：
 
 
 :::Demo
@@ -63,8 +66,7 @@
 :::
 
 
-- 组件有内置四种加载样式，属性为`type`，值为`数字`，不传值则为默认样式。
-- `type`值为`1`样式如下：
+- 内置样式`type`值为`1`显示如下：
 
 
 
@@ -79,7 +81,7 @@
 :::
 
 
-- `type`值为`2`样式如下：
+- 内置样式`type`值为`2`显示如下：
 
 
 :::Demo
@@ -93,7 +95,7 @@
 :::
 
 
-- `type`值为`3`样式如下：
+- 内置样式`type`值为`3`显示如下：
 
 
 :::Demo
@@ -107,7 +109,7 @@
 :::
 
 
-- `type`值为`4`样式如下：
+- 内置样式`type`值为`4`显示如下：
 
 
 :::Demo
@@ -125,7 +127,10 @@
 ### 加载内容
 
 
-- 组件定制加载内容有两种方式：通过属性`data.content`指定文本内容；通过内容插槽定义。
+- 组件定制加载内容有两种方式：
+- 通过属性`data.content`指定文本内容，值支持`字符串/html代码`。
+- 通过插槽定义文本内容，插槽name值为`content`。
+- 使用`data.content`配置如下：
 
 
 :::Demo
@@ -139,7 +144,7 @@
 :::
 
 
-- 通过插槽定义文本内容，插槽name值为`content`。
+- 使用插槽定义如下：
 
 
 :::Demo
