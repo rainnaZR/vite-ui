@@ -30,6 +30,7 @@ import HtPager from "./src/HtPager"; // 分页
 import HtAction from "./src/HtAction"; // 行动点
 import HtLoading from "./src/HtLoading"; // 加载
 import HtEmpty from "./src/HtEmpty"; // 空态
+import HtToast from "./src/HtToast"; // 提示
 
 const components: any[] = [
   HtBreadCrumb,
@@ -61,6 +62,7 @@ const components: any[] = [
   HtAction,
   HtLoading,
   HtEmpty,
+  HtToast,
 ];
 
 /**
@@ -103,6 +105,7 @@ export {
   HtAction,
   HtLoading,
   HtEmpty,
+  HtToast,
 };
 export default {
   install,

@@ -159,16 +159,15 @@ export default defineComponent({
     const loading = ref(false);
     // 文件上传提示
     const tips = computed(() => {
-      const { multiple, limit, width, height, extensions, maxSize } =
+      const { multiple, width, height, extensions, maxSize, limit } =
         props.data;
-      const limitTips = limit && limit > 0 ? `${limit}张` : "不限";
-      const widthTips = width ? `${width}px` : "不限";
-      const heightTips = height ? `${height}px` : "不限";
-      return `${
-        multiple ? "多" : "单"
-      }张上传，总数${limitTips}，宽度${widthTips}，高度${heightTips}，后缀${
-        extensions || "不限"
-      }，大小${maxSize || "不限"}`;
+      const tipsContent = [`支持${multiple ? "多" : "单"}张上传`];
+      if (width && width > 0) tipsContent.push(`宽度限制${width}px`);
+      if (height && height > 0) tipsContent.push(`高度限制${height}px`);
+      if (extensions) tipsContent.push(`格式仅支持${extensions}`);
+      if (maxSize) tipsContent.push(`大小限制${maxSize}内`);
+      if (limit && limit > 0) tipsContent.push(`上传总数限制${limit}张`);
+      return tipsContent.join("，");
     });
 
     /**
