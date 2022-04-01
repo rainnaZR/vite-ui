@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-empty f-flexc" :style="data.style">
+  <div class="ht-empty f-flexc f-tac" :style="data.style">
     <!-- 空态图片插槽 -->
     <slot name="image">
       <ht-image
