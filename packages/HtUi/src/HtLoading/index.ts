@@ -2,7 +2,7 @@ import { App, render, createVNode } from "vue";
 import component from "./index.vue";
 import { SFCWithInstall } from "../types";
 
-const Loading = (option: { lock: boolean } = { lock: false }) => {
+const $loading = (option: { lock: boolean } = { lock: false }) => {
   let vnode: any = createVNode(component, {
     style: {
       position: "fixed",
@@ -52,7 +52,7 @@ component.install = (app: App) => {
   });
 
   app.config.globalProperties.$loading = (option: { lock: boolean }) => {
-    const { show, close } = Loading(option);
+    const { show, close } = $loading(option);
     show();
     return {
       close,

@@ -213,3 +213,17 @@ export default {
 </template>
 ```
 :::
+
+
+### 上传禁用
+
+- 组件禁用属性`disabled`，值为`布尔值`，默认为`false`。
+
+
+::: Demo
+```vue demo
+<template>
+  <ht-upload :data="{ disabled: true }" />
+</template>
+```
+:::
