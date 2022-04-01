@@ -1,8 +1,18 @@
 <template>
-  <div class="ht-empty f-flexc f-tac" :style="data.style">
-    <!-- 空态图片插槽 -->
+  <div
+    :class="[
+      'ht-empty',
+      { 'ht-empty-1': data.hideImage },
+      { 'ht-empty-2': data.hideContent },
+      'f-flexc',
+      'f-tac',
+    ]"
+    :style="data.style"
+  >
+    <!-- 图片插槽 -->
     <slot name="image">
       <ht-image
+        v-if="!data.hideImage"
         :data="{
           ...(defaultData.image || {}),
           ...(data.image || {}),
@@ -10,8 +20,8 @@
       />
     </slot>
 
-    <div class="content f-mt15">
-      <!-- 空态内容插槽 -->
+    <div v-if="!data.hideContent" class="content">
+      <!-- 文字内容插槽 -->
       <slot name="content">
         <div v-html="data.content || defaultData.content"></div>
       </slot>

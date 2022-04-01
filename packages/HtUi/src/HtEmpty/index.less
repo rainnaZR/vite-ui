@@ -3,8 +3,15 @@
 .ht-empty {
     padding: @empty-padding @empty-padding*0.5;
     .content{
+        margin: @empty-content-margin 0 0;
         font-size: @font-size;
         line-height: @line-height;
         color: @info-color;
+    }
+    &-1{
+        padding: @empty-padding*0.3;
+        .content{
+            margin: 0;
+        }
     }
 }
