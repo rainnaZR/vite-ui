@@ -21,11 +21,11 @@
 ### 加载动画
 
 - 组件定制加载动画有三种方式：
-- 通过属性`data.imageData`指定加载动画数据，值为[HtImage 图片组件](http://localhost:1768/doc/HtImage)的配置数据。
+- 通过属性`data.media`指定加载动画数据，值为[HtImage 图片组件](http://localhost:1768/doc/HtImage)的配置数据。
 - 通过插槽定义加载动画，插槽name值为`media`。
-- 使用组件内置加载样式，内置样式有`四种`，属性为`type`，值为`1/2/3/4`，不传则为默认样式。
+- 使用组件内置加载样式，内置样式有四种，属性为`type`，值为`1/2/3/4`，不传则为默认样式。
 
-- 通过`data.imageData`调用如下：
+- 通过`data.media`调用如下：
 
 :::Demo
 ```vue demo
@@ -33,7 +33,7 @@
   <div style="position: relative; height: 200px">
     <ht-loading
       :data="{
-        imageData: {
+        media: {
           width: 150,
           src: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01ccee5cf75dc1a801205e4b392210.gif&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651314625&t=5f571f4a54f1d7524ed2d22d3430f303',
         },

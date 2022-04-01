@@ -4,7 +4,7 @@
       <!-- loading动画插槽 -->
       <slot name="media">
         <!-- 自定义图片数据 -->
-        <ht-image v-if="data.imageData" :data="data.imageData" />
+        <ht-image v-if="data.media" :data="data.media" />
         <!-- 类型1 -->
         <div v-else-if="data.type == 1" class="media1">
           <div class="line">
