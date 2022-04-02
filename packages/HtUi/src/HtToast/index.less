@@ -4,29 +4,37 @@
     position: fixed;
     left: 50%;
     top: 0;
-    padding: @toast-padding;
+    background: @base-color;
     border-radius: @toast-border-radius;
-    box-sizing: border-box;
+    overflow: hidden;
     transition: all 0.5s;
     opacity: 0;
     transform: translate(-50%, 0);
+    .box{
+        display: flex;
+        align-items: center;
+        padding: @toast-padding;
+        font-size: @font-size;
+        line-height: @line-height;
+        color: @normal-color;
+    }
     &-show{
         opacity: 1;
         transform: translate(-50%, 50px);
     }
-    &-info{
+    &-info .box{
         background: fade(@info-color, 10);
         color: @info-color;
     }
-    &-success{
+    &-success .box{
         background: fade(@success-color, 10);
         color: @success-color;
     }
-    &-warning{
+    &-warning .box{
         background: fade(@strong-color, 10);
         color: @strong-color;
     }
-    &-error{
+    &-error .box{
         background: fade(@danger-color, 10);
         color: @danger-color;
     }

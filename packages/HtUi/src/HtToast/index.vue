@@ -8,22 +8,33 @@
     ]"
     :style="data.style"
   >
-    <!-- 图标插槽 -->
-    <slot name="icon">
-      <ht-icon v-if="data.icon" class="f-mr10" :data="{ name: data.icon }" />
-    </slot>
-    <!-- 内容插槽 -->
-    <slot name="content">{{ data.content }}</slot>
+    <div class="box">
+      <!-- 图标插槽 -->
+      <slot name="icon">
+        <ht-icon
+          v-if="data.icon || data.type"
+          class="f-mr10"
+          :data="{ name: data.icon || `u-icon-${data.type}` }"
+        />
+      </slot>
+      <!-- 内容插槽 -->
+      <slot name="content">{{ data.content }}</slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref, onMounted } from "vue";
+import HtIcon from "../HtIcon";
 import { ToastData } from "./types";
 
 // toast提示信息组件。
 export default defineComponent({
   name: "HtToast",
+
+  components: {
+    HtIcon,
+  },
 
   props: {
     // 配置数据
@@ -37,7 +48,7 @@ export default defineComponent({
   setup(props) {
     const isShow = ref(false); // 是否显示
     const isDestroy = ref(false); // 是否销毁
-    const duration = 1500;
+    const duration = 30000;
 
     /**
      * 提示消失
@@ -59,7 +70,9 @@ export default defineComponent({
       setTimeout(onHide, props.data.duration || duration);
     };
 
-    onMounted(() => onShow());
+    onMounted(() => {
+      setTimeout(onShow);
+    });
 
     return { isShow, isDestroy };
   },
