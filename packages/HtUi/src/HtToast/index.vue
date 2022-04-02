@@ -9,7 +9,7 @@
     :style="{
       ...(data.style || {}),
       transform: isShow
-        ? `translate(-50%, ${data.offset || 50}px)`
+        ? `translate(-50%, ${data.offset || defaultData.offset}px)`
         : 'translate(-50%, 0)',
     }"
   >
@@ -59,7 +59,10 @@ export default defineComponent({
     const isShow = ref(false); // 是否显示
     const isDestroy = ref(false); // 是否销毁
     const intervalId: any = ref(null);
-    const duration = 3000;
+    const defaultData = {
+      offset: 20,
+      duration: 3000,
+    };
 
     /**
      * 提示消失
@@ -80,14 +83,17 @@ export default defineComponent({
     const onShow = () => {
       isShow.value = true;
       if (props.data.duration <= 0) return;
-      intervalId.value = setTimeout(onHide, props.data.duration || duration);
+      intervalId.value = setTimeout(
+        onHide,
+        props.data.duration || defaultData.duration
+      );
     };
 
     onMounted(() => {
       setTimeout(onShow);
     });
 
-    return { isShow, isDestroy, intervalId, onShow, onHide };
+    return { isShow, isDestroy, intervalId, defaultData, onShow, onHide };
   },
 });
 </script>

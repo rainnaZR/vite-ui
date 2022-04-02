@@ -1,4 +1,11 @@
+import type { VNode } from "vue";
 import { PublicProps } from "../types";
+
+type ToastQueueItem = {
+  vm: VNode;
+};
+
+export type ToastQueue = ToastQueueItem[];
 
 export interface ToastData {
   style?: object; // 自定义样式，值为样式对象

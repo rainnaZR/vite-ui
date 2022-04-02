@@ -1,6 +1,17 @@
 import { App, createVNode, render } from "vue";
 import component from "./index.vue";
-import { ToastData } from "./types";
+import { ToastQueue, ToastData } from "./types";
+
+const instances: ToastQueue = [];
+
+const onGetOffset = (offset?: number) => {
+  let verticalOffset = offset || 20;
+  instances.forEach(({ vm }) => {
+    verticalOffset += (vm.el?.offsetHeight || 0) + 10;
+  });
+  verticalOffset += 10;
+  return verticalOffset;
+};
 
 const onRender = (
   options: string | number | boolean | ToastData,
@@ -9,14 +20,15 @@ const onRender = (
   const data: any = ["string", "number", "boolean"].includes(typeof options)
     ? { content: options }
     : options;
-  const vnode: any = createVNode(component, {
+  const vm: any = createVNode(component, {
     data: {
       ...data,
       ...(extraOptions || {}),
     },
   });
   const container = document.createElement("div");
-  render(vnode, container);
+  render(vm, container);
+  // instances.push({ vm });
   document.body.appendChild(container.firstElementChild!);
 };
 
