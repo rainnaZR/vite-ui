@@ -4,15 +4,15 @@
     position: fixed;
     left: 50%;
     top: 0;
+    z-index: 999;
     background: @base-color;
     border-radius: @toast-border-radius;
+    overflow: hidden;
     transition: all 0.5s;
     opacity: 0;
     .box{
         display: flex;
         align-items: center;
-        border-radius: @toast-border-radius;
-        box-shadow: @toast-box-shadow;
         padding: @toast-padding;
         font-size: @font-size;
         line-height: @line-height;
