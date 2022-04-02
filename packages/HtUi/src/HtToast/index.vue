@@ -3,22 +3,32 @@
     v-if="!isDestroy"
     :class="[
       'ht-toast',
-      `ht-toast-${data.type || 'success'}`,
+      `ht-toast-${data.type || 'info'}`,
       { 'ht-toast-show': isShow },
     ]"
-    :style="data.style"
+    :style="{
+      ...(data.style || {}),
+      transform: isShow
+        ? `translate(-50%, ${data.offset || 50}px)`
+        : 'translate(-50%, 0)',
+    }"
   >
     <div class="box">
-      <!-- 图标插槽 -->
-      <slot name="icon">
-        <ht-icon
-          v-if="data.icon || data.type"
-          class="f-mr10"
-          :data="{ name: data.icon || `u-icon-${data.type}` }"
-        />
-      </slot>
-      <!-- 内容插槽 -->
-      <slot name="content">{{ data.content }}</slot>
+      <!-- 图标 -->
+      <ht-icon
+        v-if="data.icon || data.type"
+        class="f-mr10"
+        :data="{ name: data.icon || `u-icon-${data.type}` }"
+      />
+      <!-- 内容 -->
+      <div v-html="data.content"></div>
+      <!-- 关闭按钮 -->
+      <ht-icon
+        v-if="data.closable"
+        class="f-ml20 f-curp"
+        :data="{ name: 'u-icon-close', style: 'color: #999' }"
+        @click="onHide"
+      />
     </div>
   </div>
 </template>
@@ -48,7 +58,8 @@ export default defineComponent({
   setup(props) {
     const isShow = ref(false); // 是否显示
     const isDestroy = ref(false); // 是否销毁
-    const duration = 30000;
+    const intervalId: any = ref(null);
+    const duration = 3000;
 
     /**
      * 提示消失
@@ -56,6 +67,7 @@ export default defineComponent({
      */
     const onHide = () => {
       isShow.value = false;
+      intervalId.value && clearTimeout(intervalId.value);
       setTimeout(() => {
         isDestroy.value = true;
       }, 500); // 500ms 为渐隐动画执行时间，元素渐隐后删除元素
@@ -67,14 +79,15 @@ export default defineComponent({
      */
     const onShow = () => {
       isShow.value = true;
-      setTimeout(onHide, props.data.duration || duration);
+      if (props.data.duration <= 0) return;
+      intervalId.value = setTimeout(onHide, props.data.duration || duration);
     };
 
     onMounted(() => {
       setTimeout(onShow);
     });
 
-    return { isShow, isDestroy };
+    return { isShow, isDestroy, intervalId, onShow, onHide };
   },
 });
 </script>

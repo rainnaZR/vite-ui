@@ -23,25 +23,21 @@ const onRender = (
 const $toast = (options: string | number | boolean | ToastData) => {
   onRender(options);
 };
-
 $toast.info = (options: string | number | boolean | ToastData) => {
   onRender(options, {
     type: "info",
   });
 };
-
 $toast.success = (options: string | number | boolean | ToastData) => {
   onRender(options, {
     type: "success",
   });
 };
-
 $toast.error = (options: string | number | boolean | ToastData) => {
   onRender(options, {
     type: "error",
   });
 };
-
 $toast.warning = (options: string | number | boolean | ToastData) => {
   onRender(options, {
     type: "warning",
