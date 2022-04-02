@@ -1,21 +1,20 @@
 import { App, createVNode, render } from "vue";
 import component from "./index.vue";
-import { SFCWithInstall } from "../types";
 import { ToastData } from "./types";
 
-const $toast = (options: ToastData) => {
-  const vm = createVNode(component, options);
-  const el = document.createElement("div");
-  render(vm, el);
-  document.body.appendChild(el.firstElementChild!);
+const $toast = (options: string | number | boolean | ToastData) => {
+  const data = ["string", "number", "boolean"].includes(typeof options)
+    ? { content: options }
+    : options;
+  const vnode: any = createVNode(component, { data });
+  const container = document.createElement("div");
+  render(vnode, container);
+  document.body.appendChild(container.firstElementChild!);
 };
 
 // 安装
-component.install = (app: App) => {
-  app.component(component.name, component);
-
+$toast.install = (app: App) => {
   app.config.globalProperties.$toast = $toast;
 };
 
-const Component: SFCWithInstall<typeof component> = component;
-export default Component;
+export default $toast;

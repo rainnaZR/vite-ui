@@ -1,7 +1,33 @@
 @import "../theme/variables.less";
 
 .ht-toast {
-    display: flex;
+    position: fixed;
+    left: 50%;
+    top: 0;
     padding: @toast-padding;
-    background: @base-color;
+    border-radius: @toast-border-radius;
+    box-sizing: border-box;
+    transition: all 0.5s;
+    opacity: 0;
+    transform: translate(-50%, 0);
+    &-show{
+        opacity: 1;
+        transform: translate(-50%, 50px);
+    }
+    &-info{
+        background: fade(@info-color, 10);
+        color: @info-color;
+    }
+    &-success{
+        background: fade(@success-color, 10);
+        color: @success-color;
+    }
+    &-warning{
+        background: fade(@strong-color, 10);
+        color: @strong-color;
+    }
+    &-error{
+        background: fade(@danger-color, 10);
+        color: @danger-color;
+    }
 }

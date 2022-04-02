@@ -246,3 +246,12 @@ img[src=""],img:not([src]){
 .f-vw100{ width: 100vw; }
 .f-vh100 { height: 100vh; }
 .f-vam{ vertical-align: middle;}
+
+@keyframes fadeIn{
+	0%{opacity:0;}
+	100%{opacity:1;}
+}
+@keyframes fadeOut{
+	0%{opacity:1;}
+	100%{opacity:0;}
+}

@@ -1,5 +1,13 @@
 <template>
-  <div v-if="show" class="ht-toast" :style="data.style">
+  <div
+    v-if="!isDestroy"
+    :class="[
+      'ht-toast',
+      `ht-toast-${data.type || 'success'}`,
+      { 'ht-toast-show': isShow },
+    ]"
+    :style="data.style"
+  >
     <!-- 图标插槽 -->
     <slot name="icon">
       <ht-icon v-if="data.icon" class="f-mr10" :data="{ name: data.icon }" />
@@ -28,7 +36,7 @@ export default defineComponent({
 
   setup(props) {
     const isShow = ref(false); // 是否显示
-    const intervalId: any = null;
+    const isDestroy = ref(false); // 是否销毁
     const duration = 1500;
 
     /**
@@ -37,6 +45,9 @@ export default defineComponent({
      */
     const onHide = () => {
       isShow.value = false;
+      setTimeout(() => {
+        isDestroy.value = true;
+      }, 500); // 500ms 为渐隐动画执行时间，元素渐隐后删除元素
     };
 
     /**
@@ -45,16 +56,12 @@ export default defineComponent({
      */
     const onShow = () => {
       isShow.value = true;
-      intervalId.value && clearTimeout(intervalId.value);
-      intervalId.value = setTimeout(
-        () => onHide,
-        props.data.duration || duration
-      );
+      setTimeout(onHide, props.data.duration || duration);
     };
 
-    onMounted(() => onShow);
+    onMounted(() => onShow());
 
-    return { isShow };
+    return { isShow, isDestroy };
   },
 });
 </script>
