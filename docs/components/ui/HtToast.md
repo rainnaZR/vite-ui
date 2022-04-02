@@ -34,7 +34,7 @@ export default defineComponent({
 
 ### 类型
 
-- 组件配置提示展示类型属性`type`，值有`info/success/error/warning`。
+- 组件配置提示展示类型属性`type`，值支持四种，包括`info`，`success`，`error`，`warning`。
 
 
 :::Demo
@@ -83,7 +83,7 @@ import { defineComponent, getCurrentInstance } from "vue";
 export default defineComponent({
   setup() {
     const { proxy } = getCurrentInstance();
-    const onToast = () => proxy.$toast.success("<strong>成功<i>提示</i>信息</strong>");
+    const onToast = () => proxy.$toast.success("<span style='font-size: 18px'>成功</span>提示信息");
     return { onToast };
   },
 });

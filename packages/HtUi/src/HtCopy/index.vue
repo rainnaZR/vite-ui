@@ -18,6 +18,7 @@
 import { defineComponent, ref, PropType } from "vue";
 import { dom } from "@htfed/utils";
 import HtButton from "../HtButton";
+import HtToast from "../HtToast";
 import { CopyData } from "./types";
 
 /**
@@ -52,7 +53,7 @@ export default defineComponent({
       const value = contentRef.value!?.textContent;
       dom.onCopy(value).then(
         (res?: string) => {
-          alert(res);
+          HtToast.success(res);
           /**
            * 复制成功触发事件
            * @param {String} value 要复制的内容
@@ -61,7 +62,7 @@ export default defineComponent({
           emit("on-success", value);
         },
         (err?: string) => {
-          alert(err);
+          HtToast.error(err);
           /**
            * 复制失败触发事件
            * @param {String} value 要复制的内容

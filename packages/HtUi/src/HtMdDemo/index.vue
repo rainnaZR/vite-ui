@@ -21,6 +21,7 @@
 import { defineComponent } from "vue";
 import { dom } from "@htfed/utils";
 import HtButton from "../HtButton";
+import HtToast from "../HtToast";
 
 // md文件中写入vue源码，支持源码预览和源码执行。
 export default defineComponent({
@@ -52,8 +53,8 @@ export default defineComponent({
       const elem = node.querySelector(".vuedoc__code");
       const value = elem?.textContent!?.slice(0, -1);
       dom.onCopy(value).then(
-        (res?: string) => alert(res),
-        (err?: string) => alert(err)
+        (res?: string) => HtToast.success(res),
+        (err?: string) => HtToast.error(err)
       );
     };
 
