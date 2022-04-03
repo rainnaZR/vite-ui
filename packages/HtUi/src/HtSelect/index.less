@@ -33,18 +33,18 @@
         flex-direction: row;
         padding: 0 @select-option-padding;
         margin: 0 0 1px;
-        color: @select-option-color;
-        font-size: @select-option-font-size;
+        color: @normal-color;
+        font-size: @font-size;
         line-height: @select-option-line-height;
         &:hover{
-            background: fade(@select-option-color, 6%);
+            background: fade(@normal-color, 6%);
         }
         &-select{
-            background: fade(@select-option-color, 6%);
-            color: @select-option-active-color;
+            background: fade(@normal-color, 6%);
+            color: @active-color;
         }
         &-disabled{
-            color: @select-option-disabled-color;
+            color: @disabled-color;
             cursor: not-allowed;
             &:hover{
                 background: none;
@@ -53,7 +53,7 @@
         &-empty{
             padding-top: @select-option-line-height * 0.5;
             padding-bottom: @select-option-line-height * 0.5;
-            color: @select-option-disabled-color;
+            color: @disabled-color;
             &:hover{
                 background: none;
             }

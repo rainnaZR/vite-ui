@@ -3,8 +3,8 @@
 .ht-form-item{
     line-height: @form-item-line-height;
     .form-label{
-        font-size: @form-item-font-size;
-        color: @form-item-color;
+        font-size: @font-size;
+        color: @normal-color;
     }
     .form-content{
         position: relative;
@@ -33,10 +33,10 @@
     }
     &-error{
         :deep(.ht-input input), :deep(.ht-input textarea), :deep(.ht-input input:focus), :deep(.ht-input textarea:focus){
-            border-color: @form-item-error-color;
+            border-color: @danger-color;
         }
         :deep(.ht-input input:focus), :deep(.ht-input textarea:focus){
-            box-shadow: 0 0 0 2px fade(@form-item-error-color, 20%);
+            box-shadow: 0 0 0 2px fade(@danger-color, 20%);
         }
     }
 }
