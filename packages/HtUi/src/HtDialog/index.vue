@@ -7,6 +7,7 @@
       'f-trans',
     ]"
     :style="data.wrapStyle"
+    @click="() => data.maskClosable && onCancel()"
   >
     <div
       class="box f-pr"
@@ -15,12 +16,13 @@
         width: data.width,
         height: data.height,
       }"
+      @click.stop
     >
       <ht-icon
         v-if="data.closable"
         class="close f-curp f-trans"
         :data="{ name: 'u-icon-close' }"
-        @click="onClose"
+        @click="onCancel"
       />
       <!-- 顶部内容 -->
       <div
@@ -34,7 +36,7 @@
             class="icon f-mr10"
             :data="{ name: `u-icon-${type}`, style: { fontSize: '20px' } }"
           />
-          <div class="f-fs18 f-f1">{{ data.title }}</div>
+          <div class="f-fs18 f-f1">{{ data.title || "提示" }}</div>
         </slot>
       </div>
 
@@ -59,12 +61,14 @@
                 ...defaultCancelButton,
                 ...(data.cancelButton || {}),
               }"
+              @click="onCancel"
             />
             <ht-button
               :data="{
                 ...defaultConfirmButton,
                 ...(data.confirmButton || {}),
               }"
+              @click="onConfirm"
             />
           </slot>
         </div>
@@ -114,6 +118,13 @@ export default defineComponent({
       type: "text",
       content: "取消",
     };
+    const onCancel = () => {
+      isShow.value = false;
+      emit("on-cancel");
+    };
+    const onConfirm = () => {
+      emit("on-confirm");
+    };
 
     watch(
       () => props.visible,
@@ -128,7 +139,14 @@ export default defineComponent({
       emit("update:visible", value);
     });
 
-    return { type, isShow, defaultConfirmButton, defaultCancelButton };
+    return {
+      type,
+      isShow,
+      defaultConfirmButton,
+      defaultCancelButton,
+      onCancel,
+      onConfirm,
+    };
   },
 });
 </script>

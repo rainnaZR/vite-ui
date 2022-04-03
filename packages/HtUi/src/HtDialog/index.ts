@@ -3,22 +3,29 @@ import type { VNode } from "vue";
 import component from "./index.vue";
 import { DialogData } from "./types";
 
-const onRender = (options: DialogData) => {
-  const vm: VNode = createVNode(component, { data: options });
-  document.body.style.overflow = `${options.lock ? "hidden" : "visible"}`;
+const onRender = (data: any) => {
+  const vm: VNode = createVNode(component, data);
+  document.body.style.overflow = `${data.lock ? "hidden" : "visible"}`;
   render(vm, document.body);
 };
 
 const $dialog = (options: DialogData) => {
-  onRender(options);
+  onRender({
+    data: options,
+    visible: false,
+  });
 };
 $dialog.show = (options: DialogData) => {
-  options.show = true;
-  onRender(options);
+  onRender({
+    data: options,
+    visible: true,
+  });
 };
 $dialog.close = (options: DialogData) => {
-  options.show = false;
-  onRender(options);
+  onRender({
+    data: options,
+    visible: false,
+  });
 };
 
 // 安装
