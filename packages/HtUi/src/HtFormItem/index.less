@@ -33,10 +33,10 @@
     }
     &-error{
         :deep(.ht-input input), :deep(.ht-input textarea), :deep(.ht-input input:focus), :deep(.ht-input textarea:focus){
-            border-color: @danger-color;
+            border-color: @error-color;
         }
         :deep(.ht-input input:focus), :deep(.ht-input textarea:focus){
-            box-shadow: 0 0 0 2px fade(@danger-color, 20%);
+            box-shadow: 0 0 0 2px fade(@error-color, 20%);
         }
     }
 }

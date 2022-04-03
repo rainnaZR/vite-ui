@@ -6,7 +6,7 @@
 
 ### 按钮类型
 
-- 类型支持 `default`、`primary`、`success`、`info`、`warning`、`danger`、`text` 七种类型，默认类型为 `default`。
+- 类型支持 `default`、`primary`、`success`、`info`、`warning`、`error`、`text` 七种类型，默认类型为 `default`。
 
 
 ::: Demo
@@ -18,7 +18,7 @@
     <ht-button :data="{ type: 'success', size: 'normal'}">success按钮</ht-button>
     <ht-button :data="{ type: 'info', size: 'normal'}">info按钮</ht-button>
     <ht-button :data="{ type: 'warning', size: 'normal'}">warning按钮</ht-button>
-    <ht-button :data="{ type: 'danger', size: 'normal'}">danger按钮</ht-button>
+    <ht-button :data="{ type: 'error', size: 'normal'}">error按钮</ht-button>
     <ht-button :data="{ type: 'text', size: 'normal'}">text按钮</ht-button>
   </div>
 </template>
@@ -58,7 +58,7 @@
     <ht-button :data="{ type: 'success', size: 'normal', disabled: true}">disabled按钮</ht-button>
     <ht-button :data="{ type: 'info', size: 'normal', disabled: true}">disabled按钮</ht-button>
     <ht-button :data="{ type: 'warning', size: 'normal', disabled: true}">disabled按钮</ht-button>
-    <ht-button :data="{ type: 'danger', size: 'normal', disabled: true}">disabled按钮</ht-button>
+    <ht-button :data="{ type: 'error', size: 'normal', disabled: true}">disabled按钮</ht-button>
     <ht-button :data="{ type: 'text', size: 'normal', disabled: true}">disabled按钮</ht-button>
   </div>
 </template>
