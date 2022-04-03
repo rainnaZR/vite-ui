@@ -9,17 +9,10 @@
 @font-size: 14px;
 @font-size-small: 13px;
 @line-height: 1.8;
-
-// tab
-@tab-font-size: @font-size;
-@tab-line-height: @line-height;
-@tab-color: @normal-color;
-@tab-active-color: @active-color;
-@tab-active-border-radius: 5px;
+@border-radius: 4px;
 
 // header
 @header-height: 60px;
-@header-background-color: @base-color;
 @header-box-shadow: 0 2px 5px fade(@active-color, 30);
 @header-logo-text-size: 16px;
 
@@ -43,15 +36,10 @@
 @button-background-color-disabled: @disabled-color;
 
 @button-margin-button: 15px;
-@button-font-size: @font-size;
 @button-font-size-small: 12px;
 @button-font-size-huge: 18px;
 
 // bread-crumb
-@bread-crumb-font-size: @font-size;
-@bread-crumb-line-height: @line-height;
-@bread-crumb-color: @info-color;
-@bread-crumb-active-color: @normal-color;
 @bread-crumb-separator-font-size: 12px;
 @bread-crumb-separator-color: fade(@info-color, 30);
 
@@ -59,31 +47,23 @@
 @badge-padding-top: 0;
 @badge-padding-left: 7px;
 @badge-radius: 10px;
-@badge-background-color: @strong-color;
 @badge-font-size: 12px;
 @badge-line-height: 19px;
-@badge-color: @base-color;
 
 // tag
 @tag-padding-top: 0;
 @tag-padding-left: 10px;
 @tag-radius: 4px;
 @tag-border-color: fade(@info-color, 20);
-@tag-background-color: @base-color;
 @tag-font-size: 13px;
 @tag-line-height: 30px;
-@tag-color: @info-color;
 
 // popover
 @popover-width: 300px;
 @popover-padding: 10px 15px;
 @popover-border-radius: 4px;
 @popover-border-color: fade(@info-color, 20);
-@popover-background-color: @base-color;
 @popover-box-shadow: 0 2px 12px 0 fade(@info-color, 20);
-@popover-color: @normal-color;
-@popover-font-size: @font-size;
-@popover-line-height: @line-height;
 @popover-split-padding: 10px;
 @popover-arrow-position: 30px;
 
@@ -92,45 +72,28 @@
 @tooltip-font-size: 12px;
 @tooltip-line-height: 1.2;
 
-// avatar
-@avatar-background-color: @strong-color;
-@avatar-color: @base-color;
-
 // input
 @input-padding-top: 0;
 @input-padding-left: 10px;
 @input-border-color: fade(@info-color, 20);
 @input-border-radius: 4px;
 @input-focus-border-color: fade(@active-color, 80);
-@input-background-color: @base-color;
-@input-font-size: @font-size;
 @input-line-height: 36px;
 @input-textarea-line-height: 1.6;
-@input-color: @normal-color;
-@input-disabled-color: @disabled-color;
 @input-disabled-background-color: fade(@disabled-color, 35);
-@input-action-color: @disabled-color;
 @input-action-font-size: 12px;
 
 // radio
 @radio-padding-right: 20px;
-@radio-font-size: @font-size;
-@radio-color: @normal-color;
-@radio-active-color: @active-color;
-@radio-disabled-color: @disabled-color;
 
 // switch
 @switch-width: 40px;
 @switch-height: 22px;
 @switch-padding: 2px;
-@switch-background-color: @disabled-color;
-@switch-active-background-color: @active-color;
-@switch-circle-background-color: @base-color;
 
 // select
 @select-options-border: 1px solid fade(@info-color, 20);
 @select-options-border-radius: 4px;
-@select-options-background-color: @base-color;
 @select-options-box-shadow: 0 2px 12px 0 fade(@info-color, 20);
 @select-option-padding: 15px;
 @select-option-color: @normal-color;
@@ -184,3 +147,5 @@
 @dialog-padding: 20px 30px;
 @dialog-background: rgba(0, 0, 0, 0.5);
 @dialog-border-radius: 4px;
+@dialog-border-color: fade(@info-color, 20);
+@dialog-box-shadow: 0 2px 12px 0 fade(@info-color, 20);

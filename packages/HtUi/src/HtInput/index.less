@@ -11,14 +11,14 @@
         border: 1px solid @input-border-color;
         border-radius: @input-border-radius;
         box-sizing: border-box;
-        background: @input-background-color;
-        font-size: @input-font-size;
+        background: @base-color;
+        font-size: @font-size;
         line-height: @input-line-height;
-        color: @input-color;
+        color: @normal-color;
         &-readonly{}
         &-disabled{
             background: @input-disabled-background-color;
-            color: @input-disabled-color;
+            color: @disabled-color;
             cursor: not-allowed;
         }
         &:focus{
@@ -42,7 +42,7 @@
         top: @input-padding-top;
         bottom: @input-padding-top;
         line-height: @input-line-height;
-        color: @input-action-color;
+        color: @disabled-color;
         font-size: @input-action-font-size;
         &-1{
             left: auto;

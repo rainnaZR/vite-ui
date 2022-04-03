@@ -8,17 +8,17 @@
     height: @switch-height;
     padding: @switch-padding;
     border-radius: @switch-height;
-    background: @switch-background-color;
+    background: @disabled-color;
     box-sizing: border-box;
     .circle{
         width: @switch-height - @switch-padding*2;
         height: @switch-height - @switch-padding*2;
         border-radius: @switch-height - @switch-padding*2;
-        background: @switch-circle-background-color;
+        background: @base-color;
         transform: translateX(0%);
     }
     &-active{
-        background: @switch-active-background-color;
+        background: @active-color;
         .circle{
             transform: translateX(100%);
         }

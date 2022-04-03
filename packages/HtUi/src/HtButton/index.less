@@ -10,7 +10,7 @@
         border: 1px solid fade(@backgroundColor, 20);
         color: @Color;
     }
-    .button-size(@height: @button-height, @borderRadius: @button-border-radius, @fontSize: @button-font-size) {
+    .button-size(@height: @button-height, @borderRadius: @button-border-radius, @fontSize: @font-size) {
         height: @height;
         padding: 0 @height * 0.4;
         border-radius: @borderRadius;
@@ -42,7 +42,7 @@
         .button-size(@button-height-small, @button-border-radius-small, @button-font-size-small);
     }
     &-big{
-        .button-size(@button-height-big, @button-border-radius, @button-font-size);
+        .button-size(@button-height-big, @button-border-radius, @font-size);
     }
     &-huge{
         .button-size(@button-height-huge, @button-border-radius-huge, @button-font-size-huge);

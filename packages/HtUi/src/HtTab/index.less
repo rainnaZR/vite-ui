@@ -3,9 +3,9 @@
 .ht-tab {
     display: flex;
     flex-direction: row;
-    font-size: @tab-font-size;
-    line-height: @tab-line-height;
-    color: @tab-color;
+    font-size: @font-size;
+    line-height: @line-height;
+    color: @normal-color;
     .content{
         display: flex;
         flex-direction: row;
@@ -16,9 +16,9 @@
             white-space: nowrap;
         }
         &-curr{
-            border-radius: @tab-active-border-radius;
-            background: fade(@tab-active-color, 15%);
-            color: @tab-active-color;
+            border-radius: @border-radius;
+            background: fade(@active-color, 15%);
+            color: @active-color;
             .icon{
                 transform: rotate(180deg);
             }
@@ -31,9 +31,9 @@
         padding: 10px;
         text-align: center;
         &-curr{
-            border-radius: @tab-active-border-radius;
-            background: fade(@tab-active-color, 15%);
-            color: @tab-active-color;
+            border-radius: @border-radius;
+            background: fade(@active-color, 15%);
+            color: @active-color;
         }
     }
     &-column{
