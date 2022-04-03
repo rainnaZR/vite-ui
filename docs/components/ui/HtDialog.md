@@ -78,8 +78,8 @@ export default {
 
 ### 关闭
 
-- 组件设置右上角关闭按钮属性`closable`，值为`布尔值`，默认值为`false`。
-- 组件设置蒙层点击关闭属性`maskClosable`，值为`布尔值`，默认值为`false`。
+- 组件设置右上角关闭按钮属性`closable`，值为`布尔值`，默认值为`undefined`，有且仅有值为`false`时关闭按钮不显示。
+- 组件设置蒙层点击关闭属性`maskClosable`，值为`布尔值`，默认值为`undefined`，有且仅有值为`false`时点击无响应。
 
 
 
