@@ -5,22 +5,56 @@
     left: 0;
     top: 0;
     z-index: 998;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
     background: @dialog-background;
-    opacity: 0;
     .box{
         min-width: @dialog-min-width;
+        max-width: @dialog-max-width;
         max-height: @dialog-max-height;
+        padding: @dialog-padding;
+        box-sizing: border-box;
+        background: @base-color;
+        border-radius: @dialog-border-radius;
         overflow-y: scroll;
         font-size: @font-size;
         line-height: @line-height;
         color: @normal-color;
     }
+    .header, .footer{
+        display: flex;
+        align-items: center;
+    }
+    .close{
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        &:hover{
+            opacity: .6;
+        }
+    }
+    .buttons{
+        white-space: nowrap;
+    }
+    &-info .icon{
+        color: @info-color;
+    }
+    &-success .icon{
+        color: @success-color;
+    }
+    &-warning .icon{
+        color: @strong-color;
+    }
+    &-error .icon{
+        color: @danger-color;
+    }
+    &-info .content, &-success .content, &-warning .content, &-error .content{
+        padding-left: 30px;
+    }
     &-show{
-        opacity: 1;
+        display: flex;
     }
 }

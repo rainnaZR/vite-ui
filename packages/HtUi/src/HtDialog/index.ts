@@ -1,7 +1,6 @@
 import { App, render, createVNode } from "vue";
 import type { VNode } from "vue";
 import component from "./index.vue";
-import { SFCWithInstall } from "../types";
 import { DialogData } from "./types";
 
 const onRender = (options: DialogData) => {
