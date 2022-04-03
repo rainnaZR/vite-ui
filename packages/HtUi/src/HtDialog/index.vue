@@ -114,11 +114,28 @@ export default defineComponent({
       type: "text",
       content: "取消",
     };
+
+    /**
+     * 取消按钮点击
+     * @returns void
+     */
     const onCancel = () => {
       isShow.value = false;
+
+      /**
+       * 取消按钮事件触发
+       */
       emit("on-cancel");
     };
+
+    /**
+     * 确认按钮点击
+     * @returns void
+     */
     const onConfirm = () => {
+      /**
+       * 确认按钮事件触发
+       */
       emit("on-confirm");
     };
 
@@ -132,6 +149,10 @@ export default defineComponent({
       }
     );
     watch(isShow, (value) => {
+      /**
+       * 弹窗显示字段更新
+       * @param {Boolean} value 弹窗是否显示
+       */
       emit("update:visible", value);
     });
 
