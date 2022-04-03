@@ -132,7 +132,7 @@ export default defineComponent({
         {
           type: "search",
           content: "搜索",
-          onClick: () => alert("search事件触发！"),
+          onClick: () => console.log("search事件触发！"),
         },
       ],
       api: {
@@ -176,7 +176,6 @@ export default defineComponent({
       hooks: {},
     });
     const onAction = (options) => {
-      alert(options.type);
       console.log("options", options);
     };
 
@@ -245,7 +244,6 @@ export default defineComponent({
       ],
     });
     const onAction = (options) => {
-      alert(options.type);
       console.log("options", options);
     };
 
@@ -331,7 +329,6 @@ export default defineComponent({
       ],
     });
     const onAction = (options) => {
-      alert(options.type);
       console.log("options", options);
     };
 
@@ -382,7 +379,6 @@ export default defineComponent({
       ],
     });
     const onAction = (options) => {
-      alert(options.type);
       console.log("options", options);
     };
 
@@ -501,12 +497,11 @@ export default defineComponent({
         {
           type: "search",
           content: "搜索",
-          onClick: () => alert("search事件触发！"),
+          onClick: () => console.log("search事件触发！"),
         },
       ],
     });
     const onAction = (options) => {
-      alert(options.type);
       console.log("options", options);
     };
 

@@ -79,9 +79,11 @@ export default {
 </template>
 
 <script lang="ts">
+import { getCurrentInstance } from "vue";
 export default {
   setup() {
-    const onError = (err) => alert(err.message);
+    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
+    const onError = (err) => $toast.error(err.message);
     return { onError };
   },
 };
@@ -101,9 +103,11 @@ export default {
 </template>
 
 <script lang="ts">
+import { getCurrentInstance } from "vue";
 export default {
   setup() {
-    const onError = (err) => alert(err.message);
+    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
+    const onError = (err) => $toast.error(err.message);
     return { onError };
   },
 };
@@ -125,9 +129,11 @@ export default {
 </template>
 
 <script lang="ts">
+import { getCurrentInstance } from "vue";
 export default {
   setup() {
-    const onError = (err) => alert(err.message);
+    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
+    const onError = (err) => $toast.error(err.message);
     return { onError };
   },
 };
@@ -150,9 +156,11 @@ export default {
 </template>
 
 <script lang="ts">
+import { getCurrentInstance } from "vue";
 export default {
   setup() {
-    const onError = (err) => alert(err.message);
+    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
+    const onError = (err) => $toast.error(err.message);
     return { onError };
   },
 };
@@ -173,9 +181,11 @@ export default {
 </template>
 
 <script lang="ts">
+import { getCurrentInstance } from "vue";
 export default {
   setup() {
-    const onError = (err) => alert(err.message);
+    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
+    const onError = (err) => $toast.error(err.message);
     return { onError };
   },
 };

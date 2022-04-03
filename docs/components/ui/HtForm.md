@@ -557,7 +557,6 @@ export default {
     };
     const onSubmit = () => {
       formRef.value.onValidate().then(({ valid, invalidFields }) => {
-        alert(`${valid ? "submit" : "valid fail"}`);
         console.log(valid, invalidFields, model);
       });
     };
@@ -627,7 +626,6 @@ export default {
     };
     const onSubmit = () => {
       formRef.value.onValidate().then(({ valid, invalidFields }) => {
-        alert(`${valid ? "submit" : "valid fail"}`);
         console.log(valid, invalidFields, model);
       });
     };
@@ -702,7 +700,6 @@ export default {
     };
     const onSubmit = () => {
       formRef.value.onValidate().then(({ valid, invalidFields }) => {
-        alert(`${valid ? "submit" : "valid fail"}`);
         console.log(valid, invalidFields, model);
       });
     };
@@ -755,7 +752,6 @@ export default {
     });
     const onSubmit = () => {
       formRef.value.onValidate().then(({ valid, invalidFields }) => {
-        alert(`${valid ? "submit" : "valid fail"}`);
         console.log(valid, invalidFields, model);
       });
     };
@@ -934,7 +930,6 @@ export default {
     };
     const onSubmit = () => {
       formRef.value.onValidate().then(({ valid, invalidFields }) => {
-        alert(`${valid ? "submit" : "valid fail"}`);
         console.log(valid, invalidFields, model);
       });
     };

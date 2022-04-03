@@ -76,7 +76,7 @@
 <script lang="ts">
 export default {
   setup(){
-    const onClose = () => alert('关闭标签点击')
+    const onClose = () => console.log('关闭标签点击')
     return { onClose }
   }
 }
@@ -117,7 +117,7 @@ export default {
     const onClose = (tag) => {
       list.splice(list.indexOf(tag), 1);
     };
-    const onClick = (tag) => alert(tag);
+    const onClick = (tag) => console.log(tag);
     const onAdd = () => {
       list.push(tagValue.value);
       tagValue.value = "";

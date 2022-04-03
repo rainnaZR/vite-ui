@@ -31,6 +31,7 @@ import HtAction from "./src/HtAction"; // 行动点
 import HtLoading from "./src/HtLoading"; // 加载
 import HtEmpty from "./src/HtEmpty"; // 空态
 import HtToast from "./src/HtToast"; // 提示
+import HtDialog from "./src/HtDialog"; // 弹出框
 
 const components: any[] = [
   HtBreadCrumb,
@@ -63,6 +64,7 @@ const components: any[] = [
   HtLoading,
   HtEmpty,
   HtToast,
+  HtDialog,
 ];
 
 /**
@@ -106,6 +108,7 @@ export {
   HtLoading,
   HtEmpty,
   HtToast,
+  HtDialog,
 };
 export default {
   install,

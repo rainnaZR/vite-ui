@@ -38,7 +38,7 @@ export default defineComponent({
         },
       ],
     });
-    const onAction = (action) => alert(`行动点点击：类型为${action.type}`);
+    const onAction = (action) => console.log(`行动点点击：${action.content}`);
     return { data, onAction };
   }
 })
@@ -85,7 +85,7 @@ export default defineComponent({
         }
       ],
     });
-    const onAction = (action) => alert(`行动点点击：类型为${action.type}`);
+    const onAction = (action) => console.log(`行动点点击：${action.content}`);
     return { data, onAction };
   }
 })
@@ -140,7 +140,7 @@ export default defineComponent({
         }
       ],
     });
-    const onAction = (action) => alert(`行动点点击：类型为${action.type}`);
+    const onAction = (action) => console.log(`行动点点击：${action.content}`);
     return { data, onAction };
   }
 })
@@ -158,7 +158,7 @@ export default defineComponent({
 ```vue demo
 <template>
   <div style="width: 200px">
-    <ht-action :data="data">
+    <ht-action :data="data" @on-action="onAction">
       <template v-slot:button="scope">
         <ht-button>{{ scope.detail.content }}</ht-button>
       </template>
@@ -190,7 +190,7 @@ export default defineComponent({
         },
       ],
     });
-    const onAction = (action) => alert(`行动点点击：类型为${action.type}`);
+    const onAction = (action) => console.log(`行动点点击：${action.content}`);
     return { data, onAction };
   }
 })
@@ -208,7 +208,7 @@ export default defineComponent({
 ```vue demo
 <template>
   <div style="width: 200px">
-    <ht-action :data="data">
+    <ht-action :data="data" @on-action="onAction">
       <template v-slot:button="scope">
         <ht-button :data="{type: 'primary'}">{{ scope.detail.content }}</ht-button>
       </template>
@@ -244,7 +244,7 @@ export default defineComponent({
         },
       ],
     });
-    const onAction = (action) => alert(`行动点点击：类型为${action.type}`);
+    const onAction = (action) => console.log(`行动点点击：${action.content}`);
     return { data, onAction };
   }
 })

@@ -1,4 +1,5 @@
 import { App, createVNode, render } from "vue";
+import type { VNode } from "vue";
 import component from "./index.vue";
 import { ToastQueue, ToastData } from "./types";
 
@@ -20,7 +21,7 @@ const onRender = (
   const data: any = ["string", "number", "boolean"].includes(typeof options)
     ? { content: options }
     : options;
-  const vm: any = createVNode(component, {
+  const vm: VNode = createVNode(component, {
     data: {
       ...data,
       ...(extraOptions || {}),

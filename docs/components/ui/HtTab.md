@@ -34,7 +34,7 @@ export default {
         return {
             modelValue,
             tabData,
-            onClickTab: (tab, index, depth) => alert(`第${index+1}个导航点击，导航label值 '${tab.label}'，导航深度为${depth}`)
+            onClickTab: (tab, index, depth) => console.log(`第${index+1}个导航点击，导航label值 '${tab.label}'，导航深度为${depth}`)
         }
     }
 }

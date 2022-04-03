@@ -35,7 +35,7 @@
 export default {
     setup(){
         return {
-            onStop: () => alert('倒计时停止')
+            onStop: () => console.log('倒计时停止')
         }
     }
 }

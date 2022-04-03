@@ -1,9 +1,10 @@
 import { App, render, createVNode } from "vue";
+import type { VNode } from "vue";
 import component from "./index.vue";
 import { SFCWithInstall } from "../types";
 
 const $loading = (option: { lock: boolean } = { lock: false }) => {
-  let vnode: any = createVNode(component, {
+  let vnode: VNode = createVNode(component, {
     style: {
       position: "fixed",
     },

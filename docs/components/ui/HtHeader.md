@@ -55,8 +55,8 @@ export default {
 
         return {
             headerData,
-            onClickLogo: () => alert('logo点击'),
-            onClickTab: (tab, index) => alert(`第${index+1}个导航点击，导航label值 '${tab.label}'`)
+            onClickLogo: () => console.log('logo点击'),
+            onClickTab: (tab, index) => console.log(`第${index+1}个导航点击，导航label值 '${tab.label}'`)
         }
     }
 }

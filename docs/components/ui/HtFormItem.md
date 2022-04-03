@@ -166,7 +166,7 @@ export default {
             name: ""
         });
         const onValidate = () => {
-            formItemRef.value.onValidate(model).then(({valid}) => alert(`验证结果${valid}`));
+            formItemRef.value.onValidate(model).then(({valid}) => console.log(`验证结果${valid}`));
         }
         return {
             formItemRef,
