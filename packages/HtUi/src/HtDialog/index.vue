@@ -7,7 +7,7 @@
       'f-trans',
     ]"
     :style="data.wrapStyle"
-    @click="() => data.maskClosable && onCancel()"
+    @click="() => data.maskClosable !== false && onCancel()"
   >
     <div
       class="box f-pr"
@@ -19,7 +19,7 @@
       @click.stop
     >
       <ht-icon
-        v-if="data.closable"
+        v-if="data.closable !== false"
         class="close f-curp f-trans"
         :data="{ name: 'u-icon-close' }"
         @click="onCancel"
@@ -52,6 +52,7 @@
           <!-- 底部内容插槽 -->
           <slot name="footer">
             <ht-button
+              v-if="!data.hideCancelButton"
               :data="{
                 ...defaultCancelButton,
                 ...(data.cancelButton || {}),
@@ -59,6 +60,7 @@
               @click="onCancel"
             />
             <ht-button
+              v-if="!data.hideConfirmButton"
               :data="{
                 ...defaultConfirmButton,
                 ...(data.confirmButton || {}),

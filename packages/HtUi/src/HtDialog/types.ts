@@ -17,6 +17,8 @@ export interface DialogData {
   footerTips?: string | number; // 弹窗底部提示内容
   hideHeader?: boolean; // 是否隐藏顶部
   hideFooter?: boolean; // 是否隐藏底部
+  hideConfirmButton?: boolean; // 是否隐藏确认按钮
+  hideCancelButton?: boolean; // 是否隐藏取消按钮
   confirmButton?: ButtonData; // 确认按钮信息
   cancelButton?: ButtonData; // 取消按钮信息
 }

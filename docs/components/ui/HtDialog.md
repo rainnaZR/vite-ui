@@ -283,6 +283,9 @@ export default {
 
 - 组件设置顶部模块隐藏属性`hideHeader`，值为`布尔值`，默认值为`false`。
 - 组件设置底部模块隐藏属性`hideFooter`，值为`布尔值`，默认值为`false`。
+- 组件设置确认按钮隐藏属性`hideConfirmButton`，值为`布尔值`，默认值为`false`。
+- 组件设置取消按钮隐藏属性`hideCancelButton`，值为`布尔值`，默认值为`false`。
+
 
 
 :::Demo
@@ -301,7 +304,11 @@ export default {
     const visible = ref(false);
     const data = reactive({
       content: "您确认要删除用户夏洛特？",
-      hideFooter: true,
+      hideConfirmButton: true,
+      cancelButton: {
+        type: "success",
+        content: "我知道了",
+      },
     });
     return { visible, data };
   },
