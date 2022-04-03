@@ -108,7 +108,7 @@
             </div>
           </div>
           <!-- 文件名称 -->
-          <div class="fileName f-mt5 s-fc5 f-tac f-txtell">
+          <div class="fileName s-fc5 f-tac f-txtell">
             {{ file.name }}
           </div>
         </div>
