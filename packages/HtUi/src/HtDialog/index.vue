@@ -2,7 +2,7 @@
   <div
     :class="[
       'ht-dialog',
-      `ht-dialog-${type}`,
+      `ht-dialog-${data.type || 'warning'}`,
       { 'ht-dialog-show': isShow },
       'f-trans',
     ]"
@@ -25,33 +25,28 @@
         @click="onCancel"
       />
       <!-- 顶部内容 -->
-      <div
-        v-if="!data.hideHeader"
-        class="header f-mb5"
-        :style="data.headerStyle"
-      >
+      <div v-if="!data.hideHeader" class="header" :style="data.headerStyle">
         <!-- 顶部内容插槽 -->
         <slot name="header">
           <ht-icon
             class="icon f-mr10"
-            :data="{ name: `u-icon-${type}`, style: { fontSize: '20px' } }"
+            :data="{
+              name: `u-icon-${data.type || 'warning'}`,
+              style: { fontSize: '20px' },
+            }"
           />
           <div class="f-fs18 f-f1">{{ data.title || "提示" }}</div>
         </slot>
       </div>
 
       <!-- 主体内容 -->
-      <div class="content" :style="data.contentStyle">
+      <div class="content f-mt10 f-mb30" :style="data.contentStyle">
         <!-- 主体内容插槽 -->
         <slot>{{ data.content }}</slot>
       </div>
 
       <!-- 底部内容 -->
-      <div
-        v-if="!data.hideFooter"
-        class="footer f-mt30"
-        :style="data.footerStyle"
-      >
+      <div v-if="!data.hideFooter" class="footer" :style="data.footerStyle">
         <div class="f-mr10 f-fs13 s-fc6" v-html="data.footerTips"></div>
         <div class="buttons f-f1 f-tar">
           <!-- 底部内容插槽 -->
@@ -108,7 +103,6 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const type = props.data?.type || "warning";
     const isShow = ref(props.visible); // 是否显示
     const defaultConfirmButton = {
       type: "primary",
@@ -140,7 +134,6 @@ export default defineComponent({
     });
 
     return {
-      type,
       isShow,
       defaultConfirmButton,
       defaultCancelButton,

@@ -6,7 +6,7 @@ export interface DialogData {
   style?: object; // 弹窗样式
   headerStyle?: string | object; // 弹窗顶部样式
   contentStyle?: string | object; // 弹窗内容样式
-  footerStyle?: string | object; // 弹窗尾部样式
+  footerStyle?: string | object; // 弹窗底部样式
   closable?: boolean; // 是否显示关闭按钮
   maskClosable?: boolean; // 蒙层是否操作关闭
   type?: string; // 弹窗类型
