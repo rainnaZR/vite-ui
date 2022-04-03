@@ -52,15 +52,7 @@ export default {
 <template>
   <ht-button @on-click="visible = true">打开对话框</ht-button>
 
-  <ht-dialog v-model:visible="visible" :data="data">
-    <div>您确认要删除用户夏洛特？</div>
-    <template #footer>
-      <ht-button @click="visible = false">取消</ht-button>
-      <ht-button :data="{ type: 'primary' }" @click="visible = false">
-        确认
-      </ht-button>
-    </template>
-  </ht-dialog>
+  <ht-dialog v-model:visible="visible" :data="data" />
 </template>
 
 <script lang="ts">
@@ -70,6 +62,7 @@ export default {
   setup() {
     const visible = ref(false);
     const data = reactive({
+      content: '您确认要删除用户夏洛特？',
       wrapStyle: {
         background: "none",
       },
@@ -140,7 +133,6 @@ export default {
   setup() {
     const visible = ref(false);
     const data = ref({});
-
     const onShowDialog = (type) => {
       data.value = {
         type,
