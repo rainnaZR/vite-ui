@@ -104,7 +104,7 @@ export default {
   </ht-tag>
   <div class="f-df">
     <ht-input v-model:modelValue="tagValue" />
-    <ht-button class="f-ml10" :data="{ size: 'small' }" @on-click="onAdd">新增</ht-button>
+    <ht-button class="f-ml10" @on-click="onAdd">新增</ht-button>
   </div>
 </template>
 

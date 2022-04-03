@@ -108,7 +108,9 @@
             </div>
           </div>
           <!-- 文件名称 -->
-          <div class="f-mt5 s-fc5 f-tac">{{ file.name }}</div>
+          <div class="fileName f-mt5 s-fc5 f-tac f-txtell">
+            {{ file.name }}
+          </div>
         </div>
       </slot>
     </div>
@@ -315,9 +317,21 @@ export default defineComponent({
       options: any
     ) => {
       return new Promise((resolve, reject) => {
-        // 如果是图片，则校验尺寸，否则不校验
-        if (!options.isImage) {
+        // 如果没设置宽高，不用校验
+        if (!width && !height) {
           resolve(options);
+          return;
+        }
+        // 如果设置宽/高，但是格式非图片，则校验不通过
+        if ((width || height) && !options.isImage) {
+          const params = {
+            name: "DimensionError",
+            message: "文件有尺寸限制，仅支持图片格式！",
+            data: {
+              options,
+            },
+          };
+          reject(params);
           return;
         }
         // 读取图片数据
@@ -336,12 +350,6 @@ export default defineComponent({
               imgWidth,
               imgHeight,
             };
-
-            // 如果没设置宽高
-            if (!width && !height) {
-              resolve(result);
-              return;
-            }
             // 如果设置了宽高
             if (width && height) {
               if (
@@ -419,14 +427,11 @@ export default defineComponent({
             onReset();
             const src = `${IMAGE_DOMAIN}/${result.data.key}.${extension}`;
             const srcArr = src.split("/");
-            const { imgWidth, imgHeight } = options;
             const imgData = {
               ...options,
               src,
               name: srcArr[srcArr.length - 1],
-              thumbSrc: `${src}?imageView2/1/w/${Math.round(
-                (imgWidth / imgHeight) * 200
-              )}/h/200`,
+              thumbSrc: src,
             };
             files.push(imgData);
 
