@@ -16,6 +16,12 @@
         height: data.height,
       }"
     >
+      <ht-icon
+        v-if="data.closable"
+        class="close f-curp f-trans"
+        :data="{ name: 'u-icon-close' }"
+        @click="onClose"
+      />
       <!-- 顶部内容 -->
       <div
         v-if="!data.hideHeader"
@@ -29,12 +35,6 @@
             :data="{ name: `u-icon-${type}`, style: { fontSize: '20px' } }"
           />
           <div class="f-fs18 f-f1">{{ data.title }}</div>
-          <ht-icon
-            v-if="data.closable"
-            class="close f-curp f-trans"
-            :data="{ name: 'u-icon-close' }"
-            @click="onClose"
-          />
         </slot>
       </div>
 

@@ -7,14 +7,13 @@ export interface DialogData {
   headerStyle?: string | object; // 弹窗顶部样式
   contentStyle?: string | object; // 弹窗内容样式
   footerStyle?: string | object; // 弹窗尾部样式
-  lock?: boolean; // 是否锁住屏幕，禁止滚动
+  closable?: boolean; // 是否显示关闭按钮
   type?: string; // 弹窗类型
   width?: string | number; // 弹窗宽度
   height?: string | number; // 弹窗高度
   title?: string | number; // 弹窗标题
   content?: string | number; // 弹窗内容
   footerTips?: string | number; // 弹窗底部提示内容
-  closable?: boolean; // 是否显示关闭按钮
   hideHeader?: boolean; // 是否隐藏顶部
   hideFooter?: boolean; // 是否隐藏底部
   confirmButton?: ButtonData; // 确认按钮信息
