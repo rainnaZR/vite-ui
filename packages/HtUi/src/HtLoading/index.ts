@@ -18,7 +18,7 @@ const $loading = (option: { lock: boolean } = { lock: false }) => {
   const close = () => {
     render(null, document.body);
     document.body.style.overflow = "visible";
-    vnode = null;
+    // vnode = null;
   };
   return {
     show,

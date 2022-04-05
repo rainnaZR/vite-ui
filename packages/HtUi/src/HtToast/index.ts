@@ -3,6 +3,8 @@ import type { VNode } from "vue";
 import component from "./index.vue";
 import { ToastQueue, ToastData } from "./types";
 
+type Options = string | number | boolean | ToastData | undefined;
+
 const instances: ToastQueue = [];
 
 const onGetOffset = (offset?: number) => {
@@ -14,10 +16,7 @@ const onGetOffset = (offset?: number) => {
   return verticalOffset;
 };
 
-const onRender = (
-  options: string | number | boolean | ToastData,
-  extraOptions = {}
-) => {
+const onRender = (options: Options, extraOptions = {}) => {
   const data: any = ["string", "number", "boolean"].includes(typeof options)
     ? { content: options }
     : options;
@@ -33,25 +32,25 @@ const onRender = (
   document.body.appendChild(container.firstElementChild!);
 };
 
-const $toast = (options: string | number | boolean | ToastData) => {
+const $toast = (options: Options) => {
   onRender(options);
 };
-$toast.info = (options: string | number | boolean | ToastData) => {
+$toast.info = (options: Options) => {
   onRender(options, {
     type: "info",
   });
 };
-$toast.success = (options: string | number | boolean | ToastData) => {
+$toast.success = (options: Options) => {
   onRender(options, {
     type: "success",
   });
 };
-$toast.error = (options: string | number | boolean | ToastData) => {
+$toast.error = (options: Options) => {
   onRender(options, {
     type: "error",
   });
 };
-$toast.warning = (options: string | number | boolean | ToastData) => {
+$toast.warning = (options: Options) => {
   onRender(options, {
     type: "warning",
   });
