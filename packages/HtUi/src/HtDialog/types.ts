@@ -21,6 +21,8 @@ export interface DialogData {
   hideCancelButton?: boolean; // 是否隐藏取消按钮
   confirmButton?: ButtonData; // 确认按钮信息
   cancelButton?: ButtonData; // 取消按钮信息
+  onConfirm: any; // 确认按钮点击事件
+  onCancel: any; // 取消按钮点击事件
 }
 
 export type Props = PublicProps<{

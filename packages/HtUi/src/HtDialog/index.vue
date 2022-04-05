@@ -121,6 +121,7 @@ export default defineComponent({
      */
     const onCancel = () => {
       isShow.value = false;
+      props.data.onCancel && props.data.onCancel();
 
       /**
        * 取消按钮事件触发
@@ -133,6 +134,7 @@ export default defineComponent({
      * @returns void
      */
     const onConfirm = () => {
+      props.data.onConfirm && props.data.onConfirm();
       /**
        * 确认按钮事件触发
        */

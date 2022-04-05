@@ -356,3 +356,41 @@ export default {
 </script>
 ```
 :::
+
+
+
+- 组件可定义确认按钮点击事件属性`onConfirm`，值为`函数`。
+- 组件可定义取消按钮点击事件属性`onCancel`，值为`函数`。
+
+
+
+
+:::Demo
+```vue demo
+<template>
+  <ht-button @on-click="onShowDialog">打开对话框</ht-button>
+</template>
+
+<script lang="ts">
+import { getCurrentInstance } from "vue";
+export default {
+  setup() {
+    const { $dialog } = getCurrentInstance().appContext.config.globalProperties;
+    const onShowDialog = () => {
+      $dialog.show({
+        title: "用户删除",
+        content: "你确认要删除用户啦啦啦吗？",
+        onConfirm: () => {
+          console.log("确认按钮点击");
+        },
+        onCancel: () => {
+          console.log("取消按钮点击");
+        },
+      });
+    };
+    return { onShowDialog };
+  },
+};
+</script>
+```
+:::
