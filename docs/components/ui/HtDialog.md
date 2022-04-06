@@ -384,6 +384,7 @@ export default {
           console.log("确认按钮点击");
         },
         onCancel: () => {
+          $dialog.close();
           console.log("取消按钮点击");
         },
       });
