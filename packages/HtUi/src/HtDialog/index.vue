@@ -42,7 +42,7 @@
       <!-- 主体内容 -->
       <div class="content f-mt10 f-mb30" :style="data.contentStyle">
         <!-- 主体内容插槽 -->
-        <slot>{{ data.content }}</slot>
+        <slot><div v-html="data.content"></div></slot>
       </div>
 
       <!-- 底部内容 -->
