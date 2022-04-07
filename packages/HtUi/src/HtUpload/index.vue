@@ -178,10 +178,14 @@ export default defineComponent({
      * @returns {Object} object 文件后缀对象，值包含extension，isImage
      */
     const onGetExtension = (path: string) => {
-      const extension = path
-        ?.substring(path.lastIndexOf(".") + 1)
+      if (path.indexOf("?") > -1) path = path.substring(0, path.indexOf("?"));
+      const pathArr = path.split("/");
+      const name = pathArr[pathArr.length - 1];
+      const extension = name
+        ?.substring(name.lastIndexOf(".") + 1)
         ?.toLowerCase();
       return {
+        name,
         extension,
         isImage: ["png", "jpg", "jpeg", "bmp", "webp"].includes(extension),
       };
@@ -192,8 +196,8 @@ export default defineComponent({
      * @returns {Array} files 文件对象列表
      */
     const onGetFiles = (value: string | FileItem[] | any[]) => {
-      const files: any[] = Array.isArray(value) ? value : [value];
-      return files
+      const targetFiles: any[] = Array.isArray(value) ? value : [value];
+      return targetFiles
         ?.filter((file: string | FileItem) => !!file)
         ?.map((file: string | FileItem) => {
           if (typeof file === "string") {
@@ -632,18 +636,6 @@ export default defineComponent({
         index,
       });
     };
-
-    // 监听参数 modelValue 的变化
-    watch(
-      () => props.modelValue,
-      (value) => {
-        files.length = 0;
-        files.push(...onGetFiles(value));
-      },
-      {
-        immediate: true,
-      }
-    );
 
     // 监听文件列表变化
     watch(files, (value) => {
