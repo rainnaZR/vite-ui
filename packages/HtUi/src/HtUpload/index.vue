@@ -17,7 +17,11 @@
     </slot>
     <div class="list">
       <!-- 上传按钮插槽 -->
-      <slot name="upload" :files="files">
+      <slot
+        v-if="!data.limit || files.length < data.limit"
+        name="upload"
+        :files="files"
+      >
         <div v-if="data.uploadBtnText" class="btn f-mb10">
           <ht-button
             :data="{
