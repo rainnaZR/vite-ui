@@ -119,7 +119,7 @@ export default defineComponent({
           ],
         },
       ],
-      action: [
+      actions: [
         {
           type: "submit",
           content: "确认",
@@ -442,7 +442,7 @@ export default defineComponent({
 ### 操作项
 
 - 组件默认操作项`submit`和`reset`。
-- 组件可自定义操作项属性`action`，值为`数组`，每个子项可以是`字符串`或`对象`。
+- 组件可自定义操作项属性`actions`，值为`数组`，每个子项可以是`字符串`或`对象`。
 
 
 ::: Demo
@@ -484,7 +484,7 @@ export default defineComponent({
           ],
         },
       ],
-      action: [
+      actions: [
         {
           type: "submit",
           content: "确认",

@@ -74,7 +74,7 @@ export interface FormPageData {
 
   fields?: FieldItem[]; // 表单字段组
   group?: GroupItem[]; // 表单选项组
-  action: string[] | ActionItem[]; // 操作按钮
+  actions: string[] | ActionItem[]; // 操作按钮
   api?: ApiData; // 接口
   hooks?: HooksData; // 钩子函数
 }

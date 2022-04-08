@@ -219,7 +219,7 @@ export default defineComponent({
 
     // 表单操作行为
     const formActions = computed(() =>
-      onInitActions(props.data?.action, defaultActions)
+      onInitActions(props.data?.actions, defaultActions)
     );
 
     /**

@@ -68,7 +68,7 @@ export default defineComponent({
           },
         },
       ],
-      action: [
+      actions: [
         {
           type: "submit",
           content: "登录",
