@@ -3,6 +3,7 @@ import { PublicProps } from "../types";
 export interface TreeItem {
   id: number | string; // 唯一标识符
   label: string; // 标签内容
+  spread?: boolean; // 是否展开
   disabled?: boolean; // 是否禁用
   children?: TreeItem[]; // 子标签数组
 }
