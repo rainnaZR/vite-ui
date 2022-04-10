@@ -366,8 +366,7 @@ export default defineComponent({
 
       /**
        * 表单按钮点击事件触发
-       * @param {String} type 按钮点击类型
-       * @param {Object} formModel 表单数据
+       * @param {Object} options 回调参数，值为{type, formModel}
        */
       emit("on-action", {
         type,
