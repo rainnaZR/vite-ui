@@ -4,8 +4,8 @@
       <div class="item f-df f-aic f-trans f-curp" @click.stop="onSpread(item)">
         <!-- 展开/收起 -->
         <ht-icon
-          v-if="item.children && item.children.length"
           :class="[
+            { 'icon-hide': !item.children || !item.children.length },
             {
               'icon-spread': item.spread,
             },
@@ -20,8 +20,22 @@
         <!-- 选择框 -->
         <ht-icon
           v-if="data.showCheckbox"
-          class="f-mr5"
-          :data="{ name: 'u-icon-checkbox', style: { color: '#ccc' } }"
+          :class="[
+            {
+              'icon-disabled': item.disabled,
+            },
+            'f-mr5',
+          ]"
+          :data="{
+            name: `${
+              item.checked ? 'u-icon-checkboxCheck' : 'u-icon-checkbox'
+            } `,
+            style: {
+              fontSize: '18px',
+              color: `${item.checked && !item.disabled ? '#1677FF' : '#ccc'}`,
+            },
+          }"
+          @click.stop="onCheck(item)"
         />
         <!-- 标签插槽 -->
         <slot :label="item.label" depth="1">
@@ -46,8 +60,8 @@
           >
             <!-- 展开/收起 -->
             <ht-icon
-              v-if="subItem.children && subItem.children.length"
               :class="[
+                { 'icon-hide': !subItem.children || !subItem.children.length },
                 {
                   'icon-spread': subItem.spread,
                 },
@@ -62,8 +76,24 @@
             <!-- 选择框 -->
             <ht-icon
               v-if="data.showCheckbox"
-              class="f-mr5"
-              :data="{ name: 'u-icon-checkbox', style: { color: '#ccc' } }"
+              :class="[
+                {
+                  'icon-disabled': subItem.disabled,
+                },
+                'f-mr5',
+              ]"
+              :data="{
+                name: `${
+                  subItem.checked ? 'u-icon-checkboxCheck' : 'u-icon-checkbox'
+                } `,
+                style: {
+                  fontSize: '18px',
+                  color: `${
+                    subItem.checked && !subItem.disabled ? '#1677FF' : '#ccc'
+                  }`,
+                },
+              }"
+              @click.stop="onCheck(subItem)"
             />
             <!-- 标签插槽 -->
             <slot :label="subItem.label" depth="2">
@@ -88,8 +118,11 @@
               >
                 <!-- 展开/收起 -->
                 <ht-icon
-                  v-if="subSubItem.children && subSubItem.children.length"
                   :class="[
+                    {
+                      'icon-hide':
+                        !subSubItem.children || !subSubItem.children.length,
+                    },
                     {
                       'icon-spread': subSubItem.spread,
                     },
@@ -104,8 +137,28 @@
                 <!-- 选择框 -->
                 <ht-icon
                   v-if="data.showCheckbox"
-                  class="f-mr5"
-                  :data="{ name: 'u-icon-checkbox', style: { color: '#ccc' } }"
+                  :class="[
+                    {
+                      'icon-disabled': subSubItem.disabled,
+                    },
+                    'f-mr5',
+                  ]"
+                  :data="{
+                    name: `${
+                      subSubItem.checked
+                        ? 'u-icon-checkboxCheck'
+                        : 'u-icon-checkbox'
+                    } `,
+                    style: {
+                      fontSize: '18px',
+                      color: `${
+                        subSubItem.checked && !subSubItem.disabled
+                          ? '#1677FF'
+                          : '#ccc'
+                      }`,
+                    },
+                  }"
+                  @click.stop="onCheck(subSubItem)"
                 />
                 <!-- 标签插槽 -->
                 <slot :label="subSubItem.label" depth="3">
@@ -132,10 +185,12 @@
                   >
                     <!-- 展开/收起 -->
                     <ht-icon
-                      v-if="
-                        subSubSubItem.children && subSubSubItem.children.length
-                      "
                       :class="[
+                        {
+                          'icon-hide':
+                            !subSubSubItem.children ||
+                            !subSubSubItem.children.length,
+                        },
                         {
                           'icon-spread': subSubSubItem.spread,
                         },
@@ -150,11 +205,28 @@
                     <!-- 选择框 -->
                     <ht-icon
                       v-if="data.showCheckbox"
-                      class="f-mr5"
+                      :class="[
+                        {
+                          'icon-disabled': subSubSubItem.disabled,
+                        },
+                        'f-mr5',
+                      ]"
                       :data="{
-                        name: 'u-icon-checkbox',
-                        style: { color: '#ccc' },
+                        name: `${
+                          subSubSubItem.checked
+                            ? 'u-icon-checkboxCheck'
+                            : 'u-icon-checkbox'
+                        } `,
+                        style: {
+                          fontSize: '18px',
+                          color: `${
+                            subSubSubItem.checked && !subSubSubItem.disabled
+                              ? '#1677FF'
+                              : '#ccc'
+                          }`,
+                        },
                       }"
+                      @click.stop="onCheck(subSubSubItem)"
                     />
                     <!-- 标签插槽 -->
                     <slot :label="subSubSubItem.label" depth="4">
@@ -172,7 +244,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, onMounted, PropType, reactive } from "vue";
 import { TreeData, TreeItem } from "./types";
 
 // 树状组件，列表数据以树状结构展示，可展开收起，也可选中。
@@ -191,20 +263,54 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const onInitList = (data: TreeItem, depth: number, callback: Function) => {
-      data.depth = depth;
-      if (typeof data === "object") data = callback(data);
-      data.children?.map((i: TreeItem) => onInitList(i, depth + 1, callback));
+    const onInitList = (data: TreeItem, options: any, callback: Function) => {
+      data = {
+        ...data,
+        ...options,
+      };
+      callback(data);
+      if (data.children) {
+        data.children = data.children?.map((i: TreeItem, index: number) =>
+          onInitList(
+            i,
+            {
+              ...options,
+              depth: options.depth + 1,
+              parentId: data.id,
+              indexArr: options.indexArr.concat(index),
+            },
+            callback
+          )
+        );
+      }
       return data;
     };
+    const onShowSpread = (data: TreeItem) => {
+      if (data.spread !== undefined) return !!data.spread;
+      const { spreadConfig, spreadDepth } = props.data;
+      if (spreadConfig)
+        return !!spreadConfig?.value?.includes(data[spreadConfig?.key || "id"]);
+      return !spreadDepth || !!(data.depth && data.depth < spreadDepth);
+    };
+    const spreadList: TreeItem[] = reactive([]);
+    const checkList: TreeItem[] = reactive([]);
     const list = reactive(
-      props.data.list?.map((i: TreeItem) =>
-        onInitList(i, 1, (data: TreeItem) => ({
-          ...data,
-          spread: false,
-        }))
+      props.data.list?.map((i: TreeItem, index: number) =>
+        onInitList(i, { depth: 1, indexArr: [index] }, (data: TreeItem) => {
+          data.spread = onShowSpread(data);
+          if (data.spread) spreadList.push(data);
+        })
       )
     );
+    const onInitSpreadList = () => {
+      if (!spreadList || !spreadList.length) return;
+      spreadList.forEach((data: any) => {
+        data.indexArr.reduce((item: TreeItem, index: number) => {
+          item[index].spread = true;
+          return item[index].children;
+        }, list);
+      });
+    };
 
     const onSpread = (item: TreeItem) => {
       item.spread = !item.spread;
@@ -212,11 +318,32 @@ export default defineComponent({
     const onGetHeight = () => {
       return "auto";
     };
+    const onCheck = (item: TreeItem) => {
+      if (item.disabled) return;
+      item.checked = !item.checked;
+      const index = checkList.findIndex((i) => i.id === item.id);
+      if (item.checked && index < 0) {
+        checkList.push(item);
+      } else if (!item.checked && index > -1) {
+        checkList.splice(index, 1);
+      }
+      if (item.children && item.children.length > 0) {
+        item.children.forEach((subItem) => onCheck(subItem));
+      }
+    };
+
+    onMounted(() => {
+      onInitSpreadList();
+    });
+
+    console.log(11, list);
 
     return {
       list,
       onSpread,
       onGetHeight,
+      onInitSpreadList,
+      onCheck,
     };
   },
 });

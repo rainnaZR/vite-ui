@@ -215,6 +215,7 @@ img[src=""],img:not([src]){
 .f-pointer{ pointer-events: auto; }
 .f-curp{ cursor: pointer; }
 .f-curd{ cursor: default; }
+.f-curna{ cursor: not-allowed; }
 .f-trans{ transition: all .3s; }
 
 /* 单行隐藏 */

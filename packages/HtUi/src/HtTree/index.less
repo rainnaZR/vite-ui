@@ -18,7 +18,16 @@
             padding-left: @tree-padding * 3;
         }
     }
-    .icon-spread{
-        transform: rotate(90deg);
+    .icon{
+        &-hide{
+            opacity: 0;
+        }
+        &-spread{
+            transform: rotate(90deg);
+        }
+        &-disabled{
+            cursor: not-allowed;
+            opacity: .5;
+        }
     }
 }
