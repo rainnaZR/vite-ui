@@ -84,7 +84,7 @@
             >
               <div
                 class="item item-2 f-df f-aic f-trans f-curp"
-                @click.stop="onSpread(subItem)"
+                @click.stop="onSpread(subSubItem)"
               >
                 <!-- 展开/收起 -->
                 <ht-icon
@@ -128,7 +128,7 @@
                 >
                   <div
                     class="item item-3 f-df f-aic f-trans f-curp"
-                    @click.stop="onSpread(subItem)"
+                    @click.stop="onSpread(subSubSubItem)"
                   >
                     <!-- 展开/收起 -->
                     <ht-icon
@@ -191,17 +191,16 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const itemHeight = 28.8;
-    const onInitList = (data: TreeItem, callback: Function) => {
+    const onInitList = (data: TreeItem, depth: number, callback: Function) => {
+      data.depth = depth;
       if (typeof data === "object") data = callback(data);
-      data.children?.map((i: TreeItem) => onInitList(i, callback));
+      data.children?.map((i: TreeItem) => onInitList(i, depth + 1, callback));
       return data;
     };
     const list = reactive(
       props.data.list?.map((i: TreeItem) =>
-        onInitList(i, (data: TreeItem) => ({
+        onInitList(i, 1, (data: TreeItem) => ({
           ...data,
-          show: true,
           spread: false,
         }))
       )
@@ -210,9 +209,8 @@ export default defineComponent({
     const onSpread = (item: TreeItem) => {
       item.spread = !item.spread;
     };
-
-    const onGetHeight = (itemList: TreeItem[]) => {
-      return `${itemHeight * itemList.length}px`;
+    const onGetHeight = () => {
+      return "auto";
     };
 
     return {
