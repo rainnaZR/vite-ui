@@ -1,6 +1,6 @@
 <template>
   <div class="ht-tree f-unselect">
-    <div v-for="(item, index) in list" :key="index">
+    <div v-for="(item, index) in state.list" :key="index">
       <div class="item f-df f-aic f-trans f-curp" @click.stop="onSpread(item)">
         <!-- 展开/收起 -->
         <ht-icon
@@ -28,11 +28,19 @@
           ]"
           :data="{
             name: `${
-              item.checked ? 'u-icon-checkboxCheck' : 'u-icon-checkbox'
+              item.checked === 1
+                ? 'u-icon-checkboxCheck'
+                : item.checked === 2
+                ? 'u-icon-checkboxHalfChecked'
+                : item.disabled
+                ? 'u-icon-checkboxDisabled'
+                : 'u-icon-checkbox'
             } `,
             style: {
               fontSize: '18px',
-              color: `${item.checked && !item.disabled ? '#1677FF' : '#ccc'}`,
+              color: `${
+                item.checked > 0 && !item.disabled ? '#1677FF' : '#ccc'
+              }`,
             },
           }"
           @click.stop="onCheck(item)"
@@ -47,7 +55,7 @@
         v-if="item.children && item.children.length"
         class="f-trans f-oh"
         :style="{
-          height: item.spread ? onGetHeight(item.children) : '0px',
+          height: item.spread ? 'auto' : '0px',
         }"
       >
         <div
@@ -84,12 +92,20 @@
               ]"
               :data="{
                 name: `${
-                  subItem.checked ? 'u-icon-checkboxCheck' : 'u-icon-checkbox'
+                  subItem.checked === 1
+                    ? 'u-icon-checkboxCheck'
+                    : subItem.checked === 2
+                    ? 'u-icon-checkboxHalfChecked'
+                    : subItem.disabled
+                    ? 'u-icon-checkboxDisabled'
+                    : 'u-icon-checkbox'
                 } `,
                 style: {
                   fontSize: '18px',
                   color: `${
-                    subItem.checked && !subItem.disabled ? '#1677FF' : '#ccc'
+                    subItem.checked > 0 && !subItem.disabled
+                      ? '#1677FF'
+                      : '#ccc'
                   }`,
                 },
               }"
@@ -105,7 +121,7 @@
             v-if="subItem.children && subItem.children.length"
             class="f-trans f-oh"
             :style="{
-              height: subItem.spread ? onGetHeight(subItem.children) : '0px',
+              height: subItem.spread ? 'auto' : '0px',
             }"
           >
             <div
@@ -145,14 +161,18 @@
                   ]"
                   :data="{
                     name: `${
-                      subSubItem.checked
+                      subSubItem.checked === 1
                         ? 'u-icon-checkboxCheck'
+                        : subSubItem.checked === 2
+                        ? 'u-icon-checkboxHalfChecked'
+                        : subSubItem.disabled
+                        ? 'u-icon-checkboxDisabled'
                         : 'u-icon-checkbox'
                     } `,
                     style: {
                       fontSize: '18px',
                       color: `${
-                        subSubItem.checked && !subSubItem.disabled
+                        subSubItem.checked > 0 && !subSubItem.disabled
                           ? '#1677FF'
                           : '#ccc'
                       }`,
@@ -170,9 +190,7 @@
                 v-if="subSubItem.children && subSubItem.children.length"
                 class="f-trans f-oh"
                 :style="{
-                  height: subSubItem.spread
-                    ? onGetHeight(subSubItem.children)
-                    : '0px',
+                  height: subSubItem.spread ? 'auto' : '0px',
                 }"
               >
                 <div
@@ -213,14 +231,18 @@
                       ]"
                       :data="{
                         name: `${
-                          subSubSubItem.checked
+                          subSubSubItem.checked === 1
                             ? 'u-icon-checkboxCheck'
+                            : subSubSubItem.checked === 2
+                            ? 'u-icon-checkboxHalfChecked'
+                            : subSubSubItem.disabled
+                            ? 'u-icon-checkboxDisabled'
                             : 'u-icon-checkbox'
                         } `,
                         style: {
                           fontSize: '18px',
                           color: `${
-                            subSubSubItem.checked && !subSubSubItem.disabled
+                            subSubSubItem.checked > 0 && !subSubSubItem.disabled
                               ? '#1677FF'
                               : '#ccc'
                           }`,
@@ -244,7 +266,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, reactive } from "vue";
+import { defineComponent, onMounted, PropType, reactive, watch } from "vue";
 import { TreeData, TreeItem } from "./types";
 
 // 树状组件，列表数据以树状结构展示，可展开收起，也可选中。
@@ -263,86 +285,162 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const onInitList = (data: TreeItem, options: any, callback: Function) => {
-      data = {
-        ...data,
-        ...options,
-      };
-      callback(data);
-      if (data.children) {
-        data.children = data.children?.map((i: TreeItem, index: number) =>
-          onInitList(
-            i,
-            {
-              ...options,
-              depth: options.depth + 1,
-              parentId: data.id,
-              indexArr: options.indexArr.concat(index),
-            },
-            callback
-          )
-        );
-      }
-      return data;
-    };
-    const onShowSpread = (data: TreeItem) => {
+    const state: any = reactive({
+      spreadList: [],
+      checkedList: [],
+      list: [],
+    });
+
+    const onIsSpread = (data: TreeItem) => {
       if (data.spread !== undefined) return !!data.spread;
       const { spreadConfig, spreadDepth } = props.data;
       if (spreadConfig)
         return !!spreadConfig?.value?.includes(data[spreadConfig?.key || "id"]);
       return !spreadDepth || !!(data.depth && data.depth < spreadDepth);
     };
-    const spreadList: TreeItem[] = reactive([]);
-    const checkList: TreeItem[] = reactive([]);
-    const list = reactive(
-      props.data.list?.map((i: TreeItem, index: number) =>
-        onInitList(i, { depth: 1, indexArr: [index] }, (data: TreeItem) => {
-          data.spread = onShowSpread(data);
-          if (data.spread) spreadList.push(data);
-        })
-      )
+
+    const onIsChecked = (data: TreeItem) => {
+      if (data.checked !== undefined) return ~~data.checked;
+      const { checkedConfig } = props.data;
+      return ~~checkedConfig?.value?.includes(data[checkedConfig?.key || "id"]);
+    };
+
+    const onInitList = (data: any) => {
+      data.depth = data.depth || 1;
+      data.spread = onIsSpread(data);
+      data.checked = onIsChecked(data); // 有三个状态，0不选择，1选择，2部分选择
+      if (data.spread) state.spreadList.push(data);
+      if (data.checked === 1) state.checkedList.push(data);
+      if (data.children) {
+        data.children = data.children?.map((i: TreeItem, index: number) =>
+          onInitList({
+            ...i,
+            depth: data.depth + 1,
+            parentId: data.id,
+            indexArr: data.indexArr.concat(index),
+          })
+        );
+      }
+      return data;
+    };
+
+    state.list = props.data.list?.map((i: TreeItem, index: number) =>
+      onInitList({
+        ...i,
+        indexArr: [index],
+      })
     );
-    const onInitSpreadList = () => {
-      if (!spreadList || !spreadList.length) return;
-      spreadList.forEach((data: any) => {
-        data.indexArr.reduce((item: TreeItem, index: number) => {
-          item[index].spread = true;
-          return item[index].children;
-        }, list);
+
+    const onSetChildrenCheckStatus = (data: TreeItem, checkedValue: number) => {
+      if (!data.disabled) {
+        data.checked = checkedValue;
+        const index = state.checkedList.findIndex(
+          (i: TreeItem) => i.id === data.id
+        );
+        if (checkedValue === 1 && index < 0) {
+          state.checkedList.push(data);
+        } else if (!checkedValue && index > -1) {
+          state.checkedList.splice(index, 1);
+        }
+      }
+      data.children?.forEach((item) =>
+        onSetChildrenCheckStatus(item, checkedValue)
+      );
+    };
+
+    const getCheckStatus = (node: TreeItem[]) => {
+      let all = true;
+      let none = true;
+      let allDisabled = true;
+      for (let i = 0, j = node.length; i < j; i++) {
+        const n = node[i];
+        if (n.checked !== 1 || n.disabled) {
+          all = false;
+        }
+        if (n.checked === 1 || n.checked === 2) {
+          none = false;
+        }
+        if (!n.disabled) allDisabled = false;
+      }
+
+      return { all, none, allDisabled, half: !all && !none };
+    };
+
+    const onSetParentCheckStatus = (data: TreeItem) => {
+      const { depth, indexArr } = data;
+      if (!depth || depth === 1 || !indexArr) return;
+      // 获得父级元素的索引值
+      const nodeIndexArr: any[] = indexArr?.reduce(
+        (result: any[], value: number, index: number) => {
+          result.push((result[index - 1] || []).concat(value));
+          return result;
+        },
+        []
+      );
+      // 遍历父级元素的索引值，设置父元素的状态
+      nodeIndexArr.pop(); // 去掉最后一个元素，最后一个元素为当前选中元素
+      nodeIndexArr.reverse().forEach((nodeIndex: number[]) => {
+        const node = nodeIndex.reduce(
+          (item: TreeItem, value: number, index: number) => {
+            return index === nodeIndex.length - 1
+              ? item[value]
+              : item[value].children;
+          },
+          state.list
+        );
+        if (!node.children || !node.children) return;
+        const { all, none, half, allDisabled } = getCheckStatus(node.children);
+        node.checked = all ? 1 : half ? 2 : none ? 0 : 0;
+        node.disabled = allDisabled;
       });
+    };
+
+    const onUpdateCheckStatus = (data: TreeItem, checkedValue: number) => {
+      // 状态更新有两步：
+      // 1. 向下查找更新子级的状态
+      onSetChildrenCheckStatus(data, checkedValue);
+      // 2. 向上查找更新父级以上的状态
+      onSetParentCheckStatus(data);
     };
 
     const onSpread = (item: TreeItem) => {
       item.spread = !item.spread;
     };
-    const onGetHeight = () => {
-      return "auto";
-    };
+
     const onCheck = (item: TreeItem) => {
       if (item.disabled) return;
-      item.checked = !item.checked;
-      const index = checkList.findIndex((i) => i.id === item.id);
-      if (item.checked && index < 0) {
-        checkList.push(item);
-      } else if (!item.checked && index > -1) {
-        checkList.splice(index, 1);
-      }
-      if (item.children && item.children.length > 0) {
-        item.children.forEach((subItem) => onCheck(subItem));
-      }
+      onUpdateCheckStatus(item, !item.checked ? 1 : 0);
+    };
+
+    const onInitSpreadStatus = () => {
+      state.spreadList?.forEach((data: any) => {
+        data.indexArr?.reduce((item: TreeItem, index: number) => {
+          item[index].spread = true;
+          return item[index].children;
+        }, state.list);
+      });
+    };
+
+    const onInitCheckedStatus = () => {
+      state.checkedList?.forEach((data: TreeItem) => {
+        onUpdateCheckStatus(data, 1);
+      });
     };
 
     onMounted(() => {
-      onInitSpreadList();
+      onInitSpreadStatus();
+      onInitCheckedStatus();
     });
 
-    console.log(11, list);
+    watch(state.checkedList, (value) => {
+      console.log(12222223, value);
+    });
 
     return {
-      list,
+      state,
+      onInitSpreadStatus,
+      onInitCheckedStatus,
       onSpread,
-      onGetHeight,
-      onInitSpreadList,
       onCheck,
     };
   },
