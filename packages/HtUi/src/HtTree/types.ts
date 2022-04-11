@@ -9,16 +9,15 @@ export interface TreeItem {
   children?: TreeItem[]; // 子数组
 
   parentId?: number; // 父级ID
-  depth?: number; // 层级
-  indexArr?: number[]; // 索引路径
+  depth?: number; // 层级，值为数字
+  indexArr?: number[]; // 索引路径，值为索引数组
 }
 
 export interface TreeData {
   list: TreeItem[]; // 树列表
-  spreadDepth?: number; // 默认展开树的层级，为0表示全部展开
-  spreadConfig?: any; // 默认展开树的配置项
   showCheckbox?: boolean; // 是否展示选择框
-  checkedConfig?: any; // 默认选中项配置
+  checkedConfig?: any; // 默认选中项的配置，值为{key, value}
+  spreadConfig?: any; // 默认展开树的配置，值为{key, value, depth}
 }
 
 export type Props = PublicProps<{

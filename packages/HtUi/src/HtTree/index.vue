@@ -291,20 +291,34 @@ export default defineComponent({
       list: [],
     });
 
+    /**
+     * 判断节点是否展开
+     * @param  {Object} data 树节点数据
+     * @returns {Boolean} isSpread 节点是否展开，true展开/false不展开
+     */
     const onIsSpread = (data: TreeItem) => {
       if (data.spread !== undefined) return !!data.spread;
-      const { spreadConfig, spreadDepth } = props.data;
-      if (spreadConfig)
-        return !!spreadConfig?.value?.includes(data[spreadConfig?.key || "id"]);
-      return !spreadDepth || !!(data.depth && data.depth < spreadDepth);
+      const { spreadConfig: { key, value, depth } = {} } = props.data;
+      if (key && value) return !!value?.includes(data[key]);
+      return !depth || !!(data.depth && data.depth < depth);
     };
 
+    /**
+     * 判断节点是否选中
+     * @param  {Object} data 树节点数据
+     * @returns {Number} checkedValue 节点选中值，1选中/0未选中
+     */
     const onIsChecked = (data: TreeItem) => {
       if (data.checked !== undefined) return ~~data.checked;
       const { checkedConfig } = props.data;
       return ~~checkedConfig?.value?.includes(data[checkedConfig?.key || "id"]);
     };
 
+    /**
+     * 初始化列表
+     * @param  {Object} data 树节点数据
+     * @returns {Object} data 转换后的节点数据
+     */
     const onInitList = (data: any) => {
       data.depth = data.depth || 1;
       data.spread = onIsSpread(data);
@@ -331,6 +345,12 @@ export default defineComponent({
       })
     );
 
+    /**
+     * 设置指定元素子节点的状态值
+     * @param {Object} data 树节点数据
+     * @param {Number} checkedValue 节点需要设置的状态值，1选中/2部分选中/0未选中
+     * @returns void
+     */
     const onSetChildrenCheckStatus = (data: TreeItem, checkedValue: number) => {
       data.checked = checkedValue;
       const index = state.checkedList.findIndex(
@@ -346,6 +366,11 @@ export default defineComponent({
       );
     };
 
+    /**
+     * 设置节点状态
+     * @param {Object} data 树节点数据
+     * @returns {Object} 节点的状态对象{all, none, allDisabled, half}
+     */
     const getCheckStatus = (node: TreeItem[]) => {
       let all = true;
       let none = true;
@@ -364,6 +389,11 @@ export default defineComponent({
       return { all, none, allDisabled, half: !all && !none };
     };
 
+    /**
+     * 设置指定元素父节点的状态值
+     * @param {Object} data 树节点数据
+     * @returns void
+     */
     const onSetParentCheckStatus = (data: TreeItem) => {
       const { depth, indexArr } = data;
       if (!depth || depth === 1 || !indexArr) return;
@@ -393,6 +423,12 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 更新当前元素在整个树中的状态值
+     * @param {Object} data 树节点数据
+     * @param {Number} checkedValue 节点需要设置的状态值，1选中/2部分选中/0未选中
+     * @returns void
+     */
     const onUpdateCheckStatus = (data: TreeItem, checkedValue: number) => {
       // 状态更新有两步：
       // 1. 向下查找更新子级的状态
@@ -401,13 +437,28 @@ export default defineComponent({
       onSetParentCheckStatus(data);
     };
 
-    const onSpread = (item: TreeItem) => {
-      item.spread = !item.spread;
+    /**
+     * 节点展开
+     * @param {Object} data 树节点数据
+     * @returns void
+     */
+    const onSpread = (data: TreeItem) => {
+      data.spread = !data.spread;
     };
 
-    const onCheck = (item: TreeItem) => {
-      if (item.disabled) return;
-      onUpdateCheckStatus(item, !item.checked ? 1 : 0);
+    /**
+     * 节点选中
+     * @param {Object} data 树节点数据
+     * @returns void
+     */
+    const onCheck = (data: TreeItem) => {
+      if (data.disabled) return;
+      onUpdateCheckStatus(data, !data.checked ? 1 : 0);
+
+      /**
+       * 节点选中事件触发
+       * @param {Object} options 回调参数，值为{checkedList, allCheckedList}
+       */
       emit("on-check", {
         checkedList: state.checkedList?.filter(
           (i: TreeItem) => !i.children?.length
@@ -416,6 +467,10 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 初始化树节点展开
+     * @returns void
+     */
     const onInitSpreadStatus = () => {
       state.spreadList?.forEach((data: any) => {
         data.indexArr?.reduce((item: TreeItem, index: number) => {
@@ -425,12 +480,20 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 初始化树节点选中状态
+     * @returns void
+     */
     const onInitCheckedStatus = () => {
       state.checkedList?.forEach((data: TreeItem) => {
         onUpdateCheckStatus(data, 1);
       });
     };
 
+    /**
+     * 取消树节点选中状态
+     * @returns void
+     */
     const onCancelCheck = () => {
       state.list?.forEach((data: TreeItem) => {
         onUpdateCheckStatus(data, 0);
