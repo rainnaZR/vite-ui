@@ -332,16 +332,14 @@ export default defineComponent({
     );
 
     const onSetChildrenCheckStatus = (data: TreeItem, checkedValue: number) => {
-      if (!data.disabled) {
-        data.checked = checkedValue;
-        const index = state.checkedList.findIndex(
-          (i: TreeItem) => i.id === data.id
-        );
-        if (checkedValue === 1 && index < 0) {
-          state.checkedList.push(data);
-        } else if (!checkedValue && index > -1) {
-          state.checkedList.splice(index, 1);
-        }
+      data.checked = checkedValue;
+      const index = state.checkedList.findIndex(
+        (i: TreeItem) => i.id === data.id
+      );
+      if (checkedValue === 1 && index < 0) {
+        state.checkedList.push(data);
+      } else if (!checkedValue && index > -1) {
+        state.checkedList.splice(index, 1);
       }
       data.children?.forEach((item) =>
         onSetChildrenCheckStatus(item, checkedValue)
@@ -354,7 +352,7 @@ export default defineComponent({
       let allDisabled = true;
       for (let i = 0, j = node.length; i < j; i++) {
         const n = node[i];
-        if (n.checked !== 1 || n.disabled) {
+        if (n.checked !== 1) {
           all = false;
         }
         if (n.checked === 1 || n.checked === 2) {
@@ -389,9 +387,9 @@ export default defineComponent({
           state.list
         );
         if (!node.children || !node.children) return;
-        const { all, none, half, allDisabled } = getCheckStatus(node.children);
+        const { all, half, none, allDisabled } = getCheckStatus(node.children);
         node.checked = all ? 1 : half ? 2 : none ? 0 : 0;
-        node.disabled = allDisabled;
+        node.disabled = node.disabled || allDisabled;
       });
     };
 
@@ -410,6 +408,12 @@ export default defineComponent({
     const onCheck = (item: TreeItem) => {
       if (item.disabled) return;
       onUpdateCheckStatus(item, !item.checked ? 1 : 0);
+      emit("on-check", {
+        checkedList: state.checkedList?.filter(
+          (i: TreeItem) => !i.children?.length
+        ),
+        allCheckedList: state.checkedList,
+      });
     };
 
     const onInitSpreadStatus = () => {
@@ -427,13 +431,15 @@ export default defineComponent({
       });
     };
 
+    const onCancelCheck = () => {
+      state.list?.forEach((data: TreeItem) => {
+        onUpdateCheckStatus(data, 0);
+      });
+    };
+
     onMounted(() => {
       onInitSpreadStatus();
       onInitCheckedStatus();
-    });
-
-    watch(state.checkedList, (value) => {
-      console.log(12222223, value);
     });
 
     return {
@@ -442,6 +448,7 @@ export default defineComponent({
       onInitCheckedStatus,
       onSpread,
       onCheck,
+      onCancelCheck,
     };
   },
 });
