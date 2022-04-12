@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-tree f-unselect">
+  <div v-if="state.list && state.list.length" class="ht-tree f-unselect">
     <div v-for="(item, index) in state.list" :key="index">
       <div class="item f-df f-aic f-trans f-curp" @click.stop="onSpread(item)">
         <!-- 展开/收起 -->
@@ -263,15 +263,24 @@
       </div>
     </div>
   </div>
+  <!-- 空状态插槽 -->
+  <slot v-else-if="!data.hideEmpty" name="empty">
+    <HtEmpty />
+  </slot>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, reactive, watch } from "vue";
+import { defineComponent, onMounted, PropType, reactive } from "vue";
+import HtEmpty from "../HtEmpty";
 import { TreeData, TreeItem } from "./types";
 
 // 树状组件，列表数据以树状结构展示，可展开收起，也可选中。
 export default defineComponent({
   name: "HtTree",
+
+  components: {
+    HtEmpty,
+  },
 
   props: {
     // 配置数据

@@ -18,6 +18,7 @@ export interface TreeData {
   showCheckbox?: boolean; // 是否展示选择框
   checkedConfig?: any; // 默认选中项的配置，值为{key, value}
   spreadConfig?: any; // 默认展开树的配置，值为{key, value, depth}
+  hideEmpty?: boolean; // 是否隐藏无数据时的空态
 }
 
 export type Props = PublicProps<{
