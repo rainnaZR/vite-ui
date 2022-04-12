@@ -22,7 +22,7 @@
         width: data.labelWidth || (form && form.data && form.data.labelWidth),
       }"
     >
-      <div v-if="data.label">
+      <div v-if="data.label" class="label-cnt">
         <!-- 必填图标 -->
         <span v-if="required" class="s-fc2 f-mr5">*</span>
         <!-- 表单label插槽 -->

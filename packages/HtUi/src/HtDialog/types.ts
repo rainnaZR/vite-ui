@@ -9,7 +9,7 @@ export interface DialogData {
   footerStyle?: string | object; // 弹窗底部样式
   closable?: boolean; // 是否显示关闭按钮
   maskClosable?: boolean; // 蒙层是否操作关闭
-  type?: string; // 弹窗类型
+  type?: string; // 弹窗类型，可选值info，success，warning，error，text
   width?: string | number; // 弹窗宽度
   height?: string | number; // 弹窗高度
   title?: string | number; // 弹窗标题

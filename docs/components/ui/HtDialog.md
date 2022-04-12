@@ -122,6 +122,7 @@ export default {
   <ht-button @on-click="onShowDialog('success')">Success对话框</ht-button>
   <ht-button @on-click="onShowDialog('error')">Error对话框</ht-button>
   <ht-button @on-click="onShowDialog('warning')">Warning对话框</ht-button>
+  <ht-button @on-click="onShowDialog('text')">text对话框</ht-button>
 
   <ht-dialog v-model:visible="visible" :data="data" />
 </template>
@@ -227,7 +228,7 @@ export default {
 
   <ht-dialog
     v-model:visible="visible"
-    :data="{ title: '用户登录', hideFooter: true }"
+    :data="{ type: 'text', title: '用户登录', hideFooter: true }"
   >
     <ht-login-pwd />
   </ht-dialog>
