@@ -19,6 +19,7 @@ export interface TreeData {
   checkedConfig?: any; // 默认选中项的配置，值为{key, value}
   spreadConfig?: any; // 默认展开树的配置，值为{key, value, depth}
   hideEmpty?: boolean; // 是否隐藏无数据时的空态
+  loading?: boolean; // 是否加载中
 }
 
 export type Props = PublicProps<{
