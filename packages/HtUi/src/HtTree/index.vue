@@ -1,6 +1,6 @@
 <template>
-  <div v-if="state.list && state.list.length" class="ht-tree f-unselect">
-    <div v-for="(item, index) in state.list" :key="index">
+  <div v-if="list && list.length" class="ht-tree f-unselect">
+    <div v-for="(item, index) in list" :key="index">
       <div class="item f-df f-aic f-trans f-curp" @click.stop="onSpread(item)">
         <!-- 展开/收起 -->
         <ht-icon
@@ -46,7 +46,7 @@
           @click.stop="onCheck(item)"
         />
         <!-- 标签插槽 -->
-        <slot :label="item.label" depth="1">
+        <slot depth="1" :detail="item">
           {{ item.label }}
         </slot>
       </div>
@@ -112,7 +112,7 @@
               @click.stop="onCheck(subItem)"
             />
             <!-- 标签插槽 -->
-            <slot :label="subItem.label" depth="2">
+            <slot depth="2" :detail="subItem">
               {{ subItem.label }}
             </slot>
           </div>
@@ -181,7 +181,7 @@
                   @click.stop="onCheck(subSubItem)"
                 />
                 <!-- 标签插槽 -->
-                <slot :label="subSubItem.label" depth="3">
+                <slot depth="3" :detail="subSubItem">
                   {{ subSubItem.label }}
                 </slot>
               </div>
@@ -251,7 +251,7 @@
                       @click.stop="onCheck(subSubSubItem)"
                     />
                     <!-- 标签插槽 -->
-                    <slot :label="subSubSubItem.label" depth="4">
+                    <slot depth="4" :detail="subSubSubItem">
                       {{ subSubSubItem.label }}
                     </slot>
                   </div>
@@ -270,7 +270,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, reactive } from "vue";
+import { defineComponent, onMounted, PropType, reactive, computed } from "vue";
 import HtEmpty from "../HtEmpty";
 import { TreeData, TreeItem } from "./types";
 
@@ -297,7 +297,6 @@ export default defineComponent({
     const state: any = reactive({
       spreadList: [],
       checkedList: [],
-      list: [],
     });
 
     /**
@@ -347,11 +346,13 @@ export default defineComponent({
       return data;
     };
 
-    state.list = props.data.list?.map((i: TreeItem, index: number) =>
-      onInitList({
-        ...i,
-        indexArr: [index],
-      })
+    const list: any = computed(() =>
+      props.data.list?.map((i: TreeItem, index: number) =>
+        onInitList({
+          ...i,
+          indexArr: [index],
+        })
+      )
     );
 
     /**
@@ -423,7 +424,7 @@ export default defineComponent({
               ? item[value]
               : item[value].children;
           },
-          state.list
+          list
         );
         if (!node.children || !node.children) return;
         const { all, half, none, allDisabled } = getCheckStatus(node.children);
@@ -485,7 +486,7 @@ export default defineComponent({
         data.indexArr?.reduce((item: TreeItem, index: number) => {
           item[index].spread = true;
           return item[index].children;
-        }, state.list);
+        }, list);
       });
     };
 
@@ -504,7 +505,7 @@ export default defineComponent({
      * @returns void
      */
     const onCancelCheck = () => {
-      state.list?.forEach((data: TreeItem) => {
+      list?.forEach((data: TreeItem) => {
         onUpdateCheckStatus(data, 0);
       });
     };
@@ -516,6 +517,7 @@ export default defineComponent({
 
     return {
       state,
+      list,
       onInitSpreadStatus,
       onInitCheckedStatus,
       onSpread,
