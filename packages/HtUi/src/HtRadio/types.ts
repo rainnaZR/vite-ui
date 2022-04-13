@@ -9,6 +9,7 @@ export interface RadioItem {
 
 export interface RadioData {
   showType?: string; // 展示类型：编辑/详情，可选值edit/detail
+  placeholderText?: string; // 内容为空时的占位符
   multiple?: boolean; // 是否是多选，单选框值为false，多选框值为true
   options: RadioItem[]; // 选择框组选项值，item数组，item格式为：{label:'', value:'', style:{}, disabled: ''}
   column?: number; // 每一行显示的选择框个数

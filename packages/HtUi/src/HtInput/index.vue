@@ -1,6 +1,8 @@
 <template>
   <!-- 详情模式 -->
-  <div v-if="data.showType == 'detail'">{{ inputVal }}</div>
+  <div v-if="data.showType == 'detail'">
+    {{ inputVal || data.placeholderText }}
+  </div>
   <!-- 编辑模式 -->
   <div v-else class="ht-input" :style="data.wrapStyle">
     <!-- 输入框头部插槽 -->

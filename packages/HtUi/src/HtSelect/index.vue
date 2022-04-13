@@ -1,6 +1,8 @@
 <template>
   <!-- 详情模式 -->
-  <div v-if="data.showType == 'detail'">{{ state.inputData.modelValue }}</div>
+  <div v-if="data.showType == 'detail'">
+    {{ state.inputData.modelValue || data.placeholderText }}
+  </div>
   <!-- 编辑模式 -->
   <div v-else class="ht-select" :tabindex="data.tabIndex || 0" @blur="onBlur">
     <!-- 输入框 -->

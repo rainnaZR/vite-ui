@@ -1,7 +1,7 @@
 <template>
   <!-- 详情模式 -->
   <div v-if="data.showType == 'detail'" class="ht-upload">
-    <div class="list">
+    <div v-if="files && files.length" class="list">
       <div
         v-for="(file, index) in files"
         :key="index"
@@ -35,6 +35,7 @@
         </div>
       </div>
     </div>
+    <div v-else>{{ data.placeholderText }}</div>
   </div>
   <!-- 编辑模式 -->
   <div v-else class="ht-upload" :style="data.style">

@@ -1,6 +1,8 @@
 <template>
   <!-- 详情模式 -->
-  <div v-if="data.showType == 'detail'">{{ labelInfo }}</div>
+  <div v-if="data.showType == 'detail'">
+    {{ labelInfo || data.placeholderText }}
+  </div>
   <!-- 编辑模式 -->
   <div v-else class="ht-radio f-unselect">
     <div

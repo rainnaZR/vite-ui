@@ -62,7 +62,12 @@
                 v-if="field.type"
                 v-model:modelValue="formModel[field.prop]"
                 :is="`ht-${field.type}`"
-                :data="field.itemProps"
+                :data="
+                  Object.assign(field.itemProps || {}, {
+                    showType: data.showType,
+                    placeholderText: data.placeholderText || '暂无内容',
+                  })
+                "
                 v-on="field.itemEvents"
               />
               <div v-else>{{ formModel[field.prop] }}</div>
