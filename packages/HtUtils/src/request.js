@@ -8,7 +8,6 @@ const request = {
     reqInterceptor,
     resInterceptor,
   } = {}) {
-    if (this.ajax) return;
     this.ajax = axios.create({
       baseURL,
       timeout,
