@@ -1,5 +1,8 @@
 <template>
-  <div class="ht-input" :style="data.wrapStyle">
+  <!-- 详情模式 -->
+  <div v-if="data.showType == 'detail'">{{ inputVal }}</div>
+  <!-- 编辑模式 -->
+  <div v-else class="ht-input" :style="data.wrapStyle">
     <!-- 输入框头部插槽 -->
     <slot name="prepend" :scope="data"></slot>
     <textarea
@@ -76,7 +79,7 @@
       </span>
       <!-- 清除icon -->
       <ht-icon
-        v-if="inputVal && data.clearable"
+        v-if="inputVal && data.clearable && (!data.disabled || !data.readonly)"
         class="f-curp f-ml5"
         :data="{ name: 'u-icon-clear' }"
         @click="onAction('clearable')"

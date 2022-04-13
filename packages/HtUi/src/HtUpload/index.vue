@@ -1,5 +1,43 @@
 <template>
-  <div class="ht-upload" :style="data.style">
+  <!-- 详情模式 -->
+  <div v-if="data.showType == 'detail'" class="ht-upload">
+    <div class="list">
+      <div
+        v-for="(file, index) in files"
+        :key="index"
+        class="item f-mr10 f-mb10"
+        @click="onPreview(file, index)"
+      >
+        <div class="content content-2 f-curp">
+          <!-- 文件区域 -->
+          <ht-image
+            :data="{
+              src: file.isImage
+                ? file.thumbSrc || `${file.src}?imageView2/1/w/200/h/200`
+                : FILE_COVER,
+            }"
+          />
+          <!-- 文件标签 -->
+          <ht-tag v-if="!file.isImage" class="tag">{{ file.extension }}</ht-tag>
+          <!-- 文件操作 -->
+          <div v-if="!data.hideOperation" class="tools f-df f-jcc f-trans">
+            <!-- 下载 -->
+            <ht-icon
+              class="f-ml5 f-mr5"
+              :data="{ name: 'u-icon-download' }"
+              @on-click.stop="onDownload(file, index)"
+            />
+          </div>
+        </div>
+        <!-- 文件名称 -->
+        <div v-if="!data.hideFileName" class="fileName s-fc5 f-tac f-txtell">
+          {{ file.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 编辑模式 -->
+  <div v-else class="ht-upload" :style="data.style">
     <input
       ref="inputFileRef"
       type="file"

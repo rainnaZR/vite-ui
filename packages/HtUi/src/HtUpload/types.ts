@@ -15,6 +15,7 @@ export interface InputFileItem {
 }
 
 export interface UploadData {
+  showType?: string; // 展示类型：编辑/详情，可选值edit/detail
   action?: string; // 文件上传接口地址
   style?: string | object; // 自定义样式
   multiple: boolean; // 是否多选

@@ -1,5 +1,9 @@
 <template>
+  <!-- 详情模式 -->
+  <div v-if="data.showType == 'detail'">{{ modelValue ? "是" : "否" }}</div>
+  <!-- 编辑模式 -->
   <div
+    v-else
     :class="[
       'ht-switch',
       { 'ht-switch-active': !!modelValue },

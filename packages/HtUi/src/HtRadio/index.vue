@@ -1,5 +1,8 @@
 <template>
-  <div class="ht-radio f-unselect">
+  <!-- 详情模式 -->
+  <div v-if="data.showType == 'detail'">{{ labelInfo }}</div>
+  <!-- 编辑模式 -->
+  <div v-else class="ht-radio f-unselect">
     <div
       v-for="(item, index) in data.options"
       :key="index"
@@ -31,7 +34,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, inject, reactive, watch } from "vue";
+import {
+  defineComponent,
+  PropType,
+  inject,
+  reactive,
+  watch,
+  computed,
+} from "vue";
 import HtIcon from "../HtIcon";
 import { RadioItem, RadioData } from "./types";
 import { FormContext, formKey } from "../HtForm/types";
@@ -69,6 +79,12 @@ export default defineComponent({
         ? props.modelValue
         : [props.modelValue], // 当前选中值
     });
+    const labelInfo = computed(() =>
+      props.data?.options
+        ?.filter((i) => state.checkedValue?.includes(i.value))
+        ?.map((i) => i.label)
+        ?.join(", ")
+    );
     const defaultIcons = props.data.multiple
       ? ["u-icon-checkbox", "u-icon-checkboxCheck"]
       : ["u-icon-radio", "u-icon-radioCheck"]; // icon图标默认配置项
@@ -156,6 +172,7 @@ export default defineComponent({
     );
 
     return {
+      labelInfo,
       form,
       disabled,
       state,

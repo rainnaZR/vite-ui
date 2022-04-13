@@ -1,6 +1,7 @@
 import { PublicProps } from "../types";
 
 export interface InputData {
+  showType?: string; // 展示类型：编辑/详情，可选值edit/detail
   wrapStyle?: any; // 输入框容器自定义样式
   inputStyle?: any; // 输入框自定义样式
   type: string; // 输入框类型
