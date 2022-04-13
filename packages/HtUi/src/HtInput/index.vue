@@ -15,7 +15,6 @@
         },
         'f-trans',
       ]"
-      :style="onGetStyle()"
       :rows="data.rows || 5"
       :name="data.name"
       :placeholder="data.placeholder || '请输入...'"
@@ -59,7 +58,7 @@
       @input="onInput"
       @keyup.enter="onChange"
     />
-    <div class="action">
+    <div :class="`action action-${data.type}`">
       <!-- 输入框前缀插槽 -->
       <slot name="prefix" :scope="data"></slot>
       <!-- 自定义前缀icon名称 -->
@@ -70,7 +69,7 @@
         />
       </span>
     </div>
-    <div class="action action-1">
+    <div :class="`action action-1 action-${data.type}`">
       <!-- 字数 -->
       <span v-if="data.maxLength > 0">
         {{ String(inputVal).length }}/{{ data.maxLength }}
