@@ -75,7 +75,11 @@
       <ht-form-item>
         <!-- 表单项操作按钮插槽 -->
         <slot name="formAction" :scope="formActions">
-          <div class="f-mt20">
+          <div
+            :class="{
+              'f-mt20': !data.inline,
+            }"
+          >
             <ht-button
               v-for="(action, index) in formActions"
               :key="`action-${index}`"
