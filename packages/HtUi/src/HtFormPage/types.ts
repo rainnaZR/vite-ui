@@ -46,14 +46,16 @@ export interface ActionItem {
   limit?: any; // 按钮显示的限制条件，值为对象或函数
   onClick?: (formModel: any) => void; // 点击事件
 }
-export interface ApiData {
-  formInitial(value?: Model): any; // 表单初始化
-  formSubmit(value?: Model): any; // 表单提交
+
+export interface RequestItem {
+  xhr: Function; // 异步接口
+  getParams(value?: Model): Model; // 参数获取
+  callback(value?: Model): any; // 回调执行
 }
 
-export interface HooksData {
-  onFormInitialCallback(value?: Model): any;
-  onFormSubmitCallback(value?: Model): any;
+export interface RequestData {
+  formInitial: RequestItem; // 表单初始化
+  formSubmit: RequestItem; // 表单提交
 }
 
 export interface FormPageData {
@@ -71,12 +73,12 @@ export interface FormPageData {
   formStyle?: any; // 表单自定义样式
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   disabled?: boolean; // 表单是否禁用
+  hideLoading?: boolean; // 是否隐藏loading
 
   fields?: FieldItem[]; // 表单字段组
   group?: GroupItem[]; // 表单选项组
   actions: string[] | ActionItem[]; // 操作按钮
-  api?: ApiData; // 接口
-  hooks?: HooksData; // 钩子函数
+  request?: RequestData; // 接口
 }
 
 export type Props = PublicProps<{

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-loading="loading"
+    v-loading="loading && !data.hideLoading"
     :class="['ht-form-page', { 'ht-form-page-inline': data.inline }]"
   >
     <!-- 表单描述区 -->
@@ -274,41 +274,50 @@ export default defineComponent({
     };
 
     /**
-     * 事件设置，支持emit和callback两种方式
-     * @param {String} eventName 事件名称
-     * @param {Object} eventParams 事件调用参数
-     * @returns void
-     */
-    const onSetEvent = (eventName: string, eventParams?: any) => {
-      emit(eventName, eventParams);
-
-      const hooks = props.data.hooks || {};
-      hooks[eventName] && hooks[eventName](eventParams);
-    };
-
-    /**
      * 初始化获取表单数据
      * @returns void
      */
     const onGetFormInitInfo = async () => {
-      const api = props.data?.api?.formInitial;
-      if (!api) return;
+      const { xhr, getParams, callback } =
+        props.data?.request?.formInitial || {};
+      if (!xhr) return;
 
       loading.value = true;
       try {
-        const result = await api();
+        const params = typeof getParams === "function" && getParams();
+        const result = await xhr(params);
         const { createInfo, formInfo } = result || {};
         // 初始化表单创建
         onInitFormCreate(createInfo);
         // 初始化表单详情
         onInitFormDetail(formInfo);
         loading.value = false;
+
         // 回调事件定义
-        onSetEvent("onFormInitialCallback", { formModel: formModel.value });
+        const callbackParams = {
+          response: result,
+          formModel: formModel.value,
+        };
+        if (typeof callback === "function") {
+          callback(callbackParams);
+        }
+        /**
+         * 表单初始化事件触发
+         * @param {Object} params 回调参数，值为{response, formModel}
+         */
+        emit("cb-initial", callbackParams);
       } catch (err) {
         loading.value = false;
         HtToast.error("接口调用异常，请稍后再试");
       }
+    };
+
+    /**
+     * 表单重置
+     * @returns void
+     */
+    const onFormReset = () => {
+      formRef.value?.onReset();
     };
 
     /**
@@ -331,32 +340,43 @@ export default defineComponent({
         if (!valid) return;
 
         // 获取接口配置
-        const api = props.data?.api?.formSubmit;
-        if (!api) return;
+        const { xhr, getParams, callback } =
+          props.data?.request?.formSubmit || {};
+        if (!xhr) return;
 
         // 提交表单
         loading.value = true;
         try {
-          const result = await api({ ...formModel.value });
+          const params =
+            typeof getParams === "function" &&
+            getParams({ ...formModel.value });
+          const result = await xhr(params);
           loading.value = false;
+
+          const { code, message } = result;
+          if (code === 0) {
+            HtToast.success(message);
+            onFormReset();
+          }
+
           // 回调事件定义
-          onSetEvent("onFormSubmitCallback", {
-            result,
+          const callbackParams = {
+            response: result,
             formModel: formModel.value,
-          });
+          };
+          if (typeof callback === "function") {
+            callback(callbackParams);
+          }
+          /**
+           * 表单初始化事件触发
+           * @param {Object} params 回调参数，值为{response, formModel}
+           */
+          emit("cb-submit", callbackParams);
         } catch (err) {
           loading.value = false;
           HtToast.error("接口调用异常，请稍后再试");
         }
       });
-    };
-
-    /**
-     * 表单重置
-     * @returns void
-     */
-    const onFormReset = () => {
-      formRef.value?.onReset();
     };
 
     /**
