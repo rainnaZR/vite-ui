@@ -58,7 +58,7 @@
       @input="onInput"
       @keyup.enter="onChange"
     />
-    <div :class="`action action-${data.type}`">
+    <div :class="`action action-${data.type || 'input'}`">
       <!-- 输入框前缀插槽 -->
       <slot name="prefix" :scope="data"></slot>
       <!-- 自定义前缀icon名称 -->
@@ -69,9 +69,9 @@
         />
       </span>
     </div>
-    <div :class="`action action-1 action-${data.type}`">
+    <div :class="`action action-1 action-${data.type || 'input'}`">
       <!-- 字数 -->
-      <span v-if="data.maxLength > 0">
+      <span v-if="data.maxLength > 0" class="count">
         {{ String(inputVal).length }}/{{ data.maxLength }}
       </span>
       <!-- 清除icon -->

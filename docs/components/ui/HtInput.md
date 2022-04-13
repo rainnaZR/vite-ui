@@ -156,12 +156,14 @@ export default {
 ### 行数限制
 
 - 多行文本输入框行数限制属性 `rows`，值为数字，默认行数 `5`，仅针对`type='textarea'`有效。
+- 多行文本输入框字数限制属性 `maxLength`，值为数字。
+
 
 
 ::: Demo
 ```vue demo
 <template>
-    <ht-input :data="{ type: 'textarea', rows: 2 }" />
+    <ht-input :data="{ type: 'textarea', rows: 2, maxLength: 400 }" />
 </template>
 ```
 :::

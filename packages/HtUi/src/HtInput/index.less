@@ -34,9 +34,6 @@
         resize: vertical;
     }
     .action{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
         position: absolute;
         left: @input-padding-left;
         top: @input-padding-top;
@@ -44,12 +41,20 @@
         line-height: @input-line-height;
         color: @disabled-color;
         font-size: @input-action-font-size;
+        .count{
+            background: @base-color;
+        }
         &-1{
             left: auto;
             right: @input-padding-left;
         }
+        &-input{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
         &-textarea{
-            align-items: flex-end;
+            top: auto;
         }
     }
 }
