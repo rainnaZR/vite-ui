@@ -271,10 +271,7 @@ export default defineComponent({
      * @returns void
      */
     const onInitFormDetail = (formInfo: Model) => {
-      formModel.value = {
-        ...(formModel.value || {}),
-        ...(formInfo || {}),
-      };
+      Object.assign(formModel.value, formInfo || {});
     };
 
     /**
