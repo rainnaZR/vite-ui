@@ -1,5 +1,8 @@
 <template>
-  <div :class="['ht-form-page', { 'ht-form-page-inline': data.inline }]">
+  <div
+    v-loading="loading"
+    :class="['ht-form-page', { 'ht-form-page-inline': data.inline }]"
+  >
     <!-- 表单描述区 -->
     <div
       :class="[
@@ -72,17 +75,20 @@
       <ht-form-item>
         <!-- 表单项操作按钮插槽 -->
         <slot name="formAction" :scope="formActions">
-          <ht-button
-            v-for="(action, index) in formActions"
-            :key="`action-${index}`"
-            :data="{
-              ...action,
-              type: action.btnType,
-            }"
-            @click="onFormAction(action)"
-          >
-            {{ action.content }}
-          </ht-button>
+          <div class="f-mt20">
+            <ht-button
+              v-for="(action, index) in formActions"
+              :key="`action-${index}`"
+              :data="{
+                ...action,
+                type: action.btnType,
+                size: action.btnSize || `${data.inline ? 'normal' : 'big'}`,
+              }"
+              @click="onFormAction(action)"
+            >
+              {{ action.content }}
+            </ht-button>
+          </div>
         </slot>
       </ht-form-item>
     </ht-form>
@@ -98,6 +104,7 @@ import {
   computed,
   onMounted,
 } from "vue";
+import HtToast from "../HtToast";
 import { FormData, FormContext, Model } from "../HtForm/types";
 import { FormPageData, FieldItem, ActionItem } from "./types";
 
@@ -118,6 +125,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const loading = ref(false);
     const formRef = ref<FormContext>();
     const {
       model,
@@ -286,14 +294,21 @@ export default defineComponent({
       const api = props.data?.api?.formInitial;
       if (!api) return;
 
-      const result = await api();
-      const { createInfo, formInfo } = result || {};
-      // 初始化表单创建
-      onInitFormCreate(createInfo);
-      // 初始化表单详情
-      onInitFormDetail(formInfo);
-      // 回调事件定义
-      onSetEvent("onFormInitialCallback", { formModel: formModel.value });
+      loading.value = true;
+      try {
+        const result = await api();
+        const { createInfo, formInfo } = result || {};
+        // 初始化表单创建
+        onInitFormCreate(createInfo);
+        // 初始化表单详情
+        onInitFormDetail(formInfo);
+        loading.value = false;
+        // 回调事件定义
+        onSetEvent("onFormInitialCallback", { formModel: formModel.value });
+      } catch (err) {
+        loading.value = false;
+        HtToast.error("接口调用异常，请稍后再试");
+      }
     };
 
     /**
@@ -320,14 +335,19 @@ export default defineComponent({
         if (!api) return;
 
         // 提交表单
-        // todo: loading开始
-        // ...
-        const result = await api({ ...formModel.value });
-        // 回调事件定义
-        onSetEvent("onFormSubmitCallback", {
-          result,
-          formModel: formModel.value,
-        });
+        loading.value = true;
+        try {
+          const result = await api({ ...formModel.value });
+          loading.value = false;
+          // 回调事件定义
+          onSetEvent("onFormSubmitCallback", {
+            result,
+            formModel: formModel.value,
+          });
+        } catch (err) {
+          loading.value = false;
+          HtToast.error("接口调用异常，请稍后再试");
+        }
       });
     };
 
@@ -379,6 +399,7 @@ export default defineComponent({
     });
 
     return {
+      loading,
       formRef,
       formModel,
       formConfig,

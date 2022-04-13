@@ -33,6 +33,7 @@ export interface UploadData {
   limit?: number; // 上传限制数量
   hideTips?: boolean; // 是否隐藏上传限制信息
   hideOperation?: boolean; // 是否隐藏文件操作按钮
+  hideFileName?: boolean; // 是否隐藏文件名
   hideFiles?: boolean; // 是否隐藏文件列表
 }
 

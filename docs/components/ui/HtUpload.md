@@ -224,6 +224,18 @@ export default {
 ```
 :::
 
+### 文件名隐藏
+
+- 组件隐藏文件名属性`hideFileName`，值为布尔值，默认为`false`。
+
+::: Demo
+```vue demo
+<template>
+  <ht-upload :data="{ hideFileName: true }" />
+</template>
+```
+:::
+
 
 ### 上传禁用
 
