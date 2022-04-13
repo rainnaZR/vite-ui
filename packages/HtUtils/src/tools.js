@@ -82,9 +82,13 @@ const dataFormat = (data, options = { type: "underlineToHump" }) => {
   }
   if (Object.prototype.toString.call(data) === "[object Object]") {
     Object.keys(data).forEach((key) => {
-      const newKey = keyFormat(key, options.type);
-      data[newKey] = dataFormat(data[key], options);
-      newKey !== key && delete data[key];
+      if (options.filterEmpty && [undefined, "", null].includes(data[key])) {
+        delete data[key];
+      } else {
+        const newKey = keyFormat(key, options.type);
+        data[newKey] = dataFormat(data[key], options);
+        newKey !== key && delete data[key];
+      }
     });
   }
   return data;
