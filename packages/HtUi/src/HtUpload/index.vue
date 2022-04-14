@@ -169,7 +169,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, reactive, computed, watch } from "vue";
-import axios from "axios";
 import { dom } from "@htfed/utils";
 import { UploadData, FileItem, InputFileItem } from "./types";
 
@@ -488,40 +487,45 @@ export default defineComponent({
      * @returns {Promise} result 上传结果
      */
     const onUploadFile = (file: Blob, options: any) => {
-      return axios.get(props.data.action || ACTION).then((res: any) => {
-        const { token, key } = res.data.data;
-        const { extension } = options;
+      return fetch(props.data.action || ACTION)
+        .then((res: any) => res.json())
+        .then((res: any) => {
+          const { token, key } = res.data;
+          const { extension } = options;
 
-        const formData = new FormData();
-        formData.append("token", token);
-        formData.append("file", file);
-        formData.append("key", `${key}.${extension}`);
-        return axios
-          .post("https://upload.qiniup.com/", formData)
-          .then(async (result: any) => {
-            onReset();
-            const src = `${IMAGE_DOMAIN}/${result.data.key}.${extension}`;
-            const srcArr = src.split("/");
-            const imgData = {
-              ...options,
-              src,
-              name: srcArr[srcArr.length - 1],
-              thumbSrc: src,
-            };
-            files.push(imgData);
-            onEmit();
+          const formData = new FormData();
+          formData.append("token", token);
+          formData.append("file", file);
+          formData.append("key", `${key}.${extension}`);
+          return fetch("https://upload.qiniup.com/", {
+            method: "POST",
+            body: formData,
+          })
+            .then((result: any) => result.json())
+            .then(async (result: any) => {
+              onReset();
+              const src = `${IMAGE_DOMAIN}/${result.key}.${extension}`;
+              const srcArr = src.split("/");
+              const imgData = {
+                ...options,
+                src,
+                name: srcArr[srcArr.length - 1],
+                thumbSrc: src,
+              };
+              files.push(imgData);
+              onEmit();
 
-            /**
-             * 文件上传成功
-             * @param {Object} result 文件对象，值有files, file, index
-             */
-            emit("on-success", {
-              files,
-              file: imgData,
-              index: files.length - 1,
+              /**
+               * 文件上传成功
+               * @param {Object} result 文件对象，值有files, file, index
+               */
+              emit("on-success", {
+                files,
+                file: imgData,
+                index: files.length - 1,
+              });
             });
-          });
-      });
+        });
     };
 
     /**
