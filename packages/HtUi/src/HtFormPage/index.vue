@@ -64,9 +64,9 @@
                 :is="`ht-${field.type}`"
                 :data="
                   Object.assign(field.itemProps || {}, {
-                    showType: field.showType || data.showType,
+                    showType: field.itemProps?.showType || data.showType,
                     placeholderText:
-                      field.placeholderText ||
+                      field.itemProps?.placeholderText ||
                       data.placeholderText ||
                       '暂无内容',
                   })
@@ -82,7 +82,11 @@
       <!-- 表单项操作按钮区 -->
       <ht-form-item>
         <!-- 表单项操作按钮插槽 -->
-        <slot name="formAction" :scope="formActions">
+        <slot
+          v-if="data.showType !== 'detail'"
+          name="formAction"
+          :scope="formActions"
+        >
           <div
             :class="{
               'f-mt20': !data.inline,
@@ -207,9 +211,9 @@ export default defineComponent({
                   ...item,
                 }
               : {};
-          actionItem.hide = false;
           // 如果按钮隐藏，则直接返回
           if (actionItem.hide) return actionItem;
+          actionItem.hide = false;
           // 如果没有限制条件，直接展示
           if (!actionItem.limit) return actionItem;
           const { limit } = actionItem;
