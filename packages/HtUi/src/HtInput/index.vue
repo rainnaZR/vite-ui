@@ -82,9 +82,7 @@
         </span>
         <!-- 清除icon -->
         <ht-icon
-          v-if="
-            inputVal && data.clearable && (!data.disabled || !data.readonly)
-          "
+          v-if="inputVal && data.clearable && !data.disabled && !data.readonly"
           class="f-curp f-ml5"
           :data="{ name: 'u-icon-clear' }"
           @click="onAction('clearable')"

@@ -64,8 +64,11 @@
                 :is="`ht-${field.type}`"
                 :data="
                   Object.assign(field.itemProps || {}, {
-                    showType: data.showType,
-                    placeholderText: data.placeholderText || '暂无内容',
+                    showType: field.showType || data.showType,
+                    placeholderText:
+                      field.placeholderText ||
+                      data.placeholderText ||
+                      '暂无内容',
                   })
                 "
                 v-on="field.itemEvents"
