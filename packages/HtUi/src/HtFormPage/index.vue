@@ -235,7 +235,7 @@ export default defineComponent({
     // 表单默认行为数据
     const defaultActions = reactive({
       submit: {
-        content: "提交",
+        content: "确认",
         btnType: "primary",
       },
       reset: {

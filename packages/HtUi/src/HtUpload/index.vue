@@ -13,9 +13,7 @@
             <!-- 文件区域 -->
             <ht-image
               :data="{
-                src: file.isImage
-                  ? file.thumbSrc || `${file.src}?imageView2/1/w/200/h/200`
-                  : FILE_COVER,
+                src: file.isImage ? file.thumbSrc || file.src : FILE_COVER,
               }"
             />
             <!-- 文件标签 -->
@@ -114,9 +112,7 @@
               <!-- 文件区域 -->
               <ht-image
                 :data="{
-                  src: file.isImage
-                    ? file.thumbSrc || `${file.src}?imageView2/1/w/200/h/200`
-                    : FILE_COVER,
+                  src: file.isImage ? file.thumbSrc || file.src : FILE_COVER,
                 }"
               />
               <!-- 文件标签 -->
