@@ -169,10 +169,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, reactive, computed, watch } from "vue";
-import { request, dom } from "@htfed/utils";
+import axios from "axios";
+import { dom } from "@htfed/utils";
 import { UploadData, FileItem, InputFileItem } from "./types";
-
-request.init();
 
 /**
  * 文件上传组件，支持所有格式的文件上传。
@@ -489,7 +488,7 @@ export default defineComponent({
      * @returns {Promise} result 上传结果
      */
     const onUploadFile = (file: Blob, options: any) => {
-      return request.get(props.data.action || ACTION).then((res: any) => {
+      return axios.get(props.data.action || ACTION).then((res: any) => {
         const { token, key } = res.data.data;
         const { extension } = options;
 
@@ -497,7 +496,7 @@ export default defineComponent({
         formData.append("token", token);
         formData.append("file", file);
         formData.append("key", `${key}.${extension}`);
-        return request
+        return axios
           .post("https://upload.qiniup.com/", formData)
           .then(async (result: any) => {
             onReset();
