@@ -41,6 +41,15 @@ const request = {
     });
   },
 
+  put(url, data = {}, config = {}) {
+    return this.ajax.request({
+      url,
+      method: "put",
+      data,
+      headers: config?.headers,
+    });
+  },
+
   del(url, data = {}, config = {}) {
     return this.ajax.request({
       url,
