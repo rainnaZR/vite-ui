@@ -208,6 +208,8 @@ export default defineComponent({
                 }
               : {};
           actionItem.hide = false;
+          // 如果按钮隐藏，则直接返回
+          if (actionItem.hide) return actionItem;
           // 如果没有限制条件，直接展示
           if (!actionItem.limit) return actionItem;
           const { limit } = actionItem;

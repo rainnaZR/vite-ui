@@ -19,9 +19,9 @@
               }"
             />
             <!-- 文件标签 -->
-            <ht-tag v-if="!file.isImage" class="tag">{{
-              file.extension
-            }}</ht-tag>
+            <ht-tag v-if="!file.isImage" class="tag">
+              {{ file.extension }}
+            </ht-tag>
             <!-- 文件操作 -->
             <div v-if="!data.hideOperation" class="tools f-df f-jcc f-trans">
               <!-- 下载 -->
@@ -183,7 +183,7 @@ export default defineComponent({
   props: {
     // 文件列表
     modelValue: {
-      type: Array,
+      type: String || Array,
       required: true,
       default: () => [],
     },
@@ -197,6 +197,7 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const inputFileRef = ref<HTMLInputElement | null>(null);
+    const files: any[] = reactive([]);
     const SIZE_UNITS = {
       KB: 1024,
       MB: 1024 * 1024,
@@ -221,6 +222,22 @@ export default defineComponent({
       if (limit && limit > 0) tipsContent.push(`上传总数限制${limit}张`);
       return tipsContent.join("，");
     });
+    const onEmit = () => {
+      /**
+       * 文件列表更新
+       * @param {Array} files 文件列表
+       */
+      emit(
+        "update:modelValue",
+        files.map((i: any) => i.src)
+      );
+
+      /**
+       * 文件列表更新
+       * @param {Array} files 文件列表
+       */
+      emit("on-change", files);
+    };
 
     /**
      * 获取文件后缀信息
@@ -242,27 +259,32 @@ export default defineComponent({
     };
 
     /**
-     * 获取显示的文件列表
-     * @returns {Array} files 文件对象列表
+     * 设置显示的文件列表
+     * @returns void
      */
-    const onGetFiles = (value: string | FileItem[] | any[]) => {
-      const targetFiles: any[] = Array.isArray(value) ? value : [value];
-      return targetFiles
+    const onSetFiles = () => {
+      const { modelValue } = props;
+      const targetFiles: any[] = Array.isArray(modelValue)
+        ? modelValue
+        : [modelValue];
+      files.splice(0);
+      targetFiles
         ?.filter((file: string | FileItem) => !!file)
-        ?.map((file: string | FileItem) => {
+        ?.forEach((file: string | FileItem) => {
           if (typeof file === "string") {
-            return {
+            files.push({
               src: file,
               ...(onGetExtension(file) || {}),
-            };
+            });
+          } else {
+            files.push({
+              ...file,
+              ...(onGetExtension(file.src) || {}),
+            });
           }
-          return {
-            ...file,
-            ...(onGetExtension(file.src) || {}),
-          };
         });
     };
-    const files = reactive(onGetFiles(props.modelValue));
+    onSetFiles();
 
     /**
      * 重置上传界面
@@ -488,6 +510,7 @@ export default defineComponent({
               thumbSrc: src,
             };
             files.push(imgData);
+            onEmit();
 
             /**
              * 文件上传成功
@@ -574,6 +597,7 @@ export default defineComponent({
      */
     const onDeleteAll = () => {
       files.length = 0;
+      onEmit();
       onReset();
 
       /**
@@ -643,6 +667,7 @@ export default defineComponent({
           index,
         });
       }
+      onEmit();
     };
 
     /**
@@ -653,6 +678,7 @@ export default defineComponent({
      */
     const onDelete = (file: FileItem, index: number) => {
       files.splice(index, 1);
+      onEmit();
       onReset();
 
       /**
@@ -687,23 +713,16 @@ export default defineComponent({
       });
     };
 
-    // 监听文件列表变化
-    watch(files, (value) => {
-      /**
-       * 文件列表更新
-       * @param {Array} value 文件列表
-       */
-      emit(
-        "update:modelValue",
-        value.map((i: any) => i.src)
-      );
-
-      /**
-       * 文件列表更新
-       * @param {Array} value 文件列表
-       */
-      emit("on-change", value);
-    });
+    // 监听modelValue变化
+    watch(
+      () => props.modelValue,
+      () => {
+        onSetFiles();
+      },
+      {
+        deep: true,
+      }
+    );
 
     return {
       inputFileRef,
