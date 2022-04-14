@@ -217,13 +217,14 @@ export default defineComponent({
       return tipsContent.join("，");
     });
     const onEmit = () => {
+      const modelValue = files.map((i: any) => i.src);
       /**
        * 文件列表更新
        * @param {Array} files 文件列表
        */
       emit(
         "update:modelValue",
-        files.map((i: any) => i.src)
+        props.data?.limit === 1 ? modelValue?.[0] : modelValue
       );
 
       /**
