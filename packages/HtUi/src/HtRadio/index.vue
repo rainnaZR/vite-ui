@@ -1,37 +1,39 @@
 <template>
-  <!-- 详情模式 -->
-  <div v-if="data.showType == 'detail'">
-    {{ labelInfo || data.placeholderText }}
-  </div>
-  <!-- 编辑模式 -->
-  <div v-else class="ht-radio f-unselect">
-    <div
-      v-for="(item, index) in data.options"
-      :key="index"
-      :class="[
-        'item',
-        {
-          'item-active': state.checkedValue.includes(item.value),
-        },
-        {
-          'item-disabled': item.disabled || disabled,
-        },
-        'f-curp',
-      ]"
-      :style="onGetStyle(item)"
-      @click="onClick(item, index)"
-    >
-      <ht-icon
-        :data="{
-          name: onGetIcon(item, 'name'),
-          style: onGetIcon(item, 'style'),
-        }"
-      />
-      <div class="label f-ml5">
-        <!-- 默认内容插槽 -->
-        <slot :scope="item" :index="index">{{ item.label }}</slot>
+  <div class="ht-radio f-unselect">
+    <!-- 详情模式 -->
+    <template v-if="data.showType == 'detail'">
+      {{ labelInfo || data.placeholderText }}
+    </template>
+    <!-- 编辑模式 -->
+    <template v-else>
+      <div
+        v-for="(item, index) in data.options"
+        :key="index"
+        :class="[
+          'item',
+          {
+            'item-active': state.checkedValue.includes(item.value),
+          },
+          {
+            'item-disabled': item.disabled || disabled,
+          },
+          'f-curp',
+        ]"
+        :style="onGetStyle(item)"
+        @click="onClick(item, index)"
+      >
+        <ht-icon
+          :data="{
+            name: onGetIcon(item, 'name'),
+            style: onGetIcon(item, 'style'),
+          }"
+        />
+        <div class="label f-ml5">
+          <!-- 默认内容插槽 -->
+          <slot :scope="item" :index="index">{{ item.label }}</slot>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 

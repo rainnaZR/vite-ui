@@ -1,108 +1,10 @@
 <template>
-  <!-- 详情模式 -->
-  <div v-if="data.showType == 'detail'" class="ht-upload">
-    <div v-if="files && files.length" class="list">
-      <div
-        v-for="(file, index) in files"
-        :key="index"
-        class="item f-mr10 f-mb10"
-        @click="onPreview(file, index)"
-      >
-        <div class="content content-2 f-curp">
-          <!-- 文件区域 -->
-          <ht-image
-            :data="{
-              src: file.isImage
-                ? file.thumbSrc || `${file.src}?imageView2/1/w/200/h/200`
-                : FILE_COVER,
-            }"
-          />
-          <!-- 文件标签 -->
-          <ht-tag v-if="!file.isImage" class="tag">{{ file.extension }}</ht-tag>
-          <!-- 文件操作 -->
-          <div v-if="!data.hideOperation" class="tools f-df f-jcc f-trans">
-            <!-- 下载 -->
-            <ht-icon
-              class="f-ml5 f-mr5"
-              :data="{ name: 'u-icon-download' }"
-              @on-click.stop="onDownload(file, index)"
-            />
-          </div>
-        </div>
-        <!-- 文件名称 -->
-        <div v-if="!data.hideFileName" class="fileName s-fc5 f-tac f-txtell">
-          {{ file.name }}
-        </div>
-      </div>
-    </div>
-    <div v-else>{{ data.placeholderText }}</div>
-  </div>
-  <!-- 编辑模式 -->
-  <div v-else class="ht-upload" :style="data.style">
-    <input
-      ref="inputFileRef"
-      type="file"
-      class="input"
-      :multiple="data.multiple || false"
-      :accept="data.accept || FILE_ACCEPT"
-      :disabled="data.disabled"
-      @change="onChange"
-    />
-    <!-- 上传提示插槽 -->
-    <slot name="tips">
-      <div v-if="!data.hideTips || data.tips" class="tips f-mb10">
-        {{ data.tips || tips }}
-      </div>
-    </slot>
-    <div class="list">
-      <!-- 上传按钮插槽 -->
-      <slot
-        v-if="!data.limit || files.length < data.limit"
-        name="upload"
-        :files="files"
-      >
-        <div v-if="data.uploadBtnText" class="btn f-mb10">
-          <ht-button
-            :data="{
-              type: data.uploadBtnType,
-              icon: data.uploadBtnIcon,
-              content: data.uploadBtnText,
-              size: data.uploadBtnSize,
-              disabled: data.disabled,
-            }"
-            @click="onUpload"
-          />
-        </div>
-        <div v-else class="item f-mr10 f-mb10">
-          <div
-            class="content content-1 f-trans f-curp"
-            :class="{ 'content-disabled': data.disabled }"
-            @click="onUpload"
-          >
-            <ht-icon
-              class="icon"
-              :data="{
-                name: 'u-icon-add',
-                style: 'font-size: 44px;color: #99999980',
-              }"
-            />
-          </div>
-          <ht-button
-            v-if="!data.hideOperation && files.length"
-            class="f-mt5"
-            :data="{ size: 'small', style: 'width: 100px' }"
-            @click="onDeleteAll"
-          >
-            删除全部
-          </ht-button>
-        </div>
-      </slot>
-
-      <!-- 文件预览插槽 -->
-      <slot name="preview" :files="files">
+  <div class="ht-upload" :style="data.style">
+    <!-- 详情模式 -->
+    <template v-if="data.showType == 'detail'">
+      <div v-if="files && files.length" class="list">
         <div
           v-for="(file, index) in files"
-          v-show="!data.hideFiles"
           :key="index"
           class="item f-mr10 f-mb10"
           @click="onPreview(file, index)"
@@ -122,31 +24,11 @@
             }}</ht-tag>
             <!-- 文件操作 -->
             <div v-if="!data.hideOperation" class="tools f-df f-jcc f-trans">
-              <!-- 左移 -->
-              <ht-icon
-                v-if="index > 0"
-                class="f-ml5 f-mr5"
-                :data="{ name: 'u-icon-moveLeft' }"
-                @on-click.stop="onMove('prev', file, index)"
-              />
-              <!-- 删除 -->
-              <ht-icon
-                class="f-ml5 f-mr5"
-                :data="{ name: 'u-icon-delete' }"
-                @on-click.stop="onDelete(file, index)"
-              />
               <!-- 下载 -->
               <ht-icon
                 class="f-ml5 f-mr5"
                 :data="{ name: 'u-icon-download' }"
                 @on-click.stop="onDownload(file, index)"
-              />
-              <!-- 右移 -->
-              <ht-icon
-                v-if="index < files.length - 1"
-                class="f-ml5 f-mr5"
-                :data="{ name: 'u-icon-moveRight' }"
-                @on-click.stop="onMove('next', file, index)"
               />
             </div>
           </div>
@@ -155,8 +37,133 @@
             {{ file.name }}
           </div>
         </div>
+      </div>
+      <div v-else>{{ data.placeholderText }}</div>
+    </template>
+    <!-- 编辑模式 -->
+    <template v-else>
+      <input
+        ref="inputFileRef"
+        type="file"
+        class="input"
+        :multiple="data.multiple || false"
+        :accept="data.accept || FILE_ACCEPT"
+        :disabled="data.disabled"
+        @change="onChange"
+      />
+      <!-- 上传提示插槽 -->
+      <slot name="tips">
+        <div v-if="!data.hideTips || data.tips" class="tips f-mb10">
+          {{ data.tips || tips }}
+        </div>
       </slot>
-    </div>
+      <div class="list">
+        <!-- 上传按钮插槽 -->
+        <slot
+          v-if="!data.limit || files.length < data.limit"
+          name="upload"
+          :files="files"
+        >
+          <div v-if="data.uploadBtnText" class="btn f-mb10">
+            <ht-button
+              :data="{
+                type: data.uploadBtnType,
+                icon: data.uploadBtnIcon,
+                content: data.uploadBtnText,
+                size: data.uploadBtnSize,
+                disabled: data.disabled,
+              }"
+              @click="onUpload"
+            />
+          </div>
+          <div v-else class="item f-mr10 f-mb10">
+            <div
+              class="content content-1 f-trans f-curp"
+              :class="{ 'content-disabled': data.disabled }"
+              @click="onUpload"
+            >
+              <ht-icon
+                class="icon"
+                :data="{
+                  name: 'u-icon-add',
+                  style: 'font-size: 44px;color: #99999980',
+                }"
+              />
+            </div>
+            <ht-button
+              v-if="!data.hideOperation && files.length"
+              class="f-mt5"
+              :data="{ size: 'small', style: 'width: 100px' }"
+              @click="onDeleteAll"
+            >
+              删除全部
+            </ht-button>
+          </div>
+        </slot>
+
+        <!-- 文件预览插槽 -->
+        <slot name="preview" :files="files">
+          <div
+            v-for="(file, index) in files"
+            v-show="!data.hideFiles"
+            :key="index"
+            class="item f-mr10 f-mb10"
+            @click="onPreview(file, index)"
+          >
+            <div class="content content-2 f-curp">
+              <!-- 文件区域 -->
+              <ht-image
+                :data="{
+                  src: file.isImage
+                    ? file.thumbSrc || `${file.src}?imageView2/1/w/200/h/200`
+                    : FILE_COVER,
+                }"
+              />
+              <!-- 文件标签 -->
+              <ht-tag v-if="!file.isImage" class="tag">{{
+                file.extension
+              }}</ht-tag>
+              <!-- 文件操作 -->
+              <div v-if="!data.hideOperation" class="tools f-df f-jcc f-trans">
+                <!-- 左移 -->
+                <ht-icon
+                  v-if="index > 0"
+                  class="f-ml5 f-mr5"
+                  :data="{ name: 'u-icon-moveLeft' }"
+                  @on-click.stop="onMove('prev', file, index)"
+                />
+                <!-- 删除 -->
+                <ht-icon
+                  class="f-ml5 f-mr5"
+                  :data="{ name: 'u-icon-delete' }"
+                  @on-click.stop="onDelete(file, index)"
+                />
+                <!-- 下载 -->
+                <ht-icon
+                  class="f-ml5 f-mr5"
+                  :data="{ name: 'u-icon-download' }"
+                  @on-click.stop="onDownload(file, index)"
+                />
+                <!-- 右移 -->
+                <ht-icon
+                  v-if="index < files.length - 1"
+                  class="f-ml5 f-mr5"
+                  :data="{ name: 'u-icon-moveRight' }"
+                  @on-click.stop="onMove('next', file, index)"
+                />
+              </div>
+            </div>
+            <!-- 文件名称 -->
+            <div
+              v-if="!data.hideFileName"
+              class="fileName s-fc5 f-tac f-txtell"
+            >
+              {{ file.name }}
+            </div>
+          </div>
+        </slot>
+      </div>
+    </template>
   </div>
 </template>
 

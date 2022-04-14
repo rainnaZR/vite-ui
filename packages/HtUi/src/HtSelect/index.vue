@@ -1,64 +1,66 @@
 <template>
-  <!-- 详情模式 -->
-  <div v-if="data.showType == 'detail'">
-    {{ state.inputData.modelValue || data.placeholderText }}
-  </div>
-  <!-- 编辑模式 -->
-  <div v-else class="ht-select" :tabindex="data.tabIndex || 0" @blur="onBlur">
-    <!-- 输入框 -->
-    <ht-input
-      v-model:modelValue="state.inputData.modelValue"
-      :data="state.inputData"
-      @on-blur="onBlur('input')"
-      @on-focus="onFocus"
-      @on-input="onInput"
-      @on-action="onAction"
-    />
-    <!-- 筛选项 -->
-    <div
-      :class="[
-        'list',
-        {
-          'list-show': state.showOptions,
-        },
-        'f-trans',
-      ]"
-    >
+  <div class="ht-select">
+    <!-- 详情模式 -->
+    <template v-if="data.showType == 'detail'">
+      {{ state.inputData.modelValue || data.placeholderText }}
+    </template>
+    <!-- 编辑模式 -->
+    <div v-else :tabindex="data.tabIndex || 0" @blur="onBlur">
+      <!-- 输入框 -->
+      <ht-input
+        v-model:modelValue="state.inputData.modelValue"
+        :data="state.inputData"
+        @on-blur="onBlur('input')"
+        @on-focus="onFocus"
+        @on-input="onInput"
+        @on-action="onAction"
+      />
+      <!-- 筛选项 -->
       <div
-        v-for="(item, index) in state.options"
-        :key="index"
         :class="[
-          'item',
-          { 'item-select': state.selectValue.includes(item.value) },
-          { 'item-disabled': data.disabled || item.disabled },
-          'f-txtell',
-          'f-curp',
+          'list',
+          {
+            'list-show': state.showOptions,
+          },
           'f-trans',
         ]"
-        :style="onGetOptionsStyle(item)"
-        @click.stop="onChange(item, index)"
       >
-        <!-- 下拉选项label插槽 -->
-        <slot name="label" :scope="item" :index="index">
-          <div class="f-f1 f-txtell">{{ item.label }}</div>
-        </slot>
-        <!-- 下拉选项status插槽 -->
-        <slot
-          name="status"
-          :scoped="item"
-          :status="state.selectValue.includes(item.value)"
+        <div
+          v-for="(item, index) in state.options"
+          :key="index"
+          :class="[
+            'item',
+            { 'item-select': state.selectValue.includes(item.value) },
+            { 'item-disabled': data.disabled || item.disabled },
+            'f-txtell',
+            'f-curp',
+            'f-trans',
+          ]"
+          :style="onGetOptionsStyle(item)"
+          @click.stop="onChange(item, index)"
         >
-          <ht-icon
-            v-if="state.selectValue.includes(item.value)"
-            :data="{ name: 'u-icon-select' }"
-          />
-        </slot>
-      </div>
-      <div
-        v-if="!state.options || !state.options.length"
-        class="item item-empty"
-      >
-        {{ data.emptyText || "暂无数据" }}
+          <!-- 下拉选项label插槽 -->
+          <slot name="label" :scope="item" :index="index">
+            <div class="f-f1 f-txtell">{{ item.label }}</div>
+          </slot>
+          <!-- 下拉选项status插槽 -->
+          <slot
+            name="status"
+            :scoped="item"
+            :status="state.selectValue.includes(item.value)"
+          >
+            <ht-icon
+              v-if="state.selectValue.includes(item.value)"
+              :data="{ name: 'u-icon-select' }"
+            />
+          </slot>
+        </div>
+        <div
+          v-if="!state.options || !state.options.length"
+          class="item item-empty"
+        >
+          {{ data.emptyText || "暂无数据" }}
+        </div>
       </div>
     </div>
   </div>

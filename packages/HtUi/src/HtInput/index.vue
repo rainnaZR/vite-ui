@@ -1,121 +1,125 @@
 <template>
-  <!-- 详情模式 -->
-  <div v-if="data.showType == 'detail'">
-    {{ inputVal || data.placeholderText }}
-  </div>
-  <!-- 编辑模式 -->
-  <div v-else class="ht-input" :style="data.wrapStyle">
-    <!-- 输入框头部插槽 -->
-    <slot name="prepend" :scope="data"></slot>
-    <textarea
-      v-if="data.type === 'textarea'"
-      v-model="inputVal"
-      :class="[
-        'textarea',
-        {
-          'textarea-readonly': data.readonly,
-        },
-        {
-          'textarea-disabled': disabled,
-        },
-        'f-trans',
-      ]"
-      :rows="data.rows || 5"
-      :name="data.name"
-      :placeholder="data.placeholder || '请输入...'"
-      :readonly="data.readonly"
-      :disabled="disabled"
-      :autofocus="data.autofocus"
-      :autocomplete="data.autocomplete"
-      :maxlength="data.maxLength || -1"
-      @focus="onFocus"
-      @blur="onBlur"
-      @change="onChange"
-      @input="onInput"
-      @keyup.enter="onChange"
-    >
-    </textarea>
-    <input
-      v-else
-      v-model="inputVal"
-      :class="[
-        'input',
-        {
-          'input-readonly': data.readonly,
-        },
-        {
-          'input-disabled': disabled,
-        },
-        'f-trans',
-      ]"
-      :style="onGetStyle()"
-      :type="inputType"
-      :name="data.name"
-      :placeholder="data.placeholder || '请输入...'"
-      :readonly="data.readonly"
-      :disabled="disabled"
-      :autofocus="data.autofocus"
-      :autocomplete="data.autocomplete"
-      :maxlength="data.maxLength || -1"
-      @focus="onFocus"
-      @blur="onBlur"
-      @change="onChange"
-      @input="onInput"
-      @keyup.enter="onChange"
-    />
-    <div :class="`action action-${data.type || 'input'}`">
-      <!-- 输入框前缀插槽 -->
-      <slot name="prefix" :scope="data"></slot>
-      <!-- 自定义前缀icon名称 -->
-      <span v-if="data.prefixIcon" class="f-curp">
+  <div class="ht-input" :style="data.wrapStyle">
+    <!-- 详情模式 -->
+    <template v-if="data.showType == 'detail'">
+      {{ inputVal || data.placeholderText }}
+    </template>
+    <!-- 编辑模式 -->
+    <template v-else>
+      <!-- 输入框头部插槽 -->
+      <slot name="prepend" :scope="data"></slot>
+      <textarea
+        v-if="data.type === 'textarea'"
+        v-model="inputVal"
+        :class="[
+          'textarea',
+          {
+            'textarea-readonly': data.readonly,
+          },
+          {
+            'textarea-disabled': disabled,
+          },
+          'f-trans',
+        ]"
+        :rows="data.rows || 5"
+        :name="data.name"
+        :placeholder="data.placeholder || '请输入...'"
+        :readonly="data.readonly"
+        :disabled="disabled"
+        :autofocus="data.autofocus"
+        :autocomplete="data.autocomplete"
+        :maxlength="data.maxLength || -1"
+        @focus="onFocus"
+        @blur="onBlur"
+        @change="onChange"
+        @input="onInput"
+        @keyup.enter="onChange"
+      >
+      </textarea>
+      <input
+        v-else
+        v-model="inputVal"
+        :class="[
+          'input',
+          {
+            'input-readonly': data.readonly,
+          },
+          {
+            'input-disabled': disabled,
+          },
+          'f-trans',
+        ]"
+        :style="onGetStyle()"
+        :type="inputType"
+        :name="data.name"
+        :placeholder="data.placeholder || '请输入...'"
+        :readonly="data.readonly"
+        :disabled="disabled"
+        :autofocus="data.autofocus"
+        :autocomplete="data.autocomplete"
+        :maxlength="data.maxLength || -1"
+        @focus="onFocus"
+        @blur="onBlur"
+        @change="onChange"
+        @input="onInput"
+        @keyup.enter="onChange"
+      />
+      <div :class="`action action-${data.type || 'input'}`">
+        <!-- 输入框前缀插槽 -->
+        <slot name="prefix" :scope="data"></slot>
+        <!-- 自定义前缀icon名称 -->
+        <span v-if="data.prefixIcon" class="f-curp">
+          <ht-icon
+            :data="{ name: data.prefixIcon }"
+            @click="onAction('prefixIcon')"
+          />
+        </span>
+      </div>
+      <div :class="`action action-1 action-${data.type || 'input'}`">
+        <!-- 字数 -->
+        <span v-if="data.maxLength > 0" class="count">
+          {{ String(inputVal).length }}/{{ data.maxLength }}
+        </span>
+        <!-- 清除icon -->
         <ht-icon
-          :data="{ name: data.prefixIcon }"
-          @click="onAction('prefixIcon')"
+          v-if="
+            inputVal && data.clearable && (!data.disabled || !data.readonly)
+          "
+          class="f-curp f-ml5"
+          :data="{ name: 'u-icon-clear' }"
+          @click="onAction('clearable')"
         />
-      </span>
-    </div>
-    <div :class="`action action-1 action-${data.type || 'input'}`">
-      <!-- 字数 -->
-      <span v-if="data.maxLength > 0" class="count">
-        {{ String(inputVal).length }}/{{ data.maxLength }}
-      </span>
-      <!-- 清除icon -->
-      <ht-icon
-        v-if="inputVal && data.clearable && (!data.disabled || !data.readonly)"
-        class="f-curp f-ml5"
-        :data="{ name: 'u-icon-clear' }"
-        @click="onAction('clearable')"
-      />
-      <!-- 密码显示/隐藏icon -->
-      <ht-icon
-        v-if="inputVal && data.password"
-        class="f-curp f-ml5"
-        :data="{
-          name: `${
-            inputType === 'password' ? 'u-icon-hidePreview' : 'u-icon-preview'
-          }`,
-        }"
-        @click="onAction('password')"
-      />
-      <!-- 搜索icon -->
-      <ht-icon
-        v-if="data.search"
-        class="f-curp f-ml5"
-        :data="{ name: 'u-icon-search' }"
-        @click="onAction('search')"
-      />
-      <!-- 自定义后缀icon名称 -->
-      <ht-icon
-        v-if="data.suffixIcon"
-        class="f-curp f-ml5"
-        :data="{ name: data.suffixIcon }"
-        @click="onAction('suffixIcon')"
-      />
-      <!-- 输入框后缀插槽 -->
-      <slot name="suffix" :scope="data"></slot>
-    </div>
-    <!-- 输入框尾部插槽 -->
-    <slot name="append" :scope="data"></slot>
+        <!-- 密码显示/隐藏icon -->
+        <ht-icon
+          v-if="inputVal && data.password"
+          class="f-curp f-ml5"
+          :data="{
+            name: `${
+              inputType === 'password' ? 'u-icon-hidePreview' : 'u-icon-preview'
+            }`,
+          }"
+          @click="onAction('password')"
+        />
+        <!-- 搜索icon -->
+        <ht-icon
+          v-if="data.search"
+          class="f-curp f-ml5"
+          :data="{ name: 'u-icon-search' }"
+          @click="onAction('search')"
+        />
+        <!-- 自定义后缀icon名称 -->
+        <ht-icon
+          v-if="data.suffixIcon"
+          class="f-curp f-ml5"
+          :data="{ name: data.suffixIcon }"
+          @click="onAction('suffixIcon')"
+        />
+        <!-- 输入框后缀插槽 -->
+        <slot name="suffix" :scope="data"></slot>
+      </div>
+      <!-- 输入框尾部插槽 -->
+      <slot name="append" :scope="data"></slot>
+    </template>
   </div>
 </template>
 

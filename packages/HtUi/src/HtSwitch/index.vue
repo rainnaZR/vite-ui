@@ -1,23 +1,27 @@
 <template>
-  <!-- 详情模式 -->
-  <div v-if="data.showType == 'detail'">{{ modelValue ? "是" : "否" }}</div>
-  <!-- 编辑模式 -->
-  <div
-    v-else
-    :class="[
-      'ht-switch',
-      { 'ht-switch-active': !!modelValue },
-      { 'ht-switch-disabled': data.disabled || form?.data.disabled },
-      'f-curp',
-      'f-trans',
-    ]"
-    :style="onGetStyle()"
-    @click="onChange"
-  >
+  <div>
+    <!-- 详情模式 -->
+    <template v-if="data.showType == 'detail'">
+      {{ modelValue ? "是" : "否" }}
+    </template>
+    <!-- 编辑模式 -->
     <div
-      class="circle f-trans"
-      :style="data.circleColor ? `background: ${data.circleColor}` : ''"
-    ></div>
+      v-else
+      :class="[
+        'ht-switch',
+        { 'ht-switch-active': !!modelValue },
+        { 'ht-switch-disabled': data.disabled || form?.data.disabled },
+        'f-curp',
+        'f-trans',
+      ]"
+      :style="onGetStyle()"
+      @click="onChange"
+    >
+      <div
+        class="circle f-trans"
+        :style="data.circleColor ? `background: ${data.circleColor}` : ''"
+      ></div>
+    </div>
   </div>
 </template>
 
