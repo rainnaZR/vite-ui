@@ -5,6 +5,7 @@
   "main": "lib/index.esm.js",
   "scripts": {
     "dev": "vite -m development --port 1768 --host",
+    "build": "vite build",
     "build:doc-css": "gulp -f packages/HtVueDocCss/gulpfile.js",
     "build:ui": "node config/doc.config.ts & rollup -c packages/HtUi/rollup.config.ts -w",
     "build:ui-docs": "node config/doc.config.ts",

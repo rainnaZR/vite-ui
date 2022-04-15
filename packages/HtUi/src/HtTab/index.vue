@@ -13,11 +13,11 @@
         @click="onTabClick(tab, index, 0)"
       >
         <!-- 左侧图标插槽 -->
-        <slot name="icon" :scope="{ tab, index }">
+        <slot name="icon" :scope="{ tab, index }" :depth="1">
           <ht-icon v-if="tab.icon" class="f-mr10" :data="{ name: tab.icon }" />
         </slot>
         <!-- 内容默认插槽 -->
-        <slot :scope="{ tab, index }">
+        <slot :scope="{ tab, index }" :depth="1">
           <span class="label">{{ tab.label }}</span>
         </slot>
         <!-- 下拉子菜单 -->
@@ -54,7 +54,11 @@
           @click="onTabClick(child, childIndex, 1)"
         >
           <!-- 二级tab左侧图标插槽 -->
-          <slot name="childIcon" :scope="{ tab: child, index: childIndex }">
+          <slot
+            name="icon"
+            :scope="{ tab: child, index: childIndex }"
+            :depth="2"
+          >
             <ht-icon
               v-if="child.icon"
               class="f-mr10"
@@ -62,7 +66,7 @@
             />
           </slot>
           <!-- 二级tab内容默认插槽 -->
-          <slot name="childLabel" :scope="{ tab: child, index: childIndex }">
+          <slot :scope="{ tab: child, index: childIndex }" :depth="2">
             <span class="label">{{ child.label }}</span>
           </slot>
         </div>

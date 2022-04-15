@@ -300,10 +300,6 @@ export default {
             <div class="f-f1">{{detail.scope.tab?.label}}</div>
             <ht-badge v-if="detail.scope.tab?.isNew" :data="{ content: 'New' }"/>
         </template>
-        <template v-slot:childLabel="detail">
-            <div class="f-f1">{{detail.scope.tab?.label}}</div>
-            <ht-badge v-if="detail.scope.tab?.isNew" :data="{ content: 'New' }"/>
-        </template>
     </ht-tab>
 </template>
 
