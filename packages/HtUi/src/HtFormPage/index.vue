@@ -56,7 +56,9 @@
             :key="`field-${fieldIndex}`"
             :data="
               onGetFormItemConfig(
-                Object.assign(field, { showType: data.showType })
+                Object.assign(field, {
+                  showType: field.showType || data.showType,
+                })
               )
             "
           >
