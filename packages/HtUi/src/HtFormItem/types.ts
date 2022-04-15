@@ -19,6 +19,7 @@ export interface RuleItem {
 }
 
 export interface FormItemData {
+  showType?: string; // 展示类型：编辑/详情，可选值edit/detail
   prop?: string; // 表单项对应的表单属性值
   label: string; // 表单项的label标签
   labelWidth?: string | number; // 表单项label宽度

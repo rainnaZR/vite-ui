@@ -59,6 +59,7 @@ export interface RequestData {
 }
 
 export interface FormPageData {
+  showType?: string; // 展示类型：编辑/详情，可选值edit/detail
   id?: string | number; // 页面id
   title?: string; // 表单标题
   subTitle?: string; // 表单副标题

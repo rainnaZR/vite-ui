@@ -54,7 +54,11 @@
             v-for="(field, fieldIndex) in group.fields"
             v-show="!field.hide"
             :key="`field-${fieldIndex}`"
-            :data="onGetFormItemConfig(field)"
+            :data="
+              onGetFormItemConfig(
+                Object.assign(field, { showType: data.showType })
+              )
+            "
           >
             <!-- 表单项内容插槽 -->
             <slot :name="field.prop" :scope="field">
@@ -64,9 +68,13 @@
                 :is="`ht-${field.type}`"
                 :data="
                   Object.assign(field.itemProps || {}, {
-                    showType: field.itemProps?.showType || data.showType,
+                    showType:
+                      field.itemProps?.showType ||
+                      field.showType ||
+                      data.showType,
                     placeholderText:
                       field.itemProps?.placeholderText ||
+                      field.placeholderText ||
                       data.placeholderText ||
                       '暂无内容',
                   })
