@@ -242,6 +242,52 @@ export default {
 
 
 
+### 下拉框选项位置
+
+- 下拉框自定义选项位置属性`optionsPosition`，值为`字符串`，可选值有`top`，`bottom`，默认值为`bottom`。
+
+
+::: Demo
+```vue demo
+<template>
+    <ht-select v-model:modelValue="state.modelValue" :data="selectData" />
+</template>
+
+<script lang="ts">
+import { reactive } from 'vue'
+export default {
+  setup() {
+    const state = reactive({
+      modelValue: "",
+    });
+    const selectData = reactive({
+      optionsPosition: "top",
+      options: [
+        {
+          label: "选项1",
+          value: 1,
+        },
+        {
+          label: "选项2",
+          value: 2,
+        },
+        {
+          label: "选项3",
+          value: 3,
+        },
+      ],
+    });
+    return { 
+      state,
+      selectData,
+    };
+  },
+};
+</script>
+```
+:::
+
+
 
 ### 下拉多选
 

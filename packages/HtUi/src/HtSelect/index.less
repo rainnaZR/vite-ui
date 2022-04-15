@@ -12,7 +12,6 @@
     .list{
         position: absolute;
         left: 0;
-        top: 100%;
         z-index: -1;
         width: 100%;
         max-height: @select-option-line-height*5;
@@ -21,8 +20,15 @@
         background: @base-color;
         box-shadow: @select-options-box-shadow;
         overflow-y: auto;
-        transform: translateY(8px);
         opacity: 0;
+        &-top{
+            bottom: 100%;
+            transform: translateY(-5px);
+        }
+        &-bottom{
+            top: 100%;
+            transform: translateY(5px);
+        }
         &-show{
             z-index: 99;
             opacity: 1;

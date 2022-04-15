@@ -19,6 +19,7 @@
       <div
         :class="[
           'list',
+          `list-${data.optionsPosition || 'bottom'}`,
           {
             'list-show': state.showOptions,
           },

@@ -103,6 +103,7 @@
         v-model:modelValue="currentPageSize"
         :data="{
           options: pageSizeOptions,
+          optionsPosition: data.sizeOptionsPosition,
           inputStyle: {
             width: '105px',
             height: '28px',
@@ -316,12 +317,6 @@ export default defineComponent({
           ? Math.min(currentPageIndex.value + count, pageCount.value)
           : 0;
       currentPageIndex.value = value;
-
-      /**
-       * 页码更新事件触发
-       * @param {Number} value 当前页码值
-       */
-      emit("on-page-change", value);
     };
 
     /**
@@ -330,11 +325,6 @@ export default defineComponent({
     const onGoPrev = () => {
       if (currentPageIndex.value <= 1) return;
       currentPageIndex.value -= 1;
-      /**
-       * 页码更新事件触发
-       * @param {Number} value 当前页码值
-       */
-      emit("on-page-change", currentPageIndex.value);
     };
 
     /**
@@ -343,11 +333,6 @@ export default defineComponent({
     const onGoNext = () => {
       if (currentPageIndex.value >= pageCount.value) return;
       currentPageIndex.value += 1;
-      /**
-       * 页码更新事件触发
-       * @param {Number} value 当前页码值
-       */
-      emit("on-page-change", currentPageIndex.value);
     };
 
     /**
@@ -372,11 +357,6 @@ export default defineComponent({
      */
     const onChangePageSize = (value: number) => {
       currentPageSize.value = value;
-      /**
-       * 分页器每页的数量更新事件触发
-       * @param {Number} value 分页大小值
-       */
-      emit("on-size-change", value);
     };
 
     /**
@@ -407,15 +387,18 @@ export default defineComponent({
        * @param {Number} value 当前页码值
        */
       emit("update:pageIndex", value);
+
+      /**
+       * 页码更新事件触发
+       * @param {Number} value 当前页码值
+       */
+      emit("on-page-change", value);
     });
 
     watch(
       () => props.pageSize,
       (value) => {
         currentPageSize.value = value;
-      },
-      {
-        immediate: true,
       }
     );
 
@@ -425,6 +408,12 @@ export default defineComponent({
        * @param {Number} value 页面大小值
        */
       emit("update:pageSize", value);
+
+      /**
+       * 分页器每页的数量更新事件触发
+       * @param {Number} value 分页大小值
+       */
+      emit("on-size-change", value);
     });
 
     return {
