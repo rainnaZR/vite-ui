@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-upload" :style="data.style">
+  <div v-loading="loading" class="ht-upload" :style="data.style">
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
       <div v-if="files && files.length" class="list">
@@ -533,6 +533,7 @@ export default defineComponent({
     const onCheckFile = (file: any) => {
       // 校验文件是否有名字
       if (!file || !file.name) return;
+      loading.value = true;
       const { extensions, maxSize, width, height } = props.data;
       onCheckExtensions(file, extensions)
         .then((options) => onCheckSize(file, maxSize, options))
@@ -729,6 +730,7 @@ export default defineComponent({
       SIZE_UNITS,
       FILE_COVER,
       FILE_ACCEPT,
+      loading,
       files,
       tips,
       onChange,

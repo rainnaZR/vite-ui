@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-image" @click="onClick">
+  <div v-loading="loading" class="ht-image" @click="onClick">
     <img
       :src="data.src"
       :width="data.width"
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { ImageData } from "./types";
 
 // 图片显示与预览。
@@ -32,6 +32,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const loading = ref(true);
     /**
      * 图片点击方法
      * @param {Object} event MouseEvent对象
@@ -53,6 +54,7 @@ export default defineComponent({
      * @returns void
      */
     const onLoad = (e: Event) => {
+      loading.value = false;
       /**
        * 图片加载完成事件触发
        * @param {Object} data 图片组件data对象
@@ -68,6 +70,7 @@ export default defineComponent({
      * @returns void
      */
     const onError = (e: Event) => {
+      loading.value = false;
       /**
        * 图片加载失败事件触发
        * @param {Object} data 图片组件data对象
@@ -78,6 +81,7 @@ export default defineComponent({
     };
 
     return {
+      loading,
       onClick,
       onLoad,
       onError,

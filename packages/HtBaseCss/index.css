@@ -210,6 +210,8 @@ img[src=""],img:not([src]){
 .f-mt50 { margin-top: 50px; }
 .f-pd15{ padding: 15px; }
 .f-pd20{ padding: 20px; }
+.f-pb20{ padding-bottom: 20px;}
+.f-pb30{ padding-bottom: 30px;}
 
 .f-nopointer{ pointer-events: none; }
 .f-pointer{ pointer-events: auto; }

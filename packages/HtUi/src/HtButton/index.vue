@@ -10,6 +10,7 @@
       {
         'ht-button-disabled': data.disabled,
       },
+      'f-trans',
     ]"
     :type="data.nativeType || 'button'"
     :style="data.style"
