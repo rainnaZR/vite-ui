@@ -31,6 +31,7 @@ export interface GroupItem {
   title?: string; // 表单项标题
   subTitle?: string; // 表单项副标题
   fields?: FieldItem[]; // 表单项列表
+  hide?: boolean; // 表单项是否隐藏
 }
 
 export interface ActionItem {

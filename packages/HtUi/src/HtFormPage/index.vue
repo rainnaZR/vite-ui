@@ -26,6 +26,7 @@
     <ht-form ref="formRef" :data="formConfig">
       <div
         v-for="(group, index) in formGroup"
+        v-show="!group.hide"
         :key="`group-${index}`"
         :class="`${formGroup.length > 1 ? 'f-mb30' : ''}`"
       >
