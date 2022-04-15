@@ -39,11 +39,11 @@
             },
           ]"
         >
-          <div class="f-fs16 s-fc4">
+          <div class="f-fs16 s-fc4 f-fw1">
             <!-- 表单项标题插槽 -->
             <slot name="formItemTitle">{{ group.title }}</slot>
           </div>
-          <div class="f-fs12 s-fc6">
+          <div class="f-fs13 s-fc6">
             <!-- 表单项副标题插槽 -->
             <slot name="formItemSubTitle">{{ group.subTitle }}</slot>
           </div>
