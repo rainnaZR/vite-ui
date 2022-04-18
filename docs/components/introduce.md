@@ -19,7 +19,3 @@ import "@htfed/ui/dist/index.css";
 createApp(App).use(HtUi).mount("#app");
 ```
 :::
-
-## GitHub
-
-[👉 GitHub地址](git+https://github.com/rainnaZR/vite-ui.git) 
