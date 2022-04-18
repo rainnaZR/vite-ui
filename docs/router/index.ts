@@ -1,12 +1,11 @@
 import {
   createRouter,
-  createWebHistory,
+  createWebHashHistory,
   RouteRecordRaw,
   Router,
 } from "vue-router";
 import docs from "./docs";
 
-const BaseRouter = "/";
 // 路由配置
 const routes: RouteRecordRaw[] = [
   {
@@ -32,7 +31,7 @@ const routes: RouteRecordRaw[] = [
 
 // 路由实例
 const router: Router = createRouter({
-  history: createWebHistory(BaseRouter),
+  history: createWebHashHistory(),
   routes,
 });
 export default router;
