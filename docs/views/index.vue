@@ -30,7 +30,7 @@
     <div class="m-main f-flexc f-pr">
       <div class="m-list">
         <div
-          class="item f-flexc f-mb20"
+          class="item f-flexc f-mb20 f-curp"
           v-for="(item, index) in list"
           :key="index"
           @click="onClickCard(item.path)"
