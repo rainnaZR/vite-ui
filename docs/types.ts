@@ -28,7 +28,7 @@ export interface Doc {
 
 // 首页listItem
 export interface IndexToolsItem {
-  img: string;
+  img?: string;
   title: string;
   introduce: string;
   path: string;

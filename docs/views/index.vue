@@ -29,17 +29,29 @@
     <!-- 内容 -->
     <div class="m-main f-flexc f-pr">
       <div class="m-list">
-        <router-link
+        <div
           class="item f-flexc f-mb20"
           v-for="(item, index) in list"
           :key="index"
-          :to="item.path"
+          @click="onClickCard(item.path)"
         >
-          <ht-image class="f-mb20" :data="{ src: item.img }" />
+          <div class="cover">
+            <ht-image
+              v-if="item.img"
+              class="f-mb20"
+              :data="{ src: item.img }"
+            />
+            <svg v-else viewBox="0 0 780 250" style="width: 100%">
+              <path
+                fill="#231F20"
+                d="M240,250h100v-50h100V0H240V250z M340,50h50v100h-50V50z M480,0v200h100V50h50v150h50V50h50v150h50V0H480z M0,200h100V50h50v150h50V0H0V200z"
+              />
+            </svg>
+          </div>
           <div class="f-mb15 f-fs18 s-fc4">{{ item.title }}</div>
           <div class="f-mb15 f-fs14 s-fc6">{{ item.introduce }}</div>
-          <ht-button>开始使用</ht-button>
-        </router-link>
+          <ht-button>立即查看</ht-button>
+        </div>
       </div>
     </div>
   </div>
@@ -83,6 +95,11 @@ export default defineComponent({
         introduce: "一款轻量级、基于Vue3的PC端组件库。",
         path: "/doc",
       },
+      {
+        title: "包管理",
+        introduce: "包列表。",
+        path: "https://www.npmjs.com/search?q=%40htfed",
+      },
     ]);
     const $router = useRouter();
     const onClickLogo = () => {
@@ -91,6 +108,13 @@ export default defineComponent({
     const onClickTab = (tab: any) => {
       $router.push(tab.path);
     };
+    const onClickCard = (path: string) => {
+      if (path.startsWith("http")) {
+        window.open(path, "_blank");
+      } else {
+        $router.push(path);
+      }
+    };
 
     return {
       headerData,
@@ -98,6 +122,7 @@ export default defineComponent({
       list,
       onClickLogo,
       onClickTab,
+      onClickCard,
     };
   },
 });
@@ -148,19 +173,24 @@ export default defineComponent({
   .m-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     width: 100vw;
     .item {
       width: 30%;
       min-width: 250px;
       max-width: 400px;
       padding: 20px;
+      margin: 20px;
       box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.1);
       border-radius: 16px;
       box-sizing: border-box;
       background: #fff;
       animation: floating ease-in-out 1.6s infinite alternate;
       opacity: 0.9;
+    }
+    .cover {
+      display: flex;
+      height: 200px;
     }
   }
 }
