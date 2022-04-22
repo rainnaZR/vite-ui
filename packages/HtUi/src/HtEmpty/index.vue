@@ -50,7 +50,7 @@ export default defineComponent({
     const defaultData = {
       image: {
         width: 240,
-        src: "https://test.ding.dahuangf.com/dingV2/assets/qt_null_1.2f103bcf.png",
+        src: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01fd6e5821a7c1a84a0e282ba9dbf4.gif&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1653207625&t=0ab941cb389255ac65e87b82be4b57d0",
       },
       content: "暂无数据",
     };
