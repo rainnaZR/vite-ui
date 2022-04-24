@@ -85,11 +85,13 @@ export default defineComponent({
      * @returns void
      */
     const onAction = (result: any) => {
+      const { valid, formModel } = result || {};
+      if (!valid) return;
       /**
        * 表单行为点击事件触发
        * @param {Object} formModel 表单数据
        */
-      emit("on-login", result.formModel);
+      emit("on-login", formModel);
     };
 
     /**
