@@ -9,31 +9,25 @@ const onRender = (data: any) => {
   render(vm, container);
   document.body.appendChild(container.firstElementChild!); // 把虚拟DOM插入到真实DOM树中
   document.body.style.overflow = `${data.lock ? "hidden" : "visible"}`;
+  return vm.component;
 };
 
-const $dialog = (options: DialogData) => {
-  onRender({
-    data: options,
-    visible: false,
-  });
-};
-$dialog.show = (options: DialogData) => {
-  onRender({
-    data: options,
-    visible: true,
-  });
-};
-$dialog.close = (options: DialogData) => {
-  onRender({
-    data: options,
-    visible: false,
-  });
-};
-
-// 安装
-$dialog.install = (app: App) => {
-  app.component(component.name, component);
-  app.config.globalProperties.$dialog = $dialog;
+let instance: any;
+const $dialog = {
+  show(options: DialogData) {
+    instance = onRender({
+      data: options,
+      visible: true,
+    });
+  },
+  close() {
+    instance?.proxy?.onCancel();
+    instance = null;
+  },
+  install(app: App) {
+    app.component(component.name, component);
+    app.config.globalProperties.$dialog = $dialog;
+  },
 };
 
 export default $dialog;

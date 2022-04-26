@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!isDestroy"
     :class="[
       'ht-dialog',
       `ht-dialog-${data.type || 'warning'}`,
@@ -105,6 +106,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const isDestroy = ref(false); // 是否销毁
     const isShow = ref(props.visible); // 是否显示
     const defaultConfirmButton = {
       type: "primary",
@@ -116,29 +118,39 @@ export default defineComponent({
     };
 
     /**
+     * 隐藏
+     */
+    const onHide = () => {
+      isShow.value = false;
+      setTimeout(() => {
+        isDestroy.value = true;
+      }, 400);
+    };
+
+    /**
      * 取消按钮点击
      * @returns void
      */
     const onCancel = () => {
-      isShow.value = false;
-      props.data.onCancel && props.data.onCancel();
-
       /**
        * 取消按钮事件触发
        */
       emit("on-cancel");
+      props.data?.onCancel?.();
+      onHide();
     };
 
     /**
      * 确认按钮点击
      * @returns void
      */
-    const onConfirm = () => {
-      props.data.onConfirm && props.data.onConfirm();
+    const onConfirm = async () => {
       /**
        * 确认按钮事件触发
        */
       emit("on-confirm");
+      const res = props.data?.onConfirm?.();
+      !res && onHide();
     };
 
     watch(
@@ -159,9 +171,11 @@ export default defineComponent({
     });
 
     return {
+      isDestroy,
       isShow,
       defaultConfirmButton,
       defaultCancelButton,
+      onHide,
       onCancel,
       onConfirm,
     };
