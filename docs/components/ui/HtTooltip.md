@@ -55,4 +55,4 @@
 
 ## 配置说明
 
-组件用法和配置项参考 [HtPopover 气泡弹窗](http://localhost:1768/#/doc/HtPopover)说明。
+组件用法和配置项参考 [HtPopover 气泡弹窗](#/doc/HtPopover)说明。

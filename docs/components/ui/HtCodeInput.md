@@ -6,7 +6,7 @@
 
 ### 基本用法
 
-- 组件input输入框配置与 [HtInput 输入框](http://localhost:1768/#/doc/HtInput) 一致。
+- 组件input输入框配置与 [HtInput 输入框](#/doc/HtInput) 一致。
 - 组件可定义图片验证码的宽度属性`verifyImgWidth`，值为数字，默认为`120`px。
 - 组件可定义图片验证码的高度属性`verifyImgHeight`，值为数字，默认为`40`px。
 - 组件可定义图片验证码的链接属性`verifyImgUrl`，值为字符串。

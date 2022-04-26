@@ -9,8 +9,8 @@
 ### 基础用法
 
 - 组件是在`HtForm`组件基础上封装，通过配置数据生成表单。
-- 组件表单属性与[HtForm 表单](http://localhost:1768/#/doc/HtForm)组件data上的属性配置一致。
-- 组件分组表单项属性与[HtFormItem 表单项](http://localhost:1768/#/doc/HtFormItem)组件data上的属性配置一致。
+- 组件表单属性与[HtForm 表单](#/doc/HtForm)组件data上的属性配置一致。
+- 组件分组表单项属性与[HtFormItem 表单项](#/doc/HtFormItem)组件data上的属性配置一致。
 
 :::Demo
 ```vue demo

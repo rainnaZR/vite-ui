@@ -9,7 +9,7 @@
 ### 基本用法
 
 - 表单项的集合，包括输入框，单选框，多选框，下拉框，开关等组件组成，用来做表单的数据收集，验证，提交。
-- 表单项由`HtFormItem`组件包裹，[HtFormItem 表单项](http://localhost:1768/#/doc/HtFormItem)。
+- 表单项由`HtFormItem`组件包裹，[HtFormItem 表单项](#/doc/HtFormItem)。
 
 ::: Demo
 ```vue demo

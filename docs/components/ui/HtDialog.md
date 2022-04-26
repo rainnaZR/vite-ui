@@ -322,8 +322,8 @@ export default {
 
 ### 操作
 
-- 组件设置确认按钮操作属性`confirmButton`，值为[HtButton 按钮组件](http://localhost:1768/#/doc/HtButton)的配置数据。
-- 组件设置取消按钮操作属性`cancelButton`，值为[HtButton 按钮组件](http://localhost:1768/#/doc/HtButton)的配置数据。
+- 组件设置确认按钮操作属性`confirmButton`，值为[HtButton 按钮组件](#/doc/HtButton)的配置数据。
+- 组件设置取消按钮操作属性`cancelButton`，值为[HtButton 按钮组件](#/doc/HtButton)的配置数据。
 
 
 :::Demo

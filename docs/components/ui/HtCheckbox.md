@@ -366,4 +366,4 @@ export default {
 
 ## 配置说明
 
-组件用法和配置项参考 [HtRadio 单选框](http://localhost:1768/#/doc/HtRadio)说明。
+组件用法和配置项参考 [HtRadio 单选框](#/doc/HtRadio)说明。
