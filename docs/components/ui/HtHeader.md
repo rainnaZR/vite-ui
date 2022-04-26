@@ -37,16 +37,6 @@ export default {
                     value: 2,
                     path: "/doc/button",
                 }, 
-                {
-                    label: "品牌闪购",
-                    value: 3,
-                    path: "/doc/introduce",
-                },
-                {
-                    label: "拍卖",
-                    value: 4,
-                    path: "/doc/button",
-                },
             ],
             tabCurrentValue: 3,
             tabStyle: "color: #666",

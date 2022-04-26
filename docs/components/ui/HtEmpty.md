@@ -21,7 +21,7 @@
 ### 占位图
 
 - 组件定义占位图有两种方式：
-- 通过属性`data.image`指定占位图数据，值为[HtImage 图片组件](http://localhost:1768/doc/HtImage)的配置数据。
+- 通过属性`data.image`指定占位图数据，值为[HtImage 图片组件](http://localhost:1768/#/doc/HtImage)的配置数据。
 - 通过插槽定义占位图，插槽name值为`image`。
 
 
