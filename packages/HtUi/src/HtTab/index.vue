@@ -9,15 +9,15 @@
           },
           'f-curp',
         ]"
-        :style="onGetStyle(tab, 0)"
-        @click="onTabClick(tab, index, 0)"
+        :style="onGetStyle(tab, 1)"
+        @click="onTabClick(tab, [index])"
       >
         <!-- 左侧图标插槽 -->
-        <slot name="icon" :scope="{ tab, index }" :depth="1">
+        <slot name="icon" :scope="{ tab, index: [index] }">
           <ht-icon v-if="tab.icon" class="f-mr10" :data="{ name: tab.icon }" />
         </slot>
         <!-- 内容默认插槽 -->
-        <slot :scope="{ tab, index }" :depth="1">
+        <slot :scope="{ tab, index: [index] }">
           <span class="label">{{ tab.label }}</span>
         </slot>
         <!-- 下拉子菜单 -->
@@ -50,15 +50,11 @@
             },
             'f-curp',
           ]"
-          :style="onGetStyle(child, 1)"
-          @click="onTabClick(child, childIndex, 1)"
+          :style="onGetStyle(child, 2)"
+          @click="onTabClick(child, [index, childIndex])"
         >
           <!-- 二级tab左侧图标插槽 -->
-          <slot
-            name="icon"
-            :scope="{ tab: child, index: childIndex }"
-            :depth="2"
-          >
+          <slot name="icon" :scope="{ tab: child, index: [index, childIndex] }">
             <ht-icon
               v-if="child.icon"
               class="f-mr10"
@@ -66,7 +62,7 @@
             />
           </slot>
           <!-- 二级tab内容默认插槽 -->
-          <slot :scope="{ tab: child, index: childIndex }" :depth="2">
+          <slot :scope="{ tab: child, index: [index, childIndex] }">
             <span class="label">{{ child.label }}</span>
           </slot>
         </div>
@@ -122,9 +118,9 @@ export default defineComponent({
      */
     const onGetStyle = (tab: TabItem, depth: number) => {
       const { style, activeStyle } = props.data;
-      const isCurrent = tab.value === state.currentValue?.[depth];
+      const isCurrent = tab.value === state.currentValue?.[depth - 1];
       const currStyle = isCurrent ? activeStyle : style;
-      return isCurrent && tab.children && !depth
+      return isCurrent && tab.children && depth === 1
         ? `${currStyle};background:none`
         : currStyle;
     };
@@ -132,21 +128,21 @@ export default defineComponent({
     /**
      * tab点击方法
      * @param {Object} tab 当前点击的tab对象
-     * @param {Number} index 当前点击的tab索引值
-     * @param {Number} depth 当前点击的tab深度
+     * @param {Array} indexArray 当前点击的tab索引值数组
      * @returns void
      */
-    const onTabClick = (tab: TabItem, index: number, depth: number) => {
+    const onTabClick = (tab: TabItem, indexArray: number[]) => {
       const { currentValue } = state;
+      const depth = indexArray.length;
       const value =
-        !depth && !tab.children
+        depth === 1 && !tab.children
           ? [tab.value]
-          : !depth && tab.children
+          : depth === 1 && tab.children
           ? tab.value === currentValue[0]
             ? [currentValue[0], currentValue[1]]
             : [tab.value, tab.children[0].value]
           : [currentValue[0], tab.value];
-      !depth &&
+      depth === 1 &&
         (spread.value =
           tab.children && currentValue.includes(tab.value)
             ? !spread.value
@@ -162,10 +158,9 @@ export default defineComponent({
       /**
        * tab事件点击触发
        * @param {Object} tab 当前点击的tab对象
-       * @param {Number} index 当前点击的tab索引值
-       * @param {Number} depth 当前点击的tab深度
+       * @param {Array} indexArray 当前点击的tab索引值数组
        */
-      emit("on-change", tab, index, depth);
+      emit("on-change", tab, indexArray);
     };
 
     watch(
