@@ -1,6 +1,6 @@
 function getStorageData(key) {
   const data = localStorage.getItem(key);
-  return JSON.parse(data || "{}");
+  return data && JSON.parse(data);
 }
 
 function setStorageData(key, value) {
