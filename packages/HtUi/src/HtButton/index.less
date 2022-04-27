@@ -35,11 +35,13 @@
         .button-type(@button-background-color-error, @base-color);
     }
     &-text {
-        .button-type(@button-background-color-text, @active-color);
+        background: @button-background-color-text;
+        border: 1px solid @button-background-color-text;
+        color: @active-color;
     }
 
     &-small{
-        .button-size(@button-height-small, 10px, @button-border-radius-small, @button-font-size-small);
+        .button-size(@button-height-small, 10px, @button-border-radius, @button-font-size-small);
     }
     &-big{
         .button-size(@button-height-big, @button-height-big * 0.6, @button-border-radius, @font-size);
