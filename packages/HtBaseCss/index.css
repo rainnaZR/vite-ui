@@ -111,6 +111,9 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+input::-webkit-input-placeholder {
+    color: #aab2bd;
+}
 option{
     -webkit-appearance: none;   /* google */
     -moz-appearance: none;  /* firefox */
