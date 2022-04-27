@@ -1,6 +1,6 @@
 {
   "name": "@htfed/base-css",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "Basic css includes base.css and atom.css.",
   "main": "index.css",
   "style": "index.css",

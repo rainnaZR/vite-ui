@@ -41,9 +41,6 @@
         line-height: @input-line-height;
         color: @disabled-color;
         font-size: @input-action-font-size;
-        .count{
-            background: @base-color;
-        }
         &-1{
             left: auto;
             right: @input-padding-left;
@@ -55,6 +52,9 @@
         }
         &-textarea{
             top: auto;
+            .count{
+                background: @base-color;
+            }
         }
     }
 }
