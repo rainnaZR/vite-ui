@@ -18,6 +18,7 @@ export interface UploadData {
   showType?: string; // 展示类型：编辑/详情，可选值edit/detail
   placeholderText?: string; // 内容为空时的占位符
   action?: string; // 文件上传接口地址
+  imgDomain?: string; // 图片cdn域名
   style?: string | object; // 自定义样式
   multiple: boolean; // 是否多选
   accept?: string; // 上传文件类型

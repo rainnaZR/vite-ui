@@ -197,8 +197,8 @@ export default defineComponent({
       MB: 1024 * 1024,
       GB: 1024 * 1024 * 1024,
     };
-    const ACTION: string = "https://xxxx";
-    const IMAGE_DOMAIN: string = "https://image.xxxx.com";
+    const action: string = props.data.action || "https://xxxx";
+    const imgDomain: string = props.data.imgDomain || "https://image.xxxx.com";
     const FILE_COVER: string =
       "https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b295ba4df889443b81b8434d046a39e5~tplv-k3u1fbpfcp-watermark.image";
     const FILE_ACCEPT: string = "image/*,application/pdf,*/mp4";
@@ -483,7 +483,7 @@ export default defineComponent({
      * @returns {Promise} result 上传结果
      */
     const onUploadFile = (file: Blob, options: any) => {
-      return fetch(props.data.action || ACTION)
+      return fetch(action)
         .then((res: any) => res.json())
         .then((res: any) => {
           const { token, key } = res.data;
@@ -500,7 +500,7 @@ export default defineComponent({
             .then((result: any) => result.json())
             .then(async (result: any) => {
               onReset();
-              const src = `${IMAGE_DOMAIN}/${result.key}.${extension}`;
+              const src = `${imgDomain}/${result.key}.${extension}`;
               const srcArr = src.split("/");
               const imgData = {
                 ...options,
