@@ -311,7 +311,8 @@ export default defineComponent({
       loading.value = true;
       try {
         const params = typeof getParams === "function" && getParams();
-        const result = await xhr(params);
+        let result = await xhr(params);
+        result = typeof callback === "function" ? callback(result) : result;
         const { createInfo, formInfo } = result || {};
         // 初始化表单创建
         onInitFormCreate(createInfo);
@@ -319,19 +320,11 @@ export default defineComponent({
         onInitFormDetail(formInfo);
         loading.value = false;
 
-        // 回调事件定义
-        const callbackParams = {
-          response: result,
-          formModel: formModel.value,
-        };
-        if (typeof callback === "function") {
-          callback(callbackParams);
-        }
         /**
          * 表单初始化事件触发
          * @param {Object} params 回调参数，值为{response, formModel}
          */
-        emit("cb-initial", callbackParams);
+        emit("cb-initial", { response: result, formModel: formModel.value });
       } catch (err) {
         loading.value = false;
         HtToast.error("接口调用异常，请稍后再试");
