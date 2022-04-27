@@ -13,7 +13,15 @@
       @click="onAction(action, index)"
     >
       <!-- 行动点按钮插槽 -->
-      <slot name="button" :detail="action">{{ action.content }}</slot>
+      <slot name="button" :detail="action">
+        <ht-button
+          :data="{
+            type: action.btnType || 'text',
+            size: action.btnSize || 'small',
+            content: action.content,
+          }"
+        />
+      </slot>
     </div>
 
     <ht-popover
@@ -45,11 +53,16 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, onMounted, nextTick } from "vue";
 import { dom } from "@htfed/utils";
+import HtButton from "../HtButton";
 import { ActionData, ActionItem } from "./types";
 
 // 行动点按钮集合，常用于表格的操作项。
 export default defineComponent({
   name: "HtAction",
+
+  components: {
+    HtButton,
+  },
 
   props: {
     // 配置数据
