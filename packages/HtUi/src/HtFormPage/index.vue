@@ -313,7 +313,7 @@ export default defineComponent({
         const params = typeof getParams === "function" && getParams();
         let result = await xhr(params);
         result = typeof callback === "function" ? callback(result) : result;
-        const { createInfo, formInfo } = result || {};
+        const { createInfo, formInfo } = result?.data || {};
         // 初始化表单创建
         onInitFormCreate(createInfo);
         // 初始化表单详情
