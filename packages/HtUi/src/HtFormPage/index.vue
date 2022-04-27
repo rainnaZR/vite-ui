@@ -324,7 +324,10 @@ export default defineComponent({
          * 表单初始化事件触发
          * @param {Object} params 回调参数，值为{response, formModel}
          */
-        emit("cb-initial", { response: result, formModel: formModel.value });
+        emit("cb-initial", {
+          response: result,
+          formModel: formModel.value,
+        });
       } catch (err) {
         loading.value = false;
         HtToast.error("接口调用异常，请稍后再试");
@@ -366,14 +369,14 @@ export default defineComponent({
         // 提交表单
         loading.value = true;
         try {
-          const params =
-            typeof getParams === "function" &&
-            getParams({ ...formModel.value });
-          const result = await xhr(params);
+          const xhrParams =
+            typeof getParams === "function"
+              ? getParams({ ...formModel.value })
+              : formModel.value;
+          const result = await xhr(xhrParams);
           loading.value = false;
-
-          const { code, message } = result;
-          if (code === 0) {
+          const { code, message } = result || {};
+          if (code === 200) {
             HtToast.success(message);
             onFormReset();
           }
@@ -386,6 +389,7 @@ export default defineComponent({
           if (typeof callback === "function") {
             callback(callbackParams);
           }
+
           /**
            * 表单初始化事件触发
            * @param {Object} params 回调参数，值为{response, formModel}
