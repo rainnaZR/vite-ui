@@ -377,7 +377,7 @@ export default defineComponent({
           loading.value = false;
           const { code, message } = result || {};
           if (code === 200) {
-            HtToast.success(message);
+            HtToast.success(message || "操作成功");
             onFormReset();
           }
 
