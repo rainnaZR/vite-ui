@@ -75,19 +75,8 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-  <ht-upload :data="{ accept: 'images/*', extensions: 'png, jpg' }" @on-error="onError" />
+  <ht-upload :data="{ accept: 'images/*', extensions: 'png, jpg' }" />
 </template>
-
-<script lang="ts">
-import { getCurrentInstance } from "vue";
-export default {
-  setup() {
-    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
-    const onError = (err) => $toast.error(err.message);
-    return { onError };
-  },
-};
-</script>
 ```
 :::
 
@@ -99,19 +88,8 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-  <ht-upload :data="{ accept: 'application/pdf', extensions: 'pdf' }" @on-error="onError" />
+  <ht-upload :data="{ accept: 'application/pdf', extensions: 'pdf' }" />
 </template>
-
-<script lang="ts">
-import { getCurrentInstance } from "vue";
-export default {
-  setup() {
-    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
-    const onError = (err) => $toast.error(err.message);
-    return { onError };
-  },
-};
-</script>
 ```
 :::
 
@@ -125,19 +103,8 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-  <ht-upload :data="{ width: 120, height: 120 }" @on-error="onError" />
+  <ht-upload :data="{ width: 120, height: 120 }" />
 </template>
-
-<script lang="ts">
-import { getCurrentInstance } from "vue";
-export default {
-  setup() {
-    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
-    const onError = (err) => $toast.error(err.message);
-    return { onError };
-  },
-};
-</script>
 ```
 :::
 
@@ -152,19 +119,8 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-  <ht-upload :data="{ maxSize: '10KB' }" @on-error="onError" />
+  <ht-upload :data="{ maxSize: '10KB' }" />
 </template>
-
-<script lang="ts">
-import { getCurrentInstance } from "vue";
-export default {
-  setup() {
-    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
-    const onError = (err) => $toast.error(err.message);
-    return { onError };
-  },
-};
-</script>
 ```
 :::
 
@@ -177,19 +133,8 @@ export default {
 ::: Demo
 ```vue demo
 <template>
-  <ht-upload :data="{ limit: 2 }" @on-error="onError" />
+  <ht-upload :data="{ limit: 2 }" />
 </template>
-
-<script lang="ts">
-import { getCurrentInstance } from "vue";
-export default {
-  setup() {
-    const { $toast } = getCurrentInstance().appContext.config.globalProperties;
-    const onError = (err) => $toast.error(err.message);
-    return { onError };
-  },
-};
-</script>
 ```
 :::
 

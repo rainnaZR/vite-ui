@@ -166,6 +166,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, reactive, computed, watch } from "vue";
 import { dom } from "@htfed/utils";
+import HtToast from "../HtToast";
 import { UploadData, FileItem, InputFileItem } from "./types";
 
 /**
@@ -540,7 +541,8 @@ export default defineComponent({
         .then((options) => onUploadFile(file, options))
         .catch((err) => {
           onReset();
-          console.error(err);
+          HtToast.error(err.message || "上传失败，请稍后再试！");
+
           /**
            * 文件上传失败
            * @param {Object} result 失败对象
@@ -567,6 +569,8 @@ export default defineComponent({
           ? Math.max(limit - files.length, 0)
           : targetFiles.length;
       if (count === 0) {
+        HtToast.error("图片总数超过上传总数限制！");
+
         /**
          * 文件上传失败
          * @param {Object} result 失败对象
