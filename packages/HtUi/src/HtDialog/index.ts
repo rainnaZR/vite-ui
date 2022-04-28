@@ -8,7 +8,7 @@ const onRender = (data: any) => {
   const container = document.createElement("div");
   render(vm, container);
   document.body.appendChild(container.firstElementChild!); // 把虚拟DOM插入到真实DOM树中
-  document.body.style.overflow = `${data.lock ? "hidden" : "visible"}`;
+  document.body.style.overflow = "hidden";
   return vm.component;
 };
 
