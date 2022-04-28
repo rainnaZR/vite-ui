@@ -149,14 +149,19 @@ export default defineComponent({
        * 确认按钮事件触发
        */
       emit("on-confirm");
-      const res = props.data?.onConfirm?.();
+      const res = await props.data?.onConfirm?.();
       !res && onHide();
     };
 
     watch(
       () => props.visible,
       (value) => {
-        isShow.value = value; // 设置 value
+        if (value) {
+          isShow.value = value;
+          isDestroy.value = !value;
+          return;
+        }
+        onHide();
       },
       {
         immediate: true,
