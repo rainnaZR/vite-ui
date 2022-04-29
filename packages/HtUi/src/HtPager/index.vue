@@ -299,6 +299,45 @@ export default defineComponent({
     });
 
     /**
+     * 页码刷新
+     * @returns void
+     */
+    const onRefreshPageIndex = () => {
+      const { value } = currentPageIndex;
+      inputPageValue.value = value;
+      /**
+       * 页码索引值更新
+       * @param {Number} value 当前页码值
+       */
+      emit("update:pageIndex", value);
+
+      /**
+       * 页码更新事件触发
+       * @param {Number} value 当前页码值
+       */
+      emit("on-page-change", value);
+    };
+
+    /**
+     * 每页数量刷新
+     * @returns void
+     */
+    const onRefreshPageSize = () => {
+      const { value } = currentPageSize;
+      /**
+       * 每页数量值更新
+       * @param {Number} value 页面大小值
+       */
+      emit("update:pageSize", value);
+
+      /**
+       * 分页器每页的数量更新事件触发
+       * @param {Number} value 分页大小值
+       */
+      emit("on-size-change", value);
+    };
+
+    /**
      * 点击页码值
      * @param {Object} item 当前点击的分页信息（类型：页码/快进/快退；值：第几页）
      * @returns void
@@ -317,6 +356,7 @@ export default defineComponent({
           ? Math.min(currentPageIndex.value + count, pageCount.value)
           : 0;
       currentPageIndex.value = value;
+      onRefreshPageIndex();
     };
 
     /**
@@ -325,6 +365,7 @@ export default defineComponent({
     const onGoPrev = () => {
       if (currentPageIndex.value <= 1) return;
       currentPageIndex.value -= 1;
+      onRefreshPageIndex();
     };
 
     /**
@@ -333,6 +374,7 @@ export default defineComponent({
     const onGoNext = () => {
       if (currentPageIndex.value >= pageCount.value) return;
       currentPageIndex.value += 1;
+      onRefreshPageIndex();
     };
 
     /**
@@ -357,6 +399,7 @@ export default defineComponent({
      */
     const onChangePageSize = (value: number) => {
       currentPageSize.value = value;
+      onRefreshPageSize();
     };
 
     /**
@@ -367,33 +410,19 @@ export default defineComponent({
       let value = Math.min(inputPageValue.value, pageCount.value);
       value = Math.max(1, value);
       currentPageIndex.value = value;
-      inputPageValue.value = value;
+      onRefreshPageIndex();
     };
 
     watch(
       () => props.pageIndex,
       (value) => {
         currentPageIndex.value = value;
+        inputPageValue.value = value;
       },
       {
         immediate: true,
       }
     );
-
-    watch(currentPageIndex, (value) => {
-      inputPageValue.value = value;
-      /**
-       * 页码索引值更新
-       * @param {Number} value 当前页码值
-       */
-      emit("update:pageIndex", value);
-
-      /**
-       * 页码更新事件触发
-       * @param {Number} value 当前页码值
-       */
-      emit("on-page-change", value);
-    });
 
     watch(
       () => props.pageSize,
@@ -401,20 +430,6 @@ export default defineComponent({
         currentPageSize.value = value;
       }
     );
-
-    watch(currentPageSize, (value) => {
-      /**
-       * 每页数量值更新
-       * @param {Number} value 页面大小值
-       */
-      emit("update:pageSize", value);
-
-      /**
-       * 分页器每页的数量更新事件触发
-       * @param {Number} value 分页大小值
-       */
-      emit("on-size-change", value);
-    });
 
     return {
       hidePager,
@@ -426,6 +441,8 @@ export default defineComponent({
       pageSizeOptions,
       pageCount,
       pager,
+      onRefreshPageIndex,
+      onRefreshPageSize,
       onGoPage,
       onGoPrev,
       onGoNext,
