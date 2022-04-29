@@ -148,6 +148,48 @@ export default defineComponent({
 ```
 :::
 
+### 按钮配置
+
+- 组件可定义按钮显示的类型大小，属性有`btnType`，`size`，`icon`，`content`。
+
+
+:::Demo
+```vue demo
+<template>
+  <ht-action :data="data" @on-action="onAction" />
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive } from "vue";
+export default defineComponent({
+  setup() {
+    const data = reactive({
+      list: [
+        {
+          type: "edit",
+          btnType: 'primary',
+          size: 'normal',
+          icon: 'u-icon-edit',
+          content: "编辑",
+        },
+        {
+          type: "delete",
+          btnType: 'error',
+          size: 'normal',
+          icon: 'u-icon-delete',
+          content: "删除",
+        },
+      ],
+    });
+    const onAction = (action) => console.log(`行动点点击：${action.content}`);
+    return { data, onAction };
+  }
+})
+</script>
+```
+:::
+
+
 
 ### 按钮插槽
 
@@ -199,7 +241,7 @@ export default defineComponent({
 :::
 
 
-### 更多按钮插槽
+### "更多"按钮插槽
 
 - 组件可以使用更多按钮插槽自定义更多按钮的显示，插槽名为`more`。
 

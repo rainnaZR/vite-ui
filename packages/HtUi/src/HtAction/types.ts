@@ -2,7 +2,10 @@ import { PublicProps } from "../types";
 
 export interface ActionItem {
   type: string; // 行动点类型
-  content: string; // 行动点文案
+  btnType?: string; // 行动点按钮类型
+  size?: string; // 行动点按钮大小
+  icon?: string; // 行动点按钮图标
+  content: string; // 行动点按钮文案
 }
 
 export interface ActionData {

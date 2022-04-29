@@ -18,10 +18,11 @@
           :data="{
             type: action.btnType || 'text',
             size:
-              action.btnSize ||
+              action.size ||
               `${
                 !action.btnType || action.btnType == 'text' ? 'normal' : 'small'
               }`,
+            icon: action.icon,
             content: action.content,
           }"
         />
