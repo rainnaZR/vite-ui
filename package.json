@@ -35,6 +35,8 @@
     "@htfed/ui": "^0.2.37",
     "@htfed/utils": "0.1.19",
     "@htfed/vue-doc-css": "^0.0.7",
+    "@wangeditor/editor": "^5.0.1",
+    "@wangeditor/editor-for-vue": "^5.1.11",
     "vue": "^3.2.25",
     "vue-router": "4.0.6"
   },

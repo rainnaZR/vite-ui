@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/rainnaZR/vite-ui#readme",
   "dependencies": {
-    "@htfed/utils": "^0.1.21"
+    "@htfed/utils": "^0.1.21",
+    "@wangeditor/editor": "^5.0.1",
+    "@wangeditor/editor-for-vue": "^5.1.11"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.1.2",

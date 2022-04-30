@@ -63,6 +63,11 @@ config.push({
     }),
     terser(),
   ],
-  external: ["vue", "@htfed/utils"],
+  external: [
+    "vue",
+    "@htfed/utils",
+    "@wangeditor/editor",
+    "@wangeditor/editor-for-vue@next",
+  ],
 });
 export default config;

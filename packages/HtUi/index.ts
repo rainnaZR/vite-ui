@@ -21,6 +21,7 @@ import HtCheckbox from "./src/HtCheckbox"; // 多选框
 import HtSwitch from "./src/HtSwitch"; // 开关切换
 import HtSelect from "./src/HtSelect"; // 下拉框
 import HtUpload from "./src/HtUpload"; // 上传
+import HtRichText from "./src/HtRichText"; // 富文本
 import HtFormItem from "./src/HtFormItem"; // 表单项
 import HtForm from "./src/HtForm"; // 表单
 import HtFormPage from "./src/HtFormPage"; // 表单页
@@ -55,6 +56,7 @@ const components: any[] = [
   HtSwitch,
   HtSelect,
   HtUpload,
+  HtRichText,
   HtFormItem,
   HtForm,
   HtFormPage,
@@ -100,6 +102,7 @@ export {
   HtSwitch,
   HtSelect,
   HtUpload,
+  HtRichText,
   HtFormItem,
   HtForm,
   HtFormPage,
