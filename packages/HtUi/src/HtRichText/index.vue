@@ -85,6 +85,15 @@ export default defineComponent({
             });
           },
         },
+        uploadVideo: {
+          // 自定义上传
+          async customUpload(file: any, insertFn: any) {
+            uploadRef.value?.onUploadFile(file).then((options: any) => {
+              const { src, name } = options?.file || {};
+              insertFn(src, name, src);
+            });
+          },
+        },
       },
       ...(props.data.editorConfig || {}),
     }));
@@ -117,6 +126,10 @@ export default defineComponent({
     watch(
       () => valueHtml.value,
       (value) => {
+        /**
+         * 编辑器内容更新
+         * @param {String} value 编辑器内容
+         */
         emit("update:modelValue", value);
       }
     );
@@ -133,6 +146,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import "./index.less";
 </style>

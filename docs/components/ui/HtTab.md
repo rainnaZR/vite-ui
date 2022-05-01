@@ -290,6 +290,49 @@ export default {
 :::
 
 
+### 导航隐藏
+
+- 组件控制tab隐藏属性`hide`，值为`布尔值`，默认值为`false`。
+
+::: Demo
+```vue demo
+<template>
+  <ht-tab v-model:modelValue="modelValue" :data="tabData" />
+</template>
+
+<script>
+import { ref, reactive } from "vue";
+export default {
+  setup() {
+    const modelValue = ref(1);
+    const tabData = reactive({
+      list: [
+        {
+          label: "tab1",
+          value: 1,
+          hide: true,
+        },
+        {
+          label: "tab2",
+          value: 2,
+        },
+        {
+          label: "tab3",
+          value: 3,
+        },
+      ],
+    });
+    return {
+      modelValue,
+      tabData,
+    };
+  },
+};
+</script>
+```
+:::
+
+
 ### 插槽
 
 ::: Demo

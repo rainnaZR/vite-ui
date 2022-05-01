@@ -4,6 +4,7 @@ export interface TabItem {
   label: string; // tab名称
   value?: string | number; // tab值
   icon?: string; // icon图标
+  hide?: boolean; // 是否隐藏
   children?: Array<TabItem>; // 子tab列表
 }
 

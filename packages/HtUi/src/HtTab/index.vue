@@ -1,6 +1,6 @@
 <template>
   <div :class="['ht-tab', `ht-tab-${data.direction || 'row'}`]">
-    <div v-for="(tab, index) in data.list" :key="index">
+    <div v-for="(tab, index) in state.list" :key="index">
       <div
         :class="[
           'content',
@@ -105,10 +105,25 @@ export default defineComponent({
   setup(props, { emit }) {
     const itemHeight = 48;
     const { modelValue } = props;
+    const spread = ref(true);
+
+    /**
+     * 获取tab列表项
+     * @param {Array} list 初始tab列表项
+     * @returns {Array} list 过滤后的tab列表项
+     */
+    const onGetList = (list: TabItem[]) => {
+      list = list?.filter((i) => !i.hide);
+      list?.forEach((i) => {
+        if (i.children?.length) i.children = onGetList(i.children);
+      });
+      return list;
+    };
+
     const state = reactive({
+      list: onGetList(props.data.list),
       currentValue: Array.isArray(modelValue) ? modelValue : [modelValue], // 当前选中值
     });
-    const spread = ref(true);
 
     /**
      * 获取tab样式

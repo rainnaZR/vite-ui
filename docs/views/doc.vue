@@ -184,5 +184,14 @@ export default defineComponent({
   .ht-action .ht-popover {
     margin: 0;
   }
+  .ht-rich-text {
+    .w-e-select-list ul {
+      margin: 0;
+      padding: 0;
+      li {
+        list-style: none;
+      }
+    }
+  }
 }
 </style>
