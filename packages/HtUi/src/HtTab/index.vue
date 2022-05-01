@@ -1,6 +1,6 @@
 <template>
   <div :class="['ht-tab', `ht-tab-${data.direction || 'row'}`]">
-    <div v-for="(tab, index) in state.list" :key="index">
+    <div v-for="(tab, index) in tabList" :key="index">
       <div
         :class="[
           'content',
@@ -72,7 +72,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch, ref } from "vue";
+import { defineComponent, PropType, reactive, watch, ref, computed } from "vue";
 import HtIcon from "../HtIcon";
 import { TabItem, TabData } from "./types";
 
@@ -120,8 +120,8 @@ export default defineComponent({
       return list;
     };
 
+    const tabList = computed(() => onGetList(props.data.list));
     const state = reactive({
-      list: onGetList(props.data.list),
       currentValue: Array.isArray(modelValue) ? modelValue : [modelValue], // 当前选中值
     });
 
@@ -187,6 +187,7 @@ export default defineComponent({
 
     return {
       itemHeight,
+      tabList,
       state,
       spread,
       onGetStyle,
