@@ -556,16 +556,19 @@ export default defineComponent({
      * @returns void
      */
     const onChange = () => {
-      const targetFiles = inputFileRef.value?.files || [
+      const { files: inputFiles, value } = inputFileRef.value || {};
+      // 如果输入框没有选中文件，则退出
+      if ((!inputFiles || !inputFiles.length) && !value) return;
+      const targetFiles = inputFiles || [
         {
-          name: inputFileRef.value?.value,
+          name: value,
           size: 0,
         },
       ];
       // 限制文件上传数量逻辑
       const { limit } = props.data;
       const count =
-        limit && limit > 0
+        limit && limit > 0 && targetFiles.length > limit - files.length
           ? Math.max(limit - files.length, 0)
           : targetFiles.length;
       if (count === 0) {
