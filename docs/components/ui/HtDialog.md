@@ -1,6 +1,6 @@
 # HtDialog 对话框
 
-### `Category: base`
+##### `Category: base`
 
 ## 代码演示
 

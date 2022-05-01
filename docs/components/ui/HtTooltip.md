@@ -1,6 +1,6 @@
 # HtTooltip 工具提示
 
-### `Category: base`
+##### `Category: base`
 
 `HtTooltip 工具提示`与`HtPopover 气泡弹窗`扩展自同一个组件，配置属性均一致。
 

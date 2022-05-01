@@ -216,7 +216,7 @@ export default defineComponent({
       if (limit && limit > 0) tipsContent.push(`上传总数限制${limit}张`);
       return tipsContent.join("，");
     });
-    const onEmit = () => {
+    const onValueChange = () => {
       const modelValue = files.map((i: any) => i.src);
       /**
        * 文件列表更新
@@ -483,12 +483,12 @@ export default defineComponent({
      * @param {Object} options 文件结果对象
      * @returns {Promise} result 上传结果
      */
-    const onUploadFile = (file: Blob, options: any) => {
+    const onUploadFile = (file: any, options: any) => {
       return fetch(action)
         .then((res: any) => res.json())
         .then((res: any) => {
           const { token, key } = res.data;
-          const { extension } = options;
+          const { extension } = options || onGetExtension(file.name);
 
           const formData = new FormData();
           formData.append("token", token);
@@ -510,17 +510,19 @@ export default defineComponent({
                 thumbSrc: src,
               };
               files.push(imgData);
-              onEmit();
+              onValueChange();
 
-              /**
-               * 文件上传成功
-               * @param {Object} result 文件对象，值有files, file, index
-               */
-              emit("on-success", {
+              const params = {
                 files,
                 file: imgData,
                 index: files.length - 1,
-              });
+              };
+              /**
+               * 文件上传成功
+               * @param {Object} params 文件对象，值有files, file, index
+               */
+              emit("on-success", params);
+              return params;
             });
         });
     };
@@ -604,7 +606,7 @@ export default defineComponent({
      */
     const onDeleteAll = () => {
       files.length = 0;
-      onEmit();
+      onValueChange();
       onReset();
 
       /**
@@ -674,7 +676,7 @@ export default defineComponent({
           index,
         });
       }
-      onEmit();
+      onValueChange();
     };
 
     /**
@@ -685,7 +687,7 @@ export default defineComponent({
      */
     const onDelete = (file: FileItem, index: number) => {
       files.splice(index, 1);
-      onEmit();
+      onValueChange();
       onReset();
 
       /**
@@ -741,6 +743,7 @@ export default defineComponent({
       tips,
       onChange,
       onUpload,
+      onUploadFile,
       onDeleteAll,
       onMove,
       onPreview,

@@ -1,6 +1,6 @@
 # HtAvatar 头像
 
-### `Category: base`
+##### `Category: base`
 
 
 ## 代码演示

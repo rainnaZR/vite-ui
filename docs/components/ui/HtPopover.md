@@ -1,6 +1,6 @@
 # HtPopover 气泡弹窗
 
-### `Category: base`
+##### `Category: base`
 
 ## 代码演示
 

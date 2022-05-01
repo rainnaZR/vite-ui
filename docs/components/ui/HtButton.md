@@ -1,6 +1,6 @@
 # HtButton 按钮
 
-### `Category: base`
+##### `Category: base`
 
 ## 代码演示
 
