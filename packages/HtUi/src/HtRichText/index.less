@@ -2,12 +2,19 @@
 
 .ht-rich-text {
     border: 1px solid @richText-border-color;
-    line-height: 1.5;
+    .preview{
+        padding: 15px 25px;
+        line-height: @line-height;
+        img, video{
+            max-width: 100%;
+        }
+    }
     .toolbar{
         border-bottom: 1px solid @richText-border-color;
     }
     .editor{
         overflow-y: scroll;
+        line-height: 1.5;
     }
     li{
         list-style: revert;

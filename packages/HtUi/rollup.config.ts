@@ -12,7 +12,12 @@ const config = readdirSync(input)
   .filter((name) => !["theme", "index.ts", "types.ts"].includes(name))
   .map((name) => ({
     input: `${input}/${name}/index.ts`,
-    external: ["vue", "@htfed/utils"],
+    external: [
+      "vue",
+      "@htfed/utils",
+      "@wangeditor/editor",
+      "@wangeditor/editor-for-vue@next",
+    ],
     plugins: [
       nodeResolve(),
       vue(),
