@@ -1,31 +1,38 @@
 <template>
   <div class="ht-rich-text">
-    <div class="f-dn">
-      <ht-upload
-        ref="uploadRef"
-        :data="{
-          limit: 99,
-          ...(data.uploadConfig || {}),
-        }"
-      />
-    </div>
+    <!-- 详情模式 -->
+    <template v-if="data.showType == 'detail'">
+      <div class="preview" v-html="modelValue"></div>
+    </template>
+    <!-- 编辑模式 -->
+    <template v-else>
+      <div class="f-dn">
+        <ht-upload
+          ref="uploadRef"
+          :data="{
+            limit: 99,
+            ...(data.uploadConfig || {}),
+          }"
+        />
+      </div>
 
-    <Toolbar
-      class="toolbar"
-      :style="data.toolbarStyle"
-      :mode="data.mode"
-      :editor="editorRef"
-      :defaultConfig="toolbarConfig"
-    />
-    <Editor
-      class="editor"
-      v-model="valueHtml"
-      style="height: 400px"
-      :style="data.editorStyle"
-      :mode="data.mode"
-      :defaultConfig="editorConfig"
-      @onCreated="handleCreated"
-    />
+      <Toolbar
+        class="toolbar"
+        :style="data.toolbarStyle"
+        :mode="data.mode"
+        :editor="editorRef"
+        :defaultConfig="toolbarConfig"
+      />
+      <Editor
+        class="editor"
+        v-model="valueHtml"
+        style="height: 400px"
+        :style="data.editorStyle"
+        :mode="data.mode"
+        :defaultConfig="editorConfig"
+        @onCreated="handleCreated"
+      />
+    </template>
   </div>
 </template>
 
