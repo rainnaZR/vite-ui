@@ -75,10 +75,10 @@
                       field.itemProps?.showType ||
                       field.showType ||
                       data.showType,
-                    placeholderText:
-                      field.itemProps?.placeholderText ||
-                      field.placeholderText ||
-                      data.placeholderText ||
+                    defaultEmptyText:
+                      field.itemProps?.defaultEmptyText ||
+                      field.defaultEmptyText ||
+                      data.defaultEmptyText ||
                       '暂无内容',
                   })
                 "

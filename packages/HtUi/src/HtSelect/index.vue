@@ -2,7 +2,7 @@
   <div class="ht-select">
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
-      {{ state.inputData.modelValue || data.placeholderText }}
+      {{ state.inputData.modelValue || data.defaultEmptyText }}
     </template>
     <!-- 编辑模式 -->
     <div v-else :tabindex="data.tabIndex || 0" @blur="onBlur">

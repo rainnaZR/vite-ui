@@ -22,6 +22,7 @@ import HtSwitch from "./src/HtSwitch"; // 开关切换
 import HtSelect from "./src/HtSelect"; // 下拉框
 import HtUpload from "./src/HtUpload"; // 上传
 import HtRichText from "./src/HtRichText"; // 富文本
+import HtDate from "./src/HtDate"; // 日期选择
 import HtFormItem from "./src/HtFormItem"; // 表单项
 import HtForm from "./src/HtForm"; // 表单
 import HtFormPage from "./src/HtFormPage"; // 表单页
@@ -57,6 +58,7 @@ const components: any[] = [
   HtSelect,
   HtUpload,
   HtRichText,
+  HtDate,
   HtFormItem,
   HtForm,
   HtFormPage,
@@ -103,6 +105,7 @@ export {
   HtSelect,
   HtUpload,
   HtRichText,
+  HtDate,
   HtFormItem,
   HtForm,
   HtFormPage,

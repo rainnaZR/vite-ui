@@ -8,7 +8,7 @@ export interface SelectItem {
 
 export interface SelectData {
   showType?: string; // 展示类型：编辑/详情，可选值edit/detail
-  placeholderText?: string; // 内容为空时的占位符
+  defaultEmptyText?: string; // 内容为空时的占位符
   options: SelectItem[]; // 下拉框选项值，item数组，item格式为：{label:'', value:'', disabled: ''}
   optionsPosition?: string; // 下拉框选项位置，可选值有top/bottom，默认值为bottom
   multiple?: boolean; // 下拉框是否是多选

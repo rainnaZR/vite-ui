@@ -2,7 +2,7 @@
   <div class="ht-input" :style="data.wrapStyle">
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
-      <div class="preview">{{ inputVal || data.placeholderText }}</div>
+      <div class="preview">{{ inputVal || data.defaultEmptyText }}</div>
     </template>
     <!-- 编辑模式 -->
     <template v-else>

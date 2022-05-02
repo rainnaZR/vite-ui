@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div v-else>{{ data.placeholderText }}</div>
+      <div v-else>{{ data.defaultEmptyText }}</div>
     </template>
     <!-- 编辑模式 -->
     <template v-else>

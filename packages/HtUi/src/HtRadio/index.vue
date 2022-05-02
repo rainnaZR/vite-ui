@@ -2,7 +2,7 @@
   <div class="ht-radio f-unselect">
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
-      {{ labelInfo || data.placeholderText }}
+      {{ labelInfo || data.defaultEmptyText }}
     </template>
     <!-- 编辑模式 -->
     <template v-else>
