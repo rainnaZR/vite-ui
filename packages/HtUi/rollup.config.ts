@@ -17,6 +17,7 @@ const config = readdirSync(input)
       "@htfed/utils",
       "@wangeditor/editor",
       "@wangeditor/editor-for-vue@next",
+      "dayjs",
     ],
     plugins: [
       nodeResolve(),
@@ -73,6 +74,7 @@ config.push({
     "@htfed/utils",
     "@wangeditor/editor",
     "@wangeditor/editor-for-vue@next",
+    "dayjs",
   ],
 });
 export default config;
