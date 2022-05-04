@@ -37,7 +37,7 @@
         <!-- 更多下拉按钮插槽 -->
         <slot name="more">
           <ht-icon
-            :data="{ name: 'u-icon-arrowsBottom', style: 'font-size:12px' }"
+            :data="{ name: 'u-icon-arrowsDown', style: 'font-size:12px' }"
           />
         </slot>
       </div>

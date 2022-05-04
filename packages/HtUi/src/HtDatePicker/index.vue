@@ -27,11 +27,19 @@
               <div class="header f-flexr">
                 <ht-button
                   aria-label="上一年"
-                  :data="{ type: 'text', icon: 'u-icon-arrowsLeft' }"
+                  :data="{
+                    type: 'text',
+                    icon: 'u-icon-arrowsLeft',
+                    style: 'color: #444',
+                  }"
                 />
                 <ht-button
                   aria-label="上一月"
-                  :data="{ type: 'text', icon: 'u-icon-arrowLeft' }"
+                  :data="{
+                    type: 'text',
+                    icon: 'u-icon-arrowLeft',
+                    style: 'margin: 0;color: #444',
+                  }"
                 />
                 <div class="f-f1">
                   <span>{{ yearLabel }}</span>
@@ -39,24 +47,41 @@
                 </div>
                 <ht-button
                   aria-label="下一年"
-                  :data="{ type: 'text', icon: 'u-icon-arrowsRight' }"
+                  :data="{
+                    type: 'text',
+                    icon: 'u-icon-arrowsRight',
+                    style: 'color: #444',
+                  }"
                 />
                 <ht-button
                   aria-label="下一月"
-                  :data="{ type: 'text', icon: 'u-icon-arrowRight' }"
+                  :data="{
+                    type: 'text',
+                    icon: 'u-icon-arrowRight',
+                    style: 'margin: 0;color: #444',
+                  }"
                 />
               </div>
-              <div class="table f-mt10">
+              <div class="table f-mt5">
                 <date-table
                   v-if="currentView === 'date'"
+                  :date="innerDate"
+                  :range-state="rangeState"
+                  :min-date="minDate"
+                  :max-date="maxDate"
+                  :selection-mode="selectionMode"
+                  :parsed-value="parsedValue"
+                  :disabled-date="disabledDate"
                   @on-click="onDateClick"
                 />
                 <month-table
                   v-if="currentView === 'month'"
+                  :date="innerDate"
                   @on-click="onMonthClick"
                 />
                 <year-table
                   v-if="currentView === 'year'"
+                  :date="innerDate"
                   @on-click="onYearClick"
                 />
               </div>
@@ -70,6 +95,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, inject, ref } from "vue";
+import dayjs from "dayjs";
 import HtPopover from "../HtPopover";
 import HtInput from "../HtInput";
 import HtButton from "../HtButton";
@@ -112,6 +138,40 @@ export default defineComponent({
     const inputVal = ref<string | number>(""); // 输入框值
     const isFocus = ref(false); // 是否聚焦
     const disabled = props.data.disabled || form?.data.disabled;
+    const innerDate = ref(dayjs().locale("zh-cn"));
+    const rangeState = ref({
+      endDate: null,
+      selecting: false,
+    });
+    const minDate = ref(null);
+    const maxDate = ref(null);
+    const selectionMode = ref("day");
+    const parsedValue = ref(null);
+    const disabledDate = ref(null);
+
+    const onDateClick = (value: Dayjs) => {
+      if (selectionMode.value === "day") {
+        let newDate = props.parsedValue
+          ? (props.parsedValue as Dayjs)
+              .year(value.year())
+              .month(value.month())
+              .date(value.date())
+          : value;
+        // change default time while out of selectableRange
+        if (!checkDateWithinRange(newDate)) {
+          newDate = (selectableRange.value[0][0] as Dayjs)
+            .year(value.year())
+            .month(value.month())
+            .date(value.date());
+        }
+        innerDate.value = newDate;
+        emit(newDate, showTime.value);
+      } else if (selectionMode.value === "week") {
+        emit(value.date);
+      } else if (selectionMode.value === "dates") {
+        emit(value, true); // set false to keep panel open
+      }
+    };
 
     const yearLabel = "2022年";
     const monthLabel = "12月";
@@ -122,6 +182,15 @@ export default defineComponent({
       inputVal,
       isFocus,
       disabled,
+      innerDate,
+      rangeState,
+      minDate,
+      maxDate,
+      selectionMode,
+      parsedValue,
+      disabledDate,
+      onDateClick,
+
       yearLabel,
       monthLabel,
       currentView,

@@ -1,21 +1,23 @@
 <template>
   <table
+    class="ht-date-table f-curp f-trans"
     width="100%"
     cellspacing="0"
     cellpadding="0"
-    class="ht-date-table"
     @click="onClick"
     @mousemove="onMouseMove"
   >
     <tbody>
       <tr>
-        <th v-for="(item, index) in WEEKS" :key="index">{{ item }}</th>
+        <th v-for="(item, index) in WEEKS_TITLE" :key="index">
+          <div class="title f-mb5">{{ item }}</div>
+        </th>
       </tr>
       <tr v-for="(row, rowIndex) in rows" :key="rowIndex" class="row">
         <td
           v-for="(cell, cellIndex) in row"
           :key="`${rowIndex}-${cellIndex}`"
-          class="cell"
+          :class="getCellClasses(cell)"
         >
           {{ cell?.text }}
         </td>
@@ -47,10 +49,6 @@ export default defineComponent({
       type: String,
       default: "day",
     },
-    //   showWeekNumber: {
-    //     type: Boolean,
-    //     default: false,
-    //   },
     disabledDate: {
       type: Function,
     },
@@ -70,7 +68,7 @@ export default defineComponent({
 
     const WEEKS_CONSTANT = ["日", "一", "二", "三", "四", "五", "六"];
 
-    const WEEKS = computed(() =>
+    const WEEKS_TITLE = computed(() =>
       WEEKS_CONSTANT?.concat(WEEKS_CONSTANT).slice(
         firstDayOfWeek,
         firstDayOfWeek + 7
@@ -82,6 +80,9 @@ export default defineComponent({
     });
 
     const tableRows = ref([[], [], [], [], [], []]);
+
+    const lastRow = ref(-1);
+    const lastColumn = ref(null);
 
     const startDate = computed(() => {
       const startDayOfMonth = props?.date?.startOf("month");
@@ -202,144 +203,117 @@ export default defineComponent({
       }
       return newRows;
     });
-    //   // data
-    //   const lastRow = ref(null);
-    //   const lastColumn = ref(null);
 
-    //
+    const getCellClasses = (cell: any) => {
+      const classes: string[] = [];
+      if ((cell.type === "normal" || cell.type === "today") && !cell.disabled) {
+        classes.push("available");
+        if (cell.type === "today") {
+          classes.push("today");
+        }
+      } else {
+        classes.push(cell.type);
+      }
 
-    //
+      if (isCurrent(cell)) {
+        classes.push("current");
+      }
 
-    //
+      if (
+        cell.inRange &&
+        (cell.type === "normal" ||
+          cell.type === "today" ||
+          props.selectionMode === "week")
+      ) {
+        classes.push("in-range");
 
-    //
+        if (cell.start) {
+          classes.push("start-date");
+        }
 
-    //
+        if (cell.end) {
+          classes.push("end-date");
+        }
+      }
 
-    //
+      if (cell.disabled) {
+        classes.push("disabled");
+      }
 
-    //   const getDateOfCell = (row, column) => {
-    //     const offsetFromStart =
-    //       row * 7 + (column - (props.showWeekNumber ? 1 : 0)) - offsetDay.value;
-    //     return startDate.value.add(offsetFromStart, "day");
-    //   };
+      if (cell.selected) {
+        classes.push("selected");
+      }
 
-    //   const handleMouseMove = (event) => {
-    //     if (!props.rangeState.selecting) return;
+      if (cell.customClass) {
+        classes.push(cell.customClass);
+      }
 
-    //     let target = event.target;
-    //     if (target.tagName === "SPAN") {
-    //       target = target.parentNode.parentNode;
-    //     }
-    //     if (target.tagName === "DIV") {
-    //       target = target.parentNode;
-    //     }
-    //     if (target.tagName !== "TD") return;
+      return classes.join(" ");
+    };
 
-    //     const row = target.parentNode.rowIndex - 1;
-    //     const column = target.cellIndex;
+    const getDateOfCell = (row: number, column: number) => {
+      const offsetFromStart = row * 7 + column - offsetDay.value;
+      return startDate.value?.add(offsetFromStart, "day");
+    };
 
-    //     // can not select disabled date
-    //     if (rows.value[row][column].disabled) return;
+    const onClick = (event: any) => {
+      let target = event?.target;
 
-    //     // only update rangeState when mouse moves to a new cell
-    //     // this avoids frequent Date object creation and improves performance
-    //     if (row !== lastRow.value || column !== lastColumn.value) {
-    //       lastRow.value = row;
-    //       lastColumn.value = column;
-    //       ctx.emit("changerange", {
-    //         selecting: true,
-    //         endDate: getDateOfCell(row, column),
-    //       });
-    //     }
-    //   };
+      while (target) {
+        if (target.tagName === "TD") {
+          break;
+        }
+        target = target.parentNode;
+      }
 
-    //   const handleClick = (event) => {
-    //     let target = event.target;
+      if (!target || target.tagName !== "TD") return;
 
-    //     while (target) {
-    //       if (target.tagName === "TD") {
-    //         break;
-    //       }
-    //       target = target.parentNode;
-    //     }
+      const row = target.parentNode.rowIndex - 1;
+      const column = target.cellIndex;
+      const cell: any = rows.value[row][column];
 
-    //     if (!target || target.tagName !== "TD") return;
+      if (cell.disabled || cell.type === "week") return;
 
-    //     const row = target.parentNode.rowIndex - 1;
-    //     const column = target.cellIndex;
-    //     const cell = rows.value[row][column];
+      const newDate = getDateOfCell(row, column);
 
-    //     if (cell.disabled || cell.type === "week") return;
+      if (props.selectionMode === "day") {
+        emit("on-click", newDate);
+      }
+    };
 
-    //     const newDate = getDateOfCell(row, column);
+    const onMouseMove = (event: any) => {
+      if (!props.rangeState.selecting) return;
 
-    //     if (props.selectionMode === "range") {
-    //       if (!props.rangeState.selecting) {
-    //         ctx.emit("pick", { minDate: newDate, maxDate: null });
-    //         ctx.emit("select", true);
-    //       } else {
-    //         if (newDate >= props.minDate) {
-    //           ctx.emit("pick", { minDate: props.minDate, maxDate: newDate });
-    //         } else {
-    //           ctx.emit("pick", { minDate: newDate, maxDate: props.minDate });
-    //         }
-    //         ctx.emit("select", false);
-    //       }
-    //     } else if (props.selectionMode === "day") {
-    //       ctx.emit("pick", newDate);
-    //     } else if (props.selectionMode === "week") {
-    //       const weekNumber = newDate.week();
-    //       const value = `${newDate.year()}w${weekNumber}`;
-    //       ctx.emit("pick", {
-    //         year: newDate.year(),
-    //         week: weekNumber,
-    //         value,
-    //         date: newDate.startOf("week"),
-    //       });
-    //     } else if (props.selectionMode === "dates") {
-    //       const newValue = cell.selected
-    //         ? coerceTruthyValueToArray(props.parsedValue).filter(
-    //             (_) => _.valueOf() !== newDate.valueOf()
-    //           )
-    //         : coerceTruthyValueToArray(props.parsedValue).concat([newDate]);
-    //       ctx.emit("pick", newValue);
-    //     }
-    //   };
+      const target = event?.target;
+      if (target.tagName !== "TD") return;
 
-    //   const isWeekActive = (cell) => {
-    //     if (props.selectionMode !== "week") return false;
-    //     let newDate = props.date.startOf("day");
+      const row = target.parentNode.rowIndex - 1;
+      const column = target.cellIndex;
 
-    //     if (cell.type === "prev-month") {
-    //       newDate = newDate.subtract(1, "month");
-    //     }
-
-    //     if (cell.type === "next-month") {
-    //       newDate = newDate.add(1, "month");
-    //     }
-
-    //     newDate = newDate.date(parseInt(cell.text, 10));
-
-    //     if (props.parsedValue && !Array.isArray(props.parsedValue)) {
-    //       const dayOffset =
-    //         ((props.parsedValue.day() - firstDayOfWeek + 7) % 7) - 1;
-    //       const weekDate = props.parsedValue.subtract(dayOffset, "day");
-    //       return weekDate.isSame(newDate, "day");
-    //     }
-    //     return false;
-    //   };
+      if (rows.value[row][column].disabled) return;
+      if (row !== lastRow.value || column !== lastColumn.value) {
+        lastRow.value = row;
+        lastColumn.value = column;
+        emit("on-range-change", {
+          selecting: true,
+          endDate: getDateOfCell(row, column),
+        });
+      }
+    };
 
     return {
-      WEEKS,
+      WEEKS_TITLE,
       tableRows,
       startDate,
       rows,
-      // handleMouseMove,
-      // t,
-      // isWeekActive,
-      // handleClick,
+      getCellClasses,
+      onClick,
+      onMouseMove,
     };
   },
 });
 </script>
+
+<style lang="less" scoped>
+@import "./date-table.less";
+</style>

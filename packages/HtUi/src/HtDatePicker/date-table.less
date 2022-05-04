@@ -1,0 +1,28 @@
+@import "../theme/variables.less";
+
+.ht-date-table{
+    font-size: 12px;
+    line-height: 3;
+    color: fade(@normal-color, 80);
+    .title{
+        border-bottom: 1px solid @border-color;
+    }
+    .next-month, .prev-month{
+        color: fade(@normal-color, 50);
+    }
+    .today, .available:hover{
+        color: @active-color;
+    }
+    .today{
+        font-weight: bold;
+    }
+    .current:not(.disabled) span, .selected {
+        border-radius: 100%;
+        background-color: @active-color;
+        color: @base-color;
+    }
+    .disabled{
+        color: @disabled-color;
+        cursor: not-allowed;
+    }
+}
