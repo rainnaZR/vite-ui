@@ -10,6 +10,7 @@
 @font-size-small: 13px;
 @line-height: 1.8;
 @border-radius: 4px;
+@border-color: fade(@info-color, 20);
 
 // header
 @header-height: 60px;
@@ -22,7 +23,6 @@
 @button-height-big: 40px;
 @button-height-huge: 50px;
 
-@button-border-radius: 4px;
 @button-border-radius-huge: 6px;
 
 @button-background-color: fade(@active-color, 15);
@@ -53,16 +53,13 @@
 @tag-padding-top: 0;
 @tag-padding-left: 10px;
 @tag-radius: 4px;
-@tag-border-color: fade(@info-color, 20);
 @tag-font-size: 13px;
 @tag-line-height: 30px;
 
 // popover
 @popover-width: 300px;
 @popover-padding: 10px 15px;
-@popover-border-radius: 4px;
-@popover-border-color: fade(@info-color, 20);
-@popover-box-shadow: 0 2px 12px 0 fade(@info-color, 20);
+@popover-box-shadow: 0 2px 12px 0 @border-color;
 @popover-split-padding: 10px;
 @popover-arrow-position: 30px;
 
@@ -74,8 +71,6 @@
 // input
 @input-padding-top: 0;
 @input-padding-left: 10px;
-@input-border-color: fade(@info-color, 20);
-@input-border-radius: 4px;
 @input-focus-border-color: fade(@active-color, 80);
 @input-line-height: 36px;
 @input-textarea-line-height: 1.6;
@@ -91,15 +86,13 @@
 @switch-padding: 2px;
 
 // select
-@select-options-border: 1px solid fade(@info-color, 20);
-@select-options-border-radius: 4px;
-@select-options-box-shadow: 0 2px 12px 0 fade(@info-color, 20);
+@select-options-border: 1px solid @border-color;
+@select-options-box-shadow: 0 2px 12px 0 @border-color;
 @select-option-padding: 15px;
 @select-option-line-height: 36px;
 
 // upload
 @upload-img-height: 100px;
-@upload-img-border-radius: 4px;
 
 // form-item
 @form-item-label-margin: 12px;
@@ -128,7 +121,6 @@
 
 // toast
 @toast-padding: 10px 20px;
-@toast-border-radius: 4px;
 
 // dialog
 @dialog-min-width: 420px;
@@ -136,12 +128,7 @@
 @dialog-max-height: 80vh;
 @dialog-padding: 20px 30px;
 @dialog-background: rgba(0, 0, 0, 0.5);
-@dialog-border-radius: 4px;
-@dialog-border-color: fade(@info-color, 20);
-@dialog-box-shadow: 0 2px 12px 0 fade(@info-color, 20);
+@dialog-box-shadow: 0 2px 12px 0 @border-color;
 
 // tree
 @tree-padding: 22px;
-
-// richText
-@richText-border-color: #eee;

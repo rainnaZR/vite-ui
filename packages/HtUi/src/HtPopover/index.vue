@@ -2,10 +2,11 @@
   <div
     class="ht-popover"
     :style="data.style"
-    :tabindex="data.tabIndex || 0"
-    @mouseover="onMouseOver"
-    @mouseout="onMouseOut"
-    @click="onClick"
+    :tabindex="data.tabIndex || 1"
+    @mouseover="trigger == 'hover' && onVisibleChange(true)"
+    @mouseout="trigger == 'hover' && onVisibleChange(false)"
+    @click="trigger == 'click' && onVisibleChange(true)"
+    @blur="trigger == 'click' && onVisibleChange(false)"
   >
     <!-- 展示内容插槽 -->
     <slot scope="data">{{ data.content }}</slot>
@@ -73,51 +74,12 @@ export default defineComponent({
     const trigger = ref(props.data.trigger || "hover");
 
     /**
-     * 鼠标mouseover事件
-     * @param {Object} event MouseEvent对象
+     * 弹窗视图切换事件
+     * @param {Boolean} visible 弹窗是否可见
      * @returns void
      */
-    const onMouseOver = (e: MouseEvent) => {
-      if (trigger.value === "hover") show.value = true;
-
-      /**
-       * hover事件触发
-       * @param {Boolean} show 弹出窗是否显示
-       * @param {Object} event MouseEvent对象
-       */
-      emit("on-hover", { show: show.value, e });
-    };
-
-    /**
-     * 鼠标mouseout事件
-     * @param {Object} event MouseEvent对象
-     * @returns void
-     */
-    const onMouseOut = (e: MouseEvent) => {
-      if (trigger.value === "hover") show.value = false;
-
-      /**
-       * hover事件触发
-       * @param {Boolean} show 弹出窗是否显示
-       * @param {Object} event MouseEvent对象
-       */
-      emit("on-hover", { show: show.value, e });
-    };
-
-    /**
-     * 点击事件
-     * @param {Object} event MouseEvent对象
-     * @returns void
-     */
-    const onClick = (e: MouseEvent) => {
-      if (trigger.value === "click") show.value = !show.value;
-
-      /**
-       * 点击事件触发
-       * @param {Boolean} show 弹出窗是否显示
-       * @param {Object} event MouseEvent对象
-       */
-      emit("on-click", { show: show.value, e });
+    const onVisibleChange = (visible: boolean) => {
+      show.value = visible;
     };
 
     /**
@@ -149,7 +111,7 @@ export default defineComponent({
        * 弹出窗状态变化事件
        * @param {Boolean} show 弹出窗是否显示
        */
-      emit("on-popover-change", { show: value });
+      emit("on-visible-change", { show: value });
     });
     watch(
       () => props.modelValue,
@@ -163,10 +125,9 @@ export default defineComponent({
 
     return {
       show,
+      trigger,
       isTooltip: proxy?.$options?.extendProps?.isTooltip,
-      onMouseOver,
-      onMouseOut,
-      onClick,
+      onVisibleChange,
       onGetStyle,
     };
   },
