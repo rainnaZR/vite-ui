@@ -277,7 +277,7 @@ export default defineComponent({
       const newDate = getDateOfCell(row, column);
 
       if (props.selectionMode === "day") {
-        emit("on-click", newDate);
+        emit("on-pick", newDate);
       }
     };
 
