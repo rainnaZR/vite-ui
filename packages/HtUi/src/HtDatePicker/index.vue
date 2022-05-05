@@ -13,6 +13,10 @@
             prefixIcon: 'u-icon-calendar',
             clearable: true,
             disabled,
+            readonly: data.readonly,
+            placeholder: data.placeholder,
+            clearable: data.clearable,
+            name: data.name,
           }"
         />
         <template #popover>
@@ -108,7 +112,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, inject, ref, computed } from "vue";
+import {
+  defineComponent,
+  PropType,
+  inject,
+  ref,
+  reactive,
+  computed,
+} from "vue";
 import dayjs from "dayjs";
 import type { ConfigType, Dayjs } from "dayjs";
 import HtPopover from "../HtPopover";
@@ -197,7 +208,7 @@ export default defineComponent({
       return "day";
     });
 
-    const parsedValue = ref(props.data?.parsedValue);
+    const parsedValue = reactive(props.data?.parsedValue);
     const disabledDate = computed(() => props.data?.disabledDate);
 
     const onPanelChange = (mode: "month" | "year") => {
