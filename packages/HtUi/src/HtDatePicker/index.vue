@@ -217,7 +217,7 @@ export default defineComponent({
     };
 
     /**
-     * 选择年
+     * 展示年份面板
      * @returns void
      */
     const onShowYearPicker = () => {
@@ -226,7 +226,7 @@ export default defineComponent({
     };
 
     /**
-     * 选择月
+     * 展示月份面板
      * @returns void
      */
     const onShowMonthPicker = () => {
@@ -237,7 +237,7 @@ export default defineComponent({
     const selectableRange = ref([]);
 
     /**
-     * 检查当前日期是否在选中区域内
+     * 检查当前日期是否在选中范围内
      * @returns void
      */
     const checkDateWithinRange = (date: ConfigType) => {
@@ -280,6 +280,12 @@ export default defineComponent({
       inputVal.value = newValue?.format(dateFormat.value);
       const popoverRefValue: any = popoverRef.value;
       popoverRefValue.onVisibleChange(false);
+
+      /**
+       * 日期选择事件触发
+       * @param {String} inputVal 输入框展示的日期字符串
+       * @param {Object} dayjs 日期对象
+       */
       emit("on-pick", inputVal.value, newValue, ...args);
     };
 

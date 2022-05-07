@@ -12,8 +12,8 @@ export interface DatePickerData {
 
   type: string; // 日期选择框类型，可选值year/month/date/dates/week/dateTime/dateTimeRange/dateRange/monthRange
   format?: string; // 日期格式
-  parsedValue?: any;
-  disabledDate?: any;
+  parsedValue?: any; // 当前日期
+  disabledDate?: any; // 禁止选择的日期
 }
 
 export type Props = PublicProps<{
