@@ -26,6 +26,7 @@
         'f-trans',
       ]"
       :style="onGetStyle()"
+      @click.stop
     >
       <div
         class="box"

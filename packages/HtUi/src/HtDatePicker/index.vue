@@ -6,16 +6,15 @@
     </template>
     <!-- 编辑模式 -->
     <template v-else>
-      <ht-popover :data="{ trigger: 'click' }">
+      <ht-popover ref="popoverRef" :data="{ trigger: 'click' }">
         <ht-input
           v-model:modelValue="inputVal"
           :data="{
-            prefixIcon: 'u-icon-calendar',
-            clearable: true,
+            prefixIcon: data.prefixIcon || 'u-icon-calendar',
             disabled,
             readonly: data.readonly,
-            placeholder: data.placeholder,
-            clearable: data.clearable,
+            placeholder: data.placeholder || '请选择',
+            clearable: true,
             name: data.name,
           }"
         />
@@ -28,25 +27,18 @@
           <template v-else-if="data.type == 'monthRange'"> </template>
           <!-- 日期选择（默认） -->
           <template v-else>
-            <div class="calendar">
+            <div class="calendar f-tac">
               <div v-show="currentView !== 'time'" class="header f-flexr">
-                <ht-button
+                <ht-icon
                   aria-label="上一年"
-                  :data="{
-                    type: 'text',
-                    icon: 'u-icon-arrowsLeft',
-                    style: 'color: #444',
-                  }"
+                  class="f-curp"
+                  :data="{ name: 'u-icon-arrowsLeft' }"
                   @on-click="onPrevYear"
                 />
-                <ht-button
-                  v-show="currentView === 'date'"
+                <ht-icon
                   aria-label="上一月"
-                  :data="{
-                    type: 'text',
-                    icon: 'u-icon-arrowLeft',
-                    style: 'margin: 0;color: #444',
-                  }"
+                  class="f-curp f-ml5"
+                  :data="{ name: 'u-icon-arrowLeft' }"
                   @on-click="onPrevMonth"
                 />
                 <div class="f-f1">
@@ -54,29 +46,21 @@
                   <span
                     v-show="currentView === 'date'"
                     class="f-ml5"
-                    :class="{ active: currentView === 'month' }"
                     @click="onShowMonthPicker"
                   >
                     {{ month + 1 }}月
                   </span>
                 </div>
-                <ht-button
+                <ht-icon
                   aria-label="下一月"
-                  :data="{
-                    type: 'text',
-                    icon: 'u-icon-arrowsRight',
-                    style: 'color: #444',
-                  }"
+                  class="f-curp"
+                  :data="{ name: 'u-icon-arrowRight' }"
                   @on-click="onNextMonth"
                 />
-                <ht-button
-                  v-show="currentView === 'date'"
+                <ht-icon
                   aria-label="下一年"
-                  :data="{
-                    type: 'text',
-                    icon: 'u-icon-arrowRight',
-                    style: 'margin: 0;color: #444',
-                  }"
+                  class="f-curp f-ml5"
+                  :data="{ name: 'u-icon-arrowsRight' }"
                   @on-click="onNextYear"
                 />
               </div>
@@ -90,17 +74,17 @@
                   :selection-mode="selectionMode"
                   :parsed-value="parsedValue"
                   :disabled-date="disabledDate"
-                  @on-pick="onDateClick"
+                  @on-pick="onDatePick"
                 />
                 <month-table
                   v-if="currentView === 'month'"
                   :date="innerDate"
-                  @on-pick="onMonthClick"
+                  @on-pick="onMonthPick"
                 />
                 <year-table
                   v-if="currentView === 'year'"
                   :date="innerDate"
-                  @on-pick="onYearClick"
+                  @on-pick="onYearPick"
                 />
               </div>
             </div>
@@ -112,33 +96,43 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  PropType,
-  inject,
-  ref,
-  reactive,
-  computed,
-} from "vue";
+import { defineComponent, PropType, inject, ref, computed, watch } from "vue";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import localeData from "dayjs/plugin/localeData";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+import weekYear from "dayjs/plugin/weekYear";
+import dayOfYear from "dayjs/plugin/dayOfYear";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import type { ConfigType, Dayjs } from "dayjs";
 import HtPopover from "../HtPopover";
 import HtInput from "../HtInput";
-import HtButton from "../HtButton";
+import HtIcon from "../HtIcon";
 import DateTable from "./date-table.vue";
 import MonthTable from "./month-table.vue";
 import YearTable from "./year-table.vue";
 import { DatePickerData } from "./types";
 import { FormContext, formKey } from "../HtForm/types";
 
-// 表单中的日期选择组件
+dayjs.extend(localeData);
+dayjs.extend(advancedFormat);
+dayjs.extend(customParseFormat);
+dayjs.extend(weekOfYear);
+dayjs.extend(weekYear);
+dayjs.extend(dayOfYear);
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
+
+// 表单中的日期选择组件。
 export default defineComponent({
   name: "HtDatePicker",
 
   components: {
     HtPopover,
     HtInput,
-    HtButton,
+    HtIcon,
     DateTable,
     MonthTable,
     YearTable,
@@ -160,24 +154,19 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const popoverRef = ref(null);
     const form: FormContext | undefined = inject(formKey);
     const extractDateFormat = (format?: string) =>
       format
+        ?.toUpperCase()
         ?.replace(/\W?m{1,2}|\W?ZZ/g, "")
         ?.replace(/\W?h{1,2}|\W?s{1,3}|\W?a/gi, "")
         ?.trim();
     const dateFormat = computed(() => {
-      return extractDateFormat(props.data?.format);
+      return extractDateFormat(props.data?.format || "YYYY-MM-DD");
     });
-    const inputVal = ref<string | number | undefined | null>();
-    const onInitInputVal = () => {
-      if (props.modelValue) return props.modelValue;
-      if (!props.data.parsedValue && !props.data.disabledDate) return;
-      return ((props.data.parsedValue || innerDate.value) as Dayjs).format(
-        dateFormat.value
-      );
-    };
-    inputVal.value = onInitInputVal();
+
+    const inputVal = ref<string | number>("");
     const disabled = props.data.disabled || form?.data.disabled;
     const lang = ref("zh-cn");
     const currentView = ref("date");
@@ -202,38 +191,28 @@ export default defineComponent({
     const minDate = ref(null);
     const maxDate = ref(null);
     const selectionMode = computed(() => {
-      if (["week", "month", "year", "dates"].includes(props.data.mode)) {
-        return props.data.mode;
+      if (["week", "month", "year", "dates"].includes(props.data.type)) {
+        return props.data.type;
       }
       return "day";
     });
-
-    const parsedValue = reactive(props.data?.parsedValue);
+    const parsedValue = ref(props.data?.parsedValue);
     const disabledDate = computed(() => props.data?.disabledDate);
-
-    const onPanelChange = (mode: "month" | "year") => {
-      emit(
-        "on-panel-change",
-        innerDate.value.toDate(),
-        mode,
-        currentView.value
-      );
-    };
+    const showTime = computed(() =>
+      ["dateTime", "dateTimeRange"].includes(props.data.type)
+    );
     const onPrevYear = () => {
       if (currentView.value === "year") {
         innerDate.value = innerDate.value.subtract(10, "year");
       } else {
         innerDate.value = innerDate.value.subtract(1, "year");
       }
-      onPanelChange("year");
     };
     const onPrevMonth = () => {
       innerDate.value = innerDate.value.subtract(1, "month");
-      onPanelChange("month");
     };
     const onNextMonth = () => {
       innerDate.value = innerDate.value.add(1, "month");
-      onPanelChange("month");
     };
     const onNextYear = () => {
       if (currentView.value === "year") {
@@ -241,9 +220,7 @@ export default defineComponent({
       } else {
         innerDate.value = innerDate.value.add(1, "year");
       }
-      onPanelChange("year");
     };
-
     const onShowYearPicker = () => {
       // todo: 后续补充
       // currentView.value = "year";
@@ -253,40 +230,28 @@ export default defineComponent({
       // currentView.value = "month";
     };
     const selectableRange = ref([]);
-    // eslint-disable-next-line no-unused-vars
-    const timeWithinRange = (_: ConfigType, __: any, ___: string) => true;
     const checkDateWithinRange = (date: ConfigType) => {
-      return selectableRange.value.length > 0
-        ? timeWithinRange(
-            date,
-            selectableRange.value,
-            props.data.format || "HH:mm:ss"
-          )
-        : true;
+      // todo: 逻辑待补充
+      return !selectableRange.value?.length;
     };
-    const showTime = computed(
-      () =>
-        props.data.type === "dateTime" || props.data.type === "dateTimeRange"
-    );
-    const onFormatEmit = (emitDayjs: Dayjs) => {
+    const onFormatDayjs = (emitDayjs: Dayjs) => {
       if (showTime.value) return emitDayjs.millisecond(0);
       return emitDayjs.startOf("day");
     };
     const onEmit = (value: Dayjs, ...args: any) => {
-      if (!value) {
-        emit("on-pick", value, ...args);
-      } else if (Array.isArray(value)) {
-        const dates = value.map(onFormatEmit);
-        emit("on-pick", dates, ...args);
-      } else {
-        emit("on-pick", onFormatEmit(value), ...args);
-      }
-      inputVal.value = null;
+      const newValue = !value
+        ? value
+        : Array.isArray(value)
+        ? value.map(onFormatDayjs)
+        : onFormatDayjs(value);
+      inputVal.value = newValue?.format(dateFormat.value);
+      popoverRef.value?.onVisibleChange(false);
+      emit("on-pick", inputVal.value, newValue, ...args);
     };
-    const onDateClick = (value: Dayjs) => {
+    const onDatePick = (value: Dayjs) => {
       if (selectionMode.value === "day") {
-        let newDate = parsedValue
-          ? (parsedValue as Dayjs)
+        let newDate = parsedValue.value
+          ? (parsedValue.value as Dayjs)
               .year(value.year())
               .month(value.month())
               .date(value.date())
@@ -298,35 +263,54 @@ export default defineComponent({
             .date(value.date());
         }
         innerDate.value = newDate;
+        parsedValue.value = newDate;
         onEmit(newDate, showTime.value);
       } else if (selectionMode.value === "week") {
-        onEmit(value.date);
+        onEmit(value);
       } else if (selectionMode.value === "dates") {
         onEmit(value, true);
       }
     };
-    const onMonthPick = (month: any) => {
-      innerDate.value = innerDate.value.startOf("month").month(month);
+    const onMonthPick = (pickMonth: any) => {
+      innerDate.value = innerDate.value.startOf("month").month(pickMonth);
       if (selectionMode.value === "month") {
         onEmit(innerDate.value);
       } else {
         currentView.value = "date";
       }
-      onPanelChange("month");
     };
-
-    const onYearPick = (year: any) => {
+    const onYearPick = (pickYear: any) => {
       if (selectionMode.value === "year") {
-        innerDate.value = innerDate.value.startOf("year").year(year);
+        innerDate.value = innerDate.value.startOf("year").year(pickYear);
         onEmit(innerDate.value);
       } else {
-        innerDate.value = innerDate.value.year(year);
+        innerDate.value = innerDate.value.year(pickYear);
         currentView.value = "month";
       }
-      onPanelChange("year");
     };
 
+    // 监听参数 value 的变化
+    watch(
+      () => props.modelValue,
+      (value) => {
+        inputVal.value = value; // 设置 value
+      },
+      {
+        immediate: true,
+      }
+    );
+
+    // 监听输入框的值的变化
+    watch(inputVal, (value) => {
+      /**
+       * 输入框input值更新
+       * @param {String} value 输入框input值
+       */
+      emit("update:modelValue", value);
+    });
+
     return {
+      popoverRef,
       form,
       inputVal,
       disabled,
@@ -347,7 +331,7 @@ export default defineComponent({
       onNextYear,
       onShowYearPicker,
       onShowMonthPicker,
-      onDateClick,
+      onDatePick,
       onMonthPick,
       onYearPick,
     };

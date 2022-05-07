@@ -1,6 +1,6 @@
 {
   "name": "@htfed/vue-doc-css",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "VueDoc.css.",
   "main": "dist/index.css",
   "style": "dist/index.css",

@@ -16,9 +16,9 @@
     .today{
         font-weight: bold;
     }
-    .current:not(.disabled) span, .selected {
+    .current:not(.disabled), .selected {
         border-radius: 100%;
-        background-color: @active-color;
+        background: radial-gradient(@active-color 45%, @base-color 50%);
         color: @base-color;
     }
     .disabled{

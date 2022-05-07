@@ -63,11 +63,8 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const lang = ref("zh-cn");
-
     const firstDayOfWeek = (props.date as any).$locale().weekStart || 7;
-
-    const WEEKS_CONSTANT = ["日", "一", "二", "三", "四", "五", "六"];
-
+    const WEEKS_CONSTANT = ["一", "二", "三", "四", "五", "六", "日"];
     const WEEKS_TITLE = computed(() =>
       WEEKS_CONSTANT?.concat(WEEKS_CONSTANT).slice(
         firstDayOfWeek,
@@ -76,11 +73,10 @@ export default defineComponent({
     );
 
     const offsetDay = computed(() => {
-      return firstDayOfWeek > 3 ? 7 - firstDayOfWeek : -firstDayOfWeek;
+      return (firstDayOfWeek > 3 ? 7 - firstDayOfWeek : -firstDayOfWeek) - 1;
     });
 
     const tableRows = ref([[], [], [], [], [], []]);
-
     const lastRow = ref(-1);
     const lastColumn = ref(null);
 
@@ -290,7 +286,7 @@ export default defineComponent({
       const row = target.parentNode.rowIndex - 1;
       const column = target.cellIndex;
 
-      if (rows.value[row][column].disabled) return;
+      if (rows.value[row][column]?.disabled) return;
       if (row !== lastRow.value || column !== lastColumn.value) {
         lastRow.value = row;
         lastColumn.value = column;
