@@ -115,7 +115,7 @@ export default defineComponent({
       const calNow = dayjs().locale(lang.value).startOf("day");
 
       for (let i = 0; i < 6; i++) {
-        const row = newRows[i];
+        const row: any = newRows[i];
 
         for (let j = 0; j < 7; j++) {
           let cell: any = row[j];
@@ -130,32 +130,33 @@ export default defineComponent({
             };
           }
           const index = i * 7 + j;
-          const calTime = startDate.value?.add(index - offset, "day");
+          const calTime: any = startDate.value?.add(index - offset, "day");
           cell.dayjs = calTime;
           cell.date = calTime?.toDate();
           cell.timestamp = calTime?.valueOf();
           cell.type = "normal";
 
+          const minDate: any = props.minDate;
           const calEndDate =
             props.rangeState.endDate ||
             props.maxDate ||
-            (props.rangeState.selecting && props.minDate);
+            (props.rangeState.selecting && minDate);
 
           cell.inRange =
-            (props.minDate &&
-              calTime?.isSameOrAfter(props.minDate, "day") &&
+            (minDate &&
+              calTime?.isSameOrAfter(minDate, "day") &&
               calEndDate &&
               calTime?.isSameOrBefore(calEndDate, "day")) ||
-            (props.minDate &&
-              calTime?.isSameOrBefore(props.minDate, "day") &&
+            (minDate &&
+              calTime?.isSameOrBefore(minDate, "day") &&
               calEndDate &&
               calTime?.isSameOrAfter(calEndDate, "day"));
 
-          if (props.minDate?.isSameOrAfter(calEndDate)) {
+          if (minDate?.isSameOrAfter(calEndDate)) {
             cell.start = calEndDate && calTime?.isSame(calEndDate, "day");
-            cell.end = props.minDate && calTime?.isSame(props.minDate, "day");
+            cell.end = minDate && calTime?.isSame(minDate, "day");
           } else {
-            cell.start = props.minDate && calTime?.isSame(props.minDate, "day");
+            cell.start = minDate && calTime?.isSame(minDate, "day");
             cell.end = calEndDate && calTime?.isSame(calEndDate, "day");
           }
 
@@ -285,8 +286,8 @@ export default defineComponent({
 
       const row = target.parentNode.rowIndex - 1;
       const column = target.cellIndex;
-
-      if (rows.value[row][column]?.disabled) return;
+      const rowValue: any = rows.value[row][column];
+      if (rowValue?.disabled) return;
       if (row !== lastRow.value || column !== lastColumn.value) {
         lastRow.value = row;
         lastColumn.value = column;

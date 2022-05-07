@@ -139,18 +139,9 @@ export default defineComponent({
   setup(props, { emit }) {
     const popoverRef = ref(null);
     const form: FormContext | undefined = inject(formKey);
-    const extractDateFormat = (format?: string) =>
-      format
-        ?.toUpperCase()
-        ?.replace(/\W?m{1,2}|\W?ZZ/g, "")
-        ?.replace(/\W?h{1,2}|\W?s{1,3}|\W?a/gi, "")
-        ?.trim();
-    const dateFormat = computed(() => {
-      return extractDateFormat(props.data?.format || "YYYY-MM-DD");
-    });
-
     const inputVal = ref<string | number>("");
     const disabled = props.data.disabled || form?.data.disabled;
+
     const lang = ref("zh-cn");
     const currentView = ref("date");
     const innerDate = ref(dayjs().locale(lang.value));
@@ -184,6 +175,11 @@ export default defineComponent({
     const showTime = computed(() =>
       ["dateTime", "dateTimeRange"].includes(props.data.type)
     );
+
+    /**
+     * 点击上一年
+     * @returns void
+     */
     const onPrevYear = () => {
       if (currentView.value === "year") {
         innerDate.value = innerDate.value.subtract(10, "year");
@@ -191,12 +187,27 @@ export default defineComponent({
         innerDate.value = innerDate.value.subtract(1, "year");
       }
     };
+
+    /**
+     * 点击上一月
+     * @returns void
+     */
     const onPrevMonth = () => {
       innerDate.value = innerDate.value.subtract(1, "month");
     };
+
+    /**
+     * 点击下一月
+     * @returns void
+     */
     const onNextMonth = () => {
       innerDate.value = innerDate.value.add(1, "month");
     };
+
+    /**
+     * 点击下一年
+     * @returns void
+     */
     const onNextYear = () => {
       if (currentView.value === "year") {
         innerDate.value = innerDate.value.add(10, "year");
@@ -204,33 +215,79 @@ export default defineComponent({
         innerDate.value = innerDate.value.add(1, "year");
       }
     };
+
+    /**
+     * 选择年
+     * @returns void
+     */
     const onShowYearPicker = () => {
       // todo: 后续补充
       // currentView.value = "year";
     };
+
+    /**
+     * 选择月
+     * @returns void
+     */
     const onShowMonthPicker = () => {
       // todo: 后续补充
       // currentView.value = "month";
     };
+
     const selectableRange = ref([]);
+
+    /**
+     * 检查当前日期是否在选中区域内
+     * @returns void
+     */
     const checkDateWithinRange = (date: ConfigType) => {
       // todo: 逻辑待补充
       return !selectableRange.value?.length;
     };
+
+    /**
+     * 初始化date对象
+     * @param {Object} dayjs 日期对象
+     * @returns {Object} dayjs 初始化后的日期对象
+     */
     const onFormatDayjs = (emitDayjs: Dayjs) => {
       if (showTime.value) return emitDayjs.millisecond(0);
       return emitDayjs.startOf("day");
     };
+
+    /**
+     * 格式转换
+     * @param {String} format 格式字符串
+     * @returns {String} format 转换后的格式字符串
+     */
+    const extractDateFormat = (format?: string) =>
+      format
+        ?.toUpperCase()
+        ?.replace(/\W?m{1,2}|\W?ZZ/g, "")
+        ?.replace(/\W?h{1,2}|\W?s{1,3}|\W?a/gi, "")
+        ?.trim();
+    const dateFormat = computed(() => {
+      return extractDateFormat(props.data?.format || "YYYY-MM-DD");
+    });
+
+    /**
+     * 日期格式处理
+     * @param {Object} dayjs 日期对象
+     * @returns void
+     */
     const onEmit = (value: Dayjs, ...args: any) => {
-      const newValue = !value
-        ? value
-        : Array.isArray(value)
-        ? value.map(onFormatDayjs)
-        : onFormatDayjs(value);
+      const newValue = value ? onFormatDayjs(value) : value;
       inputVal.value = newValue?.format(dateFormat.value);
-      popoverRef.value?.onVisibleChange(false);
+      const popoverRefValue: any = popoverRef.value;
+      popoverRefValue.onVisibleChange(false);
       emit("on-pick", inputVal.value, newValue, ...args);
     };
+
+    /**
+     * 日期选择
+     * @param {Object} dayjs 日期对象
+     * @returns void
+     */
     const onDatePick = (value: Dayjs) => {
       if (selectionMode.value === "day") {
         let newDate = parsedValue.value
@@ -254,6 +311,12 @@ export default defineComponent({
         onEmit(value, true);
       }
     };
+
+    /**
+     * 月份选择
+     * @param {String} month 月份
+     * @returns void
+     */
     const onMonthPick = (pickMonth: any) => {
       innerDate.value = innerDate.value.startOf("month").month(pickMonth);
       if (selectionMode.value === "month") {
@@ -262,6 +325,12 @@ export default defineComponent({
         currentView.value = "date";
       }
     };
+
+    /**
+     * 年份选择
+     * @param {String} year 年份
+     * @returns void
+     */
     const onYearPick = (pickYear: any) => {
       if (selectionMode.value === "year") {
         innerDate.value = innerDate.value.startOf("year").year(pickYear);
