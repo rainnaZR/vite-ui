@@ -98,14 +98,6 @@
 <script lang="ts">
 import { defineComponent, PropType, inject, ref, computed, watch } from "vue";
 import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import advancedFormat from "dayjs/plugin/advancedFormat";
-import localeData from "dayjs/plugin/localeData";
-import weekOfYear from "dayjs/plugin/weekOfYear";
-import weekYear from "dayjs/plugin/weekYear";
-import dayOfYear from "dayjs/plugin/dayOfYear";
-import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import type { ConfigType, Dayjs } from "dayjs";
 import HtPopover from "../HtPopover";
 import HtInput from "../HtInput";
@@ -115,15 +107,6 @@ import MonthTable from "./month-table.vue";
 import YearTable from "./year-table.vue";
 import { DatePickerData } from "./types";
 import { FormContext, formKey } from "../HtForm/types";
-
-dayjs.extend(localeData);
-dayjs.extend(advancedFormat);
-dayjs.extend(customParseFormat);
-dayjs.extend(weekOfYear);
-dayjs.extend(weekYear);
-dayjs.extend(dayOfYear);
-dayjs.extend(isSameOrAfter);
-dayjs.extend(isSameOrBefore);
 
 // 表单中的日期选择组件。
 export default defineComponent({
