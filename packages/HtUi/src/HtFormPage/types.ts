@@ -11,7 +11,9 @@ export interface Rules {
 }
 
 export interface FieldItem {
-  type: string; // 表单项类型，可填表单内组件名
+  type: string; // 表单项类型，表单内组件名称
+  showType?: string; // 表单项展示模式，支持预览和编辑，可选值为detail时为预览模式
+  defaultEmptyText?: string; // 表单项为空值时展示的内容
   hide?: boolean; // 表单项是否隐藏，默认为false
   prop?: string; // 表单项对应的表单属性值
   label: string; // 表单项的label标签
@@ -76,10 +78,11 @@ export interface FormPageData {
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   disabled?: boolean; // 表单是否禁用
   hideLoading?: boolean; // 是否隐藏loading
+  defaultEmptyText?: string; // 表单项为空值时展示的内容
 
   fields?: FieldItem[]; // 表单字段组
   group?: GroupItem[]; // 表单选项组
-  actions: string[] | ActionItem[]; // 操作按钮
+  actions?: string[] | ActionItem[]; // 操作按钮
   request?: RequestData; // 接口
 }
 

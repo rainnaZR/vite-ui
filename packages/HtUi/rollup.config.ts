@@ -18,6 +18,8 @@ const config = readdirSync(input)
       "@wangeditor/editor",
       "@wangeditor/editor-for-vue@next",
       "dayjs",
+      "xe-utils",
+      "vxe-table",
     ],
     plugins: [
       nodeResolve(),
@@ -75,6 +77,8 @@ config.push({
     "@wangeditor/editor",
     "@wangeditor/editor-for-vue@next",
     "dayjs",
+    "xe-utils",
+    "vxe-table",
   ],
 });
 export default config;

@@ -109,7 +109,7 @@
               :data="{
                 ...action,
                 type: action.btnType,
-                size: action.btnSize || `${data.inline ? 'normal' : 'big'}`,
+                size: action.size || `${data.inline ? 'normal' : 'big'}`,
               }"
               @click="onFormAction(action)"
             >
