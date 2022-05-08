@@ -141,7 +141,7 @@ export default defineComponent({
     },
   },
 
-  setup(props) {
+  setup(props, context) {
     const xTable = ref({} as VxeTableInstance);
     const xToolbar = ref({} as VxeToolbarInstance);
     const proxy = getCurrentInstance()?.proxy;
@@ -157,7 +157,7 @@ export default defineComponent({
       onClickAction,
       onPageChange,
       onSizeChange,
-    } = useHandler(props, proxy);
+    } = useHandler(props, context, proxy);
 
     onMounted(() => {
       onGetListData({

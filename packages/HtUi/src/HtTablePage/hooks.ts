@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 /**
  * 默认表格数据
@@ -25,28 +25,7 @@ export const defaultTableData = {
   },
 };
 
-/**
- * 默认表格操作项
- */
-export const defaultActions = {
-  add: {
-    btnType: "primary",
-    icon: "u-icon-add",
-    size: "normal",
-    content: "新增",
-  },
-  detail: {
-    content: "详情",
-  },
-  edit: {
-    content: "编辑",
-  },
-  delete: {
-    content: "删除",
-  },
-};
-
-export const useHandler = (props: any, proxy: any) => {
+export const useHandler = (props: any, context: any, proxy: any) => {
   const { $dialog, $loading, $toast } = proxy;
   const { pageIndex, pageSize } = props.data.pager;
   const listParams = ref({
@@ -54,6 +33,23 @@ export const useHandler = (props: any, proxy: any) => {
     pageSize,
     ...(props.data.filterForm?.model || {}),
   });
+  const defaultActions = {
+    add: {
+      btnType: "primary",
+      icon: "u-icon-add",
+      size: "normal",
+      content: "新增",
+    },
+    detail: {
+      content: "详情",
+    },
+    edit: {
+      content: "编辑",
+    },
+    delete: {
+      content: "删除",
+    },
+  };
 
   /**
    * 列表数据获取
@@ -140,32 +136,6 @@ export const useHandler = (props: any, proxy: any) => {
     });
   };
 
-  /**
-   * 弹窗展示
-   */
-  const onShowDialog = (options: any) => {
-    const { title = "提示", content, xhr, xhrParams } = options || {};
-    $dialog.show({
-      title,
-      content,
-      onConfirm: async () => {
-        const loading = $loading();
-        try {
-          const result = await xhr(xhrParams);
-          loading.close();
-          if (result.code === 200) {
-            $toast.success("操作成功");
-            $dialog.close();
-            onReLoadList();
-          }
-        } catch (e) {
-          loading.close();
-          $toast.error("接口请求出错，请稍后再试！");
-        }
-      },
-    });
-  };
-
   const hasTargetValue = (show: any, row: any) =>
     Object.keys(show).every((key) => row[key] && row[key] === show[key]);
 
@@ -200,54 +170,69 @@ export const useHandler = (props: any, proxy: any) => {
       });
   };
 
-  // /**
-  //  * 表格操作项集合
-  //  */
-  // const actionMethods = {
-  //   // 新增
-  //   add: () => {
-  //     // $router.push(`${$route.path}/detail`);
-  //   },
-  //   // 详情
-  //   detail: (row: any = {}, action: any = {}) => {
-  //     // $router.push(`${$route.path}/detail?type=${action.type}&id=${row.id}`);
-  //   },
-  //   // 编辑
-  //   edit: (row: any = {}, action: any = {}) => {
-  //     // $router.push(`${$route.path}/detail?type=${action.type}&id=${row.id}`);
-  //   },
-  //   // 删除
-  //   delete: (row: any = {}) => {
-  //     const { xhr, getParams } = props.data?.request?.onDeleteXhr;
-  //     if (!xhr) {
-  //       console.error("删除接口为空");
-  //       return;
-  //     }
-  //     const content = row.title
-  //       ? `确定要删除"${row.title}"的数据吗？`
-  //       : "确定删除当前数据吗？";
-  //     const xhrParams =
-  //       typeof getParams === "function" ? getParams(row) : { id: row?.id };
-  //     onShowDialog({
-  //       content,
-  //       xhr,
-  //       xhrParams,
-  //     });
-  //   },
-  // };
+  /**
+   * 弹窗展示
+   */
+  const onShowDialog = (options: any) => {
+    const { title = "提示", content, xhr, xhrParams } = options || {};
+    $dialog.show({
+      title,
+      content,
+      onConfirm: async () => {
+        const loading = $loading();
+        try {
+          const result = await xhr(xhrParams);
+          loading.close();
+          if (result.code === 200) {
+            $toast.success("操作成功");
+            $dialog.close();
+            onReLoadList();
+          }
+        } catch (e) {
+          loading.close();
+          $toast.error("接口请求出错，请稍后再试！");
+        }
+      },
+    });
+  };
+
+  const defaultActionMethods = {
+    // 删除
+    delete: (row: any = {}) => {
+      const { xhr, getParams } = props.data?.request?.onDeleteXhr;
+      if (!xhr) {
+        console.error("删除接口为空");
+        return;
+      }
+      const content = row.title
+        ? `确定要删除"${row.title}"的数据吗？`
+        : "确定删除当前数据吗？";
+      const xhrParams =
+        typeof getParams === "function" ? getParams(row) : { id: row?.id };
+      onShowDialog({
+        content,
+        xhr,
+        xhrParams,
+      });
+    },
+  };
+
+  const actionMethods = computed(() => ({
+    ...defaultActionMethods,
+    ...(props.data.actionMethods || {}),
+  }));
 
   /**
    * 表格操作项点击
    */
   const onClickAction = (options = {}) => {
-    // const { type, onClick } = options.action;
-    // if (onClick) {
-    //   onClick(row, action);
-    //   return;
-    // }
-    // if (actionMethods[type]) {
-    //   actionMethods[type](row, action);
-    // }
+    const { onClick, type } = options.action;
+    if (onClick) {
+      onClick(options);
+    } else if (actionMethods.value[type]) {
+      actionMethods.value[type](options);
+    }
+    context.emit("on-action", options);
   };
 
   return {
