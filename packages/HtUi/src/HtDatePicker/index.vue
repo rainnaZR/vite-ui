@@ -122,9 +122,9 @@ export default defineComponent({
   },
 
   props: {
-    // 日期下拉框中的值
+    // 选中的日期
     modelValue: {
-      type: [String, Number],
+      type: [String],
       required: true,
       default: "",
     },
