@@ -40,7 +40,7 @@
           <!-- 排除特定属性：比如索引 -->
           <template v-if="column.type != 'seq'" #default="{ row, rowIndex }">
             <!-- render函数渲染 -->
-            <template v-if="column.slot">
+            <template v-if="column.slots">
               <renderComp :column="column" :row="row" :index="rowIndex" />
             </template>
 
@@ -71,11 +71,11 @@
       </vxe-table>
 
       <!-- 翻页区 -->
-      <div v-if="data.pager" class="f-flexr" style="height: 40px">
+      <div v-if="pager" class="f-flexr" style="height: 40px">
         <ht-pager
-          v-model:pageIndex="data.pager.pageIndex"
-          v-model:pageSize="data.pager.pageSize"
-          :data="data.pager"
+          v-model:pageIndex="pager.pageIndex"
+          v-model:pageSize="pager.pageSize"
+          :data="pager"
           @on-page-change="onPageChange"
           @on-size-change="onSizeChange"
         />
@@ -90,42 +90,32 @@ import {
   PropType,
   h,
   ref,
+  reactive,
   getCurrentInstance,
-  onMounted,
   nextTick,
+  onMounted,
 } from "vue";
-import {
-  Toolbar as vxeToolbar,
-  Table as vxeTable,
-  Column as vxeColumn,
-  VxeTableInstance,
-  VxeToolbarInstance,
-} from "vxe-table";
+import { VxeTableInstance, VxeToolbarInstance } from "vxe-table";
 import { tools } from "@htfed/utils";
 import HtFormPage from "../HtFormPage";
 import HtEmpty from "../HtEmpty";
 import HtPager from "../HtPager";
 import { TablePageData } from "./types";
-import { useHandler } from "./hooks";
-import "vxe-table/lib/style.css";
 
-// 表格页面组件，包括筛选项，表格内容，表格分页内容。
+// 表格页面组件。
 export default defineComponent({
   name: "HtTablePage",
 
   components: {
-    vxeToolbar,
-    vxeTable,
-    vxeColumn,
     HtFormPage,
     HtEmpty,
     HtPager,
     renderComp: (props) => {
-      const defaultSlot = props.column?.slot?.(props);
+      const defaultSlots = props.column?.slots?.(props);
       return h(
         "div",
         {
-          innerHTML: defaultSlot,
+          innerHTML: defaultSlots,
         },
         []
       );
@@ -141,28 +131,299 @@ export default defineComponent({
     },
   },
 
-  setup(props, context) {
+  setup(props, { emit }) {
     const xTable = ref({} as VxeTableInstance);
     const xToolbar = ref({} as VxeToolbarInstance);
-    const proxy = getCurrentInstance()?.proxy;
+    const proxy: any = getCurrentInstance()?.proxy;
+    const { $dialog, $loading, $toast } = proxy || {};
 
-    const {
-      listParams,
-      onGetListData,
-      onReLoadList,
-      onSearch,
-      onReset,
-      onClickFormAction,
-      onGetAction,
-      onClickAction,
-      onPageChange,
-      onSizeChange,
-    } = useHandler(props, context, proxy);
+    /**
+     * 默认组件配置数据
+     */
+    const defaultTableData = {
+      filterForm: {
+        inline: true,
+        model: {},
+        fields: [],
+        hideLoading: true,
+      },
+      toolbar: [],
+      table: {
+        columns: [],
+      },
+      pager: {
+        pageIndex: 1,
+        pageSize: 10,
+        total: 0,
+        pageSizes: [10, 20, 50, 100],
+        layout: "total, prev, pager, next, sizes, jumper",
+        pageShowLimit: 5,
+        sizeOptionsPosition: "top",
+      },
+    };
+
+    /**
+     * 默认行动点数据
+     */
+    const defaultActions = {
+      add: {
+        btnType: "primary",
+        icon: "u-icon-add",
+        size: "normal",
+        content: "新增",
+      },
+      detail: {
+        content: "详情",
+      },
+      edit: {
+        content: "编辑",
+      },
+      delete: {
+        content: "删除",
+      },
+    };
+
+    const pager = reactive({
+      ...defaultTableData.pager,
+      ...(props.data.pager || {}),
+    });
+    const listParams = ref({
+      pageIndex: pager.pageIndex,
+      pageSize: pager.pageSize,
+      ...(props.data.filterForm?.model || {}),
+    });
+
+    /**
+     * 列表数据获取
+     * @param {Object} params 列表加载的参数
+     * @returns void
+     */
+    const onGetListData = async (params: any) => {
+      const { xhr, getParams, callback } =
+        props.data?.request?.onGetListXhr || {};
+      if (!xhr) {
+        console.error("列表获取接口为空");
+        return;
+      }
+
+      // eslint-disable-next-line vue/no-mutating-props
+      props.data.table.loading = true;
+      try {
+        const xhrParams =
+          typeof getParams === "function" ? getParams(params) : params;
+        let result = await xhr(xhrParams);
+        result = typeof callback === "function" ? callback(result) : result;
+        const { list = [], pager: listPager } = result.data || {};
+        // eslint-disable-next-line vue/no-mutating-props
+        props.data.table.data = list;
+        Object.assign(pager, listPager);
+        listParams.value = params;
+      } catch (err) {
+        console.error(err);
+      }
+      // eslint-disable-next-line vue/no-mutating-props
+      props.data.table.loading = false;
+    };
+
+    /**
+     * 重载列表
+     * @returns void
+     */
+    const onReLoadList = () => {
+      onGetListData(listParams.value);
+    };
+
+    /**
+     * 搜索
+     * @param {Object} params 搜索参数
+     * @returns void
+     */
+    const onSearch = (params: any = {}) => {
+      onGetListData({
+        ...listParams.value,
+        ...params,
+        pageIndex: 1,
+      });
+    };
+
+    /**
+     * 重置
+     * @returns void
+     */
+    const onReset = () => {
+      onGetListData({
+        pageIndex: 1,
+        pageSize: pager.pageSizes[0],
+      });
+    };
+
+    /**
+     * 表单操作项点击
+     * @param {Object} params 当前点击操作项的配置项
+     * @returns void
+     */
+    const onClickFormAction = (params: any = {}) => {
+      const { type, formModel = {} } = params;
+      if (type === "submit") onSearch(formModel);
+      if (type === "reset") onReset();
+      emit("on-action", {
+        action: params,
+        from: "filterForm",
+      });
+    };
+
+    /**
+     * 判断当前item项是否显示
+     * @param {Object} show 展示需要满足的条件
+     * @param {Object} row 当前数据项
+     * @returns {Boolean} result 是否满足条件
+     */
+    const hasTargetValue = (show: any, row: any) =>
+      Object.keys(show).every((key) => row[key] && row[key] === show[key]);
+
+    /**
+     * 筛选表格操作项
+     * @param {Array} actions 传入的表格操作项
+     * @param {Object} row 当前表格项数据
+     * @returns {Array} actions 需要展示的表格项
+     */
+    const onGetAction = (actions: any[], row?: any) => {
+      return actions
+        .map((item) => {
+          if (typeof item === "string") {
+            item = {
+              type: item,
+              ...(defaultActions[item] || {}),
+            };
+          }
+          if (typeof item === "object") {
+            item = {
+              ...(defaultActions[item.type] || {}),
+              ...item,
+            };
+          }
+          return item;
+        })
+        ?.filter((i) => {
+          const { show } = i;
+          return (
+            show === undefined ||
+            !row ||
+            (typeof show === "object" && hasTargetValue(show, row)) ||
+            (typeof show === "function" && !!show(row))
+          );
+        });
+    };
+
+    /**
+     * 弹窗展示
+     * @param {Object} params 弹窗配置项数据
+     * @returns void
+     */
+    const onShowDialog = (params: any) => {
+      const { title = "提示", content, xhr, xhrParams } = params || {};
+      $dialog.show({
+        title,
+        content,
+        onConfirm: async () => {
+          const loading = $loading();
+          try {
+            const result = await xhr(xhrParams);
+            loading.close();
+            if (result.code === 200) {
+              $toast.success("操作成功");
+              $dialog.close();
+              onReLoadList();
+            }
+          } catch (e) {
+            loading.close();
+            $toast.error("接口请求出错，请稍后再试！");
+          }
+        },
+      });
+    };
+
+    /**
+     * 默认操作项点击事件
+     */
+    const defaultActionMethods = {
+      // 删除
+      delete: ({ row = {} }: any) => {
+        const { xhr, getParams } = props.data?.request?.onDeleteXhr || {};
+        if (!xhr) {
+          console.error("删除接口为空");
+          return;
+        }
+        const content = row.title
+          ? `确定要删除"${row.title}"的数据吗？`
+          : "确定删除当前数据吗？";
+        const xhrParams =
+          typeof getParams === "function" ? getParams(row) : { id: row?.id };
+        onShowDialog({
+          content,
+          xhr,
+          xhrParams,
+        });
+      },
+    };
+
+    /**
+     * 操作项点击事件
+     */
+    const actionMethods = reactive({
+      ...defaultActionMethods,
+      ...(props.data.actionMethods || {}),
+    });
+
+    /**
+     * 表格操作项点击
+     * @param {Object} params 当前点击操作项的配置数据
+     * @returns void
+     */
+    const onClickAction = (params: any) => {
+      const { onClick, type } = params?.action || {};
+      if (onClick) {
+        onClick(params);
+      } else if (actionMethods[type]) {
+        actionMethods[type](params);
+      }
+
+      /**
+       * 表格操作项点击事件触发
+       * @param {Object} params 回调参数，值为{action, from, row}
+       */
+      emit("on-action", params);
+    };
+
+    /**
+     * 页码点击
+     * @param {Number} index 当前点击页码值
+     * @returns void
+     */
+    const onPageChange = (pageIndex: number) => {
+      onGetListData({
+        ...listParams.value,
+        pageIndex,
+      });
+    };
+
+    /**
+     * 每页数量点击
+     * @param {Number} size 每页数量值
+     * @returns void
+     */
+    const onSizeChange = (pageSize: number) => {
+      onGetListData({
+        ...listParams.value,
+        pageIndex: 1,
+        pageSize,
+      });
+    };
 
     onMounted(() => {
       onGetListData({
         pageIndex: 1,
-        pageSize: props.data.pager.pageSizes[0],
+        pageSize: pager.pageSizes[0],
         ...(props.data.filterForm?.model || {}),
       });
     });
@@ -177,6 +438,8 @@ export default defineComponent({
     return {
       xTable,
       xToolbar,
+      defaultTableData,
+      pager,
       listParams,
       onGetListData,
       onReLoadList,
