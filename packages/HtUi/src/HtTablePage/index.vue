@@ -1,86 +1,75 @@
 <template>
-  <div class="ht-table-page">
-    <!-- 筛选项 -->
-    <div
-      v-if="data.filterForm && data.filterForm?.fields?.length"
-      class="box f-mb15"
-    >
-      <ht-form-page :data="data.filterForm" @on-action="onClickFormAction" />
-    </div>
+  <!-- 筛选项 -->
+  <div
+    v-if="data.filterForm && data.filterForm?.fields?.length"
+    class="m-table-filter f-mb15"
+  >
+    <ht-form-page :data="data.filterForm" @on-action="onClickFormAction" />
+  </div>
 
-    <!-- 表格区 -->
-    <div class="box">
-      <!-- 工具栏 -->
-      <vxe-toolbar
-        v-if="data.toolbar?.length"
-        class="f-mb15"
-        ref="xToolbar"
-        :custom="data.table.custom"
-      >
-        <template #buttons>
-          <ht-action
-            :data="{ list: onGetAction(data.toolbar) }"
-            @on-action="(action) => onClickAction({ action, from: 'toolbar' })"
-          />
-        </template>
-      </vxe-toolbar>
-
-      <!-- 列表区 -->
-      <vxe-table
-        v-if="data.table"
-        class="f-mb25 f-f1"
-        ref="xTable"
-        v-bind="data.table"
-      >
-        <vxe-column
-          v-for="(column, index) in data.table?.columns"
-          :key="`column-${index}`"
-          v-bind="column"
-        >
-          <!-- 排除特定属性：比如索引 -->
-          <template v-if="column.type != 'seq'" #default="{ row, rowIndex }">
-            <!-- render函数渲染 -->
-            <template v-if="column.slots">
-              <renderComp :column="column" :row="row" :index="rowIndex" />
-            </template>
-
-            <!-- 操作按钮 -->
-            <template v-else-if="column.actions?.length">
-              <ht-action
-                :data="{ list: onGetAction(column.actions, row) }"
-                @on-action="
-                  (action) => onClickAction({ action, row, from: 'table' })
-                "
-              />
-            </template>
-
-            <!-- 内容展示 -->
-            <template v-else>
-              {{
-                onDoValueByProps({ object: row, prop: column.field }) ||
-                column.placeholder ||
-                data.table.columnPlaceholder ||
-                "--"
-              }}
-            </template>
-          </template>
-        </vxe-column>
-        <template #empty>
-          <ht-empty />
-        </template>
-      </vxe-table>
-
-      <!-- 翻页区 -->
-      <div v-if="pager" class="f-flexr" style="height: 40px">
-        <ht-pager
-          v-model:pageIndex="pager.pageIndex"
-          v-model:pageSize="pager.pageSize"
-          :data="pager"
-          @on-page-change="onPageChange"
-          @on-size-change="onSizeChange"
+  <!-- 工具栏 -->
+  <div v-if="data.toolbar?.length" class="m-table-toolbar f-mb15">
+    <vxe-toolbar ref="xToolbar" :custom="data.table.custom">
+      <template #buttons>
+        <ht-action
+          :data="{ list: onGetAction(data.toolbar) }"
+          @on-action="(action) => onClickAction({ action, from: 'toolbar' })"
         />
-      </div>
-    </div>
+      </template>
+    </vxe-toolbar>
+  </div>
+
+  <!-- 列表区 -->
+  <div v-if="data.table" class="ht-table-list f-mb25 f-f1">
+    <vxe-table ref="xTable" v-bind="data.table">
+      <vxe-column
+        v-for="(column, index) in data.table?.columns"
+        :key="`column-${index}`"
+        v-bind="column"
+      >
+        <!-- 排除特定属性：比如索引 -->
+        <template v-if="column.type != 'seq'" #default="{ row, rowIndex }">
+          <!-- render函数渲染 -->
+          <template v-if="column.slots">
+            <renderComp :column="column" :row="row" :index="rowIndex" />
+          </template>
+
+          <!-- 操作按钮 -->
+          <template v-else-if="column.actions?.length">
+            <ht-action
+              :data="{ list: onGetAction(column.actions, row) }"
+              @on-action="
+                (action) => onClickAction({ action, row, from: 'table' })
+              "
+            />
+          </template>
+
+          <!-- 内容展示 -->
+          <template v-else>
+            {{
+              onDoValueByProps({ object: row, prop: column.field }) ||
+              column.placeholder ||
+              data.table.columnPlaceholder ||
+              "--"
+            }}
+          </template>
+        </template>
+      </vxe-column>
+      <template #empty>
+        <ht-empty />
+      </template>
+    </vxe-table>
+  </div>
+
+  <!-- 翻页区 -->
+  <div v-if="pager" class="m-table-pager f-flexr" style="height: 40px">
+    <ht-pager
+      v-model:pageIndex="pager.pageIndex"
+      v-model:pageSize="pager.pageSize"
+      :data="pager"
+      @on-page-change="onPageChange"
+      @on-size-change="onSizeChange"
+    />
   </div>
 </template>
 
