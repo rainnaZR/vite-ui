@@ -2,7 +2,7 @@
   <div class="ht-rich-text">
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
-      <div class="preview" v-html="modelValue"></div>
+      <div class="preview" v-html="modelValue || '暂无内容'"></div>
     </template>
     <!-- 编辑模式 -->
     <template v-else>
