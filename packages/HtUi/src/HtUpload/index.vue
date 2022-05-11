@@ -208,12 +208,12 @@ export default defineComponent({
     const tips = computed(() => {
       const { multiple, width, height, extensions, maxSize, limit } =
         props.data;
-      const tipsContent = [`支持${multiple ? "多" : "单"}张上传`];
-      if (width && width > 0) tipsContent.push(`宽度限制${width}px`);
-      if (height && height > 0) tipsContent.push(`高度限制${height}px`);
-      if (extensions) tipsContent.push(`格式仅支持${extensions}`);
-      if (maxSize) tipsContent.push(`大小限制${maxSize}内`);
-      if (limit && limit > 0) tipsContent.push(`上传总数限制${limit}张`);
+      const tipsContent = [`${multiple ? "多" : "单"}张上传`];
+      if (width && width > 0) tipsContent.push(`宽度${width}px`);
+      if (height && height > 0) tipsContent.push(`高度${height}px`);
+      if (extensions) tipsContent.push(`格式${extensions}`);
+      if (maxSize) tipsContent.push(`大小${maxSize}内`);
+      if (limit && limit > 0) tipsContent.push(`总数限${limit}张`);
       return tipsContent.join("，");
     });
     const onValueChange = () => {
