@@ -213,7 +213,7 @@ export default defineComponent({
       if (height && height > 0) tipsContent.push(`高度${height}px`);
       if (extensions) tipsContent.push(`格式${extensions}`);
       if (maxSize) tipsContent.push(`大小${maxSize}内`);
-      if (limit && limit > 0) tipsContent.push(`总数限${limit}张`);
+      if (limit && limit > 0) tipsContent.push(`最多${limit}张`);
       return tipsContent.join("，");
     });
     const onValueChange = () => {
