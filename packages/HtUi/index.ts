@@ -36,6 +36,7 @@ import HtToast from "./src/HtToast"; // 提示
 import HtDialog from "./src/HtDialog"; // 弹出框
 import HtTree from "./src/HtTree"; // 树
 import HtTablePage from "./src/HtTablePage"; // 表格页
+import HtBasePage from "./src/HtBasePage"; // 基础页
 
 const components: any[] = [
   HtBreadCrumb,
@@ -73,6 +74,7 @@ const components: any[] = [
   HtDialog,
   HtTree,
   HtTablePage,
+  HtBasePage,
 ];
 
 /**
@@ -121,6 +123,7 @@ export {
   HtDialog,
   HtTree,
   HtTablePage,
+  HtBasePage,
 };
 export default {
   install,
