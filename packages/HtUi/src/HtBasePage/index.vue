@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, onMounted } from "vue";
 import { BasePageData } from "./types";
 
 // 动态页面配置组件。
@@ -27,6 +27,15 @@ export default defineComponent({
         moduleList: [],
       }),
     },
+  },
+
+  setup() {
+    onMounted(() => {
+      setTimeout(() => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }, 50);
+    });
   },
 });
 </script>
