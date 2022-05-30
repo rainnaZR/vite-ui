@@ -183,6 +183,34 @@ export default defineComponent({
     });
 
     /**
+     * 函数处理
+     * @params {String} value 函数主体内容，为字符串
+     * @params {Array} paramsKey 参数名组成的字符串数组
+     * @params {Array} paramsValue 参数值组成的数组
+     * @params {Any} defaultValue 默认返回值
+     * @returns {Any} 返回值
+     */
+    const onExecFunction = (
+      value?: any,
+      paramsKey?: any,
+      paramsValue?: any,
+      defaultValue?: any
+    ) => {
+      if (!value) return defaultValue;
+
+      const type = typeof value;
+      if (type === "function") {
+        return value(...paramsValue);
+      }
+      if (type === "string") {
+        const newFunc = new Function(...paramsKey, value);
+        return newFunc.call(null, ...paramsValue);
+      }
+
+      return defaultValue;
+    };
+
+    /**
      * 列表数据获取
      * @param {Object} params 列表加载的参数
      * @returns void
@@ -198,10 +226,18 @@ export default defineComponent({
       // eslint-disable-next-line vue/no-mutating-props
       props.data.table.loading = true;
       try {
-        const xhrParams =
-          typeof getParams === "function" ? getParams(params) : params;
-        let result = await xhr(xhrParams);
-        result = typeof callback === "function" ? callback(result) : result;
+        const xhrParams = onExecFunction(
+          getParams,
+          ["params"],
+          [params],
+          params
+        );
+        let result = await onExecFunction(
+          xhr,
+          ["data", "proxy"],
+          [xhrParams, proxy]
+        );
+        result = onExecFunction(callback, ["result"], [result], result);
         const { list = [], pager: listPager } = result.data || {};
         // eslint-disable-next-line vue/no-mutating-props
         props.data.table.data = list;
@@ -317,7 +353,11 @@ export default defineComponent({
         onConfirm: async () => {
           const loading = $loading();
           try {
-            const result = await xhr(xhrParams);
+            const result = await onExecFunction(
+              xhr,
+              ["data", "proxy"],
+              [xhrParams, proxy]
+            );
             loading.close();
             if (result.code === 200) {
               $toast.success("操作成功");
@@ -346,8 +386,10 @@ export default defineComponent({
         const content = row.title
           ? `确定要删除"${row.title}"的数据吗？`
           : "确定删除当前数据吗？";
-        const xhrParams =
-          typeof getParams === "function" ? getParams(row) : { id: row?.id };
+        const xhrParams = onExecFunction(getParams, ["params"], [row], {
+          id: row?.id,
+        });
+
         onShowDialog({
           content,
           xhr,

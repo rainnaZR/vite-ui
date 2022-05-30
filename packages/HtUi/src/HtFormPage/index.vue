@@ -126,6 +126,7 @@
 import {
   defineComponent,
   PropType,
+  getCurrentInstance,
   ref,
   reactive,
   computed,
@@ -152,6 +153,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const proxy: any = getCurrentInstance()?.proxy;
     const loading = ref(false);
     const formRef = ref<FormContext>();
     const {
@@ -228,7 +230,7 @@ export default defineComponent({
           // 如果没有限制条件，直接展示
           if (!actionItem.limit) return actionItem;
           const { limit } = actionItem;
-          // limit支持两种类型判断：对象类型，函数，用于判断该操作是否展示
+          // limit支持三种类型判断：对象类型，函数，字符串，用于判断该操作是否展示
           // 对象类型的limit
           if (limit instanceof Object) {
             Object.keys(limit).forEach((key) => {
@@ -238,6 +240,11 @@ export default defineComponent({
           // 函数类型的limit
           if (typeof limit === "function") {
             actionItem.hide = !limit(data);
+          }
+          // 字符串类型的limit
+          if (typeof limit === "string") {
+            const limitFunc = new Function("data", limit);
+            actionItem.hide = !limitFunc.call(null, data);
           }
           return actionItem;
         })
@@ -300,6 +307,34 @@ export default defineComponent({
     };
 
     /**
+     * 函数处理
+     * @params {String} value 函数主体内容，为字符串
+     * @params {Array} paramsKey 参数名组成的字符串数组
+     * @params {Array} paramsValue 参数值组成的数组
+     * @params {Any} defaultValue 默认返回值
+     * @returns {Any} 返回值
+     */
+    const onExecFunction = (
+      value?: any,
+      paramsKey?: any,
+      paramsValue?: any,
+      defaultValue?: any
+    ) => {
+      if (!value) return defaultValue;
+
+      const type = typeof value;
+      if (type === "function") {
+        return value(...paramsValue);
+      }
+      if (type === "string") {
+        const newFunc = new Function(...paramsKey, value);
+        return newFunc.call(null, ...paramsValue);
+      }
+
+      return defaultValue;
+    };
+
+    /**
      * 初始化获取表单数据
      * @returns void
      */
@@ -310,9 +345,9 @@ export default defineComponent({
 
       loading.value = true;
       try {
-        const params = typeof getParams === "function" && getParams();
-        let result = await xhr(params);
-        result = typeof callback === "function" ? callback(result) : result;
+        const xhrParams = onExecFunction(getParams);
+        let result = await onExecFunction(xhr, ["data"], [xhrParams]);
+        result = onExecFunction(callback, ["result"], [result], result);
         const { createInfo, formInfo } = result?.data || {};
         // 初始化表单创建
         onInitFormCreate(createInfo);
@@ -369,11 +404,17 @@ export default defineComponent({
         // 提交表单
         loading.value = true;
         try {
-          const xhrParams =
-            typeof getParams === "function"
-              ? getParams({ ...formModel.value })
-              : formModel.value;
-          const result = await xhr(xhrParams);
+          const xhrParams = onExecFunction(
+            getParams,
+            ["params"],
+            [{ ...formModel.value }],
+            formModel.value
+          );
+          const result = await onExecFunction(
+            xhr,
+            ["data", "proxy"],
+            [xhrParams, proxy]
+          );
           loading.value = false;
           const { code, message } = result || {};
           if (code === 200) {
@@ -386,9 +427,7 @@ export default defineComponent({
             response: result,
             formModel: formModel.value,
           };
-          if (typeof callback === "function") {
-            callback(callbackParams);
-          }
+          onExecFunction(callback, ["data"], [callbackParams]);
 
           /**
            * 表单初始化事件触发
@@ -411,10 +450,16 @@ export default defineComponent({
       const { type, onClick } = action;
 
       // 如果自定义了onClick，则执行onClick自定义点击事件
-      if (typeof onClick === "function") {
-        onClick({
-          formModel: formModel.value,
-        });
+      if (onClick) {
+        onExecFunction(
+          onClick,
+          ["data"],
+          [
+            {
+              formModel: formModel.value,
+            },
+          ]
+        );
         return;
       }
 
