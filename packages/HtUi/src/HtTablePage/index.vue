@@ -237,7 +237,7 @@ export default defineComponent({
           ["data", "proxy"],
           [xhrParams, proxy]
         );
-        result = onExecFunction(callback, ["result"], [result], result);
+        result = onExecFunction(callback, ["data"], [result], result);
         const { list = [], pager: listPager } = result.data || {};
         // eslint-disable-next-line vue/no-mutating-props
         props.data.table.data = list;
