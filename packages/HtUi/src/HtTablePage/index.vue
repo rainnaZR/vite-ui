@@ -414,7 +414,7 @@ export default defineComponent({
     const onClickAction = (params: any) => {
       const { onClick, type } = params?.action || {};
       if (onClick) {
-        onClick(params);
+        onExecFunction(onClick, ["data", "proxy"], [params, proxy]);
       } else if (actionMethods[type]) {
         actionMethods[type](params);
       }

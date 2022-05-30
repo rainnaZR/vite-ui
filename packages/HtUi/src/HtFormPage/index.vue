@@ -456,6 +456,7 @@ export default defineComponent({
           ["data"],
           [
             {
+              action,
               formModel: formModel.value,
             },
           ]
