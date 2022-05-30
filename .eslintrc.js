@@ -43,6 +43,7 @@ const config = {
     "vue/no-v-model-argument": "off", // v-model 带参数
     "vue/no-multiple-template-root": "off", // 根元素只有一个
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+    "no-new-func": "off", // 可以使用new Function
   },
 };
 module.exports = config;

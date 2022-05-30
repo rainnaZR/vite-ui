@@ -5,7 +5,14 @@
       :ref="`${module.moduleName}-${index}`"
       :key="index"
       :is="module.moduleName"
-      v-bind="module"
+      v-bind="{
+        moduleId: module.moduleId,
+        moduleType: module.moduleType,
+        moduleName: module.moduleName,
+        moduleTitle: module.moduleTitle,
+        moduleDesc: module.moduleDesc,
+        data: module.moduleProps,
+      }"
     />
   </div>
 </template>
