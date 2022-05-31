@@ -99,12 +99,19 @@ export default defineComponent({
     HtFormPage,
     HtEmpty,
     HtPager,
-    renderComp: (props) => {
-      const defaultSlots = props.column?.slots?.(props);
+    renderComp: (props, context) => {
+      const slots = props.column?.slots;
+      let innerHTML;
+      if (typeof slots === "string") {
+        const newFunc = new Function("data", slots);
+        innerHTML = newFunc.call(context, props);
+      } else {
+        innerHTML = slots?.(props);
+      }
       return h(
         "div",
         {
-          innerHTML: defaultSlots,
+          innerHTML,
         },
         []
       );
@@ -278,7 +285,7 @@ export default defineComponent({
     const onReset = () => {
       onGetListData({
         pageIndex: 1,
-        pageSize: pager.pageSizes[0],
+        pageSize: pager.pageSize || pager.pageSizes[0],
       });
     };
 
@@ -359,12 +366,13 @@ export default defineComponent({
               [xhrParams, proxy]
             );
             loading.close();
-            if (result.code === 200) {
+            if (result.code === 200 || result.code === 0) {
               $toast.success("操作成功");
               $dialog.close();
               onReLoadList();
             }
           } catch (e) {
+            console.error(e);
             loading.close();
             $toast.error("接口请求出错，请稍后再试！");
           }
@@ -454,7 +462,7 @@ export default defineComponent({
     onMounted(() => {
       onGetListData({
         pageIndex: 1,
-        pageSize: pager.pageSizes[0],
+        pageSize: pager.pageSize || pager.pageSizes[0],
         ...(props.data.filterForm?.model || {}),
       });
     });
