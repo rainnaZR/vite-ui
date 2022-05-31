@@ -140,6 +140,12 @@
                   :data="{ name: 'u-icon-download' }"
                   @on-click.stop="onDownload(file, index)"
                 />
+                <!-- 复制链接 -->
+                <ht-icon
+                  class="f-ml5 f-mr5"
+                  :data="{ name: 'u-icon-notice' }"
+                  @on-click.stop="onCopy(file, index)"
+                />
                 <!-- 右移 -->
                 <ht-icon
                   v-if="index < files.length - 1"
@@ -722,6 +728,30 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 文件链接复制
+     * @param {Object} file 文件对象
+     * @param {Number} index 文件索引
+     * @returns void
+     */
+    const onCopy = (file: FileItem, index: number) => {
+      const { src } = file;
+      dom.onCopy(src).then(
+        (res?: string) => HtToast.success(res),
+        (err?: string) => HtToast.error(err)
+      );
+
+      /**
+       * 文件链接复制
+       * @param {Object} result 文件对象，值有files, file, index
+       */
+      emit("on-copy", {
+        files,
+        file,
+        index,
+      });
+    };
+
     // 监听modelValue变化
     watch(
       () => props.modelValue,
@@ -749,6 +779,7 @@ export default defineComponent({
       onPreview,
       onDelete,
       onDownload,
+      onCopy,
     };
   },
 });
