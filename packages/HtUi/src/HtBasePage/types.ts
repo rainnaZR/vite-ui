@@ -15,9 +15,6 @@ export interface ModuleItem {
 }
 
 export interface BasePageData {
-  id: number | string; // 页面id
-  pageTitle?: string; // 页面标题
-  pageExpires?: string[] | undefined; // 页面有效期
   moduleList: ModuleItem[]; // 模块列表
 }
 
