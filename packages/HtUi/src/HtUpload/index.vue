@@ -134,17 +134,17 @@
                   :data="{ name: 'u-icon-delete' }"
                   @on-click.stop="onDelete(file, index)"
                 />
-                <!-- 下载 -->
-                <ht-icon
-                  class="f-ml5 f-mr5"
-                  :data="{ name: 'u-icon-download' }"
-                  @on-click.stop="onDownload(file, index)"
-                />
                 <!-- 复制链接 -->
                 <ht-icon
                   class="f-ml5 f-mr5"
                   :data="{ name: 'u-icon-notice' }"
                   @on-click.stop="onCopy(file, index)"
+                />
+                <!-- 下载 -->
+                <ht-icon
+                  class="f-ml5 f-mr5"
+                  :data="{ name: 'u-icon-download' }"
+                  @on-click.stop="onDownload(file, index)"
                 />
                 <!-- 右移 -->
                 <ht-icon
@@ -708,27 +708,6 @@ export default defineComponent({
     };
 
     /**
-     * 文件下载
-     * @param {Object} file 文件对象
-     * @param {Number} index 文件索引
-     * @returns void
-     */
-    const onDownload = (file: FileItem, index: number) => {
-      const { src, name } = file;
-      dom.onDownloadFile({ url: src, name });
-
-      /**
-       * 文件下载
-       * @param {Object} result 文件对象，值有files, file, index
-       */
-      emit("on-download", {
-        files,
-        file,
-        index,
-      });
-    };
-
-    /**
      * 文件链接复制
      * @param {Object} file 文件对象
      * @param {Number} index 文件索引
@@ -746,6 +725,27 @@ export default defineComponent({
        * @param {Object} result 文件对象，值有files, file, index
        */
       emit("on-copy", {
+        files,
+        file,
+        index,
+      });
+    };
+
+    /**
+     * 文件下载
+     * @param {Object} file 文件对象
+     * @param {Number} index 文件索引
+     * @returns void
+     */
+    const onDownload = (file: FileItem, index: number) => {
+      const { src, name } = file;
+      dom.onDownloadFile({ url: src, name });
+
+      /**
+       * 文件下载
+       * @param {Object} result 文件对象，值有files, file, index
+       */
+      emit("on-download", {
         files,
         file,
         index,
@@ -778,8 +778,8 @@ export default defineComponent({
       onMove,
       onPreview,
       onDelete,
-      onDownload,
       onCopy,
+      onDownload,
     };
   },
 });
