@@ -271,7 +271,7 @@ const compileScript = (scriptStr, options = {}, callback = () => {}) => {
       });
     },
     VariableDeclarator(nodePath) {
-      const { type, async, params: defaultParams } = nodePath.node.init;
+      const { type, async, params: defaultParams } = nodePath.node.init || {};
       // 获取vue组件所有的方法method定义
       if (type === "ArrowFunctionExpression") {
         const { name } = nodePath.node.id;
