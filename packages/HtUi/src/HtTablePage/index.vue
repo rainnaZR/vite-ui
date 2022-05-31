@@ -36,12 +36,14 @@
 
           <!-- 操作按钮 -->
           <template v-else-if="column.actions?.length">
-            <ht-action
-              :data="{ list: onGetAction(column.actions, row) }"
-              @on-action="
-                (action) => onClickAction({ action, row, from: 'table' })
-              "
-            />
+            <div class="f-mr10">
+              <ht-action
+                :data="{ list: onGetAction(column.actions, row) }"
+                @on-action="
+                  (action) => onClickAction({ action, row, from: 'table' })
+                "
+              />
+            </div>
           </template>
 
           <!-- 内容展示 -->
