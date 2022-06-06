@@ -33,7 +33,7 @@
     "@htfed/base-css": "^1.0.26",
     "@htfed/doc-loader": "^0.0.17",
     "@htfed/ui": "^0.2.91",
-    "@htfed/utils": "0.1.19",
+    "@htfed/utils": "0.1.23",
     "@htfed/vue-doc-css": "^0.0.10",
     "@wangeditor/editor": "^5.0.1",
     "@wangeditor/editor-for-vue": "^5.1.11",
