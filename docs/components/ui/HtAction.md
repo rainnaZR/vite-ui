@@ -168,14 +168,14 @@ export default defineComponent({
         {
           type: "edit",
           btnType: 'primary',
-          size: 'normal',
+          size: 'small',
           icon: 'u-icon-edit',
           content: "编辑",
         },
         {
           type: "delete",
           btnType: 'error',
-          size: 'normal',
+          size: 'small',
           icon: 'u-icon-delete',
           content: "删除",
         },

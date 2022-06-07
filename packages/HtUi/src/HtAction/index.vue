@@ -17,11 +17,7 @@
         <ht-button
           :data="{
             type: action.btnType || 'text',
-            size:
-              action.size ||
-              `${
-                !action.btnType || action.btnType == 'text' ? 'normal' : 'small'
-              }`,
+            size: action.size || 'small',
             icon: action.icon,
             content: action.content,
           }"
