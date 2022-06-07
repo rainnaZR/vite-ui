@@ -6,11 +6,7 @@
       :key="index"
       :is="module.moduleName"
       v-bind="{
-        moduleId: module.moduleId,
-        moduleType: module.moduleType,
-        moduleName: module.moduleName,
-        moduleTitle: module.moduleTitle,
-        moduleDesc: module.moduleDesc,
+        ...module,
         data: module.moduleProps,
       }"
     />

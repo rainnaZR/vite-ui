@@ -323,6 +323,8 @@ export default defineComponent({
       if (!value) return defaultValue;
 
       const type = typeof value;
+      paramsKey = paramsKey || [];
+      paramsValue = paramsValue || [];
       if (type === "function") {
         return value(...paramsValue);
       }
@@ -364,6 +366,7 @@ export default defineComponent({
           formModel: formModel.value,
         });
       } catch (err) {
+        console.error(err);
         loading.value = false;
         HtToast.error("接口调用异常，请稍后再试");
       }
