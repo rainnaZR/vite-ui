@@ -28,13 +28,14 @@
 
 ### 按钮尺寸
 
-- 尺寸支持 `small`、`normal`、`big`、`huge`四种尺寸，默认尺寸为 `normal`。
+- 尺寸支持 `mini`、`small`、`normal`、`big`、`huge`四种尺寸，默认尺寸为 `normal`。
 
 
 ::: Demo
 ```vue demo
 <template>
   <div class="button-demo">
+    <ht-button :data="{ type: 'default', size: 'mini'}">mini按钮</ht-button>
     <ht-button :data="{ type: 'default', size: 'small'}">small按钮</ht-button>
     <ht-button :data="{ type: 'primary', size: 'normal'}">normal按钮</ht-button>
     <ht-button :data="{ type: 'success', size: 'big'}">big按钮</ht-button>

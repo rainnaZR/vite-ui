@@ -92,13 +92,10 @@ export default defineComponent({
               },
             },
             {
-              type: "checkbox",
+              type: "input",
               label: "账号地址",
               prop: "address",
               required: false,
-              itemProps: {
-                multiple: true,
-              },
             },
           ],
         },

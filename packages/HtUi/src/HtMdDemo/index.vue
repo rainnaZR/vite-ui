@@ -4,10 +4,10 @@
     <!-- 工具栏插槽 -->
     <slot name="entry">
       <div class="entry">
-        <ht-button @click="onViewSource" :data="{ size: 'small' }"
+        <ht-button @click="onViewSource" :data="{ size: 'mini' }"
           >查看源码</ht-button
         >
-        <ht-button @click="onCopySource" :data="{ size: 'small' }"
+        <ht-button @click="onCopySource" :data="{ size: 'mini' }"
           >复制源码</ht-button
         >
       </div>
