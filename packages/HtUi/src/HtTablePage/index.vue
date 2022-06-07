@@ -36,7 +36,7 @@
 
           <!-- 操作按钮 -->
           <template v-else-if="column.actions?.length">
-            <div class="f-mr10">
+            <div style="margin: -10px 10px -10px 0">
               <ht-action
                 :data="{ list: onGetAction(column.actions, row) }"
                 @on-action="
