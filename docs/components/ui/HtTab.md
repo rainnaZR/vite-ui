@@ -277,7 +277,7 @@ export default {
                 icon: 'u-icon-edit',
             }],
             style: "color: #ffffffb3",
-            activeStyle: "color: #fff;background: rgb(45, 140, 240);border-radius: 0;",
+            activeStyle: "color: #fff;background: rgb(45, 140, 240);",
         })
         return {
             modelValue,
@@ -391,7 +391,7 @@ export default {
                 icon: 'u-icon-edit',
             }],
             style: "color: #ffffffb3",
-            activeStyle: "color: #fff;background: rgb(45, 140, 240);border-radius: 0;",
+            activeStyle: "color: #fff;background: rgb(45, 140, 240);",
         })
         return {
             modelValue,
