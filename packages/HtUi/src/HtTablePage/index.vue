@@ -2,7 +2,7 @@
   <!-- 筛选项 -->
   <div
     v-if="data.filterForm && data.filterForm?.fields?.length"
-    class="m-table-filter f-mb15"
+    class="m-table-filter f-mb5"
   >
     <ht-form-page :data="data.filterForm" @on-action="onClickFormAction" />
   </div>
