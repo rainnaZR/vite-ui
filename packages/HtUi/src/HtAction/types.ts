@@ -5,6 +5,7 @@ export interface ActionItem {
   btnType?: string; // 行动点按钮类型
   size?: string; // 行动点按钮大小
   icon?: string; // 行动点按钮图标
+  iconStyle?: string | object; // 行动点按钮图标样式
   content: string; // 行动点按钮文案
 }
 

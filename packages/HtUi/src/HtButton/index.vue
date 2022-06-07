@@ -18,7 +18,7 @@
     @click="onClick"
   >
     <div v-if="data.icon" class="f-dib f-mr5">
-      <ht-icon :data="{ name: data.icon }" />
+      <ht-icon :data="{ name: data.icon, style: data.iconStyle }" />
     </div>
     <!-- 自定义按钮内容 -->
     <slot>{{ data.content }}</slot>

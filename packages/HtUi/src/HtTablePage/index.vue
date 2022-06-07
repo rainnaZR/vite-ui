@@ -8,7 +8,7 @@
   </div>
 
   <!-- 工具栏 -->
-  <div v-if="data.toolbar?.length" class="m-table-toolbar f-mb15">
+  <div v-if="data.toolbar?.length" class="m-table-toolbar f-mb5">
     <vxe-toolbar ref="xToolbar" :custom="data.table.custom">
       <template #buttons>
         <ht-action
@@ -165,9 +165,9 @@ export default defineComponent({
      */
     const defaultActions = {
       add: {
-        btnType: "primary",
+        btnType: "default",
         icon: "u-icon-add",
-        size: "normal",
+        size: "small",
         content: "新增",
       },
       detail: {

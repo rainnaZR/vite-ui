@@ -8,6 +8,7 @@ export interface ButtonData {
   full?: boolean; // 按钮是否宽度占满
   style?: any; // 按钮自定义样式
   icon?: string; // 按钮图标
+  iconStyle?: any; // 按钮图标样式
   content?: string | number; // 按钮文字
 }
 

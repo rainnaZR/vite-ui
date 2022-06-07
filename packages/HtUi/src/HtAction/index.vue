@@ -19,6 +19,7 @@
             type: action.btnType || 'text',
             size: action.size || 'small',
             icon: action.icon,
+            iconStyle: action.iconStyle || 'font-size: 12px',
             content: action.content,
           }"
         />
