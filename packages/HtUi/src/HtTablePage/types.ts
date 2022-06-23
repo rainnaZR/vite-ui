@@ -9,9 +9,18 @@ export interface RequestData {
   onDeleteXhr?: RequestItem; // 删除项
 }
 
+export interface TableColumnShowConfig {
+  type?: string; // 类型
+  imgWidth?: number; // 图片宽度
+  imgHeight?: number; // 图片高度
+  imgAlt?: string; // 图片alt
+}
+
 export type TableColumnOption = VxeTableDefines.ColumnOptions & {
+  field?: string; // 字段key
   actions?: ActionData[];
   placeholder?: string; // 列表项的占位符
+  showConfig?: TableColumnShowConfig; // 列表项展示类型配置
 };
 
 export interface TablePageData {

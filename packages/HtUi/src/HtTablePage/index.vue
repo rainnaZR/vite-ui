@@ -34,6 +34,20 @@
             <renderComp :column="column" :row="row" :index="rowIndex" />
           </template>
 
+          <!-- 自定义渲染配置 -->
+          <template v-else-if="column.showConfig && column.field">
+            <div v-if="column.showConfig.type == 'image'">
+              <a :href="row[column.field]" target="_blank">
+                <img
+                  :src="row[column.field]"
+                  :width="column.showConfig?.imgWidth"
+                  :height="column.showConfig?.imgHeight"
+                  :alt="column.showConfig?.imgAlt"
+                />
+              </a>
+            </div>
+          </template>
+
           <!-- 操作按钮 -->
           <template v-else-if="column.actions?.length">
             <div style="margin: -10px 10px -10px 0">
