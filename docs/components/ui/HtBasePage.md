@@ -35,16 +35,14 @@ export default defineComponent({
             moduleProps: {
               request: {
                 onGetListXhr: {
-                  xhr: "return fetch(`https://test.api.dahuangf.com/admin/company?${Object.keys(data).map((i) => i + '=' + data[i]).join('&')}`,{headers: {token:'Hj6Y5EZ57NBK0PRXNRxCXvBQg-oeGZb2iQUfi6IJOK6tPVNq8Dy12wT4PKw5khd8xry3TO12XwxWsVlxwduwRbhDv69Iz4QaAzN78elbvfF77hXXJaWaB6_G3nZGwJzBoRDQQn-CsMSY5p7b_8SNZLHZjycWi9D1maBgcrQeTmKerJ-3wZxWvschRpoFJPBcsJOD67GDVn3TQE9PVLjrNx5YW89q_udLhNvrw8aIrxVpbeM6ZwODVF6PRQD-LphBRuNI-FR1_YXahKcE0LBga0stawIZ26-JEsV8Z44CSdW6EactORFAndWQAHLoDFaWF35TkIAecQIXb2h2Uc49kg..'}}).then(res => res.json());",
-                  getParams:
-                    "let data={...params,skip: params.pageIndex,num: params.pageSize,type:2};delete data.pageIndex;delete data.pageSize;return data;",
-                  callback:
-                    "data.data.pager = {pageIndex: data.data.skip-1,total: data.data.count};return data;",
+                  xhr: "",
+                  getParams: "",
+                  callback: "",
                 },
                 onDeleteXhr: {
-                  xhr: "return fetch(`https://test.api.dahuangf.com/admin/company/${data.id}`,{method: 'delete',headers: {token:'Hj6Y5EZ57NBK0PRXNRxCXvBQg-oeGZb2iQUfi6IJOK6tPVNq8Dy12wT4PKw5khd8xry3TO12XwxWsVlxwduwRbhDv69Iz4QaAzN78elbvfF77hXXJaWaB6_G3nZGwJzBoRDQQn-CsMSY5p7b_8SNZLHZjycWi9D1maBgcrQeTmKerJ-3wZxWvschRpoFJPBcsJOD67GDVn3TQE9PVLjrNx5YW89q_udLhNvrw8aIrxVpbeM6ZwODVF6PRQD-LphBRuNI-FR1_YXahKcE0LBga0stawIZ26-JEsV8Z44CSdW6EactORFAndWQAHLoDFaWF35TkIAecQIXb2h2Uc49kg..'}}).then(res => res.json());",
-                  getParams: "let data = {id: params.id};return data;",
-                  callback: "return res;",
+                  xhr: "",
+                  getParams: "",
+                  callback: "",
                 },
               },
               filterForm: {
@@ -98,7 +96,7 @@ export default defineComponent({
                   type: "add",
                   content: "新增公司",
                   onClick:
-                    "window.open('https://test.admin.dahuangf.com/qt/#/purchaseManage/partsApplyEdit', '_blank')",
+                    "window.open('https://xxx', '_blank')",
                 },
               ],
               table: {
@@ -170,7 +168,7 @@ export default defineComponent({
                         type: "detail",
                         content: "详情",
                         onClick:
-                          "window.open(`https://test.admin.dahuangf.com/qt/#/area/companyDetail?id=${data.row.id}`, '_blank')",
+                          "window.open('https://xxx', '_blank')",
                       },
                       {
                         type: "edit",
@@ -185,7 +183,7 @@ export default defineComponent({
                           status: 2,
                         },
                         onClick:
-                          "proxy.$dialog.show({title: '提示',content: '确认关闭吗？',onConfirm: () => {fetch(`https://test.api.dahuangf.com/admin/company/update-status`,{method: 'POST',body: JSON.stringify({company_id: data.row.id, status: 1}),headers: {'Content-Type': 'application/json',token:'Hj6Y5EZ57NBK0PRXNRxCXvBQg-oeGZb2iQUfi6IJOK6tPVNq8Dy12wT4PKw5khd8xry3TO12XwxWsVlxwduwRbhDv69Iz4QaAzN78elbvfF77hXXJaWaB6_G3nZGwJzBoRDQQn-CsMSY5p7b_8SNZLHZjycWi9D1maBgcrQeTmKerJ-3wZxWvschRpoFJPBcsJOD67GDVn3TQE9PVLjrNx5YW89q_udLhNvrw8aIrxVpbeM6ZwODVF6PRQD-LphBRuNI-FR1_YXahKcE0LBga0stawIZ26-JEsV8Z44CSdW6EactORFAndWQAHLoDFaWF35TkIAecQIXb2h2Uc49kg..'}}).then(res => res.json()).then(res => {if(res.code == 0) {proxy.$toast.success('操作成功');proxy.onReLoadList()}});}});",
+                          "proxy.$dialog.show({title: '提示',content: '确认关闭吗？',onConfirm: () => {}});",
                       },
                       {
                         type: "close",
@@ -194,7 +192,7 @@ export default defineComponent({
                           status: 1,
                         },
                         onClick:
-                          "proxy.$dialog.show({title: '提示',content: '确认开启吗？',onConfirm: () => {fetch(`https://test.api.dahuangf.com/admin/company/update-status`,{method: 'POST',body: JSON.stringify({company_id: data.row.id, status: 2}),headers: {'Content-Type': 'application/json',token:'Hj6Y5EZ57NBK0PRXNRxCXvBQg-oeGZb2iQUfi6IJOK6tPVNq8Dy12wT4PKw5khd8xry3TO12XwxWsVlxwduwRbhDv69Iz4QaAzN78elbvfF77hXXJaWaB6_G3nZGwJzBoRDQQn-CsMSY5p7b_8SNZLHZjycWi9D1maBgcrQeTmKerJ-3wZxWvschRpoFJPBcsJOD67GDVn3TQE9PVLjrNx5YW89q_udLhNvrw8aIrxVpbeM6ZwODVF6PRQD-LphBRuNI-FR1_YXahKcE0LBga0stawIZ26-JEsV8Z44CSdW6EactORFAndWQAHLoDFaWF35TkIAecQIXb2h2Uc49kg..'}}).then(res => res.json()).then(res => {if(res.code == 0) {proxy.$toast.success('操作成功');proxy.onReLoadList()}});}});",
+                          "proxy.$dialog.show({title: '提示',content: '确认开启吗？',onConfirm: () => {}});",
                       },
                     ],
                   },

@@ -165,7 +165,7 @@ export default defineComponent({
       },
       pager: {
         pageIndex: 1,
-        pageSize: 10,
+        pageSize: 20,
         total: 0,
         pageSizes: [10, 20, 50, 100],
         layout: "total, prev, pager, next, sizes, jumper",
