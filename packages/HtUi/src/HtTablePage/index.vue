@@ -37,8 +37,9 @@
           <!-- 自定义渲染配置 -->
           <template v-else-if="column.showConfig && column.field">
             <div v-if="column.showConfig.type == 'image'">
-              <a :href="row[column.field]" target="_blank">
+              <a class="f-db" :href="row[column.field]" target="_blank">
                 <img
+                  class="f-db"
                   :src="row[column.field]"
                   :width="column.showConfig?.imgWidth"
                   :height="column.showConfig?.imgHeight"
