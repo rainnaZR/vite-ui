@@ -2,6 +2,7 @@ import { PublicProps } from "../types";
 
 export interface ImageData {
   src: string; // 图片地址
+  placeholderSrc?: string; // 图片占位符地址
   width?: string | number; // 图片宽度
   height?: string | number; // 图片高度
   fit?: string; // 图片填充方式，值为cover, contain

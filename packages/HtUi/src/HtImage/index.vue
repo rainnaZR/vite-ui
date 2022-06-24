@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading" class="ht-image" @click="onClick">
     <img
-      :src="data.src"
+      :src="data.src || data.placeholderSrc || placeholderSrc"
       :width="data.width"
       :height="data.height"
       :alt="data.alt"
@@ -33,6 +33,9 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const loading = ref(true);
+    const placeholderSrc =
+      "https://static.360buyimg.com/item/unite/1.0.150/components/default-soa/askAnswer/i/icon-dog.png";
+
     /**
      * 图片点击方法
      * @param {Object} event MouseEvent对象
@@ -82,6 +85,7 @@ export default defineComponent({
 
     return {
       loading,
+      placeholderSrc,
       onClick,
       onLoad,
       onError,

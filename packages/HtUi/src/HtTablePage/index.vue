@@ -38,12 +38,13 @@
           <template v-else-if="column.showConfig && column.field">
             <div v-if="column.showConfig.type == 'image'">
               <a class="f-db" :href="row[column.field]" target="_blank">
-                <img
-                  class="f-db"
-                  :src="row[column.field]"
-                  :width="column.showConfig?.imgWidth"
-                  :height="column.showConfig?.imgHeight"
-                  :alt="column.showConfig?.imgAlt"
+                <ht-image
+                  :data="{
+                    src: row[column.field],
+                    width: column.showConfig?.imgWidth,
+                    height: column.showConfig?.imgHeight,
+                    alt: column.showConfig?.imgAlt,
+                  }"
                 />
               </a>
             </div>
