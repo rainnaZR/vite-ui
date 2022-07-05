@@ -112,12 +112,8 @@ const onDoValueByProps = ({ object = {}, prop = "", value, type = "get" }) => {
   for (let i = 0, l = prop.length; i < l; i++) {
     const key = prop[i];
     if (type === "get") {
-      if (key in object) {
-        object = object[key];
-      } else {
-        object = "";
-        break;
-      }
+      object = object?.[key] ?? "";
+      if (typeof object !== "object") break;
     }
     if (type === "set") {
       if (key in object) {
