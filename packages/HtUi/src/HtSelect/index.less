@@ -65,4 +65,17 @@
             }
         }
     }
+    &-small{
+        .list{
+            max-height: @line-height-small*5;
+        }
+        .item{
+            font-size: @font-size-mini;
+            line-height: @line-height-small;
+            &-empty{
+                padding-top: @line-height-small * 0.5;
+                padding-bottom: @line-height-small * 0.5;
+            }
+        }
+    }
 }

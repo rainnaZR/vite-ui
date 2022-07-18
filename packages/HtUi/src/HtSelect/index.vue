@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-select">
+  <div :class="`ht-select ht-select-${form?.data?.size || 'normal'}`">
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
       {{ state.inputData.modelValue || data.defaultEmptyText }}
@@ -68,10 +68,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, watch } from "vue";
+import { defineComponent, PropType, inject, reactive, watch } from "vue";
 import HtInput from "../HtInput";
 import HtIcon from "../HtIcon";
 import { SelectData, SelectItem } from "./types";
+import { FormContext, formKey } from "../HtForm/types";
 
 export default defineComponent({
   name: "HtSelect",
@@ -98,6 +99,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const form: FormContext | undefined = inject(formKey);
     const state = reactive({
       selectValue: Array.isArray(props.modelValue)
         ? props.modelValue
@@ -282,6 +284,7 @@ export default defineComponent({
     );
 
     return {
+      form,
       state,
       onBlur,
       onFocus,

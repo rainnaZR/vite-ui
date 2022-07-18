@@ -1,5 +1,10 @@
 <template>
-  <div class="ht-date-picker f-unselect" :style="data.wrapStyle">
+  <div
+    :class="`ht-date-picker ht-date-picker-${
+      form?.data?.size || 'normal'
+    } f-unselect`"
+    :style="data.wrapStyle"
+  >
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
       <div class="preview">{{ inputVal || data.defaultEmptyText }}</div>

@@ -11,6 +11,7 @@
         'ht-switch',
         { 'ht-switch-active': !!modelValue },
         { 'ht-switch-disabled': data.disabled || form?.data.disabled },
+        `ht-switch-${form?.data?.size || 'normal'}`,
         'f-curp',
         'f-trans',
       ]"

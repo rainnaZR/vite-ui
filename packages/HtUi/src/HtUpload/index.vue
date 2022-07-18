@@ -1,5 +1,9 @@
 <template>
-  <div v-loading="loading" class="ht-upload" :style="data.style">
+  <div
+    v-loading="loading"
+    :class="`ht-upload ht-upload-${form?.data?.size || 'normal'}`"
+    :style="data.style"
+  >
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
       <div v-if="files && files.length" class="list">
@@ -170,10 +174,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, reactive, computed, watch } from "vue";
+import {
+  defineComponent,
+  PropType,
+  inject,
+  ref,
+  reactive,
+  computed,
+  watch,
+} from "vue";
 import { dom } from "@htfed/utils";
 import HtToast from "../HtToast";
 import { UploadData, FileItem, InputFileItem } from "./types";
+import { FormContext, formKey } from "../HtForm/types";
 
 /**
  * 文件上传组件，支持所有格式的文件上传。
@@ -197,6 +210,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const form: FormContext | undefined = inject(formKey);
     const inputFileRef = ref<HTMLInputElement | null>(null);
     const files: any[] = reactive([]);
     const SIZE_UNITS = {
@@ -764,6 +778,7 @@ export default defineComponent({
     );
 
     return {
+      form,
       inputFileRef,
       SIZE_UNITS,
       FILE_COVER,
