@@ -14,7 +14,7 @@
         left: 0;
         z-index: -1;
         width: 100%;
-        max-height: @select-option-line-height*5;
+        max-height: @line-height-normal*5;
         border: @select-options-border;
         border-radius: @border-radius;
         background: @base-color;
@@ -41,7 +41,7 @@
         margin: 0 0 1px;
         color: @normal-color;
         font-size: @font-size;
-        line-height: @select-option-line-height;
+        line-height: @line-height-normal;
         &:hover{
             background: fade(@normal-color, 6%);
         }
@@ -57,8 +57,8 @@
             }
         }
         &-empty{
-            padding-top: @select-option-line-height * 0.5;
-            padding-bottom: @select-option-line-height * 0.5;
+            padding-top: @line-height-normal * 0.5;
+            padding-bottom: @line-height-normal * 0.5;
             color: @disabled-color;
             &:hover{
                 background: none;

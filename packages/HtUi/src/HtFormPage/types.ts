@@ -1,33 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { PublicProps } from "../types";
-import { RuleItem } from "../HtFormItem/types";
+import { FormItemData } from "../HtFormItem/types";
+import { FormData } from "../HtForm/types";
 
 export interface Model {
   [key: string]: any;
 }
 
-export interface Rules {
-  [key: string]: RuleItem[];
-}
-
-export interface FieldItem {
+export type FieldItem = FormItemData & {
   type: string; // 表单项类型，表单内组件名称
-  showType?: string; // 表单项展示模式，支持预览和编辑，可选值为detail时为预览模式
-  defaultEmptyText?: string; // 表单项为空值时展示的内容
   hide?: boolean; // 表单项是否隐藏，默认为false
-  prop?: string; // 表单项对应的表单属性值
-  label: string; // 表单项的label标签
-  labelWidth?: string | number; // 表单项label宽度
-  labelStyle?: any; // 表单项label样式
-  labelPosition?: string; // 表单项label位置，left/right/top，默认值right
-  contentStyle?: any; // 表单项content样式
-  required?: boolean; // 表单项是否必填
-  rules?: RuleItem[]; // 表单项验证规则
-  showValidMessage?: boolean; // 是否显示验证错误信息，默认true
-  error?: string; // 表单项验证错误信息
-  itemProps?: Model; // 表单内组件props，比如输入框，下拉框的props
+  itemProps?: Model; // 表单内组件props，比如输入框/下拉框的props
   itemEvents?: Model; // 表单内组件events
-}
+};
 
 export interface GroupItem {
   title?: string; // 表单项标题
@@ -61,30 +46,17 @@ export interface RequestData {
   formSubmit: RequestItem; // 表单提交
 }
 
-export interface FormPageData {
+export type FormPageData = FormData & {
   showType?: string; // 展示类型：编辑/详情，可选值edit/detail
-  id?: string | number; // 页面id
+  id?: string | number; // 表单id
   title?: string; // 表单标题
   subTitle?: string; // 表单副标题
-
-  model: Model; // 表单数据对象
-  rules?: Rules; // 表单验证规则
-  inline?: boolean; // 是否行内表单
-  labelWidth?: string | number; // 表单项label宽度
-  labelStyle?: any; // 表单项label样式
-  labelPosition?: string; // 表单项label位置，left/right/top，默认值right
-  contentStyle?: any; // 表单项content样式
-  formStyle?: any; // 表单自定义样式
-  showValidMessage?: boolean; // 是否显示验证错误信息，默认true
-  disabled?: boolean; // 表单是否禁用
   hideLoading?: boolean; // 是否隐藏loading
-  defaultEmptyText?: string; // 表单项为空值时展示的内容
-
   fields?: FieldItem[]; // 表单字段组
   group?: GroupItem[]; // 表单选项组
   actions?: string[] | ActionItem[]; // 操作按钮
   request?: RequestData; // 接口
-}
+};
 
 export type Props = PublicProps<{
   data: FormPageData;

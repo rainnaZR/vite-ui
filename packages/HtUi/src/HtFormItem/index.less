@@ -1,7 +1,7 @@
 @import "../theme/variables.less";
 
 .ht-form-item{
-    line-height: @form-item-line-height;
+    line-height: @line-height-normal;
     .form-label{
         font-size: @font-size;
         color: @normal-color;
@@ -16,7 +16,7 @@
             white-space: nowrap;
         }
     }
-    &-left, &-right{
+    &-position-left, &-position-right{
         display: flex;
         flex-direction: row;
         .form-label .label-cnt {
@@ -26,9 +26,15 @@
             flex: 1;
         }
     }
-    &-right{
+    &-position-right{
         .form-label {
             text-align: right;
+        }
+    }
+    &-size-small{
+        line-height: @line-height-small;
+        .form-label{
+            font-size: @font-size-mini;
         }
     }
     &-error{

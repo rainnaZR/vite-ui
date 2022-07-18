@@ -159,6 +159,7 @@ export default defineComponent({
     const {
       model,
       rules,
+      size,
       inline,
       labelWidth,
       labelStyle,
@@ -173,6 +174,7 @@ export default defineComponent({
     const formConfig: FormData = reactive({
       model: formModel,
       rules,
+      size,
       inline,
       labelWidth,
       labelStyle,

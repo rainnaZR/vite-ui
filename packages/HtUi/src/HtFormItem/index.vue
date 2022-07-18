@@ -3,11 +3,10 @@
     ref="formItemRef"
     :class="[
       'ht-form-item',
-      `ht-form-item-${
-        data.labelPosition ||
-        (form && form.data && form.data.labelPosition) ||
-        'right'
+      `ht-form-item-position-${
+        data.labelPosition || form?.data?.labelPosition || 'right'
       }`,
+      `ht-form-item-size-${data.size || form?.data?.size || 'normal'}`,
       {
         'ht-form-item-error': validateMessage,
       },
@@ -19,7 +18,7 @@
       :style="{
         ...((form && form.data && form.data.labelStyle) || {}),
         ...(data.labelStyle || {}),
-        width: data.labelWidth || (form && form.data && form.data.labelWidth),
+        width: data.labelWidth || form?.data?.labelWidth,
       }"
     >
       <div v-if="data.label" class="label-cnt">
