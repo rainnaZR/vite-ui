@@ -84,7 +84,7 @@
                 "
                 v-on="field.itemEvents"
               />
-              <div v-else>{{ formModel[field.prop] }}</div>
+              <div v-else-if="field.prop">{{ formModel[field.prop] }}</div>
             </slot>
           </ht-form-item>
         </div>
@@ -109,7 +109,10 @@
               :data="{
                 ...action,
                 type: action.btnType,
-                size: action.size || `${data.inline ? 'normal' : 'big'}`,
+                size:
+                  action.size ||
+                  data.size ||
+                  `${data.inline ? 'normal' : 'big'}`,
               }"
               @click="onFormAction(action)"
             >
