@@ -66,7 +66,7 @@
             <!-- 表单项内容插槽 -->
             <slot :name="field.prop" :scope="field">
               <component
-                v-if="field.type"
+                v-if="field.type && field.prop"
                 v-model:modelValue="formModel[field.prop]"
                 :is="`ht-${field.type}`"
                 :data="

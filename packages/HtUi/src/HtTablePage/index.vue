@@ -37,7 +37,21 @@
           <!-- 自定义渲染配置 -->
           <template v-else-if="column.showConfig && column.field">
             <div v-if="column.showConfig.type == 'image'">
-              <a class="f-db" :href="row[column.field]" target="_blank">
+              <!-- 当有图片链接时 -->
+              <template v-if="row[column.field]">
+                <a class="f-db" :href="row[column.field]" target="_blank">
+                  <ht-image
+                    :data="{
+                      src: row[column.field],
+                      width: column.showConfig?.imgWidth,
+                      height: column.showConfig?.imgHeight,
+                      alt: column.showConfig?.imgAlt,
+                    }"
+                  />
+                </a>
+              </template>
+              <!-- 当无图片链接时 -->
+              <template v-else>
                 <ht-image
                   :data="{
                     src: row[column.field],
@@ -46,7 +60,7 @@
                     alt: column.showConfig?.imgAlt,
                   }"
                 />
-              </a>
+              </template>
             </div>
           </template>
 
