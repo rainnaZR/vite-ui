@@ -55,7 +55,10 @@
       />
       <!-- 上传提示插槽 -->
       <slot name="tips">
-        <div v-if="!data.hideTips || data.tips" class="tips f-mb10">
+        <div
+          v-if="!data.hideTips || data.tips"
+          :class="`tips ${form?.data?.size == 'small' ? 'f-mb5' : 'f-mb10'}`"
+        >
           {{ data.tips || tips }}
         </div>
       </slot>
