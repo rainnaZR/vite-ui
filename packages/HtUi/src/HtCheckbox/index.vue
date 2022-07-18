@@ -6,5 +6,8 @@ import HtRadio from "../HtRadio/index.vue";
 export default defineComponent({
   ...HtRadio,
   name: "HtCheckbox",
+  extendProps: {
+    multiple: true,
+  },
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="ht-radio f-unselect">
+  <div :class="`ht-radio ht-radio-${form?.data?.size || 'normal'} f-unselect`">
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
       {{ labelInfo || data.defaultEmptyText }}
@@ -41,6 +41,7 @@
 import {
   defineComponent,
   PropType,
+  getCurrentInstance,
   inject,
   reactive,
   watch,
@@ -76,6 +77,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const { proxy } = getCurrentInstance() || {};
     const form: FormContext | undefined = inject(formKey);
     const disabled: boolean = props.data.disabled || !!form?.data.disabled;
     const state = reactive({
@@ -89,7 +91,9 @@ export default defineComponent({
         ?.map((i) => i.label)
         ?.join(", ")
     );
-    const defaultIcons = props.data.multiple
+    const multiple =
+      props.data.multiple || proxy?.$options?.extendProps?.multiple;
+    const defaultIcons = multiple
       ? ["u-icon-checkbox", "u-icon-checkboxCheck"]
       : ["u-icon-radio", "u-icon-radioCheck"]; // icon图标默认配置项
 
@@ -132,7 +136,7 @@ export default defineComponent({
       if (item.disabled || disabled) return;
 
       const isChecked = state.checkedValue.includes(item.value);
-      if (props.data.multiple) {
+      if (multiple) {
         // 如果是多选
         // 当前项已包含在选中项，则反选
         if (isChecked) {
@@ -151,9 +155,7 @@ export default defineComponent({
         (i) => i !== undefined && i !== ""
       );
 
-      const value = props.data.multiple
-        ? state.checkedValue
-        : state.checkedValue[0];
+      const value = multiple ? state.checkedValue : state.checkedValue[0];
       /**
        * 选择框选中值更新
        * @param {Any} value 选择框组选中值，单选框为选中值/多选框为选中值的数组

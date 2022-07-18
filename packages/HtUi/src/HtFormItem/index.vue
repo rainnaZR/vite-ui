@@ -6,11 +6,11 @@
       `ht-form-item-position-${
         data.labelPosition || form?.data?.labelPosition || 'right'
       }`,
-      `ht-form-item-size-${data.size || form?.data?.size || 'normal'}`,
+      `ht-form-item-size-${size}`,
       {
         'ht-form-item-error': validateMessage,
       },
-      'f-mb20',
+      `${size == 'small' ? 'f-mb10' : 'f-mb20'}`,
     ]"
   >
     <div
@@ -83,6 +83,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const form: FormContext | undefined = inject(formKey);
     const formItemRef = ref<HTMLDivElement>();
+    const size = ref(props?.data?.size || form?.data?.size || "normal");
 
     /**
      * 获取表单项验证规则
@@ -237,6 +238,7 @@ export default defineComponent({
     return {
       form,
       formItemRef,
+      size,
       required,
       validateMessage,
       onValidate,

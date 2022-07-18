@@ -1,5 +1,8 @@
 <template>
-  <div class="ht-input" :style="data.wrapStyle">
+  <div
+    :class="`ht-input ht-input-${form?.data?.size || 'normal'}`"
+    :style="data.wrapStyle"
+  >
     <!-- 详情模式 -->
     <template v-if="data.showType == 'detail'">
       <div class="preview">{{ inputVal || data.defaultEmptyText }}</div>

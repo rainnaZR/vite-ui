@@ -45,7 +45,6 @@
         <ht-checkbox
           v-model:modelValue="model.role"
           :data="{
-            multiple: true,
             options: [
               {
                 label: '管理员',
@@ -447,7 +446,6 @@ export default {
       <ht-checkbox
         v-model:modelValue="model.role"
         :data="{
-          multiple: true,
           options: [
             {
               label: '管理员',
@@ -811,7 +809,6 @@ export default {
         <ht-checkbox
           v-model:modelValue="model.role"
           :data="{
-            multiple: true,
             options: [
               {
                 label: '管理员',

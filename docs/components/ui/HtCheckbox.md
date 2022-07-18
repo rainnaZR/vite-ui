@@ -32,7 +32,6 @@ export default {
       modelValue: [1, 3],
     })
     const checkboxData = reactive({
-      multiple: true,
       options: [
         {
           label: "选项1",
@@ -83,7 +82,6 @@ export default {
       modelValue: [1],
     })
     const checkboxData = reactive({
-      multiple: true,
       options: [
         {
           label: "选项1",
@@ -129,7 +127,6 @@ export default {
       modelValue: [1, 3],
     })
     const checkboxData = reactive({
-      multiple: true,
       options: [
         {
           label: "选项1",
@@ -181,7 +178,6 @@ export default {
       modelValue: [1, 3],
     })
     const checkboxData = reactive({
-      multiple: true,
       options: [
         {
           label: "选项1",
@@ -233,7 +229,6 @@ export default {
       modelValue: [1, 3],
     })
     const checkboxData = reactive({
-      multiple: true,
       options: [
         {
           label: "选项1",
@@ -290,7 +285,6 @@ export default {
       modelValue: [2],
     })
     const checkboxData = reactive({
-      multiple: true,
       options: [
         {
           label: "选项1",
@@ -337,7 +331,6 @@ export default {
       modelValue: [2],
     })
     const checkboxData = reactive({
-      multiple: true,
       options: [
         {
           label: "选项1",
