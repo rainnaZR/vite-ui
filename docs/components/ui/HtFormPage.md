@@ -189,6 +189,58 @@ export default defineComponent({
 :::
 
 
+### 表单尺寸
+
+- 组件显示尺寸属性`size`，值为`small`，`normal`，`big`，默认值为`normal`。
+
+
+::: Demo
+```vue demo
+<template>
+  <ht-form-page :data="formData" @on-action="onAction" />
+</template>
+
+<script lang="ts">
+import { defineComponent, reactive } from "vue";
+export default defineComponent({
+  setup() {
+    const formData = reactive({
+      labelWidth: "100px",
+      model: {},
+      rules: {},
+      fields: [
+        {
+          type: "input",
+          label: "标题",
+          prop: "name",
+        },
+        {
+          type: "input",
+          label: "公司简介",
+          prop: "desc",
+          itemProps: {
+            type: "textarea",
+          },
+        },
+      ],
+    });
+    const onAction = (options) => {
+      console.log("options", options);
+    };
+
+    return {
+      formData,
+      onAction,
+    };
+  },
+});
+</script>
+```
+:::
+
+
+
+
 ### 表单描述
 
 - 组件显示表单标题属性`title`，值为`字符串`。
