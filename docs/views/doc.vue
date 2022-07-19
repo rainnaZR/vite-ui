@@ -181,6 +181,7 @@ export default defineComponent({
   .ht-popover {
     margin: 0 300px;
   }
+  .ht-form .ht-popover,
   .ht-action .ht-popover {
     margin: 0;
   }

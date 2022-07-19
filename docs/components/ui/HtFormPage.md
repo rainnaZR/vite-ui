@@ -197,7 +197,7 @@ export default defineComponent({
 ::: Demo
 ```vue demo
 <template>
-  <ht-form-page :data="formData" @on-action="onAction" />
+  <ht-form-page :data="formData" />
 </template>
 
 <script lang="ts">
@@ -206,31 +206,102 @@ export default defineComponent({
   setup() {
     const formData = reactive({
       labelWidth: "100px",
+      size: "small",
       model: {},
       rules: {},
       fields: [
         {
           type: "input",
-          label: "标题",
-          prop: "name",
+          label: "开户行",
+          prop: "number",
+          itemProps: {
+            placeholder: "请输入开户行",
+            search: true,
+            clear: true,
+          },
+          itemEvents: {
+            "on-input": () => console.log("number input"),
+            "on-blur": () => console.log("number blur"),
+          },
+        },
+        {
+          type: "checkbox",
+          label: "账号类型",
+          prop: "type",
+          required: false,
+          itemProps: {
+            options: [
+              { label: "企业账号", value: 1 },
+              { label: "个人账号", value: 2 },
+            ],
+          },
+        },
+        {
+          type: "radio",
+          label: "银行类型",
+          prop: "type2",
+          required: false,
+          itemProps: {
+            options: [
+              { label: "企业账号", value: 1 },
+              { label: "个人账号", value: 2 },
+            ],
+          },
+        },
+        {
+          type: "date-picker",
+          label: "账号类型",
+          prop: "type3",
+          required: true,
+        },
+        {
+          type: "select",
+          label: "账号类型",
+          prop: "type4",
+          required: false,
+          itemProps: {
+            options: [
+              {
+                label: "选项1",
+                value: 1,
+              },
+              {
+                label: "选项2",
+                value: 2,
+              },
+              {
+                label: "选项3",
+                value: 3,
+              },
+            ],
+          },
+        },
+        {
+          type: "switch",
+          label: "账号地址",
+          prop: "address",
+          required: false,
         },
         {
           type: "input",
-          label: "公司简介",
-          prop: "desc",
+          label: "账号地址",
+          prop: "address2",
+          required: false,
+        },
+        {
+          type: "upload",
+          label: "账号地址",
+          prop: "address3",
+          required: false,
           itemProps: {
-            type: "textarea",
+            hideTips: true,
           },
         },
       ],
     });
-    const onAction = (options) => {
-      console.log("options", options);
-    };
 
     return {
       formData,
-      onAction,
     };
   },
 });
