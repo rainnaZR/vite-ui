@@ -31,6 +31,7 @@ export interface FormItemData {
   rules?: RuleItem[]; // 表单项验证规则
   showValidMessage?: boolean; // 是否显示验证错误信息，默认true
   error?: string; // 表单项验证错误信息
+  defaultValue?: any; // 表单项默认值
   defaultEmptyText?: string; // 表单项为空值时展示的内容
 }
 

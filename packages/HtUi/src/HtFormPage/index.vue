@@ -159,6 +159,21 @@ export default defineComponent({
     const proxy: any = getCurrentInstance()?.proxy;
     const loading = ref(false);
     const formRef = ref<FormContext>();
+    const formGroup = computed(() =>
+      props.data.fields ? [{ fields: props.data.fields }] : props.data.group
+    );
+
+    /**
+     * 表单字段的循环操作
+     * @param {Function} callback 循环字段时执行的回调函数
+     * @returns void
+     */
+    const onLoopFields = (callback: any) => {
+      formGroup.value?.forEach((group) => {
+        group?.fields?.forEach((field) => callback && callback(field));
+      });
+    };
+
     const {
       model,
       rules,
@@ -173,6 +188,17 @@ export default defineComponent({
       disabled,
     } = props.data;
     const formModel = ref(model);
+
+    const onInitFormModel = () => {
+      onLoopFields((field: FieldItem) => {
+        const { prop } = field;
+        if (prop && !formModel.value[prop] && field.defaultValue) {
+          formModel.value[prop] = field.defaultValue;
+        }
+      });
+    };
+    onInitFormModel();
+
     // 表单配置数据
     const formConfig: FormData = reactive({
       model: formModel,
@@ -187,9 +213,6 @@ export default defineComponent({
       showValidMessage,
       disabled,
     });
-    const formGroup = computed(() =>
-      props.data.fields ? [{ fields: props.data.fields }] : props.data.group
-    );
 
     /**
      * 表单项配置数据
@@ -270,17 +293,6 @@ export default defineComponent({
     const formActions = computed(() =>
       onInitActions(props.data?.actions, defaultActions)
     );
-
-    /**
-     * 表单字段的循环操作
-     * @param {Function} callback 循环字段时执行的回调函数
-     * @returns void
-     */
-    const onLoopFields = (callback: any) => {
-      formGroup.value?.forEach((group) => {
-        group?.fields?.forEach((field) => callback && callback(field));
-      });
-    };
 
     /**
      * 初始化表单创建
