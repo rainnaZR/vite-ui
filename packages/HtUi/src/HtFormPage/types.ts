@@ -54,6 +54,7 @@ export type FormPageData = FormData & {
   hideLoading?: boolean; // 是否隐藏loading
   fields?: FieldItem[]; // 表单字段组
   group?: GroupItem[]; // 表单选项组
+  hideFormAction?: boolean; // 是否隐藏表单项操作按钮，默认值为false
   actions?: string[] | ActionItem[]; // 操作按钮
   request?: RequestData; // 接口
 };

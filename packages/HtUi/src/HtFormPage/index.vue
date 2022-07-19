@@ -94,7 +94,7 @@
       <ht-form-item>
         <!-- 表单项操作按钮插槽 -->
         <slot
-          v-if="data.showType !== 'detail'"
+          v-if="!data.hideFormAction && data.showType !== 'detail'"
           name="formAction"
           :scope="formActions"
         >
