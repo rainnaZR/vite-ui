@@ -513,6 +513,7 @@ export default defineComponent({
       formModel,
       formConfig,
       formGroup,
+      onInitFormModel,
       onGetFormItemConfig,
       formActions,
       onGetFormInitInfo,
