@@ -15,7 +15,7 @@ export interface InputFileItem {
 }
 
 export interface UploadData {
-  showType?: string; // 展示类型：编辑/详情，可选值edit/detail
+  showType?: string; // 展示类型：编辑/预览，可选值edit/detail
   defaultEmptyText?: string; // 内容为空时的占位符
   action?: string; // 文件上传接口地址
   imgDomain?: string; // 图片cdn域名

@@ -2,7 +2,7 @@ import { PublicProps } from "../types";
 
 export interface DatePickerData {
   wrapStyle?: any; // 输入框容器自定义样式
-  showType?: string; // 展示类型：编辑/详情，可选值edit/detail
+  showType?: string; // 展示类型：编辑/预览，可选值edit/detail
   defaultEmptyText?: string; // 内容为空时的占位符
   prefixIcon?: string; // 输入框前缀icon
   disabled?: boolean; // 输入框是否禁用
